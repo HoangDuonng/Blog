@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Thông tin cá nhân Họ và tên: Hoàng Dương Nghề nghiệp: Sinh viên năm 4, ngành Công nghệ Thông tin Email: nguuyen1801@gmail.com Instagram: Instagram GitHub: GitHub Giới thiệu chung Tôi là sinh viên năm 4 ngành Công nghệ Thông tin tại Đại học Thủy Lợi. Trong quá trình học tập, tôi đã tích lũy kiến thức vững chắc về các ngôn ngữ lập trình như JavaScript, HTML, và CSS 🦖, cùng với kinh nghiệm thực tiễn trong phát triển web, cơ sở dữ liệu và DevOps.\n">
-<title>Giới thiệu</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Giới thiệu tổng quan về DevOps, lợi ích, các thành phần chính và công cụ phổ biến.">
+<title>Devops là gì ?</title>
 
-<link rel='canonical' href='https://tech.nguuyen.io.vn/page/about/'>
+<link rel='canonical' href='https://tech.nguuyen.io.vn/posts/devops-intro/'>
 
-<link rel="stylesheet" href="/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css"><meta property='og:title' content="Giới thiệu">
-<meta property='og:description' content="Thông tin cá nhân Họ và tên: Hoàng Dương Nghề nghiệp: Sinh viên năm 4, ngành Công nghệ Thông tin Email: nguuyen1801@gmail.com Instagram: Instagram GitHub: GitHub Giới thiệu chung Tôi là sinh viên năm 4 ngành Công nghệ Thông tin tại Đại học Thủy Lợi. Trong quá trình học tập, tôi đã tích lũy kiến thức vững chắc về các ngôn ngữ lập trình như JavaScript, HTML, và CSS 🦖, cùng với kinh nghiệm thực tiễn trong phát triển web, cơ sở dữ liệu và DevOps.\n">
-<meta property='og:url' content='https://tech.nguuyen.io.vn/page/about/'>
+<link rel="stylesheet" href="/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css"><meta property='og:title' content="Devops là gì ?">
+<meta property='og:description' content="Giới thiệu tổng quan về DevOps, lợi ích, các thành phần chính và công cụ phổ biến.">
+<meta property='og:url' content='https://tech.nguuyen.io.vn/posts/devops-intro/'>
 <meta property='og:site_name' content='Hoàng Dương'>
-<meta property='og:type' content='article'><meta property='article:section' content='Page' /><meta property='article:published_time' content='2025-02-19T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-02-19T00:00:00&#43;00:00'/>
-<meta name="twitter:title" content="Giới thiệu">
-<meta name="twitter:description" content="Thông tin cá nhân Họ và tên: Hoàng Dương Nghề nghiệp: Sinh viên năm 4, ngành Công nghệ Thông tin Email: nguuyen1801@gmail.com Instagram: Instagram GitHub: GitHub Giới thiệu chung Tôi là sinh viên năm 4 ngành Công nghệ Thông tin tại Đại học Thủy Lợi. Trong quá trình học tập, tôi đã tích lũy kiến thức vững chắc về các ngôn ngữ lập trình như JavaScript, HTML, và CSS 🦖, cùng với kinh nghiệm thực tiễn trong phát triển web, cơ sở dữ liệu và DevOps.\n">
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='devops' /><meta property='article:tag' content='code' /><meta property='article:published_time' content='2025-02-19T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-02-19T00:00:00&#43;00:00'/><meta property='og:image' content='https://tech.nguuyen.io.vn/devops-intro.jpg' />
+<meta name="twitter:title" content="Devops là gì ?">
+<meta name="twitter:description" content="Giới thiệu tổng quan về DevOps, lợi ích, các thành phần chính và công cụ phổ biến."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://tech.nguuyen.io.vn/devops-intro.jpg' />
     <link rel="shortcut icon" href="/favicon.png" />
 <style>
      
@@ -153,7 +154,7 @@
         </li>
         
         
-        <li  class='current' >
+        <li >
             <a href='/page/about/' >
                 
                 
@@ -280,12 +281,26 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ul>
-    <li><a href="#thông-tin-cá-nhân">Thông tin cá nhân</a></li>
-    <li><a href="#giới-thiệu-chung">Giới thiệu chung</a></li>
-    <li><a href="#kinh-nghiệm-và-dự-án">Kinh nghiệm và dự án</a></li>
-    <li><a href="#kỹ-năng">Kỹ năng</a></li>
-    <li><a href="#mục-tiêu-nghề-nghiệp">Mục tiêu nghề nghiệp</a></li>
-    <li><a href="#liên-hệ">Liên hệ</a></li>
+    <li><a href="#devops-là-gì">DevOps là gì?</a></li>
+    <li><a href="#vì-sao-devops-quan-trọng">Vì sao DevOps quan trọng?</a>
+      <ul>
+        <li><a href="#1-tăng-tốc-độ-phát-triển">1. Tăng tốc độ phát triển</a></li>
+        <li><a href="#2-cải-thiện-chất-lượng-sản-phẩm">2. Cải thiện chất lượng sản phẩm</a></li>
+        <li><a href="#3-tăng-cường-độ-tin-cậy">3. Tăng cường độ tin cậy</a></li>
+        <li><a href="#4-hợp-tác-tốt-hơn-giữa-các-nhóm">4. Hợp tác tốt hơn giữa các nhóm</a></li>
+      </ul>
+    </li>
+    <li><a href="#các-thành-phần-chính-của-devops">Các thành phần chính của DevOps</a>
+      <ul>
+        <li><a href="#1-cicd-continuous-integration--continuous-deployment">1. <strong>CI/CD (Continuous Integration &amp; Continuous Deployment)</strong></a></li>
+        <li><a href="#2-infrastructure-as-code-iac">2. <strong>Infrastructure as Code (IaC)</strong></a></li>
+        <li><a href="#3-giám-sát-và-logging">3. <strong>Giám sát và Logging</strong></a></li>
+        <li><a href="#4-containerization-và-orchestration">4. <strong>Containerization và Orchestration</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#các-công-cụ-phổ-biến-trong-devops">Các công cụ phổ biến trong DevOps</a></li>
+    <li><a href="#kết-luận">Kết luận</a></li>
+    <li><a href="#ví-dụ-về-docker">Ví dụ về Docker</a></li>
   </ul>
 </nav>
         </div>
@@ -297,17 +312,29 @@
 
 
             <main class="main full-width">
-    <article class="main-article">
+    <article class="has-image main-article">
     <header class="article-header">
+        <div class="article-image">
+            <a href="/posts/devops-intro/">
+                
+                    <img src="/devops-intro.jpg" loading="lazy" alt="Featured image of post Devops là gì ?" />
+                
+            </a>
+        </div>
+    
 
     <div class="article-details">
     
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/page/about/">Giới thiệu</a>
+            <a href="/posts/devops-intro/">Devops là gì ?</a>
         </h2>
     
+        
+        <h3 class="article-subtitle">
+            Giới thiệu tổng quan về DevOps, lợi ích, các thành phần chính và công cụ phổ biến.
+        </h3>
         
     </div>
 
@@ -342,7 +369,7 @@
 
 
                 <time class="article-time--reading">
-                    2 phút đọc
+                    3 phút đọc
                 </time>
             </div>
         
@@ -373,41 +400,72 @@
     <section class="article-content">
     
     
-    <h2 id="thông-tin-cá-nhân">Thông tin cá nhân
+    <h1 id="giới-thiệu-về-devops">Giới thiệu về DevOps
+</h1><h2 id="devops-là-gì">DevOps là gì?
+</h2><p>DevOps là một phương pháp kết hợp giữa <strong>phát triển phần mềm (Development - Dev)</strong> và <strong>vận hành hệ thống (Operations - Ops)</strong> nhằm tối ưu hóa quá trình phát triển, triển khai và vận hành ứng dụng. DevOps giúp các nhóm phát triển và vận hành làm việc cùng nhau hiệu quả hơn thông qua các công cụ, quy trình tự động và văn hóa làm việc.</p>
+<h2 id="vì-sao-devops-quan-trọng">Vì sao DevOps quan trọng?
+</h2><h3 id="1-tăng-tốc-độ-phát-triển">1. Tăng tốc độ phát triển
+</h3><p>DevOps giúp tự động hóa các quy trình như kiểm thử, triển khai và giám sát, giúp rút ngắn thời gian đưa sản phẩm ra thị trường.</p>
+<h3 id="2-cải-thiện-chất-lượng-sản-phẩm">2. Cải thiện chất lượng sản phẩm
+</h3><p>Việc tích hợp kiểm thử tự động và CI/CD giúp phát hiện lỗi sớm, giảm thiểu rủi ro khi triển khai phần mềm.</p>
+<h3 id="3-tăng-cường-độ-tin-cậy">3. Tăng cường độ tin cậy
+</h3><p>Các công cụ giám sát và logging giúp phát hiện sự cố nhanh chóng, giảm downtime và đảm bảo hệ thống luôn hoạt động ổn định.</p>
+<h3 id="4-hợp-tác-tốt-hơn-giữa-các-nhóm">4. Hợp tác tốt hơn giữa các nhóm
+</h3><p>DevOps giúp phá bỏ rào cản giữa nhóm phát triển và vận hành, tạo môi trường làm việc chung hiệu quả hơn.</p>
+<h2 id="các-thành-phần-chính-của-devops">Các thành phần chính của DevOps
+</h2><h3 id="1-cicd-continuous-integration--continuous-deployment">1. <strong>CI/CD (Continuous Integration &amp; Continuous Deployment)</strong>
+</h3><p>CI/CD giúp tự động hóa quá trình tích hợp mã nguồn, kiểm thử và triển khai, giảm thiểu lỗi khi đưa sản phẩm lên môi trường production.</p>
+<h3 id="2-infrastructure-as-code-iac">2. <strong>Infrastructure as Code (IaC)</strong>
+</h3><p>IaC cho phép quản lý hạ tầng như code, giúp dễ dàng triển khai và mở rộng hệ thống.</p>
+<h3 id="3-giám-sát-và-logging">3. <strong>Giám sát và Logging</strong>
+</h3><p>Các công cụ như Prometheus, Grafana, ELK Stack giúp giám sát và phân tích log để nhanh chóng xử lý sự cố.</p>
+<h3 id="4-containerization-và-orchestration">4. <strong>Containerization và Orchestration</strong>
+</h3><p>Docker và Kubernetes giúp đóng gói, quản lý và mở rộng ứng dụng linh hoạt.</p>
+<h2 id="các-công-cụ-phổ-biến-trong-devops">Các công cụ phổ biến trong DevOps
 </h2><ul>
-<li><strong>Họ và tên:</strong> Hoàng Dương</li>
-<li><strong>Nghề nghiệp:</strong> Sinh viên năm 4, ngành Công nghệ Thông tin</li>
-<li><strong>Email:</strong> nguuyen1801@gmail.com</li>
-<li><strong>Instagram:</strong> <a class="link" href="https://www.instagram.com/ngu_uuen/"  target="_blank" rel="noopener"
-    >Instagram</a></li>
-<li><strong>GitHub:</strong> <a class="link" href="https://github.com/HoangDuonng"  target="_blank" rel="noopener"
-    >GitHub</a></li>
+<li><strong>CI/CD:</strong> Jenkins, GitHub Actions, GitLab CI/CD</li>
+<li><strong>IaC:</strong> Terraform, Ansible, CloudFormation</li>
+<li><strong>Giám sát:</strong> Prometheus, Grafana, ELK Stack</li>
+<li><strong>Container &amp; Orchestration:</strong> Docker, Kubernetes</li>
+<li><strong>Quản lý mã nguồn:</strong> Git, GitHub, GitLab</li>
 </ul>
-<h2 id="giới-thiệu-chung">Giới thiệu chung
-</h2><p>Tôi là sinh viên năm 4 ngành Công nghệ Thông tin tại Đại học Thủy Lợi. Trong quá trình học tập, tôi đã tích lũy kiến thức vững chắc về các ngôn ngữ lập trình như <strong>JavaScript, HTML, và CSS 🦖</strong>, cùng với kinh nghiệm thực tiễn trong phát triển web, cơ sở dữ liệu và DevOps.</p>
-<h2 id="kinh-nghiệm-và-dự-án">Kinh nghiệm và dự án
-</h2><ul>
-<li><strong>Tên dự án</strong>: Dự án web 360 độ giúp người dùng khám phá các địa điểm du lịch một cách trực quan và sống động. Sử dụng krpano để hiển thị hình ảnh toàn cảnh, tích hợp hotspot để cung cấp thông tin chi tiết hoặc liên kết đến các trang đặt phòng, blog du lịch. Hỗ trợ trải nghiệm trên PC, mobile và kính VR như Meta Quest 2.</li>
-<li><strong>Thực tập tại</strong> <em><strong>CodeZX</strong></em>: Làm việc với <em><strong>Google Cloud Platform</strong></em>,<em><strong>Terraform</strong></em>, <em><strong>Microservices</strong></em>, <em><strong>Java Springboot</strong></em> , &hellip;  Tham gia phát triển <strong><a class="link" href="https://codezx.vn"  target="_blank" rel="noopener"
-    >ocr-dev.codezx.vn</a></strong>.</li>
-</ul>
-<h2 id="kỹ-năng">Kỹ năng
-</h2><ul>
-<li><strong>Ngôn ngữ lập trình:</strong> JavaScript (React 🦖, Node.js), Python (ComfyUI, Stable Diffusion), SQL(Postgre)</li>
-<li><strong>Công nghệ và công cụ:</strong> Docker, Jenkins, Terraform 🦖, Git, CI/CD</li>
-<li><strong>Cơ sở dữ liệu:</strong> PosrgreSQL (SQL), MongoDB (NoSQL)</li>
-<li><strong>Mô hình phát triển phần mềm:</strong> Scrum</li>
-</ul>
-<h2 id="mục-tiêu-nghề-nghiệp">Mục tiêu nghề nghiệp
-</h2><p>Tôi mong muốn trở thành một <strong>Backend Developer</strong> và cố gắng tìm hiểu về <strong>DevOps Engineer</strong>, nơi tôi có thể ứng dụng những kiến thức và kỹ năng của mình vào các hệ thống thực tế, đóng góp vào sự phát triển của doanh nghiệp và tiếp tục học hỏi để nâng cao chuyên môn.</p>
-<h2 id="liên-hệ">Liên hệ
-</h2><p>Nếu bạn quan tâm đến hồ sơ của tôi, hãy kết nối qua Email hoặc Instagram để trao đổi thêm! Cảm ơn bạn đã dành thời gian ghé thăm, rất mong được kết nối và hợp tác trong tương lai! 🚀</p>
+<h2 id="kết-luận">Kết luận
+</h2><p>DevOps là một phương pháp quan trọng giúp cải thiện tốc độ phát triển, chất lượng sản phẩm và tối ưu hóa vận hành hệ thống. Trong các bài viết tiếp theo của series, chúng ta sẽ tìm hiểu sâu hơn về từng khía cạnh của DevOps, từ CI/CD, Infrastructure as Code đến giám sát hệ thống.</p>
+<h2 id="ví-dụ-về-docker">Ví dụ về Docker
+</h2><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-js" data-lang="js"><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Sử</span> <span style="color:#a6e22e">dụng</span> <span style="color:#a6e22e">Node</span>.<span style="color:#a6e22e">js</span> <span style="color:#a6e22e">làm</span> <span style="color:#a6e22e">nền</span> <span style="color:#a6e22e">tảng</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">FROM</span> <span style="color:#a6e22e">node</span><span style="color:#f92672">:</span><span style="color:#ae81ff">18</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Đặt</span> <span style="color:#a6e22e">thư</span> <span style="color:#a6e22e">mục</span> <span style="color:#a6e22e">làm</span> <span style="color:#a6e22e">việc</span> <span style="color:#a6e22e">trong</span> <span style="color:#a6e22e">container</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">WORKDIR</span> <span style="color:#f92672">/</span><span style="color:#a6e22e">app</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Sao</span> <span style="color:#a6e22e">chép</span> <span style="color:#a6e22e">file</span> <span style="color:#66d9ef">package</span>.<span style="color:#a6e22e">json</span> <span style="color:#a6e22e">và</span> <span style="color:#a6e22e">cài</span> <span style="color:#a6e22e">đặt</span> <span style="color:#a6e22e">dependencies</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">COPY</span> <span style="color:#66d9ef">package</span>.<span style="color:#a6e22e">json</span> .
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">RUN</span> <span style="color:#a6e22e">npm</span> <span style="color:#a6e22e">install</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Sao</span> <span style="color:#a6e22e">chép</span> <span style="color:#a6e22e">toàn</span> <span style="color:#a6e22e">bộ</span> <span style="color:#a6e22e">mã</span> <span style="color:#a6e22e">nguồn</span> <span style="color:#a6e22e">vào</span> <span style="color:#a6e22e">container</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">COPY</span> . .
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Mở</span> <span style="color:#a6e22e">cổng</span> <span style="color:#ae81ff">3000</span> <span style="color:#a6e22e">cho</span> <span style="color:#a6e22e">ứng</span> <span style="color:#a6e22e">dụng</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">EXPOSE</span> <span style="color:#ae81ff">3000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">#</span> <span style="color:#a6e22e">Lệnh</span> <span style="color:#a6e22e">chạy</span> <span style="color:#a6e22e">ứng</span> <span style="color:#a6e22e">dụng</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">CMD</span> [<span style="color:#e6db74">&#34;npm&#34;</span>, <span style="color:#e6db74">&#34;start&#34;</span>]
+</span></span></code></pre></div><hr>
+<p>💡 <strong>Hãy theo dõi blog để cập nhật các bài viết mới nhất về DevOps!</strong></p>
 
 </section>
 
 
     <footer class="article-footer">
     
+    <section class="article-tags">
+        
+            <a href="/tags/devops/">Devops</a>
+        
+            <a href="/tags/code/">Code</a>
+        
+    </section>
+
 
     
     <section class="article-copyright">
@@ -419,7 +477,7 @@
 
 
 
-        <span>All Rights Reserved</span>
+        <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
     </footer>
 
@@ -432,6 +490,57 @@
     
 
      
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="hoangduonng/blog_comments"
+        issue-term="pathname"
+        
+        label="comments"
+        
+        theme="icy-dark"
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
     
 
     <footer class="site-footer">
