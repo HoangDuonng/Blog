@@ -1,5 +1,4 @@
 #!/bin/bash
-
 SUBFOLDER="public"
 
 CURRENT_TIME=$(date "+%d-%m-%Y %H:%M")
@@ -18,3 +17,5 @@ else
 fi
 
 cd ..
+
+read -p "Press enter to exit..."

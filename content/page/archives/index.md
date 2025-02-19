@@ -5,6 +5,7 @@ layout: "archives"
 slug: "archives"
 menu:
     main:
+        name: Lưu trữ
         weight: -70
         params: 
             icon: archives
