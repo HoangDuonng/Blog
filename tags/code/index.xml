@@ -12,7 +12,7 @@
         <pubDate>Wed, 19 Feb 2025 00:00:00 +0000</pubDate>
         
         <guid>https://tech.nguuyen.io.vn/posts/devops-intro/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/devops-intro.jpg" alt="Featured image of post Devops là gì ?" /&gt;&lt;h1 id=&#34;giới-thiệu-về-devops&#34;&gt;Giới thiệu về DevOps
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-intro.jpg" alt="Featured image of post Devops là gì ?" /&gt;&lt;h1 id=&#34;giới-thiệu-về-devops&#34;&gt;Giới thiệu về DevOps
 &lt;/h1&gt;&lt;h2 id=&#34;devops-là-gì&#34;&gt;DevOps là gì?
 &lt;/h2&gt;&lt;p&gt;DevOps là một phương pháp kết hợp giữa &lt;strong&gt;phát triển phần mềm (Development - Dev)&lt;/strong&gt; và &lt;strong&gt;vận hành hệ thống (Operations - Ops)&lt;/strong&gt; nhằm tối ưu hóa quá trình phát triển, triển khai và vận hành ứng dụng. DevOps giúp các nhóm phát triển và vận hành làm việc cùng nhau hiệu quả hơn thông qua các công cụ, quy trình tự động và văn hóa làm việc.&lt;/p&gt;
 &lt;h2 id=&#34;vì-sao-devops-quan-trọng&#34;&gt;Vì sao DevOps quan trọng?
@@ -44,25 +44,49 @@
 &lt;h2 id=&#34;kết-luận&#34;&gt;Kết luận
 &lt;/h2&gt;&lt;p&gt;DevOps là một phương pháp quan trọng giúp cải thiện tốc độ phát triển, chất lượng sản phẩm và tối ưu hóa vận hành hệ thống. Trong các bài viết tiếp theo của series, chúng ta sẽ tìm hiểu sâu hơn về từng khía cạnh của DevOps, từ CI/CD, Infrastructure as Code đến giám sát hệ thống.&lt;/p&gt;
 &lt;h2 id=&#34;ví-dụ-về-docker&#34;&gt;Ví dụ về Docker
-&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Sử&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;dụng&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Node&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;js&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;làm&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;nền&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;tảng&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;FROM&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;node&lt;/span&gt;&lt;span style=&#34;color:#f92672&#34;&gt;:&lt;/span&gt;&lt;span style=&#34;color:#ae81ff&#34;&gt;18&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Đặt&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;thư&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mục&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;làm&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;việc&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;trong&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;container&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;WORKDIR&lt;/span&gt; &lt;span style=&#34;color:#f92672&#34;&gt;/&lt;/span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;app&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Sao&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;chép&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;file&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;package&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;json&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;và&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;cài&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;đặt&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;dependencies&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;COPY&lt;/span&gt; &lt;span style=&#34;color:#66d9ef&#34;&gt;package&lt;/span&gt;.&lt;span style=&#34;color:#a6e22e&#34;&gt;json&lt;/span&gt; .
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;RUN&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;npm&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;install&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Sao&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;chép&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;toàn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;bộ&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;mã&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;nguồn&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;vào&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;container&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;COPY&lt;/span&gt; . .
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Mở&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;cổng&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3000&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;cho&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ứng&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;dụng&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;EXPOSE&lt;/span&gt; &lt;span style=&#34;color:#ae81ff&#34;&gt;3000&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#960050;background-color:#1e0010&#34;&gt;#&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;Lệnh&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;chạy&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;ứng&lt;/span&gt; &lt;span style=&#34;color:#a6e22e&#34;&gt;dụng&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;&lt;span style=&#34;color:#a6e22e&#34;&gt;CMD&lt;/span&gt; [&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;npm&amp;#34;&lt;/span&gt;, &lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;start&amp;#34;&lt;/span&gt;]
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-js&#34; data-lang=&#34;js&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Sử&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;dụng&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Node&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;js&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;làm&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;nền&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;tảng&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;FROM&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;node&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;18&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Đặt&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;thư&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;mục&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;làm&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;việc&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;trong&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;container&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;WORKDIR&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Sao&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;chép&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;file&lt;/span&gt; &lt;span class=&#34;kr&#34;&gt;package&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;json&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;và&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;cài&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;đặt&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;dependencies&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;COPY&lt;/span&gt; &lt;span class=&#34;kr&#34;&gt;package&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;json&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;RUN&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;npm&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;install&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Sao&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;chép&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;toàn&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;bộ&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;mã&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;nguồn&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;vào&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;container&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;COPY&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Mở&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;cổng&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3000&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;cho&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;ứng&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;dụng&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;EXPOSE&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3000&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;#&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Lệnh&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;chạy&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;ứng&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;dụng&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;CMD&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;npm&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;start&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
 &lt;p&gt;💡 &lt;strong&gt;Hãy theo dõi blog để cập nhật các bài viết mới nhất về DevOps!&lt;/strong&gt;&lt;/p&gt;
 </description>
         </item>
