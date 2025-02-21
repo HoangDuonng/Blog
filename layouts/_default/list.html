@@ -3,10 +3,14 @@
         <h3 class="section-title">
             {{ if eq .Parent (.GetPage "/") }}
                 {{ T "list.section" }}
+            {{ else if eq .Parent.Section "categories" }}
+                {{ T "categories" }}
+            {{ else if eq .Parent.Section "tags" }}
+                {{ T "tags" }}
             {{ else }}
                 {{ .Parent.Title }}
             {{ end }}
-        </h3>
+        </h3>        
 
         <div class="section-card">
             <div class="section-details">

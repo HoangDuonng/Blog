@@ -1,3 +1,5 @@
+// import Vibrant from 'node-vibrant';
+
 interface colorScheme {
     hash: string,                        /// Regenerate color scheme when the image hash is changed
     DarkMuted: {
