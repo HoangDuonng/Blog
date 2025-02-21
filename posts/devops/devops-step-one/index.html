@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en-us" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Bài viết hướng dẫn chọn ngôn ngữ lập trình phù hợp cho DevOps, bao gồm Python, Bash, Go và Groovy. Nó giải thích lý do chọn từng ngôn ngữ và cung cấp các ví dụ code thực tế như script tự động deploy với Python, cập nhật server với Bash, hiển thị thông tin hệ thống bằng Go và viết pipeline với Groovy. Kết luận khuyến nghị học Python + Bash để bắt đầu và bổ sung Go hoặc Groovy nếu làm việc với Kubernetes hoặc Jenkins.">
 <title>Chọn ngôn ngữ lập trình 🤗</title>
 
-<link rel='canonical' href='http://localhost:1313/posts/devops/devops-step-one/'>
+<link rel='canonical' href='https://tech.nguuyen.io.vn/posts/devops/devops-step-one/'>
 
 <link rel="stylesheet" href="/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css"><meta property='og:title' content="Chọn ngôn ngữ lập trình 🤗">
 <meta property='og:description' content="Bài viết hướng dẫn chọn ngôn ngữ lập trình phù hợp cho DevOps, bao gồm Python, Bash, Go và Groovy. Nó giải thích lý do chọn từng ngôn ngữ và cung cấp các ví dụ code thực tế như script tự động deploy với Python, cập nhật server với Bash, hiển thị thông tin hệ thống bằng Go và viết pipeline với Groovy. Kết luận khuyến nghị học Python + Bash để bắt đầu và bổ sung Go hoặc Groovy nếu làm việc với Kubernetes hoặc Jenkins.">
-<meta property='og:url' content='http://localhost:1313/posts/devops/devops-step-one/'>
+<meta property='og:url' content='https://tech.nguuyen.io.vn/posts/devops/devops-step-one/'>
 <meta property='og:site_name' content='Hoàng Dương'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='devops' /><meta property='article:tag' content='code' /><meta property='article:published_time' content='2025-02-21T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-02-21T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/images/devops-step-one.jpg' />
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='devops' /><meta property='article:tag' content='code' /><meta property='article:published_time' content='2025-02-21T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-02-21T00:00:00&#43;00:00'/><meta property='og:image' content='https://tech.nguuyen.io.vn/images/devops-step-one.webp' />
 <meta name="twitter:title" content="Chọn ngôn ngữ lập trình 🤗">
 <meta name="twitter:description" content="Bài viết hướng dẫn chọn ngôn ngữ lập trình phù hợp cho DevOps, bao gồm Python, Bash, Go và Groovy. Nó giải thích lý do chọn từng ngôn ngữ và cung cấp các ví dụ code thực tế như script tự động deploy với Python, cập nhật server với Bash, hiển thị thông tin hệ thống bằng Go và viết pipeline với Groovy. Kết luận khuyến nghị học Python + Bash để bắt đầu và bổ sung Go hoặc Groovy nếu làm việc với Kubernetes hoặc Jenkins."><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='http://localhost:1313/images/devops-step-one.jpg' />
+    <meta name="twitter:image" content='https://tech.nguuyen.io.vn/images/devops-step-one.webp' />
     <link rel="shortcut icon" href="/images/favicon.png" />
 <style>
      
@@ -331,7 +331,7 @@
         <div class="article-image">
             <a href="/posts/devops/devops-step-one/">
                 
-                    <img src="/images/devops-step-one.jpg" loading="lazy" alt="Featured image of post Chọn ngôn ngữ lập trình 🤗" />
+                    <img src="/images/devops-step-one.webp" loading="lazy" alt="Featured image of post Chọn ngôn ngữ lập trình 🤗" />
                 
             </a>
         </div>
@@ -663,7 +663,7 @@
         
             <div class="article-image">
                 
-                    <img src="/images/devops-roadmap.jpg" loading="lazy" data-key="" data-hash="/images/devops-roadmap.jpg"/>
+                    <img src="/images/devops-roadmap.webp" loading="lazy" data-key="" data-hash="/images/devops-roadmap.webp"/>
                 
             </div>
         
@@ -682,7 +682,7 @@
         
             <div class="article-image">
                 
-                    <img src="/images/devops-intro.jpg" loading="lazy" data-key="" data-hash="/images/devops-intro.jpg"/>
+                    <img src="/images/devops-intro.webp" loading="lazy" data-key="" data-hash="/images/devops-intro.webp"/>
                 
             </div>
         
@@ -850,7 +850,7 @@
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.ac34731e87bad72b2c444674f2a0654c5fbc5e86fa9eab9fb7f610fbc3eadfb3.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
