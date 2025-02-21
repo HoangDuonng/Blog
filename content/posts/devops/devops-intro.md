@@ -4,8 +4,9 @@ author: "Hoàng Dương"
 date: "2025-02-19"
 draft: false
 description: "Giới thiệu tổng quan về DevOps, lợi ích, các thành phần chính và công cụ phổ biến."
+categories: ["DevOps"]
 tags: ["devops", "code"]
-image: "devops-intro.jpg"
+image: "images/devops-intro.jpg"
 ---
 
 # Giới thiệu về DevOps
@@ -15,29 +16,29 @@ DevOps là một phương pháp kết hợp giữa **phát triển phần mềm 
 
 
 ## Vì sao DevOps quan trọng?
-### 1. Tăng tốc độ phát triển
+###  Tăng tốc độ phát triển
 DevOps giúp tự động hóa các quy trình như kiểm thử, triển khai và giám sát, giúp rút ngắn thời gian đưa sản phẩm ra thị trường.
 
-### 2. Cải thiện chất lượng sản phẩm
+###  Cải thiện chất lượng sản phẩm
 Việc tích hợp kiểm thử tự động và CI/CD giúp phát hiện lỗi sớm, giảm thiểu rủi ro khi triển khai phần mềm.
 
-### 3. Tăng cường độ tin cậy
+###  Tăng cường độ tin cậy
 Các công cụ giám sát và logging giúp phát hiện sự cố nhanh chóng, giảm downtime và đảm bảo hệ thống luôn hoạt động ổn định.
 
-### 4. Hợp tác tốt hơn giữa các nhóm
+###  Hợp tác tốt hơn giữa các nhóm
 DevOps giúp phá bỏ rào cản giữa nhóm phát triển và vận hành, tạo môi trường làm việc chung hiệu quả hơn.
 
 ## Các thành phần chính của DevOps
-### 1. **CI/CD (Continuous Integration & Continuous Deployment)**
+###  **CI/CD (Continuous Integration & Continuous Deployment)**
 CI/CD giúp tự động hóa quá trình tích hợp mã nguồn, kiểm thử và triển khai, giảm thiểu lỗi khi đưa sản phẩm lên môi trường production.
 
-### 2. **Infrastructure as Code (IaC)**
+###  **Infrastructure as Code (IaC)**
 IaC cho phép quản lý hạ tầng như code, giúp dễ dàng triển khai và mở rộng hệ thống.
 
-### 3. **Giám sát và Logging**
+###  **Giám sát và Logging**
 Các công cụ như Prometheus, Grafana, ELK Stack giúp giám sát và phân tích log để nhanh chóng xử lý sự cố.
 
-### 4. **Containerization và Orchestration**
+###  **Containerization và Orchestration**
 Docker và Kubernetes giúp đóng gói, quản lý và mở rộng ứng dụng linh hoạt.
 
 ## Các công cụ phổ biến trong DevOps
