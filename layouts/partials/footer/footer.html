@@ -14,8 +14,7 @@
         {{ end }}
 
         {{- $Generator := `<a href="https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/" target="_blank" rel="noopener">Ngữ Uyển ❤️</a>` -}}
-        <!-- {{- $Theme := printf `<b><a target="_blank" rel="noopener" data-version="%s">Stack</a></b>` $ThemeVersion -}} -->
-        {{- $DesignedBy := `<a target="_blank" rel="noopener">Jimmy</a>` -}}
+        {{- $DesignedBy := `Jimmy` -}}
 
         {{ T "footer.builtWith" (dict "Generator" $Generator) | safeHTML }} <br />
         {{ T "footer.designedBy" (dict "DesignedBy" $DesignedBy) | safeHTML }}

@@ -5,8 +5,8 @@ date: "2025-02-20"
 draft: false
 description: "Lộ trình này được thiết kế dựa trên các nguồn thực tế và kinh nghiệm trong ngành, nhằm cung cấp cho bạn một hướng dẫn chi tiết để trở thành một kỹ sư DevOps chuyên nghiệp. 🦖"
 categories: ["DevOps"]
-tags: ["devops", "code"]
-image: "images/devops-roadmap.jpg"
+tags: ["devops"]
+image: "images/devops-roadmap.webp"
 ---
 
 # Lộ trình trở thành kỹ sư DevOps
