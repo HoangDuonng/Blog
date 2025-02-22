@@ -6,7 +6,7 @@ draft: false
 description: "Bài viết hướng dẫn chọn ngôn ngữ lập trình phù hợp cho DevOps, bao gồm Python, Bash, Go và Groovy. Nó giải thích lý do chọn từng ngôn ngữ và cung cấp các ví dụ code thực tế như script tự động deploy với Python, cập nhật server với Bash, hiển thị thông tin hệ thống bằng Go và viết pipeline với Groovy. Kết luận khuyến nghị học Python + Bash để bắt đầu và bổ sung Go hoặc Groovy nếu làm việc với Kubernetes hoặc Jenkins."
 categories: ["DevOps"]
 tags: ["devops", "code"]
-image: "images/devops-step-one.jpg"
+image: "images/devops-step-one.webp"
 ---
 
 # Bước 1: Chọn ngôn ngữ lập trình cho DevOps

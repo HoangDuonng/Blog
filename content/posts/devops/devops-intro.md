@@ -5,8 +5,8 @@ date: "2025-02-19"
 draft: false
 description: "Giới thiệu tổng quan về DevOps, lợi ích, các thành phần chính và công cụ phổ biến."
 categories: ["DevOps"]
-tags: ["devops", "code"]
-image: "images/devops-intro.jpg"
+tags: ["devops"]
+image: "images/devops-intro.webp"
 ---
 
 # Giới thiệu về DevOps
