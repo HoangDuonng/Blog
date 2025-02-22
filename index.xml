@@ -6,7 +6,156 @@
         <description>Recent content on Hoàng Dương</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <lastBuildDate>Fri, 21 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sat, 22 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Học về Linux &amp; Hệ Điều Hành 🖥️</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-two/</link>
+        <pubDate>Sat, 22 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-two/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-two.webp" alt="Featured image of post Học về Linux &amp; Hệ Điều Hành 🖥️" /&gt;&lt;h1 id=&#34;-bước-2-học-về-linux--hệ-điều-hành&#34;&gt;🖥️ Bước 2: Học về Linux &amp;amp; hệ điều hành
+&lt;/h1&gt;&lt;h2 id=&#34;-tại-sao-linux-quan-trọng-trong-devops&#34;&gt;📌 Tại sao Linux quan trọng trong DevOps?
+&lt;/h2&gt;&lt;p&gt;Linux là nền tảng của hầu hết các hệ thống server, container (Docker, Kubernetes), và cloud. DevOps cần nắm vững Linux để:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅ Quản lý server hiệu quả.&lt;/li&gt;
+&lt;li&gt;✅ Viết script tự động hóa.&lt;/li&gt;
+&lt;li&gt;✅ Xử lý file, user, tiến trình.&lt;/li&gt;
+&lt;li&gt;✅ Tối ưu hệ thống và bảo mật.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-hệ-điều-hành-là-gì&#34;&gt;⚙️ Hệ điều hành là gì?
+&lt;/h2&gt;&lt;p&gt;Hệ điều hành (OS) là phần mềm quản lý tài nguyên phần cứng và phần mềm của máy tính, cung cấp dịch vụ chung cho các chương trình. Nó đóng vai trò trung gian giữa ứng dụng và phần cứng, xử lý các nhiệm vụ như:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔹 Quản lý bộ nhớ.&lt;/li&gt;
+&lt;li&gt;🔹 Lập lịch tiến trình.&lt;/li&gt;
+&lt;li&gt;🔹 Quản lý hệ thống file.&lt;/li&gt;
+&lt;li&gt;🔹 Kiểm soát thiết bị.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-các-hệ-điều-hành-phổ-biến&#34;&gt;🌍 Các hệ điều hành phổ biến:
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;💻 &lt;strong&gt;Máy tính cá nhân&lt;/strong&gt;: Windows, macOS, Linux (Ubuntu, Fedora,&amp;hellip;)&lt;/li&gt;
+&lt;li&gt;📱 &lt;strong&gt;Thiết bị di động&lt;/strong&gt;: iOS, Android&lt;/li&gt;
+&lt;li&gt;🖥️ &lt;strong&gt;Máy chủ&lt;/strong&gt;: Ubuntu Server, Red Hat Enterprise Linux, Windows Server&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Mỗi hệ điều hành có đặc điểm, giao diện và khả năng tương thích khác nhau. Chúng đóng vai trò quan trọng trong bảo mật hệ thống, tối ưu hiệu suất và cung cấp trải nghiệm người dùng nhất quán.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-các-lệnh-linux-cơ-bản&#34;&gt;🛠️ Các lệnh Linux cơ bản
+&lt;/h2&gt;&lt;p&gt;Dưới đây là một số lệnh Linux quan trọng:&lt;/p&gt;
+&lt;h3 id=&#34;--kiểm-tra-hệ-thống&#34;&gt;🔍  Kiểm tra hệ thống
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uname -a   &lt;span class=&#34;c1&#34;&gt;# Hiển thị thông tin hệ điều hành&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uptime     &lt;span class=&#34;c1&#34;&gt;# Thời gian hoạt động của hệ thống&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;free -m    &lt;span class=&#34;c1&#34;&gt;# Kiểm tra bộ nhớ RAM&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;--quản-lý-file--thư-mục&#34;&gt;📂  Quản lý file &amp;amp; thư mục
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ls -l        &lt;span class=&#34;c1&#34;&gt;# Liệt kê file với thông tin chi tiết&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir mydir  &lt;span class=&#34;c1&#34;&gt;# Tạo thư mục mới&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;rm -rf mydir &lt;span class=&#34;c1&#34;&gt;# Xóa thư mục và nội dung bên trong&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;--quản-lý-tiến-trình&#34;&gt;🚀  Quản lý tiến trình
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;top         &lt;span class=&#34;c1&#34;&gt;# Hiển thị tiến trình đang chạy&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ps aux      &lt;span class=&#34;c1&#34;&gt;# Liệt kê tất cả tiến trình&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;kill&lt;/span&gt; -9 PID &lt;span class=&#34;c1&#34;&gt;# Dừng tiến trình theo PID&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;--quản-lý-người-dùng&#34;&gt;👤  Quản lý người dùng
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;whoami               &lt;span class=&#34;c1&#34;&gt;# Xem user hiện tại&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo useradd devops  &lt;span class=&#34;c1&#34;&gt;# Tạo user mới&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo passwd devops   &lt;span class=&#34;c1&#34;&gt;# Đặt mật khẩu cho user&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-script-bash-kiểm-tra-tài-nguyên-hệ-thống&#34;&gt;📜 Script Bash kiểm tra tài nguyên hệ thống
+&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;==== Thông tin hệ thống ====&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uname -a
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;==== Thời gian hoạt động ====&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;uptime
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;==== Bộ nhớ RAM ====&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;free -m
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;-cách-chạy-script&#34;&gt;▶️ &lt;strong&gt;Cách chạy script:&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chmod +x system_check.sh  &lt;span class=&#34;c1&#34;&gt;# Cấp quyền thực thi cho script&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./system_check.sh         &lt;span class=&#34;c1&#34;&gt;# Chạy script trong terminal&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-tài-nguyên-học-tập&#34;&gt;📚 Tài nguyên học tập
+&lt;/h2&gt;&lt;p&gt;Dưới đây là một số tài nguyên miễn phí để tìm hiểu thêm về hệ điều hành:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Operating_system&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Operating Systems - Wiki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://www.tpointtech.com/operating-system&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;All you need to know about OS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://www.tutorialspoint.com/operating_system/os_overview.htm&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Learn Operating Systems&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=pVzRTmdd9j0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;What are Operating Systems?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=vBURTt97EkA&amp;amp;list=PLBlnK6fEyqRiVhbXDGLXDk_OQAeuVcp2O&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Operating Systems&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;🎯 Kết luận
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;✅ Linux là kỹ năng bắt buộc trong DevOps.&lt;/li&gt;
+&lt;li&gt;✅ Học cách dùng terminal &amp;amp; Bash scripting.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;👉 Bước tiếp theo:&lt;/strong&gt; Tìm hiểu sâu hơn về terminal và cách sử dụng CLI để làm việc hiệu quả với hệ thống.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Chọn ngôn ngữ lập trình 🤗</title>
         <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-one/</link>
         <pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate>
