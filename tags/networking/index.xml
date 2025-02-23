@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Networking on Hoàng Dương</title>
+        <link>https://tech.nguuyen.io.vn/tags/networking/</link>
+        <description>Recent content in Networking on Hoàng Dương</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>vi</language>
+        <lastBuildDate>Sun, 23 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/networking/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Giao thức mạng (Networking Protocols) 🖧</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-eight/</link>
+        <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-eight/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-eight.webp" alt="Featured image of post Giao thức mạng (Networking Protocols) 🖧" /&gt;&lt;h1 id=&#34;-giao-thức-mạng-networking-protocols&#34;&gt;🖧 Giao thức mạng (Networking Protocols)
+&lt;/h1&gt;&lt;p&gt;Giao thức mạng là tập hợp các quy tắc chuẩn hóa giúp dữ liệu được truyền, nhận và hiểu đúng cách trên các mạng máy tính. Chúng xác định định dạng, thời gian, trình tự và kiểm soát lỗi trong quá trình truyền dữ liệu. Một số giao thức quan trọng bao gồm:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;TCP/IP&lt;/strong&gt;: Bộ giao thức nền tảng cho giao tiếp trên Internet.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HTTP/HTTPS&lt;/strong&gt;: Giao thức truyền tải siêu văn bản dùng cho web.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FTP/SFTP&lt;/strong&gt;: Giao thức truyền tải tệp tin.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SMTP/POP3/IMAP&lt;/strong&gt;: Giao thức truyền tải email.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DNS&lt;/strong&gt;: Giao thức phân giải tên miền.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DHCP&lt;/strong&gt;: Giao thức cấp phát địa chỉ IP tự động.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SSL/TLS&lt;/strong&gt;: Giao thức bảo mật dữ liệu.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;UDP&lt;/strong&gt;: Giao thức truyền tải không kết nối, nhanh chóng.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-hệ-thống-tên-miền-dns&#34;&gt;🌍 Hệ thống tên miền (DNS)
+&lt;/h2&gt;&lt;p&gt;DNS (&lt;strong&gt;Domain Name System&lt;/strong&gt;) là hệ thống phân giải tên miền, giúp chuyển đổi tên miền dễ nhớ (vd: &lt;code&gt;www.example.com&lt;/code&gt;) thành địa chỉ IP (&lt;code&gt;192.168.1.1&lt;/code&gt;) mà máy tính có thể hiểu được.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-cấu-hình-dns-trong-linux&#34;&gt;🔹 Ví dụ cấu hình DNS trong Linux:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Kiểm tra DNS của một tên miền&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nslookup example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;dig example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Chỉnh sửa file hosts để ánh xạ tên miền&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /etc/hosts
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Thêm dòng sau:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;192.168.1.100   mycustomdomain.com
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Tài nguyên tham khảo:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://howdns.works/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📄 Cách hoạt động của DNS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=Wj0od2ag5sk&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Video giải thích DNS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-giao-thức-http&#34;&gt;🌐 Giao thức HTTP
+&lt;/h2&gt;&lt;p&gt;HTTP (&lt;strong&gt;Hypertext Transfer Protocol&lt;/strong&gt;) là giao thức truyền tải dữ liệu trên web theo mô hình &lt;strong&gt;yêu cầu - phản hồi&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-gửi-yêu-cầu-http-bằng-curl&#34;&gt;🔹 Ví dụ gửi yêu cầu HTTP bằng cURL:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Gửi yêu cầu GET&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -X GET https://jsonplaceholder.typicode.com/posts/1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Gửi yêu cầu POST&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -X POST https://jsonplaceholder.typicode.com/posts &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;     -H &lt;span class=&#34;s2&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;     -d &lt;span class=&#34;s1&#34;&gt;&amp;#39;{&amp;#34;title&amp;#34;: &amp;#34;Hello&amp;#34;, &amp;#34;body&amp;#34;: &amp;#34;World&amp;#34;}&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Tài nguyên tham khảo:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.cloudflare.com/en-gb/learning/ddos/glossary/hypertext-transfer-protocol-http/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📄 Tìm hiểu về HTTP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=iYM2zFP3Zn0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Video hướng dẫn HTTP&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-https-và-bảo-mật-ssltls&#34;&gt;🔒 HTTPS và bảo mật (SSL/TLS)
+&lt;/h2&gt;&lt;p&gt;HTTPS là phiên bản bảo mật của HTTP, sử dụng &lt;em&gt;&lt;strong&gt;SSL/TLS&lt;/strong&gt;&lt;/em&gt; để mã hóa dữ liệu, đảm bảo an toàn khi truyền tải trên Internet.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-thiết-lập-https-với-nginx&#34;&gt;🔹 Ví dụ thiết lập HTTPS với Nginx:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;server&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;listen&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;443&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;ssl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;server_name&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;example.com&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;ssl_certificate&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;/etc/letsencrypt/live/example.com/fullchain.pem&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;ssl_certificate_key&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;/etc/letsencrypt/live/example.com/privkey.pem&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Tài nguyên tham khảo:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.cloudflare.com/en-gb/learning/ssl/what-is-https/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📄 HTTPS là gì?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=25mXesOV9-8&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Video HTTPS hoạt động như thế nào&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-ssh---kết-nối-bảo-mật&#34;&gt;🔑 SSH - Kết nối bảo mật
+&lt;/h2&gt;&lt;p&gt;SSH (&lt;em&gt;&lt;strong&gt;Secure Shell&lt;/strong&gt;&lt;/em&gt;) là giao thức giúp kết nối an toàn đến máy chủ từ xa.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-sử-dụng-ssh-để-kết-nối-từ-xa&#34;&gt;🔹 Ví dụ sử dụng SSH để kết nối từ xa:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Kết nối đến máy chủ từ xa&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ssh user@example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Sao chép tệp tin từ máy chủ về máy cục bộ&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;scp user@example.com:/path/to/file ./localfile
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Tài nguyên tham khảo:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.baeldung.com/cs/ssh-intro&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📄 Hướng dẫn SSH&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=5JvLV2-ngCI&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Video cách SSH hoạt động&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;🎯 Kết Luận
+&lt;/h2&gt;&lt;p&gt;Giao thức mạng là nền tảng của mọi hệ thống trực tuyến, từ duyệt web đến gửi email. Hiểu và biết cách sử dụng chúng giúp cải thiện bảo mật và hiệu suất của hệ thống. Hãy thử áp dụng các lệnh trên để kiểm tra và cấu hình hệ thống của bạn! 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Cloud Providers&lt;/strong&gt;&lt;/em&gt;  các công ty cung cấp dịch vụ điện toán đám mây, cho phép cá nhân và doanh nghiệp truy cập tài nguyên như máy chủ, lưu trữ, cơ sở dữ liệu, AI, và các dịch vụ khác qua internet mà không cần đầu tư hạ tầng phần cứng.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

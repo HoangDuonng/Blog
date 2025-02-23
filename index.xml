@@ -7,6 +7,877 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>vi</language>
         <lastBuildDate>Sun, 23 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Application Gateway 🌐</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-seven/</link>
+        <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-seven/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-seven.webp" alt="Featured image of post Application Gateway 🌐" /&gt;&lt;h1 id=&#34;thiết-lập-các-thành-phần-mạng-quan-trọng&#34;&gt;Thiết lập các thành phần mạng quan trọng
+&lt;/h1&gt;&lt;p&gt;Bài viết này sẽ giúp bạn biết các thành phần mạng quan trọng:&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Forward Proxy&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Reverse Proxy&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Load Balancer&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Firewall&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Caching Server&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Web Server&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-load-balancer&#34;&gt;⚖️ Load Balancer
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Load Balancer&lt;/strong&gt; hoạt động như một &amp;ldquo;cảnh sát giao thông&amp;rdquo; đứng trước các máy chủ và điều hướng yêu cầu từ khách hàng đến các máy chủ phù hợp. Điều này giúp tối ưu hóa tốc độ, tận dụng tài nguyên hiệu quả và tránh tình trạng quá tải.&lt;/p&gt;
+&lt;p&gt;🔹 Nếu một máy chủ bị lỗi, Load Balancer sẽ chuyển hướng lưu lượng sang các máy chủ còn lại.&lt;/p&gt;
+&lt;p&gt;🔹 Có thể triển khai với các thuật toán như Round Robin, Least Connections, IP Hash&amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-cấu-hình-load-balancer-với-nginx&#34;&gt;🔍 Ví dụ cấu hình Load Balancer với Nginx:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;upstream&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;backend_servers&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;server&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;backend1.example.com&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;server&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;backend2.example.com&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;server&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;listen&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;80&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;location&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;kn&#34;&gt;proxy_pass&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;http://backend_servers&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Tham khảo thêm:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class=&#34;link&#34; href=&#34;https://www.nginx.com/resources/glossary/load-balancing/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Load Balancing là gì?&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class=&#34;link&#34; href=&#34;https://www.cloudflare.com/en-gb/learning/performance/what-is-load-balancing/#&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Các thuật toán Load Balancing&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class=&#34;link&#34; href=&#34;https://dzone.com/articles/nginx-reverse-proxy-and-load-balancing&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Nginx Reverse Proxy &amp;amp; Load Balancing&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=sCR3SAVdyCc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Video: Load Balancer hoạt động như thế nào?&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-forward-proxy&#34;&gt;🔁 Forward Proxy
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Forward Proxy&lt;/strong&gt; là một máy chủ trung gian đứng giữa client và internet, chuyển tiếp yêu cầu từ client đến server đích. Nó giúp ẩn danh, bảo mật, kiểm soát truy cập và caching nội dung.&lt;/p&gt;
+&lt;p&gt;🔹 Được sử dụng phổ biến trong các mạng doanh nghiệp để giám sát và kiểm soát truy cập.&lt;/p&gt;
+&lt;p&gt;🔹 Hỗ trợ vượt qua kiểm duyệt và hạn chế địa lý.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-cấu-hình-forward-proxy-với-squid&#34;&gt;🔍 Ví dụ cấu hình Forward Proxy với Squid:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apt update &lt;span class=&#34;o&#34;&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt install squid -y
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Chỉnh sửa file cấu hình&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nano /etc/squid/squid.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Thêm cấu hình đơn giản&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http_access allow all
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;http_port &lt;span class=&#34;m&#34;&gt;3128&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Khởi động lại dịch vụ&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;systemctl restart squid
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Tham khảo thêm:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class=&#34;link&#34; href=&#34;https://www.fortinet.com/resources/cyberglossary/proxy-server&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Forward Proxy là gì?&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class=&#34;link&#34; href=&#34;https://oxylabs.io/blog/reverse-proxy-vs-forward-proxy&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;So sánh Forward Proxy và Reverse Proxy&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=HrG0MHkSsCA&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Video: Proxy hoạt động như thế nào?&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-reverse-proxy&#34;&gt;🔄 Reverse Proxy
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Reverse Proxy&lt;/strong&gt; là một máy chủ trung gian nhận yêu cầu từ client và chuyển tiếp đến máy chủ backend thích hợp. Nó giúp cân bằng tải, caching, bảo mật và SSL termination.&lt;/p&gt;
+&lt;p&gt;🔹 Giúp che giấu thông tin của máy chủ backend để tăng cường bảo mật.&lt;/p&gt;
+&lt;p&gt;🔹 Hỗ trợ phân phối lưu lượng và tối ưu hiệu suất ứng dụng.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-cấu-hình-reverse-proxy-với-nginx&#34;&gt;🔍 Ví dụ cấu hình Reverse Proxy với Nginx:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;server&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;listen&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;80&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;server_name&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;example.com&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;location&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;kn&#34;&gt;proxy_pass&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;http://backend_server&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;kn&#34;&gt;proxy_set_header&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;Host&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$host&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;kn&#34;&gt;proxy_set_header&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;X-Real-IP&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;$remote_addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Tham khảo thêm:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class=&#34;link&#34; href=&#34;https://www.cloudflare.com/en-gb/learning/cdn/glossary/reverse-proxy/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Reverse Proxy là gì?&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class=&#34;link&#34; href=&#34;https://www.nginx.com/resources/glossary/reverse-proxy-server/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn Nginx Reverse Proxy&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=4NB0NDtOwIQ&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Video: Reverse Proxy và ứng dụng thực tế&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-firewall&#34;&gt;🔥 Firewall
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Firewall&lt;/strong&gt; là một thiết bị bảo mật mạng giám sát và lọc lưu lượng vào/ra dựa trên chính sách bảo mật của tổ chức.&lt;/p&gt;
+&lt;p&gt;🔹 Ngăn chặn truy cập trái phép vào hệ thống nội bộ.&lt;/p&gt;
+&lt;p&gt;🔹 Hỗ trợ các quy tắc kiểm soát lưu lượng dữ liệu.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-cấu-hình-firewall-với-ufw-uncomplicated-firewall&#34;&gt;🔍 Ví dụ cấu hình Firewall với UFW (Uncomplicated Firewall):
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Cài đặt UFW&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apt install ufw -y
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Mở cổng SSH&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ufw allow 22/tcp
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Chặn tất cả kết nối khác&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ufw default deny incoming
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Kích hoạt UFW&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ufw &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Tham khảo thêm:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class=&#34;link&#34; href=&#34;https://www.checkpoint.com/cyber-hub/network-security/what-is-firewall/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Firewall là gì?&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class=&#34;link&#34; href=&#34;https://www.cisco.com/c/en_in/products/security/firewalls/what-is-a-firewall.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Các loại Firewall phổ biến&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=9GZlVOafYTg&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Video: Giới thiệu về Firewall&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-nginx&#34;&gt;🌐 Nginx
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Nginx&lt;/strong&gt; là một máy chủ web mã nguồn mở, được sử dụng rộng rãi nhờ khả năng xử lý nhiều kết nối đồng thời với hiệu suất cao.&lt;/p&gt;
+&lt;p&gt;🔹 Hỗ trợ web server, reverse proxy, load balancing, caching.&lt;/p&gt;
+&lt;p&gt;🔹 Thích hợp cho hệ thống microservices và container.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-cấu-hình-nginx-đơn-giản&#34;&gt;🔍 Ví dụ cấu hình Nginx đơn giản:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;server&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;listen&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;80&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;server_name&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;example.com&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;root&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;/var/www/html&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;index&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;index.html&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Tham khảo thêm:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class=&#34;link&#34; href=&#34;https://swissmade.host/en/blog/basic-nginx-setup-ubuntu-guide-to-a-functional-and-secure-website-serving&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn cài đặt Nginx trên Ubuntu&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=JKxlsvZXG7c&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Video: Nginx trong 100 giây&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-apache&#34;&gt;🏛️ Apache
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Apache&lt;/strong&gt; là một trong những máy chủ web phổ biến nhất, hỗ trợ nhiều module mở rộng và tương thích với nhiều hệ điều hành.&lt;/p&gt;
+&lt;p&gt;🔹 Dễ dàng cấu hình với file &lt;code&gt;.conf&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;🔹 Hỗ trợ SSL/TLS, xác thực người dùng, URL rewriting&amp;hellip;&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-cấu-hình-apache-đơn-giản&#34;&gt;🔍 Ví dụ cấu hình Apache đơn giản:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-apache&#34; data-lang=&#34;apache&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;VirtualHost&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;*:80&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;ServerName&lt;/span&gt; example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;DocumentRoot&lt;/span&gt; &lt;span class=&#34;sx&#34;&gt;/var/www/html&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;Directory&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;/var/www/html&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nb&#34;&gt;AllowOverride&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;All&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nb&#34;&gt;Require&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;all&lt;/span&gt; granted
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;lt;/Directory&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;&amp;lt;/VirtualHost&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Tham khảo thêm:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class=&#34;link&#34; href=&#34;https://httpd.apache.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Apache&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=VXSgEvZKp-8&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Video: Cài đặt Apache trên Ubuntu&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;✅ Kết luận
+&lt;/h2&gt;&lt;p&gt;🔹 &lt;strong&gt;Load Balancer&lt;/strong&gt; giúp phân phối lưu lượng hiệu quả, giảm tải cho máy chủ.&lt;br&gt;
+🔹 &lt;strong&gt;Forward Proxy&lt;/strong&gt; hỗ trợ ẩn danh, caching và kiểm soát truy cập từ client.&lt;br&gt;
+🔹 &lt;strong&gt;Reverse Proxy&lt;/strong&gt; giúp tăng cường bảo mật, caching và tối ưu hệ thống backend.&lt;br&gt;
+🔹 &lt;strong&gt;Firewall&lt;/strong&gt; bảo vệ hệ thống khỏi truy cập trái phép.&lt;br&gt;
+🔹 &lt;strong&gt;Nginx &amp;amp; Apache&lt;/strong&gt; là hai web server phổ biến, phục vụ nội dung web và ứng dụng.&lt;/p&gt;
+&lt;p&gt;Bằng cách triển khai các thành phần này, bạn có thể xây dựng một hệ thống mạng mạnh mẽ, bảo mật và hiệu quả. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Networking Protocols&lt;/strong&gt;&lt;/em&gt;  tập hợp các quy tắc và tiêu chuẩn xác định cách các thiết bị trong mạng giao tiếp với nhau. Chúng đảm bảo dữ liệu được truyền tải chính xác, an toàn và hiệu quả giữa các hệ thống khác nhau.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Containers, Docker và LXC 🏗️</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-six/</link>
+        <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-six/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-six.webp" alt="Featured image of post Containers, Docker và LXC 🏗️" /&gt;&lt;h1 id=&#34;-containers-docker-và-lxc&#34;&gt;📦 Containers, Docker và LXC
+&lt;/h1&gt;&lt;p&gt;Containers là môi trường nhẹ, di động và cách ly giúp đóng gói ứng dụng cùng với tất cả các phụ thuộc của chúng, đảm bảo triển khai đồng nhất trên nhiều môi trường khác nhau. Công nghệ container giúp đơn giản hóa quá trình triển khai ứng dụng, hỗ trợ mô hình kiến trúc microservices, và tối ưu hóa tài nguyên hệ thống.&lt;/p&gt;
+&lt;h2 id=&#34;-containers-là-gì&#34;&gt;🏗️ Containers là gì?
+&lt;/h2&gt;&lt;p&gt;Containers là một phương pháp ảo hóa ở cấp độ hệ điều hành, cho phép chạy nhiều ứng dụng cô lập trên cùng một kernel. Không giống như máy ảo (VM) yêu cầu hệ điều hành riêng biệt cho mỗi môi trường, container chỉ sử dụng nhân hệ điều hành của máy chủ, giúp giảm chi phí tài nguyên và tăng hiệu suất.&lt;/p&gt;
+&lt;h3 id=&#34;-đặc-điểm-chính-của-containers&#34;&gt;🎯 Đặc điểm chính của Containers
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;🏋️ &lt;strong&gt;Nhẹ&lt;/strong&gt;: Chia sẻ kernel với hệ điều hành máy chủ, giảm bớt tài nguyên tiêu thụ.&lt;/li&gt;
+&lt;li&gt;🚀 &lt;strong&gt;Di động&lt;/strong&gt;: Chạy nhất quán trên nhiều nền tảng từ máy cá nhân đến cloud.&lt;/li&gt;
+&lt;li&gt;🔒 &lt;strong&gt;Cô lập&lt;/strong&gt;: Ứng dụng và thư viện được đóng gói riêng biệt.&lt;/li&gt;
+&lt;li&gt;📈 &lt;strong&gt;Hiệu suất cao&lt;/strong&gt;: Không cần khởi động hệ điều hành riêng biệt như máy ảo.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-docker---nền-tảng-container-phổ-biến-nhất&#34;&gt;🐳 Docker - Nền tảng container phổ biến nhất
+&lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.docker.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Docker&lt;/a&gt; là một nền tảng mã nguồn mở giúp tự động hóa việc triển khai ứng dụng bằng cách sử dụng công nghệ container. Docker giúp đóng gói ứng dụng với toàn bộ thư viện và cấu hình cần thiết để chạy trên nhiều môi trường khác nhau.&lt;/p&gt;
+&lt;h3 id=&#34;-tính-năng-nổi-bật-của-docker&#34;&gt;✨ Tính năng nổi bật của Docker
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;📦 &lt;strong&gt;Docker Engine&lt;/strong&gt;: Công cụ để tạo và chạy container.&lt;/li&gt;
+&lt;li&gt;🔄 &lt;strong&gt;Docker Compose&lt;/strong&gt;: Quản lý nhiều container trong một ứng dụng.&lt;/li&gt;
+&lt;li&gt;🏗️ &lt;strong&gt;Docker Hub&lt;/strong&gt;: Kho lưu trữ và chia sẻ hình ảnh container.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-ví-dụ-sử-dụng-docker&#34;&gt;🔍 Ví dụ sử dụng Docker:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker run -d -p 80:80 nginx
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Lệnh trên sẽ chạy một container Nginx trên cổng 80.&lt;/p&gt;
+&lt;p&gt;📚 &lt;strong&gt;Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://docs.docker.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu Docker&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=RqTEHSBrYFw&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Docker trong 5 phút&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-lxc---linux-containers&#34;&gt;🖥️ LXC - Linux Containers
+&lt;/h2&gt;&lt;p&gt;LXC (Linux Containers) là một phương pháp ảo hóa cấp hệ điều hành cho phép chạy nhiều hệ thống Linux cô lập trên cùng một kernel.&lt;/p&gt;
+&lt;h3 id=&#34;-đặc-điểm-của-lxc&#34;&gt;🛠️ Đặc điểm của LXC:
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;🏗️ Tạo môi trường gần giống máy ảo nhưng hiệu suất cao hơn.&lt;/li&gt;
+&lt;li&gt;⚡ Khởi động nhanh hơn so với VM truyền thống.&lt;/li&gt;
+&lt;li&gt;🔍 Sử dụng các công nghệ của Linux như cgroups và namespaces.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-ví-dụ-tạo-một-container-lxc&#34;&gt;📌 Ví dụ tạo một container LXC:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;lxc-create -n my-container -t ubuntu
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;lxc-start -n my-container -d
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://linuxcontainers.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ LXC&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=CWmkSj_B-wo&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn sử dụng LXC&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;🎯 Kết luận
+&lt;/h2&gt;&lt;p&gt;Containers giúp triển khai ứng dụng nhanh chóng, hiệu quả và tiết kiệm tài nguyên. &lt;strong&gt;Docker&lt;/strong&gt; là lựa chọn phổ biến cho phát triển ứng dụng, trong khi &lt;strong&gt;LXC&lt;/strong&gt; phù hợp hơn cho mô phỏng hệ điều hành đầy đủ. Hãy chọn công cụ phù hợp với nhu cầu của bạn! 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Application Gateway&lt;/strong&gt;&lt;/em&gt;  một dịch vụ quản lý traffic tầng ứng dụng giúp tối ưu hóa, bảo mật và kiểm soát luồng truy cập giữa client và backend. Nó có thể đóng vai trò như một reverse proxy, bảo vệ hệ thống và đảm bảo request được xử lý đúng cách.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Dịch vụ Cloud 🌩️</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-nine/</link>
+        <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-nine/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-nine.webp" alt="Featured image of post Dịch vụ Cloud 🌩️" /&gt;&lt;h1 id=&#34;-các-nhà-cung-cấp-dịch-vụ-cloud&#34;&gt;🌩️ Các nhà cung cấp dịch vụ Cloud
+&lt;/h1&gt;&lt;h2 id=&#34;-cloud-providers&#34;&gt;🌐 Cloud Providers
+&lt;/h2&gt;&lt;p&gt;Các nhà cung cấp dịch vụ đám mây cung cấp một lớp API để trừu tượng hóa cơ sở hạ tầng, giúp triển khai tài nguyên dựa trên các tiêu chuẩn bảo mật và mô hình thanh toán. Dù thực tế các dịch vụ đám mây chạy trên các máy chủ trong trung tâm dữ liệu, nhưng nhờ vào các lớp trừu tượng, chúng tạo cảm giác như đang tương tác với một nền tảng duy nhất. Khả năng triển khai, cấu hình và bảo mật tài nguyên nhanh chóng đã giúp cloud trở thành yếu tố quan trọng trong thành công và sự phức tạp của DevOps hiện đại.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://www.techtarget.com/searchitchannel/definition/cloud-service-provider-cloud-provider&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Cloud Service Provider&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://www.redhat.com/en/topics/cloud-computing/what-are-cloud-providers&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Cloud Providers là gì?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/cloud?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Bài viết hay về Cloud&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-aws-amazon-web-services&#34;&gt;☁️ AWS (Amazon Web Services)
+&lt;/h2&gt;&lt;p&gt;AWS là nền tảng điện toán đám mây hàng đầu từ năm 2011, vượt xa Azure và Google Cloud. AWS cung cấp hơn &lt;strong&gt;200 dịch vụ&lt;/strong&gt;, hoạt động trên quy mô toàn cầu. AWS mang đến giải pháp tính toán linh hoạt và tiết kiệm chi phí, bao gồm: &lt;strong&gt;sức mạnh tính toán, lưu trữ dữ liệu, phân phối nội dung&lt;/strong&gt;, v.v.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Ví dụ:&lt;/strong&gt; Tạo một EC2 instance bằng AWS CLI&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;aws ec2 run-instances --image-id ami-12345678 --count &lt;span class=&#34;m&#34;&gt;1&lt;/span&gt; --instance-type t2.micro --key-name MyKeyPair --security-groups MySecurityGroup
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=zA8guDqfv40&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;100 giờ khóa học AWS - 2024&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔗 &lt;a class=&#34;link&#34; href=&#34;https://aws.amazon.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ AWS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://grapplingdev.com/tutorials/how-to-create-aws-account&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn tạo tài khoản AWS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/aws?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Bài viết hay về AWS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-microsoft-azure&#34;&gt;💠 Microsoft Azure
+&lt;/h2&gt;&lt;p&gt;Azure là nền tảng điện toán đám mây của Microsoft, cung cấp &lt;strong&gt;IaaS, PaaS, SaaS&lt;/strong&gt; cùng nhiều dịch vụ như &lt;strong&gt;phân tích, AI, máy học, bảo mật&lt;/strong&gt;. Azure hỗ trợ nhiều công cụ và ngôn ngữ lập trình, giúp doanh nghiệp phát triển nhanh chóng.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Ví dụ:&lt;/strong&gt; Triển khai ứng dụng trên Azure App Service&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;az webapp create --resource-group MyResourceGroup --plan MyAppServicePlan --name MyUniqueApp --runtime &lt;span class=&#34;s2&#34;&gt;&amp;#34;PYTHON:3.8&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class=&#34;link&#34; href=&#34;https://azure.microsoft.com/en-us/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Azure&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://github.com/mikeroyal/Azure-Guide&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn về Microsoft Azure&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=5abffC-K40c&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Chứng chỉ Azure Fundamentals (AZ-900)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/azure?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Bài viết hay về Azure&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-google-cloud-platform-gcp&#34;&gt;☁️ Google Cloud Platform (GCP)
+&lt;/h2&gt;&lt;p&gt;Google Cloud cung cấp hơn &lt;strong&gt;150 dịch vụ&lt;/strong&gt;, hoạt động trên cùng hạ tầng với các sản phẩm của Google như &lt;strong&gt;Search, Gmail, YouTube&lt;/strong&gt;. Dịch vụ bao gồm: &lt;strong&gt;VMs, cơ sở dữ liệu, AI/ML, Kubernetes&lt;/strong&gt;, v.v.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Ví dụ:&lt;/strong&gt; Tạo một VM trên Google Cloud&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;gcloud compute instances create my-instance --machine-type&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;e2-medium --image-project&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;debian-cloud --image-family&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;debian-11
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class=&#34;link&#34; href=&#34;https://cloud.google.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Google Cloud&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://thenewstack.io/5-tips-to-become-a-google-cloud-certified-professional-architect/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;5 mẹo để trở thành Google Cloud Certified&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=fZOz13joN0o&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Khóa học Google Cloud Platform - 2023&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/cloud?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Bài viết hay về Google Cloud&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-digitalocean&#34;&gt;🌊 DigitalOcean
+&lt;/h2&gt;&lt;p&gt;DigitalOcean là nhà cung cấp cơ sở hạ tầng đám mây tập trung vào sự &lt;strong&gt;đơn giản, chi phí thấp, dễ sử dụng&lt;/strong&gt;. DigitalOcean cung cấp dịch vụ như &lt;strong&gt;máy ảo (Droplets), cơ sở dữ liệu, Kubernetes, lưu trữ đối tượng&lt;/strong&gt;, phù hợp với &lt;strong&gt;startup và developer&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Ví dụ:&lt;/strong&gt; Tạo một Droplet trên DigitalOcean bằng API&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -X POST -H &lt;span class=&#34;s2&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -H &lt;span class=&#34;s2&#34;&gt;&amp;#34;Authorization: Bearer YOUR_TOKEN&amp;#34;&lt;/span&gt; -d &lt;span class=&#34;s1&#34;&gt;&amp;#39;{&amp;#34;name&amp;#34;:&amp;#34;example-droplet&amp;#34;,&amp;#34;region&amp;#34;:&amp;#34;nyc3&amp;#34;,&amp;#34;size&amp;#34;:&amp;#34;s-1vcpu-1gb&amp;#34;,&amp;#34;image&amp;#34;:&amp;#34;ubuntu-20-04-x64&amp;#34;}&amp;#39;&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;https://api.digitalocean.com/v2/droplets&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class=&#34;link&#34; href=&#34;https://www.digitalocean.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ DigitalOcean&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://hacktoberfest.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hacktoberfest của DigitalOcean&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=cJKdo-glRD0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn Kubernetes trên DigitalOcean&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/digitalocean?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Bài viết hay về DigitalOcean&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;📌 Kết Luận
+&lt;/h2&gt;&lt;p&gt;Các nhà cung cấp dịch vụ cloud như &lt;strong&gt;AWS, Azure, GCP, DigitalOcean&lt;/strong&gt; cung cấp giải pháp linh hoạt cho mọi nhu cầu &lt;strong&gt;máy chủ, lưu trữ, AI, DevOps&lt;/strong&gt;. Mỗi nền tảng có ưu điểm riêng:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AWS&lt;/strong&gt;: Toàn diện, nhiều dịch vụ nhất.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Azure&lt;/strong&gt;: Tích hợp tốt với hệ sinh thái Microsoft.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GCP&lt;/strong&gt;: Tối ưu cho AI, dữ liệu lớn.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DigitalOcean&lt;/strong&gt;: Đơn giản, phù hợp với startup.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Việc chọn nền tảng phù hợp phụ thuộc vào &lt;strong&gt;mục tiêu, ngân sách, nhu cầu kỹ thuật&lt;/strong&gt; của bạn. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Serverless&lt;/strong&gt;&lt;/em&gt;  mô hình điện toán đám mây cho phép chạy ứng dụng mà không cần quản lý máy chủ. Các nhà cung cấp cloud tự động phân bổ tài nguyên, mở rộng quy mô và tính phí dựa trên lượng tài nguyên thực tế được sử dụng, giúp tối ưu chi phí và đơn giản hóa triển khai.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Dịch vụ lưu trữ mã nguồn 🐱</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-five/</link>
+        <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-five/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-five.webp" alt="Featured image of post Dịch vụ lưu trữ mã nguồn 🐱" /&gt;&lt;h1 id=&#34;-dịch-vụ-lưu-trữ-mã-nguồn-repo-hosting-services&#34;&gt;🌍 Dịch vụ lưu trữ mã nguồn (Repo Hosting Services)
+&lt;/h1&gt;&lt;p&gt;Khi làm việc nhóm, bạn cần một nơi lưu trữ mã nguồn từ xa để mọi người có thể truy cập, tạo nhánh riêng, cũng như tạo hoặc xem xét các pull request. Các dịch vụ này thường bao gồm theo dõi vấn đề (issue tracking), đánh giá mã (code review) và tích hợp liên tục (CI/CD). Một số lựa chọn phổ biến gồm GitHub, GitLab, Bitbucket và AWS CodeCommit.&lt;/p&gt;
+&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu thêm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class=&#34;link&#34; href=&#34;https://github.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔗 &lt;a class=&#34;link&#34; href=&#34;https://gitlab.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitLab&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔗 &lt;a class=&#34;link&#34; href=&#34;https://bitbucket.org&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;BitBucket&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=FQGXIIqziQg&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub vs GitLab vs Bitbucket - Nên chọn cái nào?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-github&#34;&gt;🐙 GitHub
+&lt;/h2&gt;&lt;p&gt;GitHub là một nền tảng quản lý mã nguồn dựa trên Git, cung cấp dịch vụ lưu trữ kho mã trên nền tảng đám mây. Nó hỗ trợ các tính năng như theo dõi lỗi, quản lý nhiệm vụ, và wiki dự án. GitHub cho phép đánh giá mã qua pull request, theo dõi vấn đề và hỗ trợ lập trình cộng tác với các tính năng như fork và star.&lt;/p&gt;
+&lt;p&gt;GitHub hỗ trợ cả kho mã công khai và riêng tư, giúp nó trở thành lựa chọn phổ biến cho cả dự án mã nguồn mở và phát triển cá nhân. Hệ sinh thái GitHub bao gồm:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🚀 &lt;strong&gt;GitHub Actions&lt;/strong&gt;: Tự động hóa quy trình làm việc.&lt;/li&gt;
+&lt;li&gt;📦 &lt;strong&gt;GitHub Packages&lt;/strong&gt;: Quản lý gói phần mềm.&lt;/li&gt;
+&lt;li&gt;🌐 &lt;strong&gt;GitHub Pages&lt;/strong&gt;: Lưu trữ trang web tĩnh miễn phí.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu thêm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🗺️ &lt;a class=&#34;link&#34; href=&#34;https://roadmap.sh/github&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Lộ trình Git &amp;amp; GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔗 &lt;a class=&#34;link&#34; href=&#34;https://github.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://ooloo.io/project/github-flow&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Cách sử dụng Git trong nhóm phát triển chuyên nghiệp&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=pBy1zgt0XPc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub là gì?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📰 &lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/github?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Bài viết hay về GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-gitlab&#34;&gt;🦊 GitLab
+&lt;/h2&gt;&lt;p&gt;GitLab là một công cụ DevOps toàn diện, cung cấp quản lý kho mã Git kèm theo wiki, theo dõi vấn đề và các tính năng CI/CD tích hợp sẵn. Đây là một nền tảng DevOps hoàn chỉnh, bao gồm tất cả các giai đoạn từ lập kế hoạch, phát triển, kiểm thử đến triển khai và giám sát.&lt;/p&gt;
+&lt;p&gt;GitLab hỗ trợ cả phiên bản đám mây và tự lưu trữ, phù hợp với các tổ chức có yêu cầu bảo mật cao. Một số tính năng nổi bật của GitLab gồm:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔄 &lt;strong&gt;Tích hợp CI/CD&lt;/strong&gt;: Hỗ trợ kiểm thử và triển khai tự động.&lt;/li&gt;
+&lt;li&gt;📦 &lt;strong&gt;Container &amp;amp; Package Registry&lt;/strong&gt;: Quản lý và lưu trữ gói phần mềm.&lt;/li&gt;
+&lt;li&gt;🔎 &lt;strong&gt;Quét bảo mật mã nguồn&lt;/strong&gt;: Phát hiện lỗ hổng trong code.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu thêm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class=&#34;link&#34; href=&#34;https://gitlab.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ GitLab&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://docs.gitlab.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu chính thức của GitLab&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=bnF7f1zGpo4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitLab là gì và tại sao nên dùng?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📰 &lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/gitlab?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Bài viết hay về GitLab&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-bitbucket&#34;&gt;🏗️ Bitbucket
+&lt;/h2&gt;&lt;p&gt;Bitbucket là một dịch vụ lưu trữ kho mã nguồn của Atlassian, hỗ trợ cả Git và Mercurial. Nó tích hợp chặt chẽ với các công cụ Atlassian khác như Jira và Trello, giúp quản lý dự án dễ dàng hơn. Bitbucket cung cấp cả phiên bản đám mây và tự lưu trữ.&lt;/p&gt;
+&lt;p&gt;Một số tính năng đáng chú ý của Bitbucket:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔍 &lt;strong&gt;Code Review &amp;amp; Pull Requests&lt;/strong&gt;: Hỗ trợ đánh giá mã.&lt;/li&gt;
+&lt;li&gt;🔄 &lt;strong&gt;Bitbucket Pipelines&lt;/strong&gt;: CI/CD tích hợp sẵn.&lt;/li&gt;
+&lt;li&gt;📖 &lt;strong&gt;Wiki &amp;amp; Issue Tracking&lt;/strong&gt;: Quản lý tài liệu và theo dõi vấn đề.&lt;/li&gt;
+&lt;li&gt;🔐 &lt;strong&gt;Hỗ trợ repo riêng tư miễn phí&lt;/strong&gt;: Phù hợp với nhóm nhỏ.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu thêm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class=&#34;link&#34; href=&#34;https://bitbucket.org&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Bitbucket&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://bitbucket.org/product/guides/getting-started/overview&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tổng quan về Bitbucket&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📚 &lt;a class=&#34;link&#34; href=&#34;https://www.w3schools.com/git/git_intro.asp?remote=bitbucket&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Giới thiệu về Git và Bitbucket&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=M44nEyd_5To&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn sử dụng Bitbucket Cloud&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📰 &lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/bitbucket?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Bài viết hay về Bitbucket&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;📌 Kết luận
+&lt;/h2&gt;&lt;p&gt;Việc lựa chọn dịch vụ lưu trữ kho mã nguồn phụ thuộc vào nhu cầu của nhóm phát triển. Nếu bạn cần một nền tảng phổ biến với hệ sinh thái rộng lớn, &lt;em&gt;&lt;strong&gt;GitHub&lt;/strong&gt;&lt;/em&gt; là một lựa chọn mạnh mẽ. Nếu muốn một giải pháp DevOps tích hợp đầy đủ, &lt;em&gt;&lt;strong&gt;GitLab&lt;/strong&gt;&lt;/em&gt; sẽ phù hợp hơn. Còn nếu bạn đã sử dụng hệ sinh thái Atlassian, &lt;em&gt;&lt;strong&gt;Bitbucket&lt;/strong&gt;&lt;/em&gt; sẽ là lựa chọn tốt nhất.&lt;/p&gt;
+&lt;p&gt;Hãy cân nhắc nhu cầu dự án và mức độ tích hợp mong muốn để đưa ra quyết định phù hợp! 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Containers&lt;/strong&gt;&lt;/em&gt; giúp đóng gói ứng dụng cùng với tất cả các thư viện, cấu hình và dependencies để chạy nhất quán trên nhiều môi trường khác nhau.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Giao thức mạng (Networking Protocols) 🖧</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-eight/</link>
+        <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-eight/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-eight.webp" alt="Featured image of post Giao thức mạng (Networking Protocols) 🖧" /&gt;&lt;h1 id=&#34;-giao-thức-mạng-networking-protocols&#34;&gt;🖧 Giao thức mạng (Networking Protocols)
+&lt;/h1&gt;&lt;p&gt;Giao thức mạng là tập hợp các quy tắc chuẩn hóa giúp dữ liệu được truyền, nhận và hiểu đúng cách trên các mạng máy tính. Chúng xác định định dạng, thời gian, trình tự và kiểm soát lỗi trong quá trình truyền dữ liệu. Một số giao thức quan trọng bao gồm:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;TCP/IP&lt;/strong&gt;: Bộ giao thức nền tảng cho giao tiếp trên Internet.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HTTP/HTTPS&lt;/strong&gt;: Giao thức truyền tải siêu văn bản dùng cho web.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FTP/SFTP&lt;/strong&gt;: Giao thức truyền tải tệp tin.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SMTP/POP3/IMAP&lt;/strong&gt;: Giao thức truyền tải email.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DNS&lt;/strong&gt;: Giao thức phân giải tên miền.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DHCP&lt;/strong&gt;: Giao thức cấp phát địa chỉ IP tự động.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SSL/TLS&lt;/strong&gt;: Giao thức bảo mật dữ liệu.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;UDP&lt;/strong&gt;: Giao thức truyền tải không kết nối, nhanh chóng.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-hệ-thống-tên-miền-dns&#34;&gt;🌍 Hệ thống tên miền (DNS)
+&lt;/h2&gt;&lt;p&gt;DNS (&lt;strong&gt;Domain Name System&lt;/strong&gt;) là hệ thống phân giải tên miền, giúp chuyển đổi tên miền dễ nhớ (vd: &lt;code&gt;www.example.com&lt;/code&gt;) thành địa chỉ IP (&lt;code&gt;192.168.1.1&lt;/code&gt;) mà máy tính có thể hiểu được.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-cấu-hình-dns-trong-linux&#34;&gt;🔹 Ví dụ cấu hình DNS trong Linux:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Kiểm tra DNS của một tên miền&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;nslookup example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;dig example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Chỉnh sửa file hosts để ánh xạ tên miền&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /etc/hosts
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Thêm dòng sau:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;192.168.1.100   mycustomdomain.com
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Tài nguyên tham khảo:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://howdns.works/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📄 Cách hoạt động của DNS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=Wj0od2ag5sk&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Video giải thích DNS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-giao-thức-http&#34;&gt;🌐 Giao thức HTTP
+&lt;/h2&gt;&lt;p&gt;HTTP (&lt;strong&gt;Hypertext Transfer Protocol&lt;/strong&gt;) là giao thức truyền tải dữ liệu trên web theo mô hình &lt;strong&gt;yêu cầu - phản hồi&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-gửi-yêu-cầu-http-bằng-curl&#34;&gt;🔹 Ví dụ gửi yêu cầu HTTP bằng cURL:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Gửi yêu cầu GET&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -X GET https://jsonplaceholder.typicode.com/posts/1
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Gửi yêu cầu POST&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl -X POST https://jsonplaceholder.typicode.com/posts &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;     -H &lt;span class=&#34;s2&#34;&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;     -d &lt;span class=&#34;s1&#34;&gt;&amp;#39;{&amp;#34;title&amp;#34;: &amp;#34;Hello&amp;#34;, &amp;#34;body&amp;#34;: &amp;#34;World&amp;#34;}&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Tài nguyên tham khảo:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.cloudflare.com/en-gb/learning/ddos/glossary/hypertext-transfer-protocol-http/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📄 Tìm hiểu về HTTP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=iYM2zFP3Zn0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Video hướng dẫn HTTP&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-https-và-bảo-mật-ssltls&#34;&gt;🔒 HTTPS và bảo mật (SSL/TLS)
+&lt;/h2&gt;&lt;p&gt;HTTPS là phiên bản bảo mật của HTTP, sử dụng &lt;em&gt;&lt;strong&gt;SSL/TLS&lt;/strong&gt;&lt;/em&gt; để mã hóa dữ liệu, đảm bảo an toàn khi truyền tải trên Internet.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-thiết-lập-https-với-nginx&#34;&gt;🔹 Ví dụ thiết lập HTTPS với Nginx:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-nginx&#34; data-lang=&#34;nginx&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;server&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;listen&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;443&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;ssl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;server_name&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;example.com&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;ssl_certificate&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;/etc/letsencrypt/live/example.com/fullchain.pem&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;kn&#34;&gt;ssl_certificate_key&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;/etc/letsencrypt/live/example.com/privkey.pem&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Tài nguyên tham khảo:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.cloudflare.com/en-gb/learning/ssl/what-is-https/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📄 HTTPS là gì?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=25mXesOV9-8&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Video HTTPS hoạt động như thế nào&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-ssh---kết-nối-bảo-mật&#34;&gt;🔑 SSH - Kết nối bảo mật
+&lt;/h2&gt;&lt;p&gt;SSH (&lt;em&gt;&lt;strong&gt;Secure Shell&lt;/strong&gt;&lt;/em&gt;) là giao thức giúp kết nối an toàn đến máy chủ từ xa.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-sử-dụng-ssh-để-kết-nối-từ-xa&#34;&gt;🔹 Ví dụ sử dụng SSH để kết nối từ xa:
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Kết nối đến máy chủ từ xa&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;ssh user@example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Sao chép tệp tin từ máy chủ về máy cục bộ&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;scp user@example.com:/path/to/file ./localfile
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Tài nguyên tham khảo:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.baeldung.com/cs/ssh-intro&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📄 Hướng dẫn SSH&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=5JvLV2-ngCI&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Video cách SSH hoạt động&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;🎯 Kết Luận
+&lt;/h2&gt;&lt;p&gt;Giao thức mạng là nền tảng của mọi hệ thống trực tuyến, từ duyệt web đến gửi email. Hiểu và biết cách sử dụng chúng giúp cải thiện bảo mật và hiệu suất của hệ thống. Hãy thử áp dụng các lệnh trên để kiểm tra và cấu hình hệ thống của bạn! 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Cloud Providers&lt;/strong&gt;&lt;/em&gt;  các công ty cung cấp dịch vụ điện toán đám mây, cho phép cá nhân và doanh nghiệp truy cập tài nguyên như máy chủ, lưu trữ, cơ sở dữ liệu, AI, và các dịch vụ khác qua internet mà không cần đầu tư hạ tầng phần cứng.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Hệ thống quản lý phiên bản (Version Control Systems) 🛠️</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-four/</link>
+        <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-four/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-four.webp" alt="Featured image of post Hệ thống quản lý phiên bản (Version Control Systems) 🛠️" /&gt;&lt;h2 id=&#34;-hệ-thống-quản-lý-phiên-bản-version-control-systems&#34;&gt;🔄 Hệ thống quản lý phiên bản (Version Control Systems)
+&lt;/h2&gt;&lt;p&gt;Version control systems (VCS) là các công cụ giúp theo dõi sự thay đổi của mã nguồn và tệp theo thời gian. Chúng hỗ trợ làm việc nhóm, quản lý lịch sử thay đổi và duy trì nhiều phiên bản của mã nguồn. Có hai loại VCS chính:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hệ thống tập trung (Centralized VCS - CVCS)&lt;/strong&gt;: Sử dụng một kho lưu trữ trung tâm, ví dụ như &lt;strong&gt;Subversion (SVN)&lt;/strong&gt;, &lt;strong&gt;CVS&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hệ thống phân tán (Distributed VCS - DVCS)&lt;/strong&gt;: Mỗi người dùng có một bản sao đầy đủ của kho lưu trữ, bao gồm toàn bộ lịch sử. Ví dụ phổ biến nhất là &lt;strong&gt;Git&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Git là một hệ thống quản lý phiên bản phân tán mạnh mẽ, cho phép làm việc ngoại tuyến, hỗ trợ nhanh chóng các thao tác nhánh (branching) và hợp nhất (merging), giúp tăng cường khả năng cộng tác.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-git---công-cụ-quản-lý-phiên-bản-phổ-biến-nhất&#34;&gt;🛠️ Git - Công Cụ Quản Lý Phiên Bản Phổ Biến Nhất
+&lt;/h2&gt;&lt;h3 id=&#34;-cài-đặt-git&#34;&gt;🔹 Cài Đặt Git
+&lt;/h3&gt;&lt;p&gt;Nếu chưa cài đặt Git, bạn có thể tải về từ &lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;git-scm.com&lt;/a&gt; hoặc sử dụng lệnh sau:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo apt install git    &lt;span class=&#34;c1&#34;&gt;# Ubuntu/Debian&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;yum install git         &lt;span class=&#34;c1&#34;&gt;# CentOS/RHEL&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install git        &lt;span class=&#34;c1&#34;&gt;# macOS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Xác nhận cài đặt Git:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git --version
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# output: &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# git version 2.47.1.windows.1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-các-lệnh-cơ-bản-trong-git&#34;&gt;🚀 Các Lệnh Cơ Bản Trong Git
+&lt;/h2&gt;&lt;p&gt;Dưới đây là các lệnh Git phổ biến, được sắp xếp từ cơ bản đến nâng cao:&lt;/p&gt;
+&lt;h3 id=&#34;khởi-tạo--cấu-hình&#34;&gt;&lt;strong&gt;Khởi Tạo &amp;amp; Cấu Hình&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git init                    &lt;span class=&#34;c1&#34;&gt;# Khởi tạo kho lưu trữ Git&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git config --global user.name &lt;span class=&#34;s2&#34;&gt;&amp;#34;Tên Của Bạn&amp;#34;&lt;/span&gt;          &lt;span class=&#34;c1&#34;&gt;# Cấu hình tên&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git config --global user.email &lt;span class=&#34;s2&#34;&gt;&amp;#34;email@example.com&amp;#34;&lt;/span&gt;   &lt;span class=&#34;c1&#34;&gt;# Cấu hình email&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;làm-việc-với-kho-lưu-trữ&#34;&gt;&lt;strong&gt;Làm Việc Với Kho Lưu Trữ&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone &amp;lt;repo_url&amp;gt;    &lt;span class=&#34;c1&#34;&gt;# Sao chép một kho lưu trữ từ xa về máy&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git status              &lt;span class=&#34;c1&#34;&gt;# Kiểm tra trạng thái của các tệp&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;thêm--lưu-thay-đổi&#34;&gt;&lt;strong&gt;Thêm &amp;amp; Lưu Thay Đổi&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git add &amp;lt;file&amp;gt;                   &lt;span class=&#34;c1&#34;&gt;# Thêm tệp vào vùng tạm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git commit -m &lt;span class=&#34;s2&#34;&gt;&amp;#34;Mô tả thay đổi&amp;#34;&lt;/span&gt;   &lt;span class=&#34;c1&#34;&gt;# Lưu thay đổi vào lịch sử&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;làm-việc-với-kho-lưu-trữ-từ-xa&#34;&gt;&lt;strong&gt;Làm Việc Với Kho Lưu Trữ Từ Xa&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git remote add origin &amp;lt;repo_url&amp;gt;   &lt;span class=&#34;c1&#34;&gt;# Liên kết kho lưu trữ từ xa&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git push -u origin main            &lt;span class=&#34;c1&#34;&gt;# Đẩy thay đổi lên nhánh chính&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git pull origin main               &lt;span class=&#34;c1&#34;&gt;# Cập nhật thay đổi mới nhất từ kho lưu trữ từ xa&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;làm-việc-với-nhánh&#34;&gt;&lt;strong&gt;Làm Việc Với Nhánh&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git branch new-feature     &lt;span class=&#34;c1&#34;&gt;# Tạo nhánh mới&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git checkout new-feature   &lt;span class=&#34;c1&#34;&gt;# Chuyển sang nhánh mới&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git merge new-feature      &lt;span class=&#34;c1&#34;&gt;# Gộp nhánh vào nhánh hiện tại&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;theo-dõi-lịch-sử&#34;&gt;&lt;strong&gt;Theo Dõi Lịch Sử&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git log                    &lt;span class=&#34;c1&#34;&gt;# Xem lịch sử commit&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git diff                   &lt;span class=&#34;c1&#34;&gt;# So sánh thay đổi giữa các phiên bản&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-tài-nguyên-học-git-miễn-phí&#34;&gt;📚 Tài Nguyên Học Git Miễn Phí
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://git-scm.com/doc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📖 Tài liệu chính thức về Git&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://cs.fyi/guide/git-cheatsheet&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📄 Git Cheat Sheet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=SWYqp7iY_Tc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;▶️ Video hướng dẫn Git cho người mới bắt đầu&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/git?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📝 Bài viết: Hệ thống quản lý phiên bản là gì?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;🔚 Kết Luận
+&lt;/h2&gt;&lt;p&gt;Sử dụng Git giúp quản lý mã nguồn dễ dàng hơn, hỗ trợ làm việc nhóm hiệu quả và bảo vệ dữ liệu quan trọng của dự án. Việc hiểu và thành thạo Git là kỹ năng cần thiết cho mọi lập trình viên.&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;GitHub &amp;amp; GitLab&lt;/strong&gt;&lt;/em&gt; để quản lý kho lưu trữ Git trên nền tảng đám mây.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Kiến thức về Terminal 📟</title>
         <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-three/</link>
         <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
@@ -176,7 +1047,7 @@
 &lt;/div&gt;&lt;hr&gt;
 &lt;h2 id=&#34;-kết-luận&#34;&gt;🔚 Kết Luận
 &lt;/h2&gt;&lt;p&gt;Hiểu và sử dụng thành thạo các công cụ trên giúp bạn làm việc hiệu quả hơn trong môi trường Linux và DevOps. Các công cụ &lt;em&gt;&lt;strong&gt;🟣 được đánh dấu&lt;/strong&gt;&lt;/em&gt; là những công cụ phổ biến và mạnh mẽ nhất, được nhiều chuyên gia khuyến nghị. Bạn có thể tìm hiểu sâu hơn thông qua các tài nguyên miễn phí đi kèm. Nếu có điều gì cần làm rõ hoặc bổ sung, hãy phản hồi để mình cập nhật nhé!&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;👉 Bước tiếp theo:&lt;/strong&gt; Nâng cao kiến thức về hệ thống quản lý phiên bản (Version Control Systems) để theo dõi, quản lý và cộng tác hiệu quả trên mã nguồn.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;👉 Bước tiếp theo:&lt;/strong&gt; Nâng cao kiến thức về hệ thống quản lý phiên bản (&lt;em&gt;&lt;strong&gt;Version Control Systems&lt;/strong&gt;&lt;/em&gt;) để theo dõi, quản lý và cộng tác hiệu quả trên mã nguồn.&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -325,7 +1196,7 @@
 &lt;li&gt;✅ Linux là kỹ năng bắt buộc trong DevOps.&lt;/li&gt;
 &lt;li&gt;✅ Học cách dùng terminal &amp;amp; Bash scripting.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;👉 Bước tiếp theo:&lt;/strong&gt; Tìm hiểu sâu hơn về terminal và cách sử dụng CLI để làm việc hiệu quả với hệ thống.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;👉 Bước tiếp theo:&lt;/strong&gt; Tìm hiểu sâu hơn về &lt;em&gt;&lt;strong&gt;terminal và cách sử dụng CLI&lt;/strong&gt;&lt;/em&gt; để làm việc hiệu quả với hệ thống.&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -525,7 +1396,7 @@
 &lt;li&gt;✅ Nếu làm việc với &lt;strong&gt;Kubernetes&lt;/strong&gt;, học thêm &lt;strong&gt;Go&lt;/strong&gt;.&lt;/li&gt;
 &lt;li&gt;✅ Nếu làm việc với &lt;strong&gt;Jenkins&lt;/strong&gt;, học &lt;strong&gt;Groovy&lt;/strong&gt; để viết pipeline.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;👉 Bước tiếp theo:&lt;/strong&gt; Học cơ bản về Linux &amp;amp; hệ điều hành.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;👉 Bước tiếp theo:&lt;/strong&gt; Học cơ bản về &lt;em&gt;&lt;strong&gt;Linux &amp;amp; hệ điều hành&lt;/strong&gt;&lt;/em&gt;.&lt;/p&gt;
 </description>
         </item>
         <item>
