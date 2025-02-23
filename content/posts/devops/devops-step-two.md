@@ -108,4 +108,4 @@ Dưới đây là một số tài nguyên miễn phí để tìm hiểu thêm v�
 - ✅ Linux là kỹ năng bắt buộc trong DevOps.
 - ✅ Học cách dùng terminal & Bash scripting.
 
-**👉 Bước tiếp theo:** Tìm hiểu sâu hơn về terminal và cách sử dụng CLI để làm việc hiệu quả với hệ thống.
+**👉 Bước tiếp theo:** Tìm hiểu sâu hơn về ***terminal và cách sử dụng CLI*** để làm việc hiệu quả với hệ thống.

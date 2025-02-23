@@ -139,4 +139,4 @@ pipeline {
 - ✅ Nếu làm việc với **Kubernetes**, học thêm **Go**.
 - ✅ Nếu làm việc với **Jenkins**, học **Groovy** để viết pipeline.
 
-**👉 Bước tiếp theo:** Học cơ bản về Linux & hệ điều hành.
+**👉 Bước tiếp theo:** Học cơ bản về ***Linux & hệ điều hành***.
