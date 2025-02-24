@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Log on Hoàng Dương</title>
+        <link>https://tech.nguuyen.io.vn/tags/log/</link>
+        <description>Recent content in Log on Hoàng Dương</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>vi</language>
+        <lastBuildDate>Mon, 24 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/log/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Quản lý logs (Logs Management) 📜</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-sixteen/</link>
+        <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-sixteen/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-sixteen.webp" alt="Featured image of post Quản lý logs (Logs Management) 📜" /&gt;&lt;h1 id=&#34;-quản-lý-logs-logs-management&#34;&gt;📜 Quản lý logs (Logs Management)
+&lt;/h1&gt;&lt;h2 id=&#34;-quản-lý-logs-là-gì&#34;&gt;🔍 Quản lý logs là gì?
+&lt;/h2&gt;&lt;p&gt;Quản lý logs là quá trình thu thập, tổng hợp, phân tích, lưu trữ và truy xuất logs từ các ứng dụng và hệ thống hạ tầng. Logs chứa thông tin quan trọng về hoạt động của hệ thống, giúp phát hiện sự cố, tối ưu hóa hiệu suất và đảm bảo tuân thủ bảo mật.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-các-công-cụ-quản-lý-logs-phổ-biến&#34;&gt;🚀 Các công cụ quản lý logs phổ biến
+&lt;/h2&gt;&lt;h3 id=&#34;elastic-stack-elk-stack&#34;&gt;Elastic Stack (ELK Stack)
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;📝 Giới thiệu:&lt;/strong&gt;
+Elastic Stack, trước đây gọi là ELK Stack, bao gồm Elasticsearch (công cụ tìm kiếm và phân tích), Logstash (xử lý dữ liệu), Kibana (trực quan hóa) và Beats (thu thập dữ liệu). Đây là giải pháp phổ biến để quản lý logs với khả năng mở rộng cao.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Tính năng nổi bật:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tìm kiếm và phân tích logs theo thời gian thực.&lt;/li&gt;
+&lt;li&gt;Hỗ trợ nhiều định dạng dữ liệu khác nhau.&lt;/li&gt;
+&lt;li&gt;Khả năng mở rộng tốt với môi trường doanh nghiệp.&lt;/li&gt;
+&lt;li&gt;Cung cấp giao diện trực quan với Kibana.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Sử dụng Elastic Stack để thu thập logs từ các máy chủ web, phân tích lỗi và tạo dashboard giám sát lưu lượng truy cập.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📚 Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗&lt;a class=&#34;link&#34; href=&#34;https://www.elastic.co/elastic-stack/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Elastic Stack&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=CfCTWVAwFbQ&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tổng quan về Elastic Stack&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;loki&#34;&gt;Loki
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;📝 Giới thiệu:&lt;/strong&gt;
+Loki là hệ thống thu thập logs do Grafana Labs phát triển, tối ưu cho Kubernetes và container. Loki không lưu trữ toàn bộ logs mà chỉ lập chỉ mục metadata, giúp tiết kiệm tài nguyên.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Tính năng nổi bật:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tích hợp chặt chẽ với Grafana.&lt;/li&gt;
+&lt;li&gt;Sử dụng LogQL, ngôn ngữ truy vấn tương tự PromQL.&lt;/li&gt;
+&lt;li&gt;Tối ưu cho môi trường Kubernetes và container.&lt;/li&gt;
+&lt;li&gt;Tiết kiệm tài nguyên so với các giải pháp khác.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Sử dụng Loki để theo dõi logs từ các container trong Kubernetes, giúp phát hiện lỗi ứng dụng nhanh chóng.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📚 Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗&lt;a class=&#34;link&#34; href=&#34;https://grafana.com/oss/loki/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Loki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖&lt;a class=&#34;link&#34; href=&#34;https://grafana.com/docs/loki/latest/?pg=oss-loki&amp;amp;plcmt=quick-links&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu Loki&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;graylog&#34;&gt;Graylog
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;📝 Giới thiệu:&lt;/strong&gt;
+Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập, lưu trữ và phân tích logs theo thời gian thực. Hệ thống này cung cấp giao diện web thân thiện và hỗ trợ nhiều loại dữ liệu logs khác nhau.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Tính năng nổi bật:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Hỗ trợ nhiều giao thức thu thập logs như Syslog, GELF.&lt;/li&gt;
+&lt;li&gt;Giao diện tìm kiếm mạnh mẽ.&lt;/li&gt;
+&lt;li&gt;Tích hợp tính năng cảnh báo khi phát hiện sự cố.&lt;/li&gt;
+&lt;li&gt;Hỗ trợ truy vấn logs theo thời gian thực.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Sử dụng Graylog để theo dõi logs từ các hệ thống bảo mật, giúp phát hiện hành vi xâm nhập trái phép.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📚 Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗&lt;a class=&#34;link&#34; href=&#34;https://www.graylog.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Graylog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥&lt;a class=&#34;link&#34; href=&#34;https://www.graylog.org/resources-videos&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn sử dụng Graylog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-ví-dụ-về-mã-nguồn&#34;&gt;🔥 Ví dụ về mã nguồn
+&lt;/h2&gt;&lt;p&gt;Dưới đây là cách gửi logs đến một hệ thống thu thập logs bằng JavaScript:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;winston&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;winston&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;logger&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;winston&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;createLogger&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;({&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;level&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;info&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;format&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;winston&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;format&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;json&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;transports&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;winston&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;transports&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;winston&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;transports&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;File&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;({&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;filename&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;app.log&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// Ghi log
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;logger&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;info&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Ứng dụng đã khởi động thành công&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;logger&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;warn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Cảnh báo: Dữ liệu đầu vào không hợp lệ&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;logger&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;error&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Lỗi: Không thể kết nối cơ sở dữ liệu&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;✅ Kết luận
+&lt;/h2&gt;&lt;p&gt;Quản lý logs đóng vai trò quan trọng trong việc giám sát hệ thống và xử lý sự cố nhanh chóng. Các công cụ như &lt;strong&gt;Elastic Stack, Loki,&lt;/strong&gt; và &lt;strong&gt;Graylog&lt;/strong&gt; cung cấp giải pháp mạnh mẽ để thu thập, phân tích và trực quan hóa logs. Việc lựa chọn công cụ phù hợp sẽ giúp nâng cao hiệu quả vận hành hệ thống của bạn. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Container Orchestration&lt;/strong&gt;&lt;/em&gt;  quá trình tự động quản lý, triển khai, mở rộng và điều phối các container trong môi trường hạ tầng, giúp đảm bảo tính sẵn sàng, khả năng mở rộng và tối ưu tài nguyên hệ thống. Các công cụ phổ biến cho Container Orchestration bao gồm Kubernetes, Docker Swarm và Apache Mesos.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

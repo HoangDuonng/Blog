@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="vi" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Container orchestration là quá trình quản lý và tự động hóa vòng đời container, giúp đảm bảo tính khả dụng, khả năng mở rộng và độ tin cậy cho ứng dụng bằng cách sử dụng các công cụ như Kubernetes, Docker Swarm và Apache Mesos.">
+<title>Container Orchestration 🚢</title>
+
+<link rel='canonical' href='https://tech.nguuyen.io.vn/posts/devops/devops-step-seventeen/'>
+
+<link rel="stylesheet" href="/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css"><meta property='og:title' content="Container Orchestration 🚢">
+<meta property='og:description' content="Container orchestration là quá trình quản lý và tự động hóa vòng đời container, giúp đảm bảo tính khả dụng, khả năng mở rộng và độ tin cậy cho ứng dụng bằng cách sử dụng các công cụ như Kubernetes, Docker Swarm và Apache Mesos.">
+<meta property='og:url' content='https://tech.nguuyen.io.vn/posts/devops/devops-step-seventeen/'>
+<meta property='og:site_name' content='Hoàng Dương'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='devops' /><meta property='article:tag' content='container' /><meta property='article:published_time' content='2025-02-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-02-24T00:00:00&#43;00:00'/><meta property='og:image' content='https://tech.nguuyen.io.vn/images/devops-step-seventeen.webp' />
+<meta name="twitter:title" content="Container Orchestration 🚢">
+<meta name="twitter:description" content="Container orchestration là quá trình quản lý và tự động hóa vòng đời container, giúp đảm bảo tính khả dụng, khả năng mở rộng và độ tin cậy cho ứng dụng bằng cách sử dụng các công cụ như Kubernetes, Docker Swarm và Apache Mesos."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://tech.nguuyen.io.vn/images/devops-step-seventeen.webp' />
+    <link rel="icon" type="image/png" href="/images/favicon.ico" />
+<style>
+     
+    :root {
+        --article-font-family: "Roboto", var(--base-font-family);
+    }
+</style>
+
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap";
+    
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+    
+        document.head.appendChild(customFont);
+    }());
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Hiển thị Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="400"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Hoàng Dương</a></h1>
+            <h2 class="site-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/HoangDuonng'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.instagram.com/ngu_uuen/'
+                        target="_blank"
+                        title="Instagram"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="3" width="18" height="18" rx="3" />
+  <circle cx="12" cy="12" r="4" />
+  <path d="M16.5 7.5h.01" />
+</svg>
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Trang chủ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/gi%E1%BB%9Bi-thi%E1%BB%87u/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Về tôi</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Lưu trữ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Tìm kiếm</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/li%C3%AAn-k%E1%BA%BFt/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Liên kết</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://tech.nguuyen.io.vn/" selected>Tiếng Việt</option>
+                                
+                                    <option value="https://tech.nguuyen.io.vn/en/" >English</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Chế độ tối</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Mục lục</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#-container-orchestration-là-gì">🔍 Container Orchestration là gì?</a></li>
+    <li><a href="#-kubernetes">☸️ Kubernetes</a></li>
+    <li><a href="#-gke--eks--aks">☁️ GKE / EKS / AKS</a>
+      <ol>
+        <li><a href="#-gke---google-kubernetes-engine">🔹 GKE - Google Kubernetes Engine</a></li>
+        <li><a href="#-eks---amazon-elastic-kubernetes-service">🔹 EKS - Amazon Elastic Kubernetes Service</a></li>
+        <li><a href="#-aks---azure-kubernetes-service">🔹 AKS - Azure Kubernetes Service</a></li>
+      </ol>
+    </li>
+    <li><a href="#-ecs--fargate">🚀 ECS / Fargate</a></li>
+    <li><a href="#-docker-swarm">🐳 Docker Swarm</a></li>
+    <li><a href="#-kết-luận">✅ Kết luận</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/posts/devops/devops-step-seventeen/">
+                
+                    <img src="/images/devops-step-seventeen.webp" loading="lazy" alt="Featured image of post Container Orchestration 🚢" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/devops/" style="background-color: #2a9d8f; color: #fff;">
+                DevOps
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/devops/devops-step-seventeen/">Container Orchestration 🚢</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Container orchestration là quá trình quản lý và tự động hóa vòng đời container, giúp đảm bảo tính khả dụng, khả năng mở rộng và độ tin cậy cho ứng dụng bằng cách sử dụng các công cụ như Kubernetes, Docker Swarm và Apache Mesos.
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">24/02/2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    4 phút đọc
+                </time>
+            </div>
+        
+
+        
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                    <span class="article-author--name">
+                        Hoàng Dương
+                    </span>
+                </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="-container-orchestration">🚢 Container Orchestration
+</h1><h2 id="-container-orchestration-là-gì">🔍 Container Orchestration là gì?
+</h2><p>Container orchestration là quá trình quản lý và tự động hóa vòng đời của container, bao gồm triển khai, mở rộng và kết nối mạng giữa các container trên nhiều máy chủ. Đây là công nghệ quan trọng để chạy các ứng dụng phức tạp trong môi trường sản xuất.</p>
+<p>Bằng cách sử dụng các công cụ như <strong>Kubernetes, Docker Swarm,</strong> và <strong>Apache Mesos</strong>, các tổ chức có thể đảm bảo <strong>tính khả dụng cao, khả năng mở rộng và độ tin cậy</strong> cho ứng dụng của mình. Container orchestration giúp tự động hóa các tác vụ vận hành và tạo nền tảng vững chắc cho <strong>microservices, cloud-native development,</strong> và <strong>DevOps</strong>.</p>
+<p>📚 <strong>Tài nguyên miễn phí hữu ích:</strong></p>
+<ul>
+<li>📦 <a class="link" href="https://www.redhat.com/en/topics/containers/what-is-container-orchestration"  target="_blank" rel="noopener"
+    >Container Orchestration là gì?</a></li>
+<li>🚀 <a class="link" href="https://kubernetes.io/docs/tutorials/kubernetes-basics/"  target="_blank" rel="noopener"
+    >Kubernetes là gì?</a></li>
+<li>🐳 <a class="link" href="https://docs.docker.com/engine/swarm/"  target="_blank" rel="noopener"
+    >Docker Swarm</a></li>
+<li>🎥 <a class="link" href="https://www.youtube.com/watch?v=PH-2FfFD2PU"  target="_blank" rel="noopener"
+    >Giới thiệu về Kubernetes</a></li>
+</ul>
+<hr>
+<h2 id="-kubernetes">☸️ Kubernetes
+</h2><p>Kubernetes là nền tảng mã nguồn mở phổ biến nhất để quản lý container. Nó cho phép triển khai container trên nhiều máy chủ, xác định mức độ sẵn sàng, logic triển khai và mở rộng thông qua YAML.</p>
+<p>Kubernetes có nguồn gốc từ <strong>Borg</strong>, nền tảng nội bộ của Google, và đã trở thành <strong>kỹ năng quan trọng đối với các kỹ sư DevOps</strong>. Nhiều tổ chức đã thành lập <strong>đội ngũ Platform Engineering</strong> chuyên về Kubernetes để hỗ trợ các nhóm phát triển sản phẩm.</p>
+<p>📚 <strong>Tài nguyên miễn phí hữu ích:</strong></p>
+<ul>
+<li>🗺️ <a class="link" href="https://roadmap.sh/kubernetes"  target="_blank" rel="noopener"
+    >Lộ trình Kubernetes chuyên sâu</a></li>
+<li>🌐 <a class="link" href="https://kubernetes.io/"  target="_blank" rel="noopener"
+    >Trang web chính thức của Kubernetes</a></li>
+<li>📖 <a class="link" href="https://thenewstack.io/primer-how-kubernetes-came-to-be-what-it-is-and-why-you-should-care/"  target="_blank" rel="noopener"
+    >Tổng quan về Kubernetes</a></li>
+<li>🎥 <a class="link" href="https://www.youtube.com/watch?v=2T86xAtR6Fo"  target="_blank" rel="noopener"
+    >Khóa học Kubernetes hoàn chỉnh - Từ cơ bản đến nâng cao</a></li>
+</ul>
+<p><strong>📌 Ví dụ:</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="nx">apiVersion</span><span class="o">:</span> <span class="nx">apps</span><span class="o">/</span><span class="nx">v1</span>
+</span></span><span class="line"><span class="cl"><span class="nx">kind</span><span class="o">:</span> <span class="nx">Deployment</span>
+</span></span><span class="line"><span class="cl"><span class="nx">metadata</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">name</span><span class="o">:</span> <span class="nx">my</span><span class="o">-</span><span class="nx">app</span>
+</span></span><span class="line"><span class="cl"><span class="nx">spec</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">replicas</span><span class="o">:</span> <span class="mi">3</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">selector</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">matchLabels</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">app</span><span class="o">:</span> <span class="nx">my</span><span class="o">-</span><span class="nx">app</span>
+</span></span><span class="line"><span class="cl">  <span class="nx">template</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">metadata</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">labels</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">app</span><span class="o">:</span> <span class="nx">my</span><span class="o">-</span><span class="nx">app</span>
+</span></span><span class="line"><span class="cl">    <span class="nx">spec</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">      <span class="nx">containers</span><span class="o">:</span>
+</span></span><span class="line"><span class="cl">      <span class="o">-</span> <span class="nx">name</span><span class="o">:</span> <span class="nx">my</span><span class="o">-</span><span class="nx">app</span>
+</span></span><span class="line"><span class="cl">        <span class="nx">image</span><span class="o">:</span> <span class="nx">my</span><span class="o">-</span><span class="nx">app</span><span class="o">-</span><span class="nx">image</span><span class="o">:</span><span class="nx">latest</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="-gke--eks--aks">☁️ GKE / EKS / AKS
+</h2><h3 id="-gke---google-kubernetes-engine">🔹 GKE - Google Kubernetes Engine
+</h3><p>Google Kubernetes Engine (GKE) là dịch vụ Kubernetes được quản lý bởi Google Cloud. Nó giúp triển khai, quản lý và mở rộng ứng dụng container với Kubernetes mà không cần tự quản lý cụm máy chủ.</p>
+<h3 id="-eks---amazon-elastic-kubernetes-service">🔹 EKS - Amazon Elastic Kubernetes Service
+</h3><p>Amazon Elastic Kubernetes Service (EKS) là dịch vụ Kubernetes được AWS cung cấp. Nó tự động quản lý control plane của Kubernetes và tích hợp với các dịch vụ AWS khác.</p>
+<h3 id="-aks---azure-kubernetes-service">🔹 AKS - Azure Kubernetes Service
+</h3><p>Azure Kubernetes Service (AKS) là dịch vụ Kubernetes của Microsoft Azure. AKS hỗ trợ giám sát, bảo mật, mở rộng tự động và tích hợp với Azure DevOps.</p>
+<p>📚 <strong>Tài nguyên miễn phí hữu ích:</strong></p>
+<ul>
+<li>☁️ <a class="link" href="https://cloud.google.com/kubernetes-engine"  target="_blank" rel="noopener"
+    >Google Kubernetes Engine (GKE)</a></li>
+<li>🟧 <a class="link" href="https://aws.amazon.com/eks/"  target="_blank" rel="noopener"
+    >Amazon Elastic Kubernetes Service (EKS)</a></li>
+<li>🔵 <a class="link" href="https://azure.microsoft.com/en-us/products/kubernetes-service/"  target="_blank" rel="noopener"
+    >Azure Kubernetes Service (AKS)</a></li>
+<li>🎥 <a class="link" href="https://www.youtube.com/watch?v=CukYk43agA4"  target="_blank" rel="noopener"
+    >Hướng dẫn AWS EKS</a></li>
+<li>🎥 <a class="link" href="https://www.youtube.com/watch?v=Rl5M1CzgEH4"  target="_blank" rel="noopener"
+    >Google Kubernetes Engine là gì?</a></li>
+</ul>
+<hr>
+<h2 id="-ecs--fargate">🚀 ECS / Fargate
+</h2><p><strong>ECS</strong> là dịch vụ quản lý container chạy trên EC2 của AWS, cho phép kiểm soát hạ tầng máy chủ.</p>
+<p><strong>Fargate</strong> là dịch vụ quản lý container <strong>serverless</strong>, giúp chạy container mà không cần quản lý máy chủ hoặc cụm máy.</p>
+<p>📚 <strong>Tài nguyên miễn phí hữu ích:</strong></p>
+<ul>
+<li>📄 <a class="link" href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html"  target="_blank" rel="noopener"
+    >Tài liệu AWS Fargate</a></li>
+<li>📄 <a class="link" href="https://docs.aws.amazon.com/ecs/"  target="_blank" rel="noopener"
+    >Tài liệu AWS ECS</a></li>
+<li>🎥 <a class="link" href="https://www.youtube.com/watch?v=yi22xrvPnPk"  target="_blank" rel="noopener"
+    >Tổng quan về AWS Fargate</a></li>
+<li>🎥 <a class="link" href="https://www.youtube.com/watch?v=esISkPlnxL0"  target="_blank" rel="noopener"
+    >Hướng dẫn AWS ECS</a></li>
+</ul>
+<hr>
+<p><strong>📌 Ví dụ:</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;family&#34;</span><span class="o">:</span> <span class="s2">&#34;my-task&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">  <span class="s2">&#34;containerDefinitions&#34;</span><span class="o">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;name&#34;</span><span class="o">:</span> <span class="s2">&#34;my-container&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;image&#34;</span><span class="o">:</span> <span class="s2">&#34;my-container-image:latest&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;memory&#34;</span><span class="o">:</span> <span class="mi">512</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="s2">&#34;cpu&#34;</span><span class="o">:</span> <span class="mi">256</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="-docker-swarm">🐳 Docker Swarm
+</h2><p>Docker Swarm là tập hợp các máy (vật lý hoặc ảo) chạy Docker và được cấu hình thành một cụm (<strong>cluster</strong>). Quản lý cụm được thực hiện bởi <strong>swarm manager</strong>, và các máy tham gia cụm được gọi là <strong>nodes</strong>.</p>
+<p>📚 <strong>Tài nguyên hữu ích:</strong></p>
+<ul>
+<li>📄 <a class="link" href="https://docs.docker.com/engine/swarm/"  target="_blank" rel="noopener"
+    >Tài liệu Docker Swarm</a></li>
+<li>🔧 <a class="link" href="https://thenewstack.io/tutorial-manage-docker-swarm-with-portainer/"  target="_blank" rel="noopener"
+    >Quản lý Docker Swarm với Portainer</a></li>
+<li>📦 <a class="link" href="https://thenewstack.io/tutorial-create-a-docker-swarm-with-persistent-storage-using-glusterfs/"  target="_blank" rel="noopener"
+    >Tạo Docker Swarm với bộ nhớ lưu trữ GlusterFS</a></li>
+<li>🎥 <a class="link" href="https://www.youtube.com/watch?v=Xaea-XnJTJU"  target="_blank" rel="noopener"
+    >Giới thiệu Docker Swarm | Hướng dẫn từng bước</a></li>
+</ul>
+<hr>
+<p><strong>📌 Ví dụ:</strong></p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="c1">// Khởi tạo Swarm
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">$</span> <span class="nx">docker</span> <span class="nx">swarm</span> <span class="nx">init</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">// Triển khai dịch vụ trên Swarm
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="nx">$</span> <span class="nx">docker</span> <span class="nx">service</span> <span class="nx">create</span> <span class="o">--</span><span class="nx">name</span> <span class="nx">web</span> <span class="o">-</span><span class="nx">p</span> <span class="mi">80</span><span class="o">:</span><span class="mi">80</span> <span class="nx">nginx</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="-kết-luận">✅ Kết luận
+</h2><p>Container orchestration đóng vai trò quan trọng trong việc quản lý ứng dụng container, giúp <strong>đơn giản hóa vận hành, tối ưu tài nguyên và tăng cường tính sẵn sàng</strong>. Các công cụ như <strong>Kubernetes, Docker Swarm, ECS, Fargate</strong> cung cấp nhiều giải pháp linh hoạt cho các doanh nghiệp hiện đại. Việc lựa chọn công cụ phù hợp sẽ giúp doanh nghiệp <strong>tận dụng tối đa sức mạnh của container hóa và điện toán đám mây</strong>. 🚀</p>
+<p>👉 <strong>Bước tiếp theo:</strong> Tìm hiểu về <em><strong>Application Monitoring</strong></em>  theo dõi, đo lường và phân tích hiệu suất, trạng thái và hành vi của ứng dụng để phát hiện sự cố, tối ưu hóa hiệu suất và đảm bảo trải nghiệm người dùng tốt. Các công cụ phổ biến như Prometheus, Grafana, Datadog, New Relic giúp thu thập dữ liệu từ ứng dụng, máy chủ và hạ tầng để cung cấp cảnh báo và báo cáo chi tiết.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/devops/">Devops</a>
+        
+            <a href="/tags/container/">Container</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Bài viết liên quan</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-thirteen/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-thirteen.webp" loading="lazy" data-key="" data-hash="/images/devops-step-thirteen.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CI/CD - Tích hợp liên tục và triển khai liên tục 🚀</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-fifteen/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-fifteen.webp" loading="lazy" data-key="" data-hash="/images/devops-step-fifteen.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Giám sát hạ tầng (Infrastructure Monitoring) 📊</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-eleven/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-eleven.webp" loading="lazy" data-key="" data-hash="/images/devops-step-eleven.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Infrastructure Provisioning với Terraform 🟪🔳</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-twelve/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-twelve.webp" loading="lazy" data-key="" data-hash="/images/devops-step-twelve.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Quản lý cấu hình (Configuration Management)🔧</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-fourteen/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-fourteen.webp" loading="lazy" data-key="" data-hash="/images/devops-step-fourteen.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Quản lý khoá bí mật (Secret Management)🔒</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="hoangduonng/blog_comments"
+        issue-term="pathname"
+        
+        label="comments"
+        
+        theme="icy-dark"
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 Hoàng Dương
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/" target="_blank" rel="noopener">Ngữ Uyển ❤️</a> <br />
+        Theme <no value> thiết kế bởi Jimmy
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

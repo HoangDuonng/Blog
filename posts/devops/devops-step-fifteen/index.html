@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="vi" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Giám sát hạ tầng là quá trình theo dõi hiệu suất và trạng thái hệ thống nhằm phát hiện sự cố, tối ưu hóa hoạt động và lựa chọn công cụ phù hợp với mục tiêu giám sát.">
+<title>Giám sát hạ tầng (Infrastructure Monitoring) 📊</title>
+
+<link rel='canonical' href='https://tech.nguuyen.io.vn/posts/devops/devops-step-fifteen/'>
+
+<link rel="stylesheet" href="/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css"><meta property='og:title' content="Giám sát hạ tầng (Infrastructure Monitoring) 📊">
+<meta property='og:description' content="Giám sát hạ tầng là quá trình theo dõi hiệu suất và trạng thái hệ thống nhằm phát hiện sự cố, tối ưu hóa hoạt động và lựa chọn công cụ phù hợp với mục tiêu giám sát.">
+<meta property='og:url' content='https://tech.nguuyen.io.vn/posts/devops/devops-step-fifteen/'>
+<meta property='og:site_name' content='Hoàng Dương'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='devops' /><meta property='article:published_time' content='2025-02-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-02-24T00:00:00&#43;00:00'/><meta property='og:image' content='https://tech.nguuyen.io.vn/images/devops-step-fifteen.webp' />
+<meta name="twitter:title" content="Giám sát hạ tầng (Infrastructure Monitoring) 📊">
+<meta name="twitter:description" content="Giám sát hạ tầng là quá trình theo dõi hiệu suất và trạng thái hệ thống nhằm phát hiện sự cố, tối ưu hóa hoạt động và lựa chọn công cụ phù hợp với mục tiêu giám sát."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://tech.nguuyen.io.vn/images/devops-step-fifteen.webp' />
+    <link rel="icon" type="image/png" href="/images/favicon.ico" />
+<style>
+     
+    :root {
+        --article-font-family: "Roboto", var(--base-font-family);
+    }
+</style>
+
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap";
+    
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+    
+        document.head.appendChild(customFont);
+    }());
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Hiển thị Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="400"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Hoàng Dương</a></h1>
+            <h2 class="site-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/HoangDuonng'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.instagram.com/ngu_uuen/'
+                        target="_blank"
+                        title="Instagram"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="3" width="18" height="18" rx="3" />
+  <circle cx="12" cy="12" r="4" />
+  <path d="M16.5 7.5h.01" />
+</svg>
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Trang chủ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/gi%E1%BB%9Bi-thi%E1%BB%87u/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Về tôi</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Lưu trữ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Tìm kiếm</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/li%C3%AAn-k%E1%BA%BFt/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Liên kết</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://tech.nguuyen.io.vn/" selected>Tiếng Việt</option>
+                                
+                                    <option value="https://tech.nguuyen.io.vn/en/" >English</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Chế độ tối</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Mục lục</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#-giám-sát-là-gì">🔍 Giám sát là gì?</a></li>
+    <li><a href="#-các-công-cụ-giám-sát-phổ-biến">🚀 Các công cụ giám sát phổ biến</a>
+      <ol>
+        <li><a href="#grafana">Grafana</a></li>
+        <li><a href="#prometheus">Prometheus</a></li>
+        <li><a href="#zabbix">Zabbix</a></li>
+      </ol>
+    </li>
+    <li><a href="#-kết-luận">✅ Kết luận</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/posts/devops/devops-step-fifteen/">
+                
+                    <img src="/images/devops-step-fifteen.webp" loading="lazy" alt="Featured image of post Giám sát hạ tầng (Infrastructure Monitoring) 📊" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/devops/" style="background-color: #2a9d8f; color: #fff;">
+                DevOps
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/devops/devops-step-fifteen/">Giám sát hạ tầng (Infrastructure Monitoring) 📊</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Giám sát hạ tầng là quá trình theo dõi hiệu suất và trạng thái hệ thống nhằm phát hiện sự cố, tối ưu hóa hoạt động và lựa chọn công cụ phù hợp với mục tiêu giám sát.
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">24/02/2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 phút đọc
+                </time>
+            </div>
+        
+
+        
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                    <span class="article-author--name">
+                        Hoàng Dương
+                    </span>
+                </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="-giám-sát-hạ-tầng-infrastructure-monitoring">📊 Giám sát hạ tầng (Infrastructure Monitoring)
+</h1><h2 id="-giám-sát-là-gì">🔍 Giám sát là gì?
+</h2><p>Giám sát hạ tầng là quá trình theo dõi hiệu suất và trạng thái của hệ thống, giúp phát hiện sự cố kịp thời và tối ưu hóa hoạt động. Đây là một lĩnh vực rộng lớn với nhiều công cụ khác nhau, mỗi công cụ có ưu nhược điểm riêng. Hiểu rõ các công cụ này sẽ giúp bạn chọn giải pháp phù hợp với mục tiêu giám sát của mình.</p>
+<hr>
+<h2 id="-các-công-cụ-giám-sát-phổ-biến">🚀 Các công cụ giám sát phổ biến
+</h2><h3 id="grafana">Grafana
+</h3><p><strong>📝 Giới thiệu:</strong>
+Grafana là một ứng dụng web mã nguồn mở chuyên dùng để phân tích dữ liệu và trực quan hóa. Nó kết nối với nhiều nguồn dữ liệu khác nhau như cơ sở dữ liệu thời gian thực, cơ sở dữ liệu quan hệ và dịch vụ đám mây.</p>
+<p><strong>🔹 Tính năng nổi bật:</strong></p>
+<ul>
+<li>Trực quan hóa dữ liệu mạnh mẽ với nhiều loại biểu đồ.</li>
+<li>Hỗ trợ nhiều plugin mở rộng.</li>
+<li>Hệ thống cảnh báo theo thời gian thực.</li>
+<li>Xác thực người dùng và kiểm soát truy cập theo vai trò.</li>
+</ul>
+<p><strong>📌 Ví dụ:</strong>
+Sử dụng Grafana để giám sát mức sử dụng CPU và RAM của hệ thống, giúp phát hiện và xử lý sự cố quá tải.</p>
+<p><strong>📚 Tài nguyên hữu ích:</strong></p>
+<ul>
+<li>🔗<a class="link" href="https://grafana.com/"  target="_blank" rel="noopener"
+    >Trang chủ Grafana</a></li>
+<li>📖<a class="link" href="https://grafana.com/videos/"  target="_blank" rel="noopener"
+    >Hướng dẫn cài đặt và sử dụng</a></li>
+</ul>
+<hr>
+<h3 id="prometheus">Prometheus
+</h3><p><strong>📝 Giới thiệu:</strong>
+Prometheus là một công cụ giám sát và cảnh báo mã nguồn mở, đặc biệt phù hợp với các hệ thống microservices và container hóa như Kubernetes.</p>
+<p><strong>🔹 Tính năng nổi bật:</strong></p>
+<ul>
+<li>Mô hình dữ liệu đa chiều.</li>
+<li>Hỗ trợ ngôn ngữ truy vấn PromQL mạnh mẽ.</li>
+<li>Cơ chế thu thập dữ liệu theo mô hình pull.</li>
+<li>Quản lý cảnh báo thông minh với Alertmanager.</li>
+</ul>
+<p><strong>📌 Ví dụ:</strong>
+Sử dụng Prometheus để thu thập và phân tích số lượng request đến một API, giúp xác định thời điểm tải cao và tối ưu hóa hiệu suất.</p>
+<p><strong>📚 Tài nguyên hữu ích:</strong></p>
+<ul>
+<li>🔗<a class="link" href="https://prometheus.io/"  target="_blank" rel="noopener"
+    >Trang chủ Prometheus</a></li>
+<li>🎥<a class="link" href="https://www.youtube.com/watch?v=STVMGrYIlfg"  target="_blank" rel="noopener"
+    >Giới thiệu về Prometheus</a></li>
+</ul>
+<hr>
+<h3 id="zabbix">Zabbix
+</h3><p><strong>📝 Giới thiệu:</strong>
+Zabbix là một nền tảng giám sát mã nguồn mở, hỗ trợ theo dõi toàn diện các thành phần trong hệ thống như máy chủ, mạng, ứng dụng và dịch vụ.</p>
+<p><strong>🔹 Tính năng nổi bật:</strong></p>
+<ul>
+<li>Hỗ trợ nhiều phương thức thu thập dữ liệu: Agent, SNMP, IPMI, script tùy chỉnh.</li>
+<li>Cảnh báo và thông báo theo thời gian thực.</li>
+<li>Hệ thống dashboard và báo cáo chi tiết.</li>
+<li>Mở rộng dễ dàng cho các môi trường lớn.</li>
+</ul>
+<p><strong>📌 Ví dụ:</strong>
+Sử dụng Zabbix để giám sát trạng thái của các server trong hệ thống, phát hiện downtime và gửi cảnh báo ngay lập tức.</p>
+<p><strong>📚 Tài nguyên hữu ích:</strong></p>
+<ul>
+<li>🔗<a class="link" href="https://www.zabbix.com/"  target="_blank" rel="noopener"
+    >Trang chủ Zabbix</a></li>
+<li>📖<a class="link" href="https://www.zabbix.com/manuals"  target="_blank" rel="noopener"
+    >Hướng dẫn sử dụng Zabbix</a></li>
+</ul>
+<hr>
+<h2 id="-kết-luận">✅ Kết luận
+</h2><p>Mỗi công cụ giám sát có ưu điểm riêng:</p>
+<ul>
+<li><strong>Grafana</strong>: Mạnh về trực quan hóa dữ liệu.</li>
+<li><strong>Prometheus</strong>: Phù hợp với môi trường container và microservices.</li>
+<li><strong>Zabbix</strong>: Giải pháp giám sát tổng thể cho hệ thống lớn.</li>
+</ul>
+<p>Tùy vào nhu cầu cụ thể, bạn có thể kết hợp nhiều công cụ để xây dựng hệ thống giám sát tối ưu cho mình. 🚀</p>
+<p>👉 <strong>Bước tiếp theo:</strong> Tìm hiểu về <em><strong>Logs Management</strong></em>  quá trình thu thập, lưu trữ, xử lý và phân tích log từ các hệ thống, ứng dụng và thiết bị nhằm theo dõi hoạt động, phát hiện sự cố, đảm bảo bảo mật và hỗ trợ khắc phục sự cố nhanh chóng.</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/devops/">Devops</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Bài viết liên quan</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-thirteen/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-thirteen.webp" loading="lazy" data-key="" data-hash="/images/devops-step-thirteen.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CI/CD - Tích hợp liên tục và triển khai liên tục 🚀</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-seventeen/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-seventeen.webp" loading="lazy" data-key="" data-hash="/images/devops-step-seventeen.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Container Orchestration 🚢</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-eleven/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-eleven.webp" loading="lazy" data-key="" data-hash="/images/devops-step-eleven.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Infrastructure Provisioning với Terraform 🟪🔳</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-twelve/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-twelve.webp" loading="lazy" data-key="" data-hash="/images/devops-step-twelve.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Quản lý cấu hình (Configuration Management)🔧</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-fourteen/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-fourteen.webp" loading="lazy" data-key="" data-hash="/images/devops-step-fourteen.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Quản lý khoá bí mật (Secret Management)🔒</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="hoangduonng/blog_comments"
+        issue-term="pathname"
+        
+        label="comments"
+        
+        theme="icy-dark"
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 Hoàng Dương
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/" target="_blank" rel="noopener">Ngữ Uyển ❤️</a> <br />
+        Theme <no value> thiết kế bởi Jimmy
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

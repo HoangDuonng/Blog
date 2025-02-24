@@ -6,7 +6,1080 @@
         <description>Recent content in Posts on Hoàng Dương</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>vi</language>
-        <lastBuildDate>Sun, 23 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 24 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>CI/CD - Tích hợp liên tục và triển khai liên tục 🚀</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-thirteen/</link>
+        <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-thirteen/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-thirteen.webp" alt="Featured image of post CI/CD - Tích hợp liên tục và triển khai liên tục 🚀" /&gt;&lt;h1 id=&#34;-cicd---tích-hợp-liên-tục-và-triển-khai-liên-tục&#34;&gt;🚀 CI/CD - Tích hợp liên tục và Triển khai liên tục
+&lt;/h1&gt;&lt;h2 id=&#34;-cicd-là-gì&#34;&gt;🔍 CI/CD là gì?
+&lt;/h2&gt;&lt;p&gt;CI/CD (Continuous Integration/Continuous Deployment) là một phương pháp giúp tự động hóa quá trình phát triển phần mềm, giúp giảm lỗi, tăng tốc độ triển khai và cải thiện chất lượng sản phẩm.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Continuous Integration (CI):&lt;/strong&gt; Tích hợp liên tục, giúp phát hiện lỗi sớm bằng cách tự động kiểm thử mỗi khi có thay đổi trong mã nguồn.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Continuous Deployment (CD):&lt;/strong&gt; Triển khai liên tục, đảm bảo phần mềm được phát hành một cách tự động và nhanh chóng.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-các-công-cụ-cicd-phổ-biến&#34;&gt;🌟 Các công cụ CI/CD phổ biến
+&lt;/h2&gt;&lt;h3 id=&#34;-jenkins&#34;&gt;🔧 Jenkins
+&lt;/h3&gt;&lt;p&gt;Jenkins là một máy chủ tự động hóa mã nguồn mở phổ biến, giúp xây dựng, kiểm thử và triển khai phần mềm một cách tự động.&lt;/p&gt;
+&lt;p&gt;📌 &lt;strong&gt;Đặc điểm nổi bật:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Hỗ trợ nhiều plugin, dễ dàng tích hợp với các công cụ DevOps.&lt;/li&gt;
+&lt;li&gt;Giao diện web trực quan, dễ dàng cấu hình.&lt;/li&gt;
+&lt;li&gt;Hỗ trợ cả môi trường Windows và Linux.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;💡 &lt;strong&gt;Ví dụ:&lt;/strong&gt; Cấu hình một pipeline đơn giản trong Jenkinsfile&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;18
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;19
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;20
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-groovy&#34; data-lang=&#34;groovy&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;pipeline&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;agent&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;any&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;stages&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;stage&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Build&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;steps&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;n&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Building the application...&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;stage&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Test&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;steps&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;n&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Running tests...&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;stage&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Deploy&amp;#39;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;steps&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;n&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;Deploying the application...&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.jenkins.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🔗 Trang chủ Jenkins&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=6YZvp2GwT0A&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Hướng dẫn Jenkins từ A-Z&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;-circleci&#34;&gt;🔄 CircleCI
+&lt;/h3&gt;&lt;p&gt;CircleCI là một nền tảng CI/CD mạnh mẽ, hỗ trợ nhiều ngôn ngữ lập trình và tích hợp tốt với GitHub, Bitbucket.&lt;/p&gt;
+&lt;p&gt;📌 &lt;strong&gt;Đặc điểm nổi bật:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Hỗ trợ build song song để tăng tốc độ xử lý.&lt;/li&gt;
+&lt;li&gt;Tích hợp tốt với Docker và Kubernetes.&lt;/li&gt;
+&lt;li&gt;Có phiên bản cloud và self-hosted.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;💡 &lt;strong&gt;Ví dụ:&lt;/strong&gt; Cấu hình một pipeline CircleCI trong &lt;code&gt;.circleci/config.yml&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;version&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;m&#34;&gt;2.1&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;jobs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;build&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;docker&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;nt&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;circleci/node:14&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;steps&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;checkout&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;nt&#34;&gt;run&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;npm install&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;nt&#34;&gt;run&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;npm test&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://circleci.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🔗 Trang chủ CircleCI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=_XaYv9zvHUk&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Video hướng dẫn CircleCI&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;-gitlab-cicd&#34;&gt;🛠️ GitLab CI/CD
+&lt;/h3&gt;&lt;p&gt;GitLab CI/CD là một hệ thống tích hợp sẵn trong GitLab, cho phép tự động hóa quá trình kiểm thử và triển khai ngay trong Git repository.&lt;/p&gt;
+&lt;p&gt;📌 &lt;strong&gt;Đặc điểm nổi bật:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Hỗ trợ tự động hóa toàn bộ pipeline từ build, test đến deploy.&lt;/li&gt;
+&lt;li&gt;Có sẵn trong GitLab, không cần công cụ bên ngoài.&lt;/li&gt;
+&lt;li&gt;Hỗ trợ cả chạy pipeline trên Docker container.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;💡 &lt;strong&gt;Ví dụ:&lt;/strong&gt; Cấu hình pipeline GitLab CI/CD trong &lt;code&gt;.gitlab-ci.yml&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;stages&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;build&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;deploy&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;stage&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;test&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;script&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;npm install&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;- &lt;span class=&#34;l&#34;&gt;npm test&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://gitlab.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🔗 Trang chủ GitLab&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=z7nLsJvEyMY&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Hướng dẫn GitLab CI/CD&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;-github-actions&#34;&gt;⚡ GitHub Actions
+&lt;/h3&gt;&lt;p&gt;GitHub Actions là công cụ CI/CD được tích hợp trực tiếp vào GitHub, giúp tự động hóa quá trình kiểm thử và triển khai mỗi khi có thay đổi trong repository.&lt;/p&gt;
+&lt;p&gt;📌 &lt;strong&gt;Đặc điểm nổi bật:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tích hợp chặt chẽ với GitHub, dễ dàng thiết lập workflow.&lt;/li&gt;
+&lt;li&gt;Hỗ trợ nhiều hệ điều hành và ngôn ngữ lập trình.&lt;/li&gt;
+&lt;li&gt;Có thể sử dụng marketplace với hàng nghìn actions có sẵn.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;💡 &lt;strong&gt;Ví dụ:&lt;/strong&gt; Workflow GitHub Actions trong &lt;code&gt;.github/workflows/main.yml&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;Node.js CI&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;on&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;l&#34;&gt;push, pull_request]&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;jobs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;build&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;runs-on&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;ubuntu-latest&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;steps&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;nt&#34;&gt;uses&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;actions/checkout@v3&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;nt&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;Setup Node.js&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;uses&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;actions/setup-node@v3&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;with&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;node-version&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;m&#34;&gt;14&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;nt&#34;&gt;run&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;npm install&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;- &lt;span class=&#34;nt&#34;&gt;run&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;npm test&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://docs.github.com/en/actions&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🔗 Trang chủ GitHub Actions&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=nyKZTKQS_EQ&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Video hướng dẫn GitHub Actions&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;🎯 Kết luận
+&lt;/h2&gt;&lt;p&gt;CI/CD giúp tăng tốc quá trình phát triển phần mềm, giảm thiểu lỗi và nâng cao chất lượng sản phẩm. Tùy theo nhu cầu và môi trường làm việc, bạn có thể chọn &lt;strong&gt;Jenkins, CircleCI, GitLab CI/CD hoặc GitHub Actions&lt;/strong&gt; để triển khai hệ thống CI/CD của mình. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Secret Management&lt;/strong&gt;&lt;/em&gt;  quá trình lưu trữ, quản lý và bảo vệ các thông tin nhạy cảm như mật khẩu, khóa API, chứng chỉ và token truy cập để ngăn chặn rò rỉ dữ liệu và đảm bảo bảo mật hệ thống. 💡&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Container Orchestration 🚢</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-seventeen/</link>
+        <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-seventeen/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-seventeen.webp" alt="Featured image of post Container Orchestration 🚢" /&gt;&lt;h1 id=&#34;-container-orchestration&#34;&gt;🚢 Container Orchestration
+&lt;/h1&gt;&lt;h2 id=&#34;-container-orchestration-là-gì&#34;&gt;🔍 Container Orchestration là gì?
+&lt;/h2&gt;&lt;p&gt;Container orchestration là quá trình quản lý và tự động hóa vòng đời của container, bao gồm triển khai, mở rộng và kết nối mạng giữa các container trên nhiều máy chủ. Đây là công nghệ quan trọng để chạy các ứng dụng phức tạp trong môi trường sản xuất.&lt;/p&gt;
+&lt;p&gt;Bằng cách sử dụng các công cụ như &lt;strong&gt;Kubernetes, Docker Swarm,&lt;/strong&gt; và &lt;strong&gt;Apache Mesos&lt;/strong&gt;, các tổ chức có thể đảm bảo &lt;strong&gt;tính khả dụng cao, khả năng mở rộng và độ tin cậy&lt;/strong&gt; cho ứng dụng của mình. Container orchestration giúp tự động hóa các tác vụ vận hành và tạo nền tảng vững chắc cho &lt;strong&gt;microservices, cloud-native development,&lt;/strong&gt; và &lt;strong&gt;DevOps&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📦 &lt;a class=&#34;link&#34; href=&#34;https://www.redhat.com/en/topics/containers/what-is-container-orchestration&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Container Orchestration là gì?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🚀 &lt;a class=&#34;link&#34; href=&#34;https://kubernetes.io/docs/tutorials/kubernetes-basics/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Kubernetes là gì?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🐳 &lt;a class=&#34;link&#34; href=&#34;https://docs.docker.com/engine/swarm/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Docker Swarm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=PH-2FfFD2PU&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Giới thiệu về Kubernetes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kubernetes&#34;&gt;☸️ Kubernetes
+&lt;/h2&gt;&lt;p&gt;Kubernetes là nền tảng mã nguồn mở phổ biến nhất để quản lý container. Nó cho phép triển khai container trên nhiều máy chủ, xác định mức độ sẵn sàng, logic triển khai và mở rộng thông qua YAML.&lt;/p&gt;
+&lt;p&gt;Kubernetes có nguồn gốc từ &lt;strong&gt;Borg&lt;/strong&gt;, nền tảng nội bộ của Google, và đã trở thành &lt;strong&gt;kỹ năng quan trọng đối với các kỹ sư DevOps&lt;/strong&gt;. Nhiều tổ chức đã thành lập &lt;strong&gt;đội ngũ Platform Engineering&lt;/strong&gt; chuyên về Kubernetes để hỗ trợ các nhóm phát triển sản phẩm.&lt;/p&gt;
+&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🗺️ &lt;a class=&#34;link&#34; href=&#34;https://roadmap.sh/kubernetes&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Lộ trình Kubernetes chuyên sâu&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌐 &lt;a class=&#34;link&#34; href=&#34;https://kubernetes.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang web chính thức của Kubernetes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://thenewstack.io/primer-how-kubernetes-came-to-be-what-it-is-and-why-you-should-care/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tổng quan về Kubernetes&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=2T86xAtR6Fo&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Khóa học Kubernetes hoàn chỉnh - Từ cơ bản đến nâng cao&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;📌 Ví dụ:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;apiVersion&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;apps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;v1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;kind&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Deployment&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;metadata&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nx&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;my&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;spec&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nx&#34;&gt;replicas&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nx&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;matchLabels&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;my&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nx&#34;&gt;template&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;metadata&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;nx&#34;&gt;labels&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;my&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;spec&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;nx&#34;&gt;containers&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;my&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nx&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;my&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;latest&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-gke--eks--aks&#34;&gt;☁️ GKE / EKS / AKS
+&lt;/h2&gt;&lt;h3 id=&#34;-gke---google-kubernetes-engine&#34;&gt;🔹 GKE - Google Kubernetes Engine
+&lt;/h3&gt;&lt;p&gt;Google Kubernetes Engine (GKE) là dịch vụ Kubernetes được quản lý bởi Google Cloud. Nó giúp triển khai, quản lý và mở rộng ứng dụng container với Kubernetes mà không cần tự quản lý cụm máy chủ.&lt;/p&gt;
+&lt;h3 id=&#34;-eks---amazon-elastic-kubernetes-service&#34;&gt;🔹 EKS - Amazon Elastic Kubernetes Service
+&lt;/h3&gt;&lt;p&gt;Amazon Elastic Kubernetes Service (EKS) là dịch vụ Kubernetes được AWS cung cấp. Nó tự động quản lý control plane của Kubernetes và tích hợp với các dịch vụ AWS khác.&lt;/p&gt;
+&lt;h3 id=&#34;-aks---azure-kubernetes-service&#34;&gt;🔹 AKS - Azure Kubernetes Service
+&lt;/h3&gt;&lt;p&gt;Azure Kubernetes Service (AKS) là dịch vụ Kubernetes của Microsoft Azure. AKS hỗ trợ giám sát, bảo mật, mở rộng tự động và tích hợp với Azure DevOps.&lt;/p&gt;
+&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;☁️ &lt;a class=&#34;link&#34; href=&#34;https://cloud.google.com/kubernetes-engine&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Google Kubernetes Engine (GKE)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🟧 &lt;a class=&#34;link&#34; href=&#34;https://aws.amazon.com/eks/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Amazon Elastic Kubernetes Service (EKS)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔵 &lt;a class=&#34;link&#34; href=&#34;https://azure.microsoft.com/en-us/products/kubernetes-service/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Azure Kubernetes Service (AKS)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=CukYk43agA4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn AWS EKS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=Rl5M1CzgEH4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Google Kubernetes Engine là gì?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-ecs--fargate&#34;&gt;🚀 ECS / Fargate
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;ECS&lt;/strong&gt; là dịch vụ quản lý container chạy trên EC2 của AWS, cho phép kiểm soát hạ tầng máy chủ.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Fargate&lt;/strong&gt; là dịch vụ quản lý container &lt;strong&gt;serverless&lt;/strong&gt;, giúp chạy container mà không cần quản lý máy chủ hoặc cụm máy.&lt;/p&gt;
+&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu AWS Fargate&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://docs.aws.amazon.com/ecs/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu AWS ECS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=yi22xrvPnPk&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tổng quan về AWS Fargate&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=esISkPlnxL0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn AWS ECS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;📌 Ví dụ:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;s2&#34;&gt;&amp;#34;family&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;my-task&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;s2&#34;&gt;&amp;#34;containerDefinitions&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;s2&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;my-container&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;s2&#34;&gt;&amp;#34;image&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;my-container-image:latest&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;s2&#34;&gt;&amp;#34;memory&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;512&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;s2&#34;&gt;&amp;#34;cpu&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;256&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-docker-swarm&#34;&gt;🐳 Docker Swarm
+&lt;/h2&gt;&lt;p&gt;Docker Swarm là tập hợp các máy (vật lý hoặc ảo) chạy Docker và được cấu hình thành một cụm (&lt;strong&gt;cluster&lt;/strong&gt;). Quản lý cụm được thực hiện bởi &lt;strong&gt;swarm manager&lt;/strong&gt;, và các máy tham gia cụm được gọi là &lt;strong&gt;nodes&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;📚 &lt;strong&gt;Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://docs.docker.com/engine/swarm/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu Docker Swarm&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔧 &lt;a class=&#34;link&#34; href=&#34;https://thenewstack.io/tutorial-manage-docker-swarm-with-portainer/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Quản lý Docker Swarm với Portainer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📦 &lt;a class=&#34;link&#34; href=&#34;https://thenewstack.io/tutorial-create-a-docker-swarm-with-persistent-storage-using-glusterfs/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tạo Docker Swarm với bộ nhớ lưu trữ GlusterFS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=Xaea-XnJTJU&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Giới thiệu Docker Swarm | Hướng dẫn từng bước&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;strong&gt;📌 Ví dụ:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// Khởi tạo Swarm
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;docker&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;swarm&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;init&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// Triển khai dịch vụ trên Swarm
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;docker&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;create&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;web&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;p&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;80&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;80&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;nginx&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;✅ Kết luận
+&lt;/h2&gt;&lt;p&gt;Container orchestration đóng vai trò quan trọng trong việc quản lý ứng dụng container, giúp &lt;strong&gt;đơn giản hóa vận hành, tối ưu tài nguyên và tăng cường tính sẵn sàng&lt;/strong&gt;. Các công cụ như &lt;strong&gt;Kubernetes, Docker Swarm, ECS, Fargate&lt;/strong&gt; cung cấp nhiều giải pháp linh hoạt cho các doanh nghiệp hiện đại. Việc lựa chọn công cụ phù hợp sẽ giúp doanh nghiệp &lt;strong&gt;tận dụng tối đa sức mạnh của container hóa và điện toán đám mây&lt;/strong&gt;. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Application Monitoring&lt;/strong&gt;&lt;/em&gt;  theo dõi, đo lường và phân tích hiệu suất, trạng thái và hành vi của ứng dụng để phát hiện sự cố, tối ưu hóa hiệu suất và đảm bảo trải nghiệm người dùng tốt. Các công cụ phổ biến như Prometheus, Grafana, Datadog, New Relic giúp thu thập dữ liệu từ ứng dụng, máy chủ và hạ tầng để cung cấp cảnh báo và báo cáo chi tiết.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Giám sát hạ tầng (Infrastructure Monitoring) 📊</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-fifteen/</link>
+        <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-fifteen/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-fifteen.webp" alt="Featured image of post Giám sát hạ tầng (Infrastructure Monitoring) 📊" /&gt;&lt;h1 id=&#34;-giám-sát-hạ-tầng-infrastructure-monitoring&#34;&gt;📊 Giám sát hạ tầng (Infrastructure Monitoring)
+&lt;/h1&gt;&lt;h2 id=&#34;-giám-sát-là-gì&#34;&gt;🔍 Giám sát là gì?
+&lt;/h2&gt;&lt;p&gt;Giám sát hạ tầng là quá trình theo dõi hiệu suất và trạng thái của hệ thống, giúp phát hiện sự cố kịp thời và tối ưu hóa hoạt động. Đây là một lĩnh vực rộng lớn với nhiều công cụ khác nhau, mỗi công cụ có ưu nhược điểm riêng. Hiểu rõ các công cụ này sẽ giúp bạn chọn giải pháp phù hợp với mục tiêu giám sát của mình.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-các-công-cụ-giám-sát-phổ-biến&#34;&gt;🚀 Các công cụ giám sát phổ biến
+&lt;/h2&gt;&lt;h3 id=&#34;grafana&#34;&gt;Grafana
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;📝 Giới thiệu:&lt;/strong&gt;
+Grafana là một ứng dụng web mã nguồn mở chuyên dùng để phân tích dữ liệu và trực quan hóa. Nó kết nối với nhiều nguồn dữ liệu khác nhau như cơ sở dữ liệu thời gian thực, cơ sở dữ liệu quan hệ và dịch vụ đám mây.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Tính năng nổi bật:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Trực quan hóa dữ liệu mạnh mẽ với nhiều loại biểu đồ.&lt;/li&gt;
+&lt;li&gt;Hỗ trợ nhiều plugin mở rộng.&lt;/li&gt;
+&lt;li&gt;Hệ thống cảnh báo theo thời gian thực.&lt;/li&gt;
+&lt;li&gt;Xác thực người dùng và kiểm soát truy cập theo vai trò.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;📌 Ví dụ:&lt;/strong&gt;
+Sử dụng Grafana để giám sát mức sử dụng CPU và RAM của hệ thống, giúp phát hiện và xử lý sự cố quá tải.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📚 Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗&lt;a class=&#34;link&#34; href=&#34;https://grafana.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Grafana&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖&lt;a class=&#34;link&#34; href=&#34;https://grafana.com/videos/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn cài đặt và sử dụng&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;prometheus&#34;&gt;Prometheus
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;📝 Giới thiệu:&lt;/strong&gt;
+Prometheus là một công cụ giám sát và cảnh báo mã nguồn mở, đặc biệt phù hợp với các hệ thống microservices và container hóa như Kubernetes.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Tính năng nổi bật:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Mô hình dữ liệu đa chiều.&lt;/li&gt;
+&lt;li&gt;Hỗ trợ ngôn ngữ truy vấn PromQL mạnh mẽ.&lt;/li&gt;
+&lt;li&gt;Cơ chế thu thập dữ liệu theo mô hình pull.&lt;/li&gt;
+&lt;li&gt;Quản lý cảnh báo thông minh với Alertmanager.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;📌 Ví dụ:&lt;/strong&gt;
+Sử dụng Prometheus để thu thập và phân tích số lượng request đến một API, giúp xác định thời điểm tải cao và tối ưu hóa hiệu suất.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📚 Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗&lt;a class=&#34;link&#34; href=&#34;https://prometheus.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Prometheus&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=STVMGrYIlfg&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Giới thiệu về Prometheus&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;zabbix&#34;&gt;Zabbix
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;📝 Giới thiệu:&lt;/strong&gt;
+Zabbix là một nền tảng giám sát mã nguồn mở, hỗ trợ theo dõi toàn diện các thành phần trong hệ thống như máy chủ, mạng, ứng dụng và dịch vụ.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Tính năng nổi bật:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Hỗ trợ nhiều phương thức thu thập dữ liệu: Agent, SNMP, IPMI, script tùy chỉnh.&lt;/li&gt;
+&lt;li&gt;Cảnh báo và thông báo theo thời gian thực.&lt;/li&gt;
+&lt;li&gt;Hệ thống dashboard và báo cáo chi tiết.&lt;/li&gt;
+&lt;li&gt;Mở rộng dễ dàng cho các môi trường lớn.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;📌 Ví dụ:&lt;/strong&gt;
+Sử dụng Zabbix để giám sát trạng thái của các server trong hệ thống, phát hiện downtime và gửi cảnh báo ngay lập tức.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📚 Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗&lt;a class=&#34;link&#34; href=&#34;https://www.zabbix.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Zabbix&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖&lt;a class=&#34;link&#34; href=&#34;https://www.zabbix.com/manuals&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn sử dụng Zabbix&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;✅ Kết luận
+&lt;/h2&gt;&lt;p&gt;Mỗi công cụ giám sát có ưu điểm riêng:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Grafana&lt;/strong&gt;: Mạnh về trực quan hóa dữ liệu.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Prometheus&lt;/strong&gt;: Phù hợp với môi trường container và microservices.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Zabbix&lt;/strong&gt;: Giải pháp giám sát tổng thể cho hệ thống lớn.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Tùy vào nhu cầu cụ thể, bạn có thể kết hợp nhiều công cụ để xây dựng hệ thống giám sát tối ưu cho mình. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Logs Management&lt;/strong&gt;&lt;/em&gt;  quá trình thu thập, lưu trữ, xử lý và phân tích log từ các hệ thống, ứng dụng và thiết bị nhằm theo dõi hoạt động, phát hiện sự cố, đảm bảo bảo mật và hỗ trợ khắc phục sự cố nhanh chóng.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Infrastructure Provisioning với Terraform 🟪🔳</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-eleven/</link>
+        <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-eleven/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-eleven.webp" alt="Featured image of post Infrastructure Provisioning với Terraform 🟪🔳" /&gt;&lt;h1 id=&#34;-infrastructure-provisioning-với-terraform&#34;&gt;🚀 Infrastructure Provisioning với Terraform
+&lt;/h1&gt;&lt;h2 id=&#34;-provisioning-là-gì&#34;&gt;🔹 Provisioning là gì?
+&lt;/h2&gt;&lt;p&gt;Provisioning đề cập đến quá trình thiết lập và cấu hình hạ tầng CNTT cần thiết để hỗ trợ ứng dụng hoặc dịch vụ. Điều này bao gồm việc phân bổ và chuẩn bị tài nguyên như &lt;strong&gt;máy chủ, lưu trữ, mạng và môi trường phần mềm&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Mặc dù provisioning có thể được thực hiện thủ công, nhưng trong DevOps hiện đại, quá trình này thường được tự động hóa bằng các công cụ như &lt;strong&gt;Terraform, Pulumi, CloudFormation&lt;/strong&gt;. Việc sử dụng Infrastructure-as-Code (&lt;strong&gt;IaC&lt;/strong&gt;) giúp định nghĩa toàn bộ quy trình provisioning trong các tệp script được quản lý phiên bản, giúp đảm bảo tính nhất quán, giảm lỗi do con người và cải thiện khả năng mở rộng, phục hồi sau thảm họa.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://www.redhat.com/en/topics/automation/what-is-provisioning&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;What is provisioning? - RedHat&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://www.ibm.com/topics/provisioning&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;What is provisioning? - IBM&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=hWvDlmhASpk&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Open Answers: What is provisioning?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-terraform---giải-pháp-iac-mạnh-mẽ&#34;&gt;🏗️ Terraform - Giải pháp IaC mạnh mẽ
+&lt;/h2&gt;&lt;p&gt;Terraform là công cụ &lt;strong&gt;Infrastructure-as-Code (IaC)&lt;/strong&gt; mã nguồn mở do &lt;strong&gt;HashiCorp&lt;/strong&gt; phát triển, giúp định nghĩa, triển khai và quản lý hạ tầng trên &lt;strong&gt;đa đám mây&lt;/strong&gt; hoặc on-premises bằng các tập tin cấu hình &lt;strong&gt;khai báo (declarative)&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;-lợi-ích-khi-sử-dụng-terraform&#34;&gt;🌟 Lợi ích khi sử dụng Terraform
+&lt;/h3&gt;&lt;p&gt;✅ &lt;strong&gt;Hỗ trợ đa nền tảng&lt;/strong&gt;: AWS, Azure, Google Cloud, Kubernetes, v.v.
+✅ &lt;strong&gt;Quản lý trạng thái (state management)&lt;/strong&gt;: Giúp theo dõi tài nguyên hạ tầng.
+✅ &lt;strong&gt;Khả năng mở rộng và tái sử dụng&lt;/strong&gt;: Dễ dàng modular hóa cấu hình.
+✅ &lt;strong&gt;Tích hợp CI/CD&lt;/strong&gt;: Tự động hóa triển khai hạ tầng.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-tạo-một-ec2-instance-trên-aws&#34;&gt;🔨 Ví dụ: Tạo một EC2 instance trên AWS
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-hcl&#34; data-lang=&#34;hcl&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;provider&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;aws&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;  region&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;us-east-1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;resource&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;aws_instance&amp;#34; &amp;#34;web&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;  ami&lt;/span&gt;           &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;ami-12345678&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;  instance_type&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;t2.micro&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;  tags&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;    Name&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Terraform-Instance&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  }
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📍 &lt;a class=&#34;link&#34; href=&#34;https://roadmap.sh/terraform&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Lộ trình Terraform chi tiết&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=7xngnjfIlK4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Khóa học Terraform hoàn chỉnh&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://www.terraform.io/docs&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu chính thức của Terraform&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://thenewstack.io/how-to-scale-your-terraform-infrastructure/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Cách mở rộng hạ tầng Terraform&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔥 &lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/terraform?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Khám phá các bài viết hàng đầu về Terraform&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-aws-cdk---một-sự-thay-thế&#34;&gt;🔹 AWS CDK - Một sự thay thế?
+&lt;/h2&gt;&lt;p&gt;AWS Cloud Development Kit (&lt;strong&gt;AWS CDK&lt;/strong&gt;) là framework mã nguồn mở để provisioning hạ tầng AWS bằng mã trong các ngôn ngữ như &lt;strong&gt;TypeScript, Python, Java, C#, Go&lt;/strong&gt;. AWS CDK sử dụng CloudFormation để triển khai tài nguyên một cách an toàn và có thể lặp lại.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=D4Asp5g4fp8&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Khóa học AWS CDK cho người mới bắt đầu&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=D4Asp5g4fp8&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu chính thức của AWS CDK&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📂 &lt;a class=&#34;link&#34; href=&#34;https://github.com/aws-samples/aws-cdk-examples&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Các ví dụ về AWS CDK&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔥 &lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/aws?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Khám phá các bài viết hàng đầu về AWS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;📌 Kết luận
+&lt;/h2&gt;&lt;p&gt;Terraform là công cụ hàng đầu cho &lt;strong&gt;Infrastructure-as-Code&lt;/strong&gt;, mang đến sự linh hoạt và khả năng tự động hóa mạnh mẽ trên nhiều nền tảng cloud khác nhau. Nếu bạn làm việc nhiều với AWS và muốn triển khai bằng các ngôn ngữ lập trình, &lt;strong&gt;AWS CDK&lt;/strong&gt; cũng là một lựa chọn đáng cân nhắc.&lt;/p&gt;
+&lt;p&gt;Tùy vào yêu cầu của dự án, bạn có thể lựa chọn công cụ phù hợp để quản lý hạ tầng hiệu quả hơn. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Configuration Management&lt;/strong&gt;&lt;/em&gt;  quá trình quản lý, giám sát và tự động hóa cấu hình hệ thống, phần mềm và hạ tầng để đảm bảo tính nhất quán, ổn định và dễ dàng kiểm soát trong suốt vòng đời của chúng. Nó giúp theo dõi và kiểm soát thay đổi, giảm lỗi do cấu hình thủ công và hỗ trợ triển khai nhanh chóng. Các công cụ phổ biến bao gồm &lt;strong&gt;Ansible, Puppet, Chef và SaltStack&lt;/strong&gt;.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Quản lý cấu hình (Configuration Management)🔧</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-twelve/</link>
+        <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-twelve/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-twelve.webp" alt="Featured image of post Quản lý cấu hình (Configuration Management)🔧" /&gt;&lt;h1 id=&#34;-quản-lý-cấu-hình-configuration-management&#34;&gt;🔧 Quản lý cấu hình (Configuration Management)
+&lt;/h1&gt;&lt;p&gt;Quản lý cấu hình là quy trình quản lý và duy trì tính nhất quán của các thành phần trong hệ thống công nghệ thông tin. Trong lĩnh vực phần mềm, nó bao gồm việc giám sát, theo dõi và quản lý các thay đổi cấu hình của hệ thống trong suốt vòng đời sản phẩm. Việc áp dụng quản lý cấu hình giúp tăng tính đồng bộ, giảm nguy cơ lỗi, và đảm bảo sự tuân thủ các tiêu chuẩn trong quy trình CI/CD (Continuous Integration and Continuous Deployment).&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-các-công-cụ-quản-lý-cấu-hình-phổ-biến&#34;&gt;🌐 Các công cụ quản lý cấu hình phổ biến
+&lt;/h2&gt;&lt;h3 id=&#34;-ansible&#34;&gt;🚀 Ansible
+&lt;/h3&gt;&lt;p&gt;Ansible là một công cụ tự động hóa mở, chủ yếu dùng cho quản lý cấu hình, triển khai ứng dụng và tự động hóa tác vụ.&lt;/p&gt;
+&lt;p&gt;🔄 &lt;strong&gt;Đặc điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sử dụng YAML (playbooks) để xác định trạng thái mong muốn.&lt;/li&gt;
+&lt;li&gt;Hoạt động không cần cài đặt agent.&lt;/li&gt;
+&lt;li&gt;Phù hợp với quy mô nhỏ đến lớn.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;💡 &lt;strong&gt;Ví dụ sử dụng Ansible:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;- &lt;span class=&#34;nt&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;Cài đặt và khởi động Nginx&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;hosts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;all&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;become&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;yes&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;tasks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;- &lt;span class=&#34;nt&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;Cài đặt Nginx&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;apt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;nginx&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;present&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;- &lt;span class=&#34;nt&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;Khởi động Nginx&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;service&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;nginx&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;state&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;started&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=9Ua2b06oAr4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📚 Khóa học Ansible đầy đủ cho người mới bắt đầu&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.ansible.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🔗 Trang web chính thức của Ansible&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=xRMPKQweySE&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Ansible trong 100 giây&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;-chef&#34;&gt;🌟 Chef
+&lt;/h3&gt;&lt;p&gt;Chef (hiện thuộc Progress Chef) là một trong những công cụ quản lý cấu hình đầu tiên. Nó sử dụng ngôn ngữ Ruby và đề cao tính idempotence (đảm bảo chạy n nhiều lần vẫn cùng kết quả).&lt;/p&gt;
+&lt;p&gt;🔄 &lt;strong&gt;Đặc điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Dựa trên client/server.&lt;/li&gt;
+&lt;li&gt;Có Chef-Solo cho triển khai độc lập.&lt;/li&gt;
+&lt;li&gt;Phù hợp với môi trường doanh nghiệp.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;💡 &lt;strong&gt;Ví dụ sử dụng Chef:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-ruby&#34; data-lang=&#34;ruby&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;nginx&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;action&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;:install&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;nginx&amp;#39;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;n&#34;&gt;action&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;ss&#34;&gt;:enable&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;ss&#34;&gt;:start&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.chef.io/products/chef-infra&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🔗 Trang web chính thức của Chef&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.tutorialspoint.com/chef/index.htm&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📚 Hướng dẫn Chef&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/chef/chef&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Video hướng dẫn Chef&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;-puppet&#34;&gt;🏰 Puppet
+&lt;/h3&gt;&lt;p&gt;Puppet là một công cụ quản lý cấu hình theo mô hình declarative, hoạt động theo kiểu client/server và hỗ trợ nhiều hệ điều hành.&lt;/p&gt;
+&lt;p&gt;🔄 &lt;strong&gt;Đặc điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Quản lý quy mô lớn.&lt;/li&gt;
+&lt;li&gt;Kiểm tra và áp dụng cấu hình định kỳ.&lt;/li&gt;
+&lt;li&gt;Tích hợp với nhiều công cụ DevOps.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;💡 &lt;strong&gt;Ví dụ sử dụng Puppet:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-puppet&#34; data-lang=&#34;puppet&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;package&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#39;nginx&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;na&#34;&gt;ensure&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;installed&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;s&#34;&gt;&amp;#39;nginx&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;na&#34;&gt;ensure&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;running&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;  &lt;span class=&#34;na&#34;&gt;enable&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;err&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;err&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=Ns_tRKD20c4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📚 Khóa học Puppet đầy đủ&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://puppet.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🔗 Trang web chính thức của Puppet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/puppet?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Bài viết hay về Puppet&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;🎉 Kết luận
+&lt;/h2&gt;&lt;p&gt;Quản lý cấu hình là một yếu tố quan trọng trong quy trình DevOps, giúp đảm bảo hệ thống hoạt động nhất quán, giảm thiểu lỗi và nâng cao độ tin cậy. Tùy thuộc vào nhu cầu và quy mô, doanh nghiệp có thể chọn Ansible, Chef hoặc Puppet để quản lý hạ tầng một cách hiệu quả.&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Continuous Integration and Continuous Deployment&lt;/strong&gt;&lt;/em&gt; (CI/CD), là quy trình tự động hóa trong phát triển phần mềm giúp tích hợp, kiểm thử và triển khai ứng dụng một cách liên tục.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Quản lý khoá bí mật (Secret Management)🔒</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-fourteen/</link>
+        <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-fourteen/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-fourteen.webp" alt="Featured image of post Quản lý khoá bí mật (Secret Management)🔒" /&gt;&lt;h1 id=&#34;-quản-lý-khoá-bí-mật-secret-management&#34;&gt;🔒 Quản lý khoá bí mật (Secret Management)
+&lt;/h1&gt;&lt;h2 id=&#34;-secret-management-là-gì&#34;&gt;🔍 Secret Management là gì?
+&lt;/h2&gt;&lt;p&gt;Secret Management là quá trình bảo vệ, lưu trữ và phân phối an toàn các thông tin nhạy cảm như mật khẩu, khóa API và chứng chỉ trong hệ thống công nghệ thông tin của tổ chức. Nó giúp ngăn chặn truy cập trái phép đồng thời đảm bảo các hệ thống và người dùng được ủy quyền có thể sử dụng thông tin khi cần thiết.&lt;/p&gt;
+&lt;p&gt;Secret Management thường bao gồm các tính năng:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Mã hóa dữ liệu&lt;/strong&gt; khi lưu trữ và truyền tải.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Kiểm soát truy cập&lt;/strong&gt;, chỉ cho phép người hoặc hệ thống có quyền mới được truy cập.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cơ chế quay vòng khóa&lt;/strong&gt; để thay đổi mật khẩu định kỳ.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tích hợp với các hệ thống DevOps&lt;/strong&gt; để tự động hóa quy trình bảo mật.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔗 &lt;strong&gt;Tham khảo thêm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://cs.fyi/guide/secret-management-best-practices&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Cách quản lý bí mật trong ứng dụng web&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://www.keepersecurity.com/blog/2023/01/26/why-devsecops-teams-need-secrets-management/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tại sao DevSecOps cần quản lý bí mật&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=u_L-f7Th_7o&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Mẹo DevOps để quản lý bí mật trong môi trường sản xuất&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-hashicorp-vault&#34;&gt;🏛️ HashiCorp Vault
+&lt;/h2&gt;&lt;p&gt;HashiCorp Vault là công cụ quản lý bí mật giúp bảo vệ dữ liệu nhạy cảm như mật khẩu, khóa API và khóa mã hóa.&lt;/p&gt;
+&lt;h3 id=&#34;-đặc-điểm-nổi-bật&#34;&gt;🔑 Đặc điểm nổi bật:
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Quản lý tập trung&lt;/strong&gt; giúp dễ dàng kiểm soát các bí mật.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hỗ trợ nhiều phương thức xác thực&lt;/strong&gt; như LDAP, Kubernetes.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cung cấp bí mật động (Dynamic Secrets)&lt;/strong&gt; giúp tạo bí mật tạm thời khi cần.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Mã hóa dữ liệu mạnh mẽ&lt;/strong&gt; khi lưu trữ và truyền tải.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔗 &lt;strong&gt;Ví dụ:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Lưu trữ và quản lý chứng chỉ TLS cho một cấu trúc microservices.&lt;/p&gt;
+&lt;p&gt;Tích hợp với Kubernetes để cấp bí mật động cho Pod mỗi khi khởi chạy.&lt;/p&gt;
+&lt;p&gt;Tạo mật khẩu tạm thời cho cơ sở dữ liệu nhằm giảm rủi ro bị lộ thông tin.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-thực-tế&#34;&gt;🛠 Ví dụ thực tế:
+&lt;/h3&gt;&lt;p&gt;1️⃣ Cấp mật khẩu động cho PostgreSQL bằng Vault&lt;/p&gt;
+&lt;p&gt;Giả sử bạn có một cơ sở dữ liệu PostgreSQL và muốn cấp tài khoản tạm thời:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault write database/creds/postgres-role
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Lệnh này sẽ tạo một tài khoản mới với thời gian tồn tại giới hạn.&lt;/p&gt;
+&lt;p&gt;2️⃣ Sử dụng Vault để quản lý khóa API trong ứng dụng Node.js&lt;/p&gt;
+&lt;p&gt;Bạn có thể truy xuất khóa API từ Vault trong mã nguồn của mình:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;execSync&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;child_process&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;secret&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;execSync&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;vault kv get -field=value secret/my-api-key&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;).&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;toString&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;`API Key: &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;${&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;secret&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;}&lt;/span&gt;&lt;span class=&#34;sb&#34;&gt;`&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🌍 &lt;a class=&#34;link&#34; href=&#34;https://www.vaultproject.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ HashiCorp Vault&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🛠️ &lt;a class=&#34;link&#34; href=&#34;https://github.com/hashicorp/vault&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Mã nguồn HashiCorp Vault trên GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=nG8fCdWkLzc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Giới thiệu HashiCorp Vault trong 180 giây&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=nG8fCdWkLzc&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn HashiCorp Vault cho người mới bắt đầu&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-công-cụ-quản-lý-khoá-bí-mật-trên-cloud&#34;&gt;☁️ Công cụ quản lý khoá bí mật trên Cloud
+&lt;/h2&gt;&lt;h3 id=&#34;-aws-secrets-manager&#34;&gt;🔥 AWS Secrets Manager
+&lt;/h3&gt;&lt;p&gt;Cung cấp dịch vụ lưu trữ và quản lý bí mật an toàn trên AWS với khả năng tự động quay vòng mật khẩu và tích hợp với các dịch vụ AWS khác.&lt;/p&gt;
+&lt;h3 id=&#34;-google-cloud-secret-manager&#34;&gt;🌍 Google Cloud Secret Manager
+&lt;/h3&gt;&lt;p&gt;Giải pháp quản lý bí mật trên Google Cloud, cho phép tự động xoay vòng mật khẩu và kiểm soát truy cập dễ dàng.&lt;/p&gt;
+&lt;h3 id=&#34;-azure-key-vault&#34;&gt;🔷 Azure Key Vault
+&lt;/h3&gt;&lt;p&gt;Dịch vụ của Microsoft Azure giúp lưu trữ và quản lý khóa, mật khẩu và chứng chỉ số an toàn.&lt;/p&gt;
+&lt;p&gt;🔗 &lt;strong&gt;Ví dụ:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;AWS Secrets Manager: Lưu trữ API key của một ứng dụng web, đảm bảo API key không bị lộ trong mã nguồn.&lt;/p&gt;
+&lt;p&gt;HashiCorp Vault: Quản lý mật khẩu truy cập vào cơ sở dữ liệu PostgreSQL.&lt;/p&gt;
+&lt;p&gt;Azure Key Vault: Lưu trữ và bảo mật các khóa mã hóa của ứng dụng.&lt;/p&gt;
+&lt;h3 id=&#34;-ví-dụ-thực-tế-1&#34;&gt;🛠 Ví dụ thực tế:
+&lt;/h3&gt;&lt;p&gt;1️⃣ Sử dụng AWS Secrets Manager để quản lý khóa API&lt;/p&gt;
+&lt;p&gt;Giả sử bạn có một ứng dụng web cần truy cập vào dịch vụ bên thứ ba thông qua API key. Thay vì lưu trữ khóa API trong mã nguồn, bạn có thể lưu trữ nó trong AWS Secrets Manager và gọi nó khi cần:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;aws secretsmanager get-secret-value --secret-id my-api-key
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;2️⃣ Tạo bí mật động với HashiCorp Vault&lt;/p&gt;
+&lt;p&gt;HashiCorp Vault có thể tạo mật khẩu tạm thời cho cơ sở dữ liệu, giúp tăng cường bảo mật. Ví dụ, bạn có thể tạo một tài khoản tạm thời cho PostgreSQL:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vault write database/creds/my-role
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://aws.amazon.com/secrets-manager/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;AWS Secrets Manager&lt;/a&gt; – Dịch vụ quản lý bí mật của AWS&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://cloud.google.com/secret-manager&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Google Cloud Secret Manager&lt;/a&gt; – Dịch vụ quản lý bí mật của Google Cloud&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://azure.microsoft.com/en-us/services/key-vault/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Azure Key Vault&lt;/a&gt; – Dịch vụ quản lý khóa và bí mật của Azure&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=GwVWWn2ZKj0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Demo AWS Secrets Manager&lt;/a&gt; – Hướng dẫn sử dụng AWS Secrets Manager&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=nsrADMrp4BI&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Google Cloud Secret Manager&lt;/a&gt; – Giới thiệu Google Cloud Secret Manager&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=pnOFP_oijxw&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Azure Key Vault và cách sử dụng&lt;/a&gt; – Hướng dẫn sử dụng Azure Key Vault&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-sealed-secrets&#34;&gt;🔐 Sealed Secrets
+&lt;/h2&gt;&lt;p&gt;Sealed Secrets là một công cụ cho Kubernetes giúp mã hóa dữ liệu nhạy cảm thành các &lt;strong&gt;SealedSecrets&lt;/strong&gt;, có thể lưu trữ an toàn ngay cả trong môi trường công khai như GitHub.&lt;/p&gt;
+&lt;h3 id=&#34;-cách-hoạt-động&#34;&gt;🛠️ Cách hoạt động:
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Mã hóa&lt;/strong&gt;: Người dùng tạo một SealedSecret từ Kubernetes Secret.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lưu trữ&lt;/strong&gt;: SealedSecret có thể được commit vào Git.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Giải mã&lt;/strong&gt;: Chỉ có Kubernetes Controller trong cluster mới có thể giải mã và khôi phục thành Kubernetes Secret thông thường.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;💡 &lt;strong&gt;Điểm nổi bật:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Sử dụng mã hóa bất đối xứng&lt;/strong&gt; đảm bảo chỉ controller có thể giải mã dữ liệu.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hỗ trợ GitOps&lt;/strong&gt; giúp quản lý bí mật trong repository Git an toàn.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dễ dàng tích hợp với Kubernetes&lt;/strong&gt; để bảo vệ dữ liệu nhạy cảm.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔗 &lt;strong&gt;Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🛠️ &lt;a class=&#34;link&#34; href=&#34;https://github.com/bitnami-labs/sealed-secrets&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Sealed Secrets trên GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://fluxcd.io/flux/guides/sealed-secrets/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu Sealed Secrets&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-tích-hợp-secret-management-vào-cicd&#34;&gt;🔄 Tích hợp Secret Management vào CI/CD
+&lt;/h2&gt;&lt;p&gt;Các công cụ CI/CD như Azure DevOps, Travis CI và AWS CodePipeline hỗ trợ quản lý bí mật bằng cách tích hợp với các hệ thống Secret Management để bảo vệ thông tin nhạy cảm trong quá trình triển khai.&lt;/p&gt;
+&lt;h3 id=&#34;-azure-devops&#34;&gt;🏗️ Azure DevOps
+&lt;/h3&gt;&lt;p&gt;Azure DevOps cung cấp &lt;strong&gt;Azure Key Vault&lt;/strong&gt; để lưu trữ và quản lý bí mật an toàn. Các pipeline trong Azure DevOps có thể truy xuất bí mật từ Key Vault để sử dụng trong quá trình triển khai.&lt;/p&gt;
+&lt;h3 id=&#34;-travis-ci&#34;&gt;🚀 Travis CI
+&lt;/h3&gt;&lt;p&gt;Travis CI hỗ trợ mã hóa biến môi trường, giúp bảo vệ khóa API và thông tin nhạy cảm trong quá trình build.&lt;/p&gt;
+&lt;h3 id=&#34;-aws-codepipeline&#34;&gt;🌩️ AWS CodePipeline
+&lt;/h3&gt;&lt;p&gt;AWS CodePipeline có thể tích hợp với &lt;strong&gt;AWS Secrets Manager&lt;/strong&gt; để truy xuất bí mật trong quá trình triển khai ứng dụng.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;🎯 Kết luận
+&lt;/h2&gt;&lt;p&gt;Quản lý bí mật đóng vai trò quan trọng trong bảo mật hệ thống hiện đại. Việc sử dụng các công cụ như &lt;strong&gt;HashiCorp Vault, AWS Secrets Manager, Google Cloud Secret Manager, Azure Key Vault, Sealed Secrets, Azure DevOps, Travis CI và AWS CodePipeline&lt;/strong&gt; giúp đảm bảo an toàn cho thông tin nhạy cảm, hỗ trợ triển khai DevOps an toàn và tuân thủ các tiêu chuẩn bảo mật.&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Giám sát hạ tầng &lt;em&gt;&lt;strong&gt;Infrastructure Monitoring&lt;/strong&gt;&lt;/em&gt;  quá trình theo dõi và phân tích hiệu suất, tính sẵn sàng và trạng thái của các thành phần hạ tầng công nghệ thông tin như máy chủ, mạng, lưu trữ, cơ sở dữ liệu và dịch vụ điện toán đám mây, giúp phát hiện sớm sự cố, tối ưu hóa tài nguyên và đảm bảo hệ thống hoạt động ổn định. 🚀&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Quản lý logs (Logs Management) 📜</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-sixteen/</link>
+        <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-sixteen/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-sixteen.webp" alt="Featured image of post Quản lý logs (Logs Management) 📜" /&gt;&lt;h1 id=&#34;-quản-lý-logs-logs-management&#34;&gt;📜 Quản lý logs (Logs Management)
+&lt;/h1&gt;&lt;h2 id=&#34;-quản-lý-logs-là-gì&#34;&gt;🔍 Quản lý logs là gì?
+&lt;/h2&gt;&lt;p&gt;Quản lý logs là quá trình thu thập, tổng hợp, phân tích, lưu trữ và truy xuất logs từ các ứng dụng và hệ thống hạ tầng. Logs chứa thông tin quan trọng về hoạt động của hệ thống, giúp phát hiện sự cố, tối ưu hóa hiệu suất và đảm bảo tuân thủ bảo mật.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-các-công-cụ-quản-lý-logs-phổ-biến&#34;&gt;🚀 Các công cụ quản lý logs phổ biến
+&lt;/h2&gt;&lt;h3 id=&#34;elastic-stack-elk-stack&#34;&gt;Elastic Stack (ELK Stack)
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;📝 Giới thiệu:&lt;/strong&gt;
+Elastic Stack, trước đây gọi là ELK Stack, bao gồm Elasticsearch (công cụ tìm kiếm và phân tích), Logstash (xử lý dữ liệu), Kibana (trực quan hóa) và Beats (thu thập dữ liệu). Đây là giải pháp phổ biến để quản lý logs với khả năng mở rộng cao.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Tính năng nổi bật:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tìm kiếm và phân tích logs theo thời gian thực.&lt;/li&gt;
+&lt;li&gt;Hỗ trợ nhiều định dạng dữ liệu khác nhau.&lt;/li&gt;
+&lt;li&gt;Khả năng mở rộng tốt với môi trường doanh nghiệp.&lt;/li&gt;
+&lt;li&gt;Cung cấp giao diện trực quan với Kibana.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Sử dụng Elastic Stack để thu thập logs từ các máy chủ web, phân tích lỗi và tạo dashboard giám sát lưu lượng truy cập.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📚 Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗&lt;a class=&#34;link&#34; href=&#34;https://www.elastic.co/elastic-stack/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Elastic Stack&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=CfCTWVAwFbQ&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tổng quan về Elastic Stack&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;loki&#34;&gt;Loki
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;📝 Giới thiệu:&lt;/strong&gt;
+Loki là hệ thống thu thập logs do Grafana Labs phát triển, tối ưu cho Kubernetes và container. Loki không lưu trữ toàn bộ logs mà chỉ lập chỉ mục metadata, giúp tiết kiệm tài nguyên.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Tính năng nổi bật:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tích hợp chặt chẽ với Grafana.&lt;/li&gt;
+&lt;li&gt;Sử dụng LogQL, ngôn ngữ truy vấn tương tự PromQL.&lt;/li&gt;
+&lt;li&gt;Tối ưu cho môi trường Kubernetes và container.&lt;/li&gt;
+&lt;li&gt;Tiết kiệm tài nguyên so với các giải pháp khác.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Sử dụng Loki để theo dõi logs từ các container trong Kubernetes, giúp phát hiện lỗi ứng dụng nhanh chóng.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📚 Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗&lt;a class=&#34;link&#34; href=&#34;https://grafana.com/oss/loki/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Loki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖&lt;a class=&#34;link&#34; href=&#34;https://grafana.com/docs/loki/latest/?pg=oss-loki&amp;amp;plcmt=quick-links&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu Loki&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;graylog&#34;&gt;Graylog
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;📝 Giới thiệu:&lt;/strong&gt;
+Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập, lưu trữ và phân tích logs theo thời gian thực. Hệ thống này cung cấp giao diện web thân thiện và hỗ trợ nhiều loại dữ liệu logs khác nhau.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Tính năng nổi bật:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Hỗ trợ nhiều giao thức thu thập logs như Syslog, GELF.&lt;/li&gt;
+&lt;li&gt;Giao diện tìm kiếm mạnh mẽ.&lt;/li&gt;
+&lt;li&gt;Tích hợp tính năng cảnh báo khi phát hiện sự cố.&lt;/li&gt;
+&lt;li&gt;Hỗ trợ truy vấn logs theo thời gian thực.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Sử dụng Graylog để theo dõi logs từ các hệ thống bảo mật, giúp phát hiện hành vi xâm nhập trái phép.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📚 Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗&lt;a class=&#34;link&#34; href=&#34;https://www.graylog.org/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Graylog&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥&lt;a class=&#34;link&#34; href=&#34;https://www.graylog.org/resources-videos&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn sử dụng Graylog&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-ví-dụ-về-mã-nguồn&#34;&gt;🔥 Ví dụ về mã nguồn
+&lt;/h2&gt;&lt;p&gt;Dưới đây là cách gửi logs đến một hệ thống thu thập logs bằng JavaScript:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;winston&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;winston&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;logger&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;winston&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;createLogger&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;({&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;level&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;info&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;format&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;winston&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;format&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;json&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;transports&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;winston&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;transports&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;new&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;winston&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;transports&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;File&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;({&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;filename&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;app.log&amp;#39;&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;})&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// Ghi log
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;logger&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;info&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Ứng dụng đã khởi động thành công&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;logger&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;warn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Cảnh báo: Dữ liệu đầu vào không hợp lệ&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;logger&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;error&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Lỗi: Không thể kết nối cơ sở dữ liệu&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;✅ Kết luận
+&lt;/h2&gt;&lt;p&gt;Quản lý logs đóng vai trò quan trọng trong việc giám sát hệ thống và xử lý sự cố nhanh chóng. Các công cụ như &lt;strong&gt;Elastic Stack, Loki,&lt;/strong&gt; và &lt;strong&gt;Graylog&lt;/strong&gt; cung cấp giải pháp mạnh mẽ để thu thập, phân tích và trực quan hóa logs. Việc lựa chọn công cụ phù hợp sẽ giúp nâng cao hiệu quả vận hành hệ thống của bạn. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Container Orchestration&lt;/strong&gt;&lt;/em&gt;  quá trình tự động quản lý, triển khai, mở rộng và điều phối các container trong môi trường hạ tầng, giúp đảm bảo tính sẵn sàng, khả năng mở rộng và tối ưu tài nguyên hệ thống. Các công cụ phổ biến cho Container Orchestration bao gồm Kubernetes, Docker Swarm và Apache Mesos.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Serverless và các nền tảng liên quan ☁️</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-ten/</link>
+        <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-ten/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-ten.webp" alt="Featured image of post Serverless và các nền tảng liên quan ☁️" /&gt;&lt;h1 id=&#34;-serverless-và-các-nền-tảng-liên-quan&#34;&gt;☁️ Serverless và các nền tảng liên quan
+&lt;/h1&gt;&lt;h2 id=&#34;-serverless-là-gì&#34;&gt;🚀 Serverless là gì?
+&lt;/h2&gt;&lt;p&gt;Serverless là mô hình điện toán đám mây nơi nhà cung cấp dịch vụ quản lý hoàn toàn cơ sở hạ tầng, giúp lập trình viên chỉ cần tập trung vào viết mã. Hệ thống sẽ &lt;strong&gt;tự động phân bổ tài nguyên&lt;/strong&gt; theo nhu cầu và chỉ tính phí dựa trên tài nguyên thực tế sử dụng. Kiến trúc serverless thường được áp dụng cho các &lt;strong&gt;ứng dụng microservices, xử lý sự kiện&lt;/strong&gt; và giúp giảm thiểu chi phí vận hành.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://www.redhat.com/en/topics/cloud-native-apps/what-is-serverless&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Serverless là gì?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=vxJobGtqKVM&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Giới thiệu về Serverless&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/serverless?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Bài viết hay về Serverless&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-aws-lambda&#34;&gt;⚡ AWS Lambda
+&lt;/h2&gt;&lt;p&gt;AWS Lambda là một dịch vụ serverless của AWS, cho phép chạy mã mà không cần quản lý máy chủ. Lambda &lt;strong&gt;tự động mở rộng&lt;/strong&gt; theo nhu cầu, hỗ trợ nhiều ngôn ngữ lập trình và dễ dàng tích hợp với các dịch vụ khác của AWS. Nó phù hợp với &lt;strong&gt;xử lý dữ liệu, tự động hóa tác vụ, xây dựng microservices&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Ví dụ:&lt;/strong&gt; Triển khai một function trên AWS Lambda&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kn&#34;&gt;import&lt;/span&gt; &lt;span class=&#34;nn&#34;&gt;json&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;lambda_handler&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;event&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;context&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;s1&#34;&gt;&amp;#39;statusCode&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;200&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;s1&#34;&gt;&amp;#39;body&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;json&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;dumps&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Hello from AWS Lambda!&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class=&#34;link&#34; href=&#34;https://docs.aws.amazon.com/lambda/latest/operatorguide/intro.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Giới thiệu AWS Lambda&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=RtiWU1DrMaM&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn AWS Lambda từ A-Z&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/aws?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Bài viết hay về AWS Lambda&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-cloudflare&#34;&gt;🌍 Cloudflare
+&lt;/h2&gt;&lt;p&gt;Cloudflare là một công ty cung cấp dịch vụ &lt;strong&gt;CDN, bảo mật, tối ưu hiệu suất&lt;/strong&gt; cho website. Cloudflare đóng vai trò là &lt;strong&gt;proxy ngược&lt;/strong&gt;, giúp tăng tốc tải trang và bảo vệ website khỏi các cuộc tấn công. Công ty được thành lập năm 2009 và lên sàn chứng khoán vào năm 2019.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class=&#34;link&#34; href=&#34;https://cloudflare.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Cloudflare&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=24cml1rKGBs&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Giới thiệu về Cloudflare&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/cloudflare?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Bài viết hay về Cloudflare&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-vercel&#34;&gt;🌐 Vercel
+&lt;/h2&gt;&lt;p&gt;Vercel là nền tảng &lt;strong&gt;triển khai frontend&lt;/strong&gt; giúp đưa các ứng dụng web lên cloud một cách nhanh chóng. Nó hỗ trợ &lt;strong&gt;React, Next.js, Vue, Angular&lt;/strong&gt;, tích hợp với GitHub, và cho phép triển khai chỉ với một lệnh push.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class=&#34;link&#34; href=&#34;https://vercel.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Trang chủ Vercel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://vercel.com/docs&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu chính thức Vercel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=sPmat30SE4k&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn sử dụng Vercel&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class=&#34;link&#34; href=&#34;https://app.daily.dev/tags/vercel?ref=roadmapsh&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Bài viết hay về Vercel&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;📌 Kết Luận
+&lt;/h2&gt;&lt;p&gt;Serverless giúp &lt;strong&gt;tự động hóa triển khai, giảm chi phí, dễ dàng mở rộng&lt;/strong&gt;. Các nền tảng phổ biến:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AWS Lambda&lt;/strong&gt;: Xử lý sự kiện không cần máy chủ.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cloudflare&lt;/strong&gt;: CDN và bảo mật website.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vercel&lt;/strong&gt;: Triển khai frontend nhanh chóng.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Việc lựa chọn nền tảng phụ thuộc vào &lt;strong&gt;nhu cầu, công nghệ và chi phí&lt;/strong&gt; của bạn. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Provisioning&lt;/strong&gt;&lt;/em&gt;  quá trình cung cấp và cấu hình tài nguyên (máy chủ, mạng, lưu trữ, tài khoản) để hệ thống hoặc ứng dụng có thể hoạt động hiệu quả.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Application Gateway 🌐</title>
         <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-seven/</link>
         <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>

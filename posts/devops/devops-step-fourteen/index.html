@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="vi" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Secret Management quá trình lưu trữ, quản lý và bảo vệ các thông tin nhạy cảm như mật khẩu, khóa API, chứng chỉ và token truy cập để ngăn chặn rò rỉ dữ liệu và đảm bảo bảo mật hệ thống.">
+<title>Quản lý khoá bí mật (Secret Management)🔒</title>
+
+<link rel='canonical' href='https://tech.nguuyen.io.vn/posts/devops/devops-step-fourteen/'>
+
+<link rel="stylesheet" href="/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css"><meta property='og:title' content="Quản lý khoá bí mật (Secret Management)🔒">
+<meta property='og:description' content="Secret Management quá trình lưu trữ, quản lý và bảo vệ các thông tin nhạy cảm như mật khẩu, khóa API, chứng chỉ và token truy cập để ngăn chặn rò rỉ dữ liệu và đảm bảo bảo mật hệ thống.">
+<meta property='og:url' content='https://tech.nguuyen.io.vn/posts/devops/devops-step-fourteen/'>
+<meta property='og:site_name' content='Hoàng Dương'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='devops' /><meta property='article:tag' content='secret' /><meta property='article:published_time' content='2025-02-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-02-24T00:00:00&#43;00:00'/><meta property='og:image' content='https://tech.nguuyen.io.vn/images/devops-step-fourteen.webp' />
+<meta name="twitter:title" content="Quản lý khoá bí mật (Secret Management)🔒">
+<meta name="twitter:description" content="Secret Management quá trình lưu trữ, quản lý và bảo vệ các thông tin nhạy cảm như mật khẩu, khóa API, chứng chỉ và token truy cập để ngăn chặn rò rỉ dữ liệu và đảm bảo bảo mật hệ thống."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://tech.nguuyen.io.vn/images/devops-step-fourteen.webp' />
+    <link rel="icon" type="image/png" href="/images/favicon.ico" />
+<style>
+     
+    :root {
+        --article-font-family: "Roboto", var(--base-font-family);
+    }
+</style>
+
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap";
+    
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+    
+        document.head.appendChild(customFont);
+    }());
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Hiển thị Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="400"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Hoàng Dương</a></h1>
+            <h2 class="site-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/HoangDuonng'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.instagram.com/ngu_uuen/'
+                        target="_blank"
+                        title="Instagram"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="3" width="18" height="18" rx="3" />
+  <circle cx="12" cy="12" r="4" />
+  <path d="M16.5 7.5h.01" />
+</svg>
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Trang chủ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/gi%E1%BB%9Bi-thi%E1%BB%87u/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Về tôi</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Lưu trữ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Tìm kiếm</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/li%C3%AAn-k%E1%BA%BFt/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Liên kết</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://tech.nguuyen.io.vn/" selected>Tiếng Việt</option>
+                                
+                                    <option value="https://tech.nguuyen.io.vn/en/" >English</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Chế độ tối</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Mục lục</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#-secret-management-là-gì">🔍 Secret Management là gì?</a></li>
+    <li><a href="#-hashicorp-vault">🏛️ HashiCorp Vault</a>
+      <ol>
+        <li><a href="#-đặc-điểm-nổi-bật">🔑 Đặc điểm nổi bật:</a></li>
+        <li><a href="#-ví-dụ-thực-tế">🛠 Ví dụ thực tế:</a></li>
+      </ol>
+    </li>
+    <li><a href="#-công-cụ-quản-lý-khoá-bí-mật-trên-cloud">☁️ Công cụ quản lý khoá bí mật trên Cloud</a>
+      <ol>
+        <li><a href="#-aws-secrets-manager">🔥 AWS Secrets Manager</a></li>
+        <li><a href="#-google-cloud-secret-manager">🌍 Google Cloud Secret Manager</a></li>
+        <li><a href="#-azure-key-vault">🔷 Azure Key Vault</a></li>
+        <li><a href="#-ví-dụ-thực-tế-1">🛠 Ví dụ thực tế:</a></li>
+      </ol>
+    </li>
+    <li><a href="#-sealed-secrets">🔐 Sealed Secrets</a>
+      <ol>
+        <li><a href="#-cách-hoạt-động">🛠️ Cách hoạt động:</a></li>
+      </ol>
+    </li>
+    <li><a href="#-tích-hợp-secret-management-vào-cicd">🔄 Tích hợp Secret Management vào CI/CD</a>
+      <ol>
+        <li><a href="#-azure-devops">🏗️ Azure DevOps</a></li>
+        <li><a href="#-travis-ci">🚀 Travis CI</a></li>
+        <li><a href="#-aws-codepipeline">🌩️ AWS CodePipeline</a></li>
+      </ol>
+    </li>
+    <li><a href="#-kết-luận">🎯 Kết luận</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/posts/devops/devops-step-fourteen/">
+                
+                    <img src="/images/devops-step-fourteen.webp" loading="lazy" alt="Featured image of post Quản lý khoá bí mật (Secret Management)🔒" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/devops/" style="background-color: #2a9d8f; color: #fff;">
+                DevOps
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/devops/devops-step-fourteen/">Quản lý khoá bí mật (Secret Management)🔒</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Secret Management quá trình lưu trữ, quản lý và bảo vệ các thông tin nhạy cảm như mật khẩu, khóa API, chứng chỉ và token truy cập để ngăn chặn rò rỉ dữ liệu và đảm bảo bảo mật hệ thống.
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">24/02/2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    6 phút đọc
+                </time>
+            </div>
+        
+
+        
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                    <span class="article-author--name">
+                        Hoàng Dương
+                    </span>
+                </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="-quản-lý-khoá-bí-mật-secret-management">🔒 Quản lý khoá bí mật (Secret Management)
+</h1><h2 id="-secret-management-là-gì">🔍 Secret Management là gì?
+</h2><p>Secret Management là quá trình bảo vệ, lưu trữ và phân phối an toàn các thông tin nhạy cảm như mật khẩu, khóa API và chứng chỉ trong hệ thống công nghệ thông tin của tổ chức. Nó giúp ngăn chặn truy cập trái phép đồng thời đảm bảo các hệ thống và người dùng được ủy quyền có thể sử dụng thông tin khi cần thiết.</p>
+<p>Secret Management thường bao gồm các tính năng:</p>
+<ul>
+<li><strong>Mã hóa dữ liệu</strong> khi lưu trữ và truyền tải.</li>
+<li><strong>Kiểm soát truy cập</strong>, chỉ cho phép người hoặc hệ thống có quyền mới được truy cập.</li>
+<li><strong>Cơ chế quay vòng khóa</strong> để thay đổi mật khẩu định kỳ.</li>
+<li><strong>Tích hợp với các hệ thống DevOps</strong> để tự động hóa quy trình bảo mật.</li>
+</ul>
+<p>🔗 <strong>Tham khảo thêm:</strong></p>
+<ul>
+<li>📄 <a class="link" href="https://cs.fyi/guide/secret-management-best-practices"  target="_blank" rel="noopener"
+    >Cách quản lý bí mật trong ứng dụng web</a></li>
+<li>📄 <a class="link" href="https://www.keepersecurity.com/blog/2023/01/26/why-devsecops-teams-need-secrets-management/"  target="_blank" rel="noopener"
+    >Tại sao DevSecOps cần quản lý bí mật</a></li>
+<li>🎥 <a class="link" href="https://www.youtube.com/watch?v=u_L-f7Th_7o"  target="_blank" rel="noopener"
+    >Mẹo DevOps để quản lý bí mật trong môi trường sản xuất</a></li>
+</ul>
+<hr>
+<h2 id="-hashicorp-vault">🏛️ HashiCorp Vault
+</h2><p>HashiCorp Vault là công cụ quản lý bí mật giúp bảo vệ dữ liệu nhạy cảm như mật khẩu, khóa API và khóa mã hóa.</p>
+<h3 id="-đặc-điểm-nổi-bật">🔑 Đặc điểm nổi bật:
+</h3><ul>
+<li><strong>Quản lý tập trung</strong> giúp dễ dàng kiểm soát các bí mật.</li>
+<li><strong>Hỗ trợ nhiều phương thức xác thực</strong> như LDAP, Kubernetes.</li>
+<li><strong>Cung cấp bí mật động (Dynamic Secrets)</strong> giúp tạo bí mật tạm thời khi cần.</li>
+<li><strong>Mã hóa dữ liệu mạnh mẽ</strong> khi lưu trữ và truyền tải.</li>
+</ul>
+<p>🔗 <strong>Ví dụ:</strong></p>
+<p>Lưu trữ và quản lý chứng chỉ TLS cho một cấu trúc microservices.</p>
+<p>Tích hợp với Kubernetes để cấp bí mật động cho Pod mỗi khi khởi chạy.</p>
+<p>Tạo mật khẩu tạm thời cho cơ sở dữ liệu nhằm giảm rủi ro bị lộ thông tin.</p>
+<h3 id="-ví-dụ-thực-tế">🛠 Ví dụ thực tế:
+</h3><p>1️⃣ Cấp mật khẩu động cho PostgreSQL bằng Vault</p>
+<p>Giả sử bạn có một cơ sở dữ liệu PostgreSQL và muốn cấp tài khoản tạm thời:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vault write database/creds/postgres-role
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Lệnh này sẽ tạo một tài khoản mới với thời gian tồn tại giới hạn.</p>
+<p>2️⃣ Sử dụng Vault để quản lý khóa API trong ứng dụng Node.js</p>
+<p>Bạn có thể truy xuất khóa API từ Vault trong mã nguồn của mình:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-javascript" data-lang="javascript"><span class="line"><span class="cl"><span class="kr">const</span> <span class="p">{</span> <span class="nx">execSync</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">&#39;child_process&#39;</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kr">const</span> <span class="nx">secret</span> <span class="o">=</span> <span class="nx">execSync</span><span class="p">(</span><span class="s1">&#39;vault kv get -field=value secret/my-api-key&#39;</span><span class="p">).</span><span class="nx">toString</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl"><span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="sb">`API Key: </span><span class="si">${</span><span class="nx">secret</span><span class="si">}</span><span class="sb">`</span><span class="p">);</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>🔗 <strong>Tài nguyên hữu ích:</strong></p>
+<ul>
+<li>🌍 <a class="link" href="https://www.vaultproject.io/"  target="_blank" rel="noopener"
+    >Trang chủ HashiCorp Vault</a></li>
+<li>🛠️ <a class="link" href="https://github.com/hashicorp/vault"  target="_blank" rel="noopener"
+    >Mã nguồn HashiCorp Vault trên GitHub</a></li>
+<li>🎥 <a class="link" href="https://www.youtube.com/watch?v=nG8fCdWkLzc"  target="_blank" rel="noopener"
+    >Giới thiệu HashiCorp Vault trong 180 giây</a></li>
+<li>🎥 <a class="link" href="https://www.youtube.com/watch?v=nG8fCdWkLzc"  target="_blank" rel="noopener"
+    >Hướng dẫn HashiCorp Vault cho người mới bắt đầu</a></li>
+</ul>
+<hr>
+<h2 id="-công-cụ-quản-lý-khoá-bí-mật-trên-cloud">☁️ Công cụ quản lý khoá bí mật trên Cloud
+</h2><h3 id="-aws-secrets-manager">🔥 AWS Secrets Manager
+</h3><p>Cung cấp dịch vụ lưu trữ và quản lý bí mật an toàn trên AWS với khả năng tự động quay vòng mật khẩu và tích hợp với các dịch vụ AWS khác.</p>
+<h3 id="-google-cloud-secret-manager">🌍 Google Cloud Secret Manager
+</h3><p>Giải pháp quản lý bí mật trên Google Cloud, cho phép tự động xoay vòng mật khẩu và kiểm soát truy cập dễ dàng.</p>
+<h3 id="-azure-key-vault">🔷 Azure Key Vault
+</h3><p>Dịch vụ của Microsoft Azure giúp lưu trữ và quản lý khóa, mật khẩu và chứng chỉ số an toàn.</p>
+<p>🔗 <strong>Ví dụ:</strong></p>
+<p>AWS Secrets Manager: Lưu trữ API key của một ứng dụng web, đảm bảo API key không bị lộ trong mã nguồn.</p>
+<p>HashiCorp Vault: Quản lý mật khẩu truy cập vào cơ sở dữ liệu PostgreSQL.</p>
+<p>Azure Key Vault: Lưu trữ và bảo mật các khóa mã hóa của ứng dụng.</p>
+<h3 id="-ví-dụ-thực-tế-1">🛠 Ví dụ thực tế:
+</h3><p>1️⃣ Sử dụng AWS Secrets Manager để quản lý khóa API</p>
+<p>Giả sử bạn có một ứng dụng web cần truy cập vào dịch vụ bên thứ ba thông qua API key. Thay vì lưu trữ khóa API trong mã nguồn, bạn có thể lưu trữ nó trong AWS Secrets Manager và gọi nó khi cần:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">aws secretsmanager get-secret-value --secret-id my-api-key
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>2️⃣ Tạo bí mật động với HashiCorp Vault</p>
+<p>HashiCorp Vault có thể tạo mật khẩu tạm thời cho cơ sở dữ liệu, giúp tăng cường bảo mật. Ví dụ, bạn có thể tạo một tài khoản tạm thời cho PostgreSQL:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">vault write database/creds/my-role
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>🔗 <strong>Tài nguyên hữu ích:</strong></p>
+<ul>
+<li>📄 <a class="link" href="https://aws.amazon.com/secrets-manager/"  target="_blank" rel="noopener"
+    >AWS Secrets Manager</a> – Dịch vụ quản lý bí mật của AWS</li>
+<li>📄 <a class="link" href="https://cloud.google.com/secret-manager"  target="_blank" rel="noopener"
+    >Google Cloud Secret Manager</a> – Dịch vụ quản lý bí mật của Google Cloud</li>
+<li>📄 <a class="link" href="https://azure.microsoft.com/en-us/services/key-vault/"  target="_blank" rel="noopener"
+    >Azure Key Vault</a> – Dịch vụ quản lý khóa và bí mật của Azure</li>
+<li>🎥 <a class="link" href="https://www.youtube.com/watch?v=GwVWWn2ZKj0"  target="_blank" rel="noopener"
+    >Demo AWS Secrets Manager</a> – Hướng dẫn sử dụng AWS Secrets Manager</li>
+<li>🎥 <a class="link" href="https://www.youtube.com/watch?v=nsrADMrp4BI"  target="_blank" rel="noopener"
+    >Google Cloud Secret Manager</a> – Giới thiệu Google Cloud Secret Manager</li>
+<li>🎥 <a class="link" href="https://www.youtube.com/watch?v=pnOFP_oijxw"  target="_blank" rel="noopener"
+    >Azure Key Vault và cách sử dụng</a> – Hướng dẫn sử dụng Azure Key Vault</li>
+</ul>
+<hr>
+<h2 id="-sealed-secrets">🔐 Sealed Secrets
+</h2><p>Sealed Secrets là một công cụ cho Kubernetes giúp mã hóa dữ liệu nhạy cảm thành các <strong>SealedSecrets</strong>, có thể lưu trữ an toàn ngay cả trong môi trường công khai như GitHub.</p>
+<h3 id="-cách-hoạt-động">🛠️ Cách hoạt động:
+</h3><ol>
+<li><strong>Mã hóa</strong>: Người dùng tạo một SealedSecret từ Kubernetes Secret.</li>
+<li><strong>Lưu trữ</strong>: SealedSecret có thể được commit vào Git.</li>
+<li><strong>Giải mã</strong>: Chỉ có Kubernetes Controller trong cluster mới có thể giải mã và khôi phục thành Kubernetes Secret thông thường.</li>
+</ol>
+<p>💡 <strong>Điểm nổi bật:</strong></p>
+<ul>
+<li><strong>Sử dụng mã hóa bất đối xứng</strong> đảm bảo chỉ controller có thể giải mã dữ liệu.</li>
+<li><strong>Hỗ trợ GitOps</strong> giúp quản lý bí mật trong repository Git an toàn.</li>
+<li><strong>Dễ dàng tích hợp với Kubernetes</strong> để bảo vệ dữ liệu nhạy cảm.</li>
+</ul>
+<p>🔗 <strong>Tài nguyên hữu ích:</strong></p>
+<ul>
+<li>🛠️ <a class="link" href="https://github.com/bitnami-labs/sealed-secrets"  target="_blank" rel="noopener"
+    >Sealed Secrets trên GitHub</a></li>
+<li>📄 <a class="link" href="https://fluxcd.io/flux/guides/sealed-secrets/"  target="_blank" rel="noopener"
+    >Tài liệu Sealed Secrets</a></li>
+</ul>
+<hr>
+<h2 id="-tích-hợp-secret-management-vào-cicd">🔄 Tích hợp Secret Management vào CI/CD
+</h2><p>Các công cụ CI/CD như Azure DevOps, Travis CI và AWS CodePipeline hỗ trợ quản lý bí mật bằng cách tích hợp với các hệ thống Secret Management để bảo vệ thông tin nhạy cảm trong quá trình triển khai.</p>
+<h3 id="-azure-devops">🏗️ Azure DevOps
+</h3><p>Azure DevOps cung cấp <strong>Azure Key Vault</strong> để lưu trữ và quản lý bí mật an toàn. Các pipeline trong Azure DevOps có thể truy xuất bí mật từ Key Vault để sử dụng trong quá trình triển khai.</p>
+<h3 id="-travis-ci">🚀 Travis CI
+</h3><p>Travis CI hỗ trợ mã hóa biến môi trường, giúp bảo vệ khóa API và thông tin nhạy cảm trong quá trình build.</p>
+<h3 id="-aws-codepipeline">🌩️ AWS CodePipeline
+</h3><p>AWS CodePipeline có thể tích hợp với <strong>AWS Secrets Manager</strong> để truy xuất bí mật trong quá trình triển khai ứng dụng.</p>
+<hr>
+<h2 id="-kết-luận">🎯 Kết luận
+</h2><p>Quản lý bí mật đóng vai trò quan trọng trong bảo mật hệ thống hiện đại. Việc sử dụng các công cụ như <strong>HashiCorp Vault, AWS Secrets Manager, Google Cloud Secret Manager, Azure Key Vault, Sealed Secrets, Azure DevOps, Travis CI và AWS CodePipeline</strong> giúp đảm bảo an toàn cho thông tin nhạy cảm, hỗ trợ triển khai DevOps an toàn và tuân thủ các tiêu chuẩn bảo mật.</p>
+<p>👉 <strong>Bước tiếp theo:</strong> Giám sát hạ tầng <em><strong>Infrastructure Monitoring</strong></em>  quá trình theo dõi và phân tích hiệu suất, tính sẵn sàng và trạng thái của các thành phần hạ tầng công nghệ thông tin như máy chủ, mạng, lưu trữ, cơ sở dữ liệu và dịch vụ điện toán đám mây, giúp phát hiện sớm sự cố, tối ưu hóa tài nguyên và đảm bảo hệ thống hoạt động ổn định. 🚀</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/devops/">Devops</a>
+        
+            <a href="/tags/secret/">Secret</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Bài viết liên quan</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-thirteen/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-thirteen.webp" loading="lazy" data-key="" data-hash="/images/devops-step-thirteen.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">CI/CD - Tích hợp liên tục và triển khai liên tục 🚀</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-seventeen/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-seventeen.webp" loading="lazy" data-key="" data-hash="/images/devops-step-seventeen.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Container Orchestration 🚢</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-fifteen/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-fifteen.webp" loading="lazy" data-key="" data-hash="/images/devops-step-fifteen.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Giám sát hạ tầng (Infrastructure Monitoring) 📊</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-eleven/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-eleven.webp" loading="lazy" data-key="" data-hash="/images/devops-step-eleven.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Infrastructure Provisioning với Terraform 🟪🔳</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-twelve/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops-step-twelve.webp" loading="lazy" data-key="" data-hash="/images/devops-step-twelve.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Quản lý cấu hình (Configuration Management)🔧</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="hoangduonng/blog_comments"
+        issue-term="pathname"
+        
+        label="comments"
+        
+        theme="icy-dark"
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 Hoàng Dương
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/" target="_blank" rel="noopener">Ngữ Uyển ❤️</a> <br />
+        Theme <no value> thiết kế bởi Jimmy
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
