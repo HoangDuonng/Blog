@@ -6,7 +6,620 @@
         <description>Recent content in Posts on Hoàng Dương</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>vi</language>
-        <lastBuildDate>Mon, 24 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 25 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/posts/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Giám sát ứng dụng (Application Monitoring) 📊</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-eighteen/</link>
+        <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-eighteen/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-eighteen.webp" alt="Featured image of post Giám sát ứng dụng (Application Monitoring) 📊" /&gt;&lt;h1 id=&#34;-giám-sát-ứng-dụng-application-monitoring&#34;&gt;📊 Giám sát ứng dụng (Application Monitoring)
+&lt;/h1&gt;&lt;p&gt;Giám sát ứng dụng là quá trình theo dõi và phân tích liên tục các ứng dụng phần mềm nhằm đảm bảo chúng hoạt động tối ưu, phát hiện sự cố và cung cấp những hiểu biết sâu sắc về hiệu suất của hệ thống. Việc giám sát bao gồm các chỉ số quan trọng như:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;⏳ &lt;strong&gt;Thời gian phản hồi&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;❌ &lt;strong&gt;Tỷ lệ lỗi&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;🖥️ &lt;strong&gt;Sử dụng tài nguyên (CPU, RAM, Disk)&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;🔄 &lt;strong&gt;Hiệu suất giao dịch&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Các công cụ giám sát ứng dụng giúp thu thập, phân tích dữ liệu để phát hiện bất thường, cảnh báo sớm các vấn đề tiềm ẩn, đồng thời cung cấp cái nhìn toàn diện về hành vi của ứng dụng. Nhờ đó, doanh nghiệp có thể chủ động xử lý sự cố, tối ưu hiệu suất và nâng cao trải nghiệm người dùng.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-jaeger---công-cụ-tracing-phân-tán&#34;&gt;🔍 Jaeger - Công cụ tracing phân tán
+&lt;/h2&gt;&lt;p&gt;Jaeger là một hệ thống giám sát phân tán mã nguồn mở do Uber phát triển, giúp theo dõi và khắc phục sự cố trong các hệ thống microservices phức tạp.&lt;/p&gt;
+&lt;h3 id=&#34;-tính-năng-chính&#34;&gt;🔹 Tính năng chính:
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;🌐 &lt;strong&gt;Theo dõi yêu cầu phân tán&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;🔎 &lt;strong&gt;Phân tích quan hệ giữa các dịch vụ&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;📊 &lt;strong&gt;Xác định nguyên nhân gốc rễ của vấn đề&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;🛠️ &lt;strong&gt;Hỗ trợ OpenTracing – dễ dàng tích hợp với các hệ thống khác&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;ví-dụ-cài-đặt-jaeger-với-docker&#34;&gt;🔹Ví dụ cài đặt Jaeger với Docker
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker run -d --name jaeger &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -e &lt;span class=&#34;nv&#34;&gt;COLLECTOR_ZIPKIN_HTTP_PORT&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;9411&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -p 5775:5775/udp &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -p 6831:6831/udp &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -p 6832:6832/udp &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -p 5778:5778 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -p 16686:16686 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -p 14268:14268 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -p 14250:14250 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  -p 9411:9411 &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;  jaegertracing/all-in-one:1.37
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Sau khi cài đặt, tra cứu Jaeger UI tại http://localhost:16686&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📌 Tài nguyên tham khảo:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.jaegertracing.io/docs/1.37/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📖 Tài liệu Jaeger&lt;/a&gt;&lt;br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://github.com/jaegertracing/jaeger&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🛠️ GitHub - jaegertracing&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-new-relic---giám-sát-hiệu-năng-ứng-dụng&#34;&gt;🌎 New Relic - Giám sát hiệu năng ứng dụng
+&lt;/h2&gt;&lt;p&gt;New Relic là một nền tảng quan sát đám mây cung cấp cái nhìn toàn diện về phần mềm và cơ sở hạ tầng. Nó hỗ trợ giám sát hiệu suất thời gian thực, phân tích dữ liệu và cảnh báo tự động.&lt;/p&gt;
+&lt;h3 id=&#34;-tính-năng-chính-1&#34;&gt;🔹 Tính năng chính:
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;📈 &lt;strong&gt;Theo dõi hiệu suất ứng dụng (APM)&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;🔎 &lt;strong&gt;Phân tích logs và truy vết lỗi&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;🚀 &lt;strong&gt;Theo dõi trải nghiệm người dùng trên web và mobile&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;🤖 &lt;strong&gt;AI-powered analytics – tự động phát hiện sự cố&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;ví-dụ-cài-đặt-new-relic-agent-trong-nodejs&#34;&gt;🔹Ví dụ cài đặt New Relic Agent trong Node.js
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;npm install newrelic --save
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Sau đó, bạn cần thêm require(&amp;rsquo;newrelic&amp;rsquo;) ở dòng đầu tiên trong file main:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;newrelic&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;     &lt;span class=&#34;err&#34;&gt;#&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;Thêm&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;thư&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;viện&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;newrelic&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;express&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;require&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;express&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kr&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;express&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;();&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;get&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;/&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;req&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;res&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;res&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;send&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;Hello, New Relic!&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;listen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;3000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;()&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;console&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;App running on port 3000&amp;#39;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;));&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;📌 Tài nguyên tham khảo:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://newrelic.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🌐 Trang web New Relic&lt;/a&gt;&lt;br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=8kx7nRGVJRg&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🎥 Bản demo nền tảng New Relic&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-datadog---giải-pháp-giám-sát-toàn-diện&#34;&gt;🐶 Datadog - Giải pháp giám sát toàn diện
+&lt;/h2&gt;&lt;p&gt;Datadog là một nền tảng giám sát và phân tích mạnh mẽ dành cho các ứng dụng quy mô lớn. Nó hỗ trợ nhiều lĩnh vực từ giám sát hạ tầng, hiệu suất ứng dụng đến quản lý logs và trải nghiệm người dùng.&lt;/p&gt;
+&lt;h3 id=&#34;-tính-năng-chính-2&#34;&gt;🔹 Tính năng chính:
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;🔗 &lt;strong&gt;400+ tích hợp với các công cụ DevOps&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;📊 &lt;strong&gt;Theo dõi toàn bộ hệ thống trên dashboard trực quan&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;⚠️ &lt;strong&gt;Thiết lập cảnh báo thông minh&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;📡 &lt;strong&gt;Hỗ trợ giám sát cloud-native&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-ví-dụ-vài-đặt-datadog-agent&#34;&gt;🔹 Ví dụ vài đặt Datadog Agent
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nv&#34;&gt;DD_AGENT_MAJOR_VERSION&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;m&#34;&gt;7&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;DD_API_KEY&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&amp;lt;YOUR_API_KEY&amp;gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nv&#34;&gt;DD_SITE&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;datadoghq.com&amp;#34;&lt;/span&gt; bash -c &lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;$(&lt;/span&gt;curl -L https://s3.amazonaws.com/dd-agent/scripts/install_script.sh&lt;span class=&#34;k&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Sau khi cài đặt, truy cập Datadog dashboard để xem các metric của bạn.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📌 Tài nguyên tham khảo:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.datadoghq.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;🌐 Trang web Datadog&lt;/a&gt;&lt;br&gt;
+&lt;a class=&#34;link&#34; href=&#34;https://docs.datadoghq.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;📖 Tài liệu Datadog&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;🎯 Kết luận
+&lt;/h2&gt;&lt;p&gt;Việc giám sát ứng dụng đóng vai trò quan trọng trong việc đảm bảo hiệu suất và độ tin cậy của hệ thống. Các công cụ như &lt;strong&gt;Jaeger&lt;/strong&gt;, &lt;strong&gt;New Relic&lt;/strong&gt; và &lt;strong&gt;Datadog&lt;/strong&gt; cung cấp các giải pháp toàn diện giúp doanh nghiệp theo dõi, phân tích và tối ưu hóa hệ thống phần mềm một cách hiệu quả. Chọn công cụ phù hợp sẽ giúp bạn quản lý ứng dụng tốt hơn, phát hiện sớm lỗi và cải thiện trải nghiệm người dùng.&lt;/p&gt;
+&lt;p&gt;🚀 Hãy triển khai giám sát để tối ưu hóa hiệu suất ứng dụng của bạn!&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Artifacts&lt;/strong&gt;&lt;/em&gt; trong phát triển phần mềm, artifacts là các tệp hoặc sản phẩm được tạo ra trong quá trình phát triển và triển khai ứng dụng.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>GitOps - Tự động hoá triển khai với Git 🌟</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty/</link>
+        <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-twenty.webp" alt="Featured image of post GitOps - Tự động hoá triển khai với Git 🌟" /&gt;&lt;h1 id=&#34;-gitops---tự-động-hoá-triển-khai-với-git&#34;&gt;🌟 GitOps - Tự động hoá triển khai với Git
+&lt;/h1&gt;&lt;h2 id=&#34;giới-thiệu&#34;&gt;Giới thiệu
+&lt;/h2&gt;&lt;p&gt;GitOps là một phương pháp quản lý hạ tầng và triển khai ứng dụng bằng cách sử dụng Git làm nguồn sự thật duy nhất (single source of truth). Phương pháp này giúp tự động hóa quy trình triển khai, đảm bảo tính nhất quán và tăng cường khả năng theo dõi các thay đổi.&lt;/p&gt;
+&lt;p&gt;GitOps mở rộng thực tiễn của DevOps bằng cách áp dụng các nguyên tắc của kiểm soát phiên bản (version control) và tích hợp liên tục (CI/CD) vào quản lý hạ tầng. Thay vì thực hiện thủ công, mọi thay đổi được thực hiện qua pull request và tự động đồng bộ với hệ thống thực tế.&lt;/p&gt;
+&lt;h2 id=&#34;-lợi-ích-của-gitops&#34;&gt;🚀 Lợi ích của GitOps
+&lt;/h2&gt;&lt;p&gt;✅ &lt;strong&gt;Kiểm soát phiên bản&lt;/strong&gt;: Tất cả các thay đổi được theo dõi trong Git, dễ dàng kiểm tra và quay lại trạng thái cũ khi cần.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Tự động hoá triển khai&lt;/strong&gt;: Sử dụng các công cụ như ArgoCD hoặc FluxCD để tự động đồng bộ hệ thống.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Tăng cường bảo mật&lt;/strong&gt;: Mọi thay đổi cần thông qua Git, giúp kiểm soát truy cập và hạn chế rủi ro thao tác trực tiếp.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Khả năng phục hồi cao&lt;/strong&gt;: Hệ thống có thể nhanh chóng phục hồi trạng thái ban đầu khi gặp sự cố bằng cách áp dụng lại cấu hình từ Git.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Cải thiện hợp tác nhóm&lt;/strong&gt;: Các thay đổi đều được ghi nhận và xem xét qua pull request, giúp các thành viên làm việc hiệu quả hơn.&lt;/p&gt;
+&lt;h2 id=&#34;-các-công-cụ-gitops-phổ-biến&#34;&gt;🛠️ Các công cụ GitOps phổ biến
+&lt;/h2&gt;&lt;h3 id=&#34;argocd---triển-khai-liên-tục-mạnh-mẽ&#34;&gt;ArgoCD - Triển khai liên tục mạnh mẽ
+&lt;/h3&gt;&lt;p&gt;ArgoCD là một công cụ triển khai liên tục (CD) dành cho Kubernetes, giúp tự động hóa quá trình triển khai bằng cách theo dõi trạng thái của ứng dụng trong Git và đồng bộ với môi trường thực tế.&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Tính năng nổi bật&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tự động đồng bộ trạng thái ứng dụng với Git.&lt;/li&gt;
+&lt;li&gt;Giao diện web trực quan để theo dõi trạng thái triển khai.&lt;/li&gt;
+&lt;li&gt;Hỗ trợ Helm, Kustomize, và các công cụ quản lý cấu hình khác.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🔹Ví dụ triển khai ArgoCD&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;apiVersion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;argoproj.io/v1alpha1&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;kind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;Application&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;metadata&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;my-app&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;namespace&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;argocd&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;spec&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;destination&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;namespace&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;default&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;server&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;https://kubernetes.default.svc&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;source&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;repoURL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;https://github.com/my-org/my-repo.git&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;targetRevision&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;HEAD&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;manifests&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;syncPolicy&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;automated&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;selfHeal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;prune&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;fluxcd---quản-lý-triển-khai-tự-động&#34;&gt;FluxCD - Quản lý triển khai tự động
+&lt;/h3&gt;&lt;p&gt;FluxCD là một công cụ GitOps giúp triển khai ứng dụng lên Kubernetes bằng cách theo dõi Git repository và tự động cập nhật hệ thống khi có thay đổi.&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Tính năng nổi bật&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Theo dõi repository Git và triển khai ứng dụng tự động.&lt;/li&gt;
+&lt;li&gt;Hỗ trợ Helm, Kustomize, và nhiều hệ thống CI/CD khác.&lt;/li&gt;
+&lt;li&gt;Cung cấp khả năng cập nhật hình ảnh container tự động.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Ví dụ triển khai FluxCD&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;apiVersion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;source.toolkit.fluxcd.io/v1beta1&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;kind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;GitRepository&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;metadata&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;my-app-repo&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;namespace&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;flux-system&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;spec&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;interval&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;1m0s&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;url&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;https://github.com/my-org/my-repo.git&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;ref&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;branch&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;-so-sánh-argocd-và-fluxcd&#34;&gt;🔥 So sánh ArgoCD và FluxCD
+&lt;/h2&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Tính năng&lt;/th&gt;
+          &lt;th&gt;ArgoCD&lt;/th&gt;
+          &lt;th&gt;FluxCD&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;UI trực quan&lt;/td&gt;
+          &lt;td&gt;✅ Có&lt;/td&gt;
+          &lt;td&gt;❌ Không&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Hỗ trợ Helm&lt;/td&gt;
+          &lt;td&gt;✅ Có&lt;/td&gt;
+          &lt;td&gt;✅ Có&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Cập nhật hình ảnh container tự động&lt;/td&gt;
+          &lt;td&gt;❌ Không&lt;/td&gt;
+          &lt;td&gt;✅ Có&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Triển khai Canary/Rollback&lt;/td&gt;
+          &lt;td&gt;✅ Có&lt;/td&gt;
+          &lt;td&gt;✅ Có&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;📌 Kết luận
+&lt;/h2&gt;&lt;p&gt;GitOps giúp đơn giản hóa quy trình triển khai ứng dụng bằng cách sử dụng Git làm trung tâm kiểm soát. Với các công cụ như ArgoCD và FluxCD, doanh nghiệp có thể dễ dàng tự động hóa triển khai, đảm bảo tính nhất quán và cải thiện khả năng phục hồi hệ thống.&lt;/p&gt;
+&lt;p&gt;🔗 &lt;strong&gt;Tài liệu tham khảo&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://argo-cd.readthedocs.io/en/stable/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu ArgoCD&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://docs.fluxcd.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu FluxCD&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📘 &lt;a class=&#34;link&#34; href=&#34;https://www.weave.works/technologies/gitops/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Hướng dẫn GitOps&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Bạn đã thử áp dụng &lt;strong&gt;GitOps&lt;/strong&gt; vào dự án của mình chưa? Hãy chia sẻ trải nghiệm của bạn! 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Service Mesh&lt;/strong&gt;&lt;/em&gt;  một lớp hạ tầng phần mềm giúp quản lý giao tiếp giữa các dịch vụ trong hệ thống microservices. Nó cung cấp các tính năng như cân bằng tải, bảo mật, quan sát, kiểm soát lưu lượng và khắc phục lỗi, giúp dịch vụ giao tiếp với nhau một cách hiệu quả mà không cần thay đổi mã nguồn ứng dụng.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Mẫu thiết kế đám mây (Cloud Design Patterns) 🌟</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty-two/</link>
+        <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty-two/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-twenty-two.webp" alt="Featured image of post Mẫu thiết kế đám mây (Cloud Design Patterns) 🌟" /&gt;&lt;h1 id=&#34;-mẫu-thiết-kế-đám-mây-cloud-design-patterns&#34;&gt;🌟 Mẫu thiết kế đám mây (Cloud Design Patterns)
+&lt;/h1&gt;&lt;h2 id=&#34;giới-thiệu&#34;&gt;Giới thiệu
+&lt;/h2&gt;&lt;p&gt;Mẫu thiết kế đám mây là những giải pháp có thể tái sử dụng cho các vấn đề phổ biến trong kiến trúc điện toán đám mây. Các mẫu này giúp giải quyết các thách thức liên quan đến khả năng mở rộng, độ tin cậy, bảo mật và hiệu suất trong các hệ thống phân tán.&lt;/p&gt;
+&lt;p&gt;Chúng cung cấp các phương pháp tốt nhất để thiết kế và triển khai ứng dụng đám mây, bao gồm quản lý dữ liệu, xử lý tin nhắn, đảm bảo tính kiên cố (resiliency) và triển khai. Một số ví dụ phổ biến:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Circuit Breaker&lt;/strong&gt;: Ngăn chặn lỗi lan rộng trong hệ thống bằng cách ngắt kết nối tạm thời khi phát hiện lỗi.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CQRS (Command Query Responsibility Segregation)&lt;/strong&gt;: Tách biệt các thao tác đọc và ghi dữ liệu để cải thiện hiệu suất.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sidecar Pattern&lt;/strong&gt;: Tách các thành phần phụ của ứng dụng vào một tiến trình hoặc container riêng để tăng tính linh hoạt.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-khả-dụng-availability&#34;&gt;🔹 Khả dụng (Availability)
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Khả dụng (Availability)&lt;/strong&gt; là phần trăm thời gian hệ thống hoạt động đúng như mong đợi, còn được gọi là &lt;strong&gt;uptime&lt;/strong&gt;. Yếu tố này có thể bị ảnh hưởng bởi lỗi phần cứng/phần mềm, vấn đề hạ tầng, tấn công mạng hoặc tải hệ thống quá cao.&lt;/p&gt;
+&lt;p&gt;Các nhà cung cấp dịch vụ đám mây thường đưa ra &lt;strong&gt;thỏa thuận mức dịch vụ (SLA - Service Level Agreement)&lt;/strong&gt;, quy định thời gian uptime cam kết. Ví dụ, một công ty có thể đảm bảo 99.99% thời gian hoạt động.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹Ví dụ&lt;/strong&gt;:
+Một hệ thống cam kết &lt;strong&gt;99.99% uptime&lt;/strong&gt; tức là chỉ được phép ngừng hoạt động tối đa &lt;strong&gt;52 phút/năm&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;-quản-lý-dữ-liệu-data-management&#34;&gt;🔹 Quản lý dữ liệu (Data Management)
+&lt;/h2&gt;&lt;p&gt;Quản lý dữ liệu là yếu tố quan trọng trong các ứng dụng đám mây, ảnh hưởng đến hầu hết các thuộc tính chất lượng. Dữ liệu thường được lưu trữ ở nhiều địa điểm khác nhau để cải thiện hiệu suất, mở rộng quy mô hoặc đảm bảo tính sẵn sàng. Điều này đặt ra các thách thức như:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Duy trì tính nhất quán dữ liệu&lt;/strong&gt; khi dữ liệu được đồng bộ trên nhiều máy chủ.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Bảo mật dữ liệu&lt;/strong&gt; khi lưu trữ, truyền tải và cấp quyền truy cập.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Khả năng mở rộng&lt;/strong&gt; để đáp ứng nhu cầu tăng trưởng.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🔹Ví dụ&lt;/strong&gt;:
+Hệ thống ngân hàng cần đảm bảo mọi giao dịch đều đồng nhất giữa các trung tâm dữ liệu để tránh sai lệch số dư tài khoản.&lt;/p&gt;
+&lt;h2 id=&#34;-thiết-kế--triển-khai-design-and-implementation&#34;&gt;🔹 Thiết Kế &amp;amp; triển Khai (Design and Implementation)
+&lt;/h2&gt;&lt;p&gt;Thiết kế tốt giúp hệ thống dễ bảo trì, nhất quán và có thể tái sử dụng trong nhiều tình huống khác nhau. Các quyết định trong giai đoạn thiết kế và triển khai ảnh hưởng trực tiếp đến chi phí và chất lượng tổng thể của ứng dụng đám mây.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Nguyên tắc thiết kế quan trọng&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Tính nhất quán&lt;/strong&gt;: Các thành phần phải tuân theo một cấu trúc nhất định.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Khả năng mở rộng&lt;/strong&gt;: Hệ thống có thể xử lý lưu lượng cao mà không bị suy giảm hiệu suất.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tái sử dụng&lt;/strong&gt;: Các thành phần có thể dùng lại trong nhiều ứng dụng khác nhau.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🔹Ví dụ&lt;/strong&gt;:
+Một hệ thống e-commerce sử dụng kiến trúc microservices để có thể dễ dàng mở rộng từng dịch vụ riêng lẻ (ví dụ: thanh toán, giỏ hàng, tìm kiếm sản phẩm).&lt;/p&gt;
+&lt;h2 id=&#34;-quản-lý--giám-sát-management-and-monitoring&#34;&gt;🔹 Quản lý &amp;amp; giám sát (Management and Monitoring)
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Quản lý và giám sát DevOps&lt;/strong&gt; bao gồm toàn bộ quá trình phát triển từ lập kế hoạch, phát triển, kiểm thử, triển khai đến vận hành. Một hệ thống giám sát tốt giúp theo dõi trạng thái của ứng dụng, dịch vụ và hạ tầng trong môi trường sản xuất.&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Các thành phần giám sát quan trọng&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Real-time streaming&lt;/strong&gt;: Theo dõi hệ thống trong thời gian thực.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Historical replay&lt;/strong&gt;: Lưu trữ lịch sử để phân tích lỗi.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Visualization&lt;/strong&gt;: Hiển thị dữ liệu trực quan để dễ dàng đánh giá hệ thống.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Ví dụ&lt;/strong&gt;:
+Sử dụng &lt;strong&gt;Prometheus + Grafana&lt;/strong&gt; để giám sát hiệu suất của các container Kubernetes.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;🔥 Kết luận
+&lt;/h2&gt;&lt;p&gt;Các mẫu thiết kế đám mây giúp tối ưu hóa kiến trúc hệ thống bằng cách cung cấp giải pháp cho các thách thức phổ biến như hiệu suất, bảo mật và khả năng mở rộng. Việc áp dụng các mẫu thiết kế phù hợp giúp doanh nghiệp xây dựng hệ thống mạnh mẽ, linh hoạt và dễ bảo trì.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Tổng kết:&lt;/strong&gt; Bạn đã hoàn thành hành trình khám phá về &lt;strong&gt;DevOps&lt;/strong&gt;, phương pháp kết hợp phát triển (&lt;em&gt;&lt;strong&gt;Development&lt;/strong&gt;&lt;/em&gt;) và vận hành (&lt;em&gt;&lt;strong&gt;Operations&lt;/strong&gt;&lt;/em&gt;) để tăng tốc triển khai phần mềm, nâng cao độ tin cậy hệ thống và tối ưu quy trình làm việc. Cảm ơn bạn đã đồng hành, hy vọng những kiến thức này sẽ giúp ích cho bạn trong hành trình tiếp theo! 🚀&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Quản lý Artifacts trong phát triển phần mềm 🏢</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-nineteen/</link>
+        <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-nineteen/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-nineteen.webp" alt="Featured image of post Quản lý Artifacts trong phát triển phần mềm 🏢" /&gt;&lt;h1 id=&#34;quản-lý-artifacts-trong-phát-triển-phần-mềm&#34;&gt;Quản lý Artifacts trong phát triển phần mềm
+&lt;/h1&gt;&lt;h2 id=&#34;-artifacts-là-gì&#34;&gt;🏗️ Artifacts là gì?
+&lt;/h2&gt;&lt;p&gt;Artifacts là các sản phẩm được tạo ra trong suốt vòng đời phát triển phần mềm. Chúng có thể bao gồm:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📜 &lt;strong&gt;Mã nguồn (Source code)&lt;/strong&gt;: Các tệp chứa logic ứng dụng.&lt;/li&gt;
+&lt;li&gt;🏗️ &lt;strong&gt;Binaries&lt;/strong&gt;: Các tệp thực thi hoặc thư viện được biên dịch.&lt;/li&gt;
+&lt;li&gt;📖 &lt;strong&gt;Tài liệu (Documentation)&lt;/strong&gt;: Hướng dẫn sử dụng, API specs.&lt;/li&gt;
+&lt;li&gt;⚙️ &lt;strong&gt;Tệp cấu hình (Configuration files)&lt;/strong&gt;: Các thiết lập cần thiết để chạy ứng dụng.&lt;/li&gt;
+&lt;li&gt;🛠️ &lt;strong&gt;Kết quả kiểm thử (Test results)&lt;/strong&gt;: Báo cáo từ các quy trình kiểm thử.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Việc quản lý artifacts giúp đảm bảo tính nhất quán, dễ dàng theo dõi và triển khai phần mềm hiệu quả hơn.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-các-công-cụ-quản-lý-artifacts-phổ-biến&#34;&gt;🏢 Các công cụ quản lý Artifacts phổ biến
+&lt;/h2&gt;&lt;h3 id=&#34;-1-artifactory&#34;&gt;🚀 1. Artifactory
+&lt;/h3&gt;&lt;p&gt;Artifactory là một giải pháp DevOps cho việc lưu trữ, quản lý và phân phối các artifacts. Nó hỗ trợ nhiều định dạng như Docker, npm, Maven, Python, Go, và hơn thế nữa.&lt;/p&gt;
+&lt;h4 id=&#34;-cài-đặt-artifactory-trên-docker&#34;&gt;🔧 Cài đặt Artifactory trên Docker:
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Kéo image Artifactory&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker pull releases-docker.jfrog.io/jfrog/artifactory-oss:latest
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Chạy container&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;docker run --name artifactory -d -p 8081:8081 releases-docker.jfrog.io/jfrog/artifactory-oss:latest
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Sau khi cài đặt, bạn có thể truy cập giao diện web qua &lt;code&gt;http://localhost:8081&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;-2-nexus-repository-manager&#34;&gt;📦 2. Nexus Repository Manager
+&lt;/h3&gt;&lt;p&gt;Nexus là một trong những công cụ phổ biến để quản lý binary artifacts, đặc biệt trong môi trường Java.&lt;/p&gt;
+&lt;h4 id=&#34;-cài-đặt-nexus-trên-linux&#34;&gt;🏗️ Cài đặt Nexus trên Linux:
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;wget https://download.sonatype.com/nexus/3/latest-unix.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;tar -xvf latest-unix.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; nexus-3.*
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./bin/nexus start
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Sau khi chạy, bạn có thể truy cập Nexus tại &lt;code&gt;http://localhost:8081&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;-3-cloudsmith&#34;&gt;☁️ 3. Cloudsmith
+&lt;/h3&gt;&lt;p&gt;Cloudsmith là một nền tảng quản lý artifacts dựa trên đám mây, hỗ trợ nhiều định dạng gói tin như Docker, Helm, npm, pip.&lt;/p&gt;
+&lt;h4 id=&#34;-cách-tải-và-đẩy-package-lên-cloudsmith&#34;&gt;⚡ Cách tải và đẩy package lên Cloudsmith:
+&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Cài đặt CLI của Cloudsmith&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;pip install cloudsmith-cli
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Đẩy một package lên kho lưu trữ&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cloudsmith push python my-org/my-repo my-package-1.0.0.tar.gz
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Cloudsmith giúp đơn giản hóa quá trình quản lý và phân phối gói phần mềm.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;🎯 Kết luận
+&lt;/h2&gt;&lt;p&gt;Việc quản lý artifacts đóng vai trò quan trọng trong quy trình phát triển phần mềm. Sử dụng các công cụ như &lt;strong&gt;Artifactory, Nexus, và Cloudsmith&lt;/strong&gt; giúp đảm bảo tính tổ chức, bảo mật và hiệu quả trong việc lưu trữ và triển khai ứng dụng. Tùy vào nhu cầu của dự án, bạn có thể chọn công cụ phù hợp để tối ưu hóa quy trình DevOps của mình!&lt;/p&gt;
+&lt;p&gt;🛠️ Bạn đang sử dụng công cụ nào để quản lý artifacts? Hãy chia sẻ kinh nghiệm của bạn!&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;GitOps&lt;/strong&gt;&lt;/em&gt;  quá trình cung cấp và cấu hình tài nguyên (máy chủ, mạng, lưu trữ, tài khoản) để hệ thống hoặc ứng dụng có thể hoạt động hiệu quả.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>Service Mesh - Quản lý giao tiếp giữa Microservices 🌐</title>
+        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty-one/</link>
+        <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty-one/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-twenty-one.webp" alt="Featured image of post Service Mesh - Quản lý giao tiếp giữa Microservices 🌐" /&gt;&lt;h1 id=&#34;-service-mesh---quản-lý-giao-tiếp-giữa-microservices&#34;&gt;🌐 Service Mesh - Quản lý giao tiếp giữa Microservices
+&lt;/h1&gt;&lt;h2 id=&#34;-giới-thiệu&#34;&gt;📌 Giới thiệu
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Service Mesh&lt;/strong&gt; là một lớp hạ tầng phần mềm giúp quản lý giao tiếp giữa các dịch vụ trong hệ thống &lt;em&gt;&lt;strong&gt;microservices&lt;/strong&gt;&lt;/em&gt;. Nó cung cấp các tính năng như &lt;strong&gt;cân bằng tải, bảo mật, quan sát, kiểm soát lưu lượng và khắc phục lỗi&lt;/strong&gt;, giúp dịch vụ giao tiếp với nhau một cách hiệu quả mà không cần thay đổi mã nguồn ứng dụng.&lt;/p&gt;
+&lt;p&gt;Các công cụ Service Mesh phổ biến gồm: &lt;strong&gt;Istio, Linkerd, Consul&lt;/strong&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-lợi-ích-của-service-mesh&#34;&gt;🚀 Lợi ích của Service Mesh
+&lt;/h2&gt;&lt;p&gt;✅ &lt;strong&gt;Tự động quản lý giao tiếp giữa các dịch vụ&lt;/strong&gt; - Không cần thay đổi mã nguồn ứng dụng.&lt;br&gt;
+✅ &lt;strong&gt;Bảo mật nâng cao&lt;/strong&gt; - Mã hóa TLS, xác thực dịch vụ, chính sách RBAC.&lt;br&gt;
+✅ &lt;strong&gt;Tối ưu hiệu suất&lt;/strong&gt; - Hỗ trợ cân bằng tải thông minh và kiểm soát lưu lượng.&lt;br&gt;
+✅ &lt;strong&gt;Quan sát toàn diện&lt;/strong&gt; - Theo dõi logs, metrics và tracing để giám sát hệ thống.&lt;br&gt;
+✅ &lt;strong&gt;Khả năng phục hồi cao&lt;/strong&gt; - Giúp phát hiện và xử lý lỗi tự động.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-các-công-cụ-service-mesh-phổ-biến&#34;&gt;🛠️ Các công cụ Service Mesh phổ biến
+&lt;/h2&gt;&lt;h3 id=&#34;1-istio---giải-pháp-mạnh-mẽ-nhất&#34;&gt;1️⃣ Istio - Giải pháp mạnh mẽ nhất
+&lt;/h3&gt;&lt;p&gt;Istio là một nền tảng &lt;strong&gt;Service Mesh&lt;/strong&gt; mã nguồn mở cung cấp khả năng kiểm soát, bảo mật và quan sát dịch vụ trong hệ thống &lt;strong&gt;Kubernetes&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Tính năng chính:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Hỗ trợ &lt;strong&gt;mTLS&lt;/strong&gt; để bảo mật giao tiếp giữa các dịch vụ.&lt;/li&gt;
+&lt;li&gt;Cân bằng tải thông minh, retry, timeout.&lt;/li&gt;
+&lt;li&gt;Quản lý API Gateway và chính sách truy cập dịch vụ.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Ví dụ cấu hình Istio Gateway:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;apiVersion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;networking.istio.io/v1alpha3&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;kind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;Gateway&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;metadata&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;my-gateway&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;spec&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;istio&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;ingressgateway&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;servers&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;- &lt;span class=&#34;nt&#34;&gt;port&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;number&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;m&#34;&gt;80&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;http&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;protocol&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;HTTP&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;hosts&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;- &lt;span class=&#34;s2&#34;&gt;&amp;#34;example.com&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://www.redhat.com/en/topics/microservices/what-is-istio&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu Istio&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;2-linkerd---dễ-triển-khai--hiệu-năng-cao&#34;&gt;2️⃣ Linkerd - Dễ triển khai &amp;amp; hiệu năng cao
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Linkerd&lt;/strong&gt; là Service Mesh nhẹ, tối ưu hóa hiệu suất cho &lt;strong&gt;Kubernetes&lt;/strong&gt;, giúp giảm độ trễ và tài nguyên sử dụng.&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Tính năng chính:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tự động mã hóa TLS (mTLS) cho toàn bộ giao tiếp.&lt;/li&gt;
+&lt;li&gt;Hỗ trợ giám sát &lt;strong&gt;tracing&lt;/strong&gt; và &lt;strong&gt;metrics&lt;/strong&gt; dễ dàng.&lt;/li&gt;
+&lt;li&gt;Cài đặt nhanh chỉ với một lệnh CLI.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Ví dụ cấu hình Linkerd:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-yaml&#34; data-lang=&#34;yaml&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nt&#34;&gt;apiVersion&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;linkerd.io/v1alpha2&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;kind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;ServiceProfile&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;metadata&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;my-service.default.svc.cluster.local&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;spec&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;  &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;routes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;    &lt;/span&gt;- &lt;span class=&#34;nt&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;GET /health&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;condition&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;method&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;GET&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;pathRegex&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;/health&amp;#34;&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;      &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;isRetryable&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;kc&#34;&gt;true&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://linkerd.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu Linkerd&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;3-consul---hỗ-trợ-service-mesh--service-discovery&#34;&gt;3️⃣ Consul - Hỗ trợ Service Mesh &amp;amp; Service Discovery
+&lt;/h3&gt;&lt;p&gt;Consul không chỉ là một &lt;strong&gt;Service Mesh&lt;/strong&gt;, mà còn cung cấp &lt;strong&gt;Service Discovery, quản lý cấu hình, và bảo mật giao tiếp&lt;/strong&gt; giữa các dịch vụ.&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Tính năng chính:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Hỗ trợ &lt;strong&gt;service discovery&lt;/strong&gt; cho cả Kubernetes và hệ thống truyền thống.&lt;/li&gt;
+&lt;li&gt;Kết hợp với &lt;strong&gt;Envoy Proxy&lt;/strong&gt; để quản lý giao tiếp.&lt;/li&gt;
+&lt;li&gt;Cho phép &lt;strong&gt;multi-cluster&lt;/strong&gt; và &lt;strong&gt;hybrid cloud&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Ví dụ cấu hình Consul Service Registration:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-json&#34; data-lang=&#34;json&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nt&#34;&gt;&amp;#34;service&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;web&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;#34;port&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;8080&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nt&#34;&gt;&amp;#34;connect&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt; &lt;span class=&#34;nt&#34;&gt;&amp;#34;sidecar_service&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;{}&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://www.consul.io/docs/intro&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu Consul&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-so-sánh-các-service-mesh-phổ-biến&#34;&gt;🔥 So sánh các Service Mesh phổ biến
+&lt;/h2&gt;&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th&gt;Tính năng&lt;/th&gt;
+          &lt;th&gt;Istio&lt;/th&gt;
+          &lt;th&gt;Linkerd&lt;/th&gt;
+          &lt;th&gt;Consul&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td&gt;UI trực quan&lt;/td&gt;
+          &lt;td&gt;✅ Có&lt;/td&gt;
+          &lt;td&gt;❌ Không&lt;/td&gt;
+          &lt;td&gt;✅ Có&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Hỗ trợ mTLS&lt;/td&gt;
+          &lt;td&gt;✅ Có&lt;/td&gt;
+          &lt;td&gt;✅ Có&lt;/td&gt;
+          &lt;td&gt;✅ Có&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Hiệu năng cao&lt;/td&gt;
+          &lt;td&gt;⚠️ Cần tối ưu&lt;/td&gt;
+          &lt;td&gt;✅ Nhanh&lt;/td&gt;
+          &lt;td&gt;⚠️ Trung bình&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td&gt;Hỗ trợ Service Discovery&lt;/td&gt;
+          &lt;td&gt;❌ Không&lt;/td&gt;
+          &lt;td&gt;❌ Không&lt;/td&gt;
+          &lt;td&gt;✅ Có&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-kết-luận&#34;&gt;📌 Kết luận
+&lt;/h2&gt;&lt;p&gt;Service Mesh giúp &lt;strong&gt;đơn giản hóa việc quản lý giao tiếp giữa các microservices&lt;/strong&gt;, đảm bảo &lt;strong&gt;bảo mật, giám sát và hiệu suất cao&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;💡 Nếu bạn đang tìm kiếm &lt;strong&gt;một giải pháp mạnh mẽ nhất&lt;/strong&gt;, hãy thử &lt;strong&gt;Istio&lt;/strong&gt;.&lt;br&gt;
+💡 Nếu ưu tiên &lt;strong&gt;hiệu năng cao và dễ triển khai&lt;/strong&gt;, hãy chọn &lt;strong&gt;Linkerd&lt;/strong&gt;.&lt;br&gt;
+💡 Nếu bạn cần &lt;strong&gt;service discovery và multi-cloud&lt;/strong&gt;, hãy xem xét &lt;strong&gt;Consul&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Tài liệu tham khảo:&lt;/strong&gt;&lt;br&gt;
+🔗 &lt;a class=&#34;link&#34; href=&#34;https://istio.io/latest/docs/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu Istio&lt;/a&gt;&lt;br&gt;
+🔗 &lt;a class=&#34;link&#34; href=&#34;https://linkerd.io/2.17/getting-started/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu Linkerd&lt;/a&gt;&lt;br&gt;
+🔗 &lt;a class=&#34;link&#34; href=&#34;https://developer.hashicorp.com/consul&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Tài liệu Consul&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Bạn đã thử triển khai &lt;strong&gt;Service Mesh&lt;/strong&gt; nào chưa? Hãy chia sẻ trải nghiệm của bạn! 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước cuối cùng:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Cloud Design Patterns&lt;/strong&gt;&lt;/em&gt;  tập hợp các mẫu thiết kế đã được kiểm chứng, giúp xây dựng các ứng dụng trên đám mây hiệu quả, linh hoạt và có khả năng mở rộng. Chúng giải quyết các vấn đề phổ biến như tính sẵn sàng cao, khả năng chịu lỗi, mở rộng theo nhu cầu và bảo mật trong môi trường điện toán đám mây.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>CI/CD - Tích hợp liên tục và triển khai liên tục 🚀</title>
         <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-thirteen/</link>
         <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
