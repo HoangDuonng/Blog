@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="vi" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+    <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Cách up website lên Hosting thông qua File Manager và cPanel nhanh nhất từ A-Z. Bao gồm cả các framework như React hay Vue.js">
 <title>Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥</title>
 
-<link rel='canonical' href='http://localhost:1313/posts/website/how-to-deploy-a-website/'>
+<link rel='canonical' href='https://tech.nguuyen.io.vn/posts/website/how-to-deploy-a-website/'>
 
 <link rel="stylesheet" href="/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css"><meta property='og:title' content="Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥">
 <meta property='og:description' content="Cách up website lên Hosting thông qua File Manager và cPanel nhanh nhất từ A-Z. Bao gồm cả các framework như React hay Vue.js">
-<meta property='og:url' content='http://localhost:1313/posts/website/how-to-deploy-a-website/'>
+<meta property='og:url' content='https://tech.nguuyen.io.vn/posts/website/how-to-deploy-a-website/'>
 <meta property='og:site_name' content='Hoàng Dương'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='website' /><meta property='article:tag' content='hosting' /><meta property='article:published_time' content='2025-02-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-02-26T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/images/website/upload-website-on-hosting.webp' />
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='website' /><meta property='article:tag' content='hosting' /><meta property='article:published_time' content='2025-02-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-02-26T00:00:00&#43;00:00'/><meta property='og:image' content='https://tech.nguuyen.io.vn/images/website/upload-website-on-hosting.webp' />
 <meta name="twitter:title" content="Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥">
 <meta name="twitter:description" content="Cách up website lên Hosting thông qua File Manager và cPanel nhanh nhất từ A-Z. Bao gồm cả các framework như React hay Vue.js"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='http://localhost:1313/images/website/upload-website-on-hosting.webp' />
+    <meta name="twitter:image" content='https://tech.nguuyen.io.vn/images/website/upload-website-on-hosting.webp' />
     <link rel="icon" type="image/png" href="/images/favicon.ico" />
 <style>
      
@@ -247,9 +247,9 @@
 
                             <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
                                 
-                                    <option value="http://localhost:1313/" selected>Tiếng Việt</option>
+                                    <option value="https://tech.nguuyen.io.vn/" selected>Tiếng Việt</option>
                                 
-                                    <option value="http://localhost:1313/en/" >English</option>
+                                    <option value="https://tech.nguuyen.io.vn/en/" >English</option>
                                 
                             </select>
                         </li>
@@ -299,7 +299,12 @@
         <li><a href="#chọn-nhà-cung-cấp-hosting-uy-tín-tin-cậy">Chọn nhà cung cấp hosting uy tín, tin cậy</a></li>
         <li><a href="#lựa-chọn-phương-pháp-upload-website-lên-hosting">Lựa chọn phương pháp upload website lên hosting</a>
           <ol>
-            <li></li>
+            <li><a href="#sử-dụng-công-cụ-quản-lý-file-file-manager">Sử dụng công cụ quản lý file (File Manager)</a></li>
+            <li><a href="#sử-dụng-giao-thức-truyền-tải-file-ftp">Sử dụng giao thức truyền tải file (FTP)</a></li>
+            <li><a href="#sử-dụng-plugin-di-chuyển-wordpress">Sử dụng Plugin Di Chuyển WordPress</a></li>
+            <li><a href="#sử-dụng-ssh-secure-shell">Sử dụng SSH (Secure Shell)</a></li>
+            <li><a href="#import-site--trình-nhập-website-tự-động">Import Site – Trình nhập website tự động</a></li>
+            <li><a href="#nhờ-sự-hỗ-trợ-từ-nhà-cung-cấp-hosting">Nhờ sự hỗ trợ từ nhà cung cấp hosting</a></li>
           </ol>
         </li>
       </ol>
@@ -537,8 +542,8 @@ mà chỉ cần upload <strong>thư mục chứa các file tĩnh đã được b
 <p><strong>Lưu ý</strong>: Hãy tìm hiểu kỹ về đánh giá của người dùng và uy tín của nhà cung cấp thông qua các diễn đàn hoặc trang đánh giá trước khi đưa ra quyết định. Điều này sẽ giúp bạn chọn được dịch vụ phù hợp nhất với nhu cầu phát triển website.</p></blockquote>
 <h3 id="lựa-chọn-phương-pháp-upload-website-lên-hosting">Lựa chọn phương pháp upload website lên hosting
 </h3><p>Có 5 phương pháp chính để upload website lên hosting, tùy thuộc vào nhu cầu và công cụ bạn sử dụng:</p>
-<h5 id="sử-dụng-công-cụ-quản-lý-file-file-manager">Sử dụng công cụ quản lý file (File Manager)
-</h5><p>Là công cụ quản lý file trực tiếp trên nền tảng web của hosting, thường được tích hợp sẵn trong cPanel hoặc các trình quản lý hosting khác.</p>
+<h4 id="sử-dụng-công-cụ-quản-lý-file-file-manager">Sử dụng công cụ quản lý file (File Manager)
+</h4><p>Là công cụ quản lý file trực tiếp trên nền tảng web của hosting, thường được tích hợp sẵn trong cPanel hoặc các trình quản lý hosting khác.</p>
 <p><strong>Ưu điểm:</strong></p>
 <ul>
 <li>Miễn phí.</li>
@@ -562,8 +567,8 @@ mà chỉ cần upload <strong>thư mục chứa các file tĩnh đã được b
 	
 ></p>
 <p align="center"><em>Hình 1: Truy cập vào File Manager</em></p>
-<h5 id="sử-dụng-giao-thức-truyền-tải-file-ftp">Sử dụng giao thức truyền tải file (FTP)
-</h5><p>Giao thức FTP (File Transfer Protocol) cho phép bạn tải file lên hosting thông qua phần mềm FTP client như FileZilla. Đây là phương pháp hiệu quả và không giới hạn dung lượng file tải lên.</p>
+<h4 id="sử-dụng-giao-thức-truyền-tải-file-ftp">Sử dụng giao thức truyền tải file (FTP)
+</h4><p>Giao thức FTP (File Transfer Protocol) cho phép bạn tải file lên hosting thông qua phần mềm FTP client như FileZilla. Đây là phương pháp hiệu quả và không giới hạn dung lượng file tải lên.</p>
 <p><strong>Ưu điểm:</strong></p>
 <ul>
 <li>Không giới hạn dung lượng tải lên.</li>
@@ -586,8 +591,8 @@ mà chỉ cần upload <strong>thư mục chứa các file tĩnh đã được b
 	
 ></p>
 <p align="center"><em>Hình 2: Thông tin FPT</em></p>
-<h5 id="sử-dụng-plugin-di-chuyển-wordpress">Sử dụng Plugin Di Chuyển WordPress
-</h5><p>Nếu bạn sử dụng WordPress, các plugin như All in One WP Migration có thể giúp bạn di chuyển toàn bộ website một cách tự động.</p>
+<h4 id="sử-dụng-plugin-di-chuyển-wordpress">Sử dụng Plugin Di Chuyển WordPress
+</h4><p>Nếu bạn sử dụng WordPress, các plugin như All in One WP Migration có thể giúp bạn di chuyển toàn bộ website một cách tự động.</p>
 <p><strong>Ưu điểm:</strong></p>
 <ul>
 <li>Dễ sử dụng, không cần kiến thức kỹ thuật cao.</li>
@@ -611,8 +616,8 @@ mà chỉ cần upload <strong>thư mục chứa các file tĩnh đã được b
 	
 ></p>
 <p align="center"><em>Hình 3: Sử dụng WordPress Migration Plugin</em></p>
-<h5 id="sử-dụng-ssh-secure-shell">Sử dụng SSH (Secure Shell)
-</h5><p>SSH là cách tải và quản lý file qua dòng lệnh, phù hợp với những file lớn hoặc yêu cầu tốc độ cao.</p>
+<h4 id="sử-dụng-ssh-secure-shell">Sử dụng SSH (Secure Shell)
+</h4><p>SSH là cách tải và quản lý file qua dòng lệnh, phù hợp với những file lớn hoặc yêu cầu tốc độ cao.</p>
 <p><strong>Ưu điểm:</strong></p>
 <ul>
 <li>Nhanh chóng, không giới hạn dung lượng.</li>
@@ -633,8 +638,8 @@ mà chỉ cần upload <strong>thư mục chứa các file tĩnh đã được b
 	
 ></p>
 <p align="center"><em>Hình 4: Sử dụng SSH upload website</em></p>
-<h5 id="import-site--trình-nhập-website-tự-động">Import Site – Trình nhập website tự động
-</h5><p>Một số nhà cung cấp dịch vụ hosting cung cấp công cụ <strong>Import Site</strong> giúp tải và giải nén website vào thư mục <code>public_html</code> một cách nhanh chóng.</p>
+<h4 id="import-site--trình-nhập-website-tự-động">Import Site – Trình nhập website tự động
+</h4><p>Một số nhà cung cấp dịch vụ hosting cung cấp công cụ <strong>Import Site</strong> giúp tải và giải nén website vào thư mục <code>public_html</code> một cách nhanh chóng.</p>
 <p><strong>Ưu điểm:</strong></p>
 <ul>
 <li>Quá trình tải lên nhanh chóng và dễ dàng.</li>
@@ -658,8 +663,8 @@ mà chỉ cần upload <strong>thư mục chứa các file tĩnh đã được b
 	
 ></p>
 <p align="center"><em>Hình 5: Tool nhập website</em></p>
-<h5 id="nhờ-sự-hỗ-trợ-từ-nhà-cung-cấp-hosting">Nhờ sự hỗ trợ từ nhà cung cấp hosting
-</h5><p>Hầu hết các nhà cung cấp hosting đều có dịch vụ hỗ trợ di chuyển website, đặc biệt khi bạn chuyển từ dịch vụ hosting cũ sang nhà cung cấp mới.</p>
+<h4 id="nhờ-sự-hỗ-trợ-từ-nhà-cung-cấp-hosting">Nhờ sự hỗ trợ từ nhà cung cấp hosting
+</h4><p>Hầu hết các nhà cung cấp hosting đều có dịch vụ hỗ trợ di chuyển website, đặc biệt khi bạn chuyển từ dịch vụ hosting cũ sang nhà cung cấp mới.</p>
 <p><strong>Ưu điểm:</strong></p>
 <ul>
 <li>Tiết kiệm thời gian và tránh sai sót kỹ thuật.</li>
@@ -1228,7 +1233,7 @@ mà chỉ cần upload <strong>thư mục chứa các file tĩnh đã được b
                 src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
                 
                 >
-            </script><script type="text/javascript" src="/ts/main.ac34731e87bad72b2c444674f2a0654c5fbc5e86fa9eab9fb7f610fbc3eadfb3.js" defer></script>
+            </script><script type="text/javascript" src="/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js" defer></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
