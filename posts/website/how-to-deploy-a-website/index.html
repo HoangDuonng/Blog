@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="vi" dir="ltr">
+    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Cách up website lên Hosting thông qua File Manager và cPanel nhanh nhất từ A-Z. Bao gồm cả các framework như React hay Vue.js">
+<title>Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥</title>
+
+<link rel='canonical' href='http://localhost:1313/posts/website/how-to-deploy-a-website/'>
+
+<link rel="stylesheet" href="/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css"><meta property='og:title' content="Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥">
+<meta property='og:description' content="Cách up website lên Hosting thông qua File Manager và cPanel nhanh nhất từ A-Z. Bao gồm cả các framework như React hay Vue.js">
+<meta property='og:url' content='http://localhost:1313/posts/website/how-to-deploy-a-website/'>
+<meta property='og:site_name' content='Hoàng Dương'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='website' /><meta property='article:tag' content='hosting' /><meta property='article:published_time' content='2025-02-26T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-02-26T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/images/website/upload-website-on-hosting.webp' />
+<meta name="twitter:title" content="Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥">
+<meta name="twitter:description" content="Cách up website lên Hosting thông qua File Manager và cPanel nhanh nhất từ A-Z. Bao gồm cả các framework như React hay Vue.js"><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='http://localhost:1313/images/website/upload-website-on-hosting.webp' />
+    <link rel="icon" type="image/png" href="/images/favicon.ico" />
+<style>
+     
+    :root {
+        --article-font-family: "Roboto", var(--base-font-family);
+    }
+</style>
+
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap";
+    
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+    
+        document.head.appendChild(customFont);
+    }());
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Hiển thị Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu_f509edb42ecc0ebd.png" width="400"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Hoàng Dương</a></h1>
+            <h2 class="site-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/HoangDuonng'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.instagram.com/ngu_uuen/'
+                        target="_blank"
+                        title="Instagram"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="3" width="18" height="18" rx="3" />
+  <circle cx="12" cy="12" r="4" />
+  <path d="M16.5 7.5h.01" />
+</svg>
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Trang chủ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/gi%E1%BB%9Bi-thi%E1%BB%87u/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Về tôi</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Lưu trữ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Tìm kiếm</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/li%C3%AAn-k%E1%BA%BFt/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Liên kết</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="http://localhost:1313/" selected>Tiếng Việt</option>
+                                
+                                    <option value="http://localhost:1313/en/" >English</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Chế độ tối</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        
+        <h2 class="widget-title section-title">Mục lục</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#điểm-chính-cần-nắm">Điểm chính cần nắm</a></li>
+    <li><a href="#cần-chuẩn-bị-gì-khi-upload-website-lên-hosting">Cần chuẩn bị gì khi upload website lên hosting?</a>
+      <ol>
+        <li><a href="#chọn-nhà-cung-cấp-hosting-uy-tín-tin-cậy">Chọn nhà cung cấp hosting uy tín, tin cậy</a></li>
+        <li><a href="#lựa-chọn-phương-pháp-upload-website-lên-hosting">Lựa chọn phương pháp upload website lên hosting</a>
+          <ol>
+            <li></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#lý-do-cần-upload-website-lên-hosting">Lý do cần upload website lên Hosting</a>
+      <ol>
+        <li><a href="#xuất-bản-website-và-tiếp-cận-toàn-cầu">Xuất bản website và tiếp cận toàn cầu</a></li>
+        <li><a href="#bảo-mật-và-an-toàn-dữ-liệu">Bảo mật và an toàn dữ liệu</a></li>
+        <li><a href="#tăng-tốc-độ-và-hiệu-suất-website">Tăng tốc độ và hiệu suất Website</a></li>
+        <li><a href="#tính-ổn-định-và-tin-cậy">Tính ổn định và tin cậy</a></li>
+        <li><a href="#quản-lý-website-dễ-dàng-và-tiện-lợi">Quản lý website dễ dàng và tiện lợi</a></li>
+        <li><a href="#tính-mở-rộng-và-phát-triển-lâu-dài">Tính mở rộng và phát triển lâu dài</a></li>
+      </ol>
+    </li>
+    <li><a href="#bước-1-chọn-cách-upload-file-website-lên-host">Bước 1: Chọn cách upload file website lên host</a>
+      <ol>
+        <li><a href="#cách-1-upload-website-lên-hosting-bằng-file-manager-qua-cpanel">Cách 1: Upload website lên hosting bằng File Manager qua cPanel</a></li>
+        <li><a href="#cách-2-upload-website-lên-hosting-bằng-ftp-client">Cách 2: Upload website lên hosting bằng FTP client</a></li>
+      </ol>
+    </li>
+    <li><a href="#bước-2-kiểm-tra-xem-file-đã-ở-trong-thư-mục-public_html-hay-chưa">Bước 2: Kiểm tra xem file đã ở trong thư mục public_html hay chưa</a></li>
+    <li><a href="#bước-3-tiến-hành-upload-database-lên-website-hosting">Bước 3: Tiến hành upload database lên website hosting</a>
+      <ol>
+        <li><a href="#tạo-database-trên-cpanel">Tạo database trên cPanel</a></li>
+        <li><a href="#di-chuyển-vào-phpmyadmin-của-database">Di chuyển vào phpMyAdmin của database</a></li>
+        <li><a href="#di-chuyển-vào-tab-import-và-upload-dữ-liệu-vào-database">Di chuyển vào tab Import và upload dữ liệu vào database</a></li>
+        <li><a href="#cập-nhật-file-cấu-hình-để-kết-nối-website-và-database">Cập nhật file cấu hình để kết nối website và database</a></li>
+        <li><a href="#cập-nhật-file-cấu-hình-để-kết-nối-website-và-database-1">Cập nhật file cấu hình để kết nối website và database</a></li>
+      </ol>
+    </li>
+    <li><a href="#bước-4-kiểm-tra-website-đã-hoạt-động-ổn-định-hay-chưa">Bước 4: Kiểm tra website đã hoạt động ổn định hay chưa</a>
+      <ol>
+        <li><a href="#-kiểm-tra-truy-cập-website">🔍 Kiểm tra truy cập website</a></li>
+        <li><a href="#-kiểm-tra-các-chức-năng-của-website">🛠️ Kiểm tra các chức năng của website</a></li>
+        <li><a href="#-kiểm-tra-tốc-độ-tải-trang">⚡ Kiểm tra tốc độ tải trang</a></li>
+        <li><a href="#-kiểm-tra-các-lỗi-trên-website">🚨 Kiểm tra các lỗi trên website</a></li>
+        <li><a href="#-kiểm-tra-trên-nhiều-trình-duyệt--thiết-bị">🌍 Kiểm tra trên nhiều trình duyệt &amp; thiết bị</a></li>
+        <li><a href="#-kiểm-tra-vào-các-thời-điểm-khác-nhau-trong-ngày">⏳ Kiểm tra vào các thời điểm khác nhau trong ngày</a></li>
+      </ol>
+    </li>
+    <li><a href="#-lời-kết">📌 Lời kết</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/posts/website/how-to-deploy-a-website/">
+                
+                    <img src="/images/website/upload-website-on-hosting.webp" loading="lazy" alt="Featured image of post Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/website/" style="background-color: #2a9d8f; color: #fff;">
+                Website
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/website/how-to-deploy-a-website/">Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Cách up website lên Hosting thông qua File Manager và cPanel nhanh nhất từ A-Z. Bao gồm cả các framework như React hay Vue.js
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">26/02/2025</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    20 phút đọc
+                </time>
+            </div>
+        
+
+        
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                    <span class="article-author--name">
+                        Hoàng Dương
+                    </span>
+                </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="cách-up-website-lên-hosting-thông-qua-file-manager-và-cpanel-nhanh-nhất-từ-a-z">Cách up website lên Hosting thông qua File Manager và cPanel nhanh nhất từ A-Z
+</h1><hr>
+<p>Việc upload website lên hosting là bước thiết yếu để đưa website của bạn hoạt động trên internet. Quá trình này không chỉ đơn giản là chuyển dữ liệu, mà còn liên quan đến việc đảm bảo mọi thứ hoạt động mượt mà và an toàn. Bài viết này sẽ giúp bạn hiểu rõ các bước cần thiết, từ chuẩn bị file và database, đến các công cụ hỗ trợ upload hiệu quả.</p>
+<hr>
+<h2 id="điểm-chính-cần-nắm">Điểm chính cần nắm
+</h2><p>Trước khi bắt tay vào việc upload website lên hosting, bạn cần lưu ý một số yếu tố quan trọng. Mình sẽ giúp bạn dễ dàng hiểu và nắm bắt các bước thực hiện:</p>
+<p>✅ <strong>Bạn cần chuẩn bị gì khi upload website lên hosting</strong>: Chuẩn bị file website, database, quyền truy cập control panel và phần mềm FTP như FileZilla.</p>
+<p>✅ <strong>Các cách upload website lên hosting</strong>: Chọn hosting uy tín, sau đó sử dụng File Manager, FTP, plugin WordPress, SSH hoặc nhờ hỗ trợ từ nhà cung cấp.</p>
+<p>✅ <strong>Lý do cần upload website lên hosting</strong>: Giúp công khai website, tăng bảo mật, cải thiện tốc độ và dễ quản lý.</p>
+<p>✅ <strong>Bốn bước để upload web lên hosting</strong>:</p>
+<ol>
+<li>Upload file website vào thư mục <code>public_html</code> qua File Manager hoặc FTP.</li>
+<li>Kiểm tra xem các file đã đúng vị trí chưa.</li>
+<li>Tạo database trên cPanel, import dữ liệu qua phpMyAdmin và cấu hình kết nối.</li>
+<li>Truy cập website để kiểm tra xem mọi thứ đã hoạt động ổn định chưa.</li>
+</ol>
+<h2 id="cần-chuẩn-bị-gì-khi-upload-website-lên-hosting">Cần chuẩn bị gì khi upload website lên hosting?
+</h2><p>Để upload website lên hosting, trước tiên bạn cần phải chuẩn bị một số vấn đề sau đây:</p>
+<ul>
+<li><strong>File website</strong>: Những file này có thể là toàn bộ dữ liệu bên trong phần <code>public_html</code> cũ hoặc file source code hay bản backup (sao lưu) dữ liệu mới nhất thay cho source code.</li>
+</ul>
+<blockquote>
+<p><strong>📌 Lưu ý khi triển khai website React/Vue.js</strong></p>
+<p>Khi build một ứng dụng <strong>React</strong> hoặc <strong>Vue.js</strong>, ta không tải toàn bộ mã nguồn lên máy chủ,<br>
+mà chỉ cần upload <strong>thư mục chứa các file tĩnh đã được build</strong>.</p>
+<p><strong>🔹 Các bước build và nén tệp:</strong></p>
+<ul>
+<li>Chạy lệnh build:
+<ul>
+<li><strong>React:</strong>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">npm run build
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li><strong>Vue.js:</strong>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">npm run build
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
+</li>
+<li>Sau khi build xong, thư mục output thường là <code>build/</code> (<strong>React</strong>) hoặc <code>dist/</code> (<strong>Vue.js</strong>).</li>
+<li>Nén thư mục <code>build</code> hoặc <code>dist</code> thành file ZIP trước khi tải lên máy chủ.</li>
+</ul>
+<p><strong>📤 Khi tải lên máy chủ:</strong></p>
+<ul>
+<li>Nếu dùng <strong>cPanel</strong>, có thể giải nén trực tiếp trong thư mục <code>public_html</code>.</li>
+<li>Nếu dùng <strong>SSH/SFTP</strong>, tải lên và giải nén bằng lệnh:
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">unzip build.zip -d /var/www/html/
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>Đảm bảo <strong>cấu hình máy chủ (Apache/Nginx)</strong> để trỏ vào thư mục chứa file <code>index.html</code>.</li>
+</ul></blockquote>
+<ul>
+<li><strong>File database</strong> (nếu có).</li>
+<li><strong>Truy cập control panel</strong> của tài khoản hosting mới.</li>
+<li><strong>Phần mềm FTP client</strong> như FileZilla.</li>
+</ul>
+<p>Để tải trang web lên hosting, bạn cần truy cập control panel của tài khoản hosting bằng phần mềm FTP như FileZilla. Nếu trang web đã có, bạn có thể dễ dàng sao lưu và tải lên bằng tính năng sao lưu của CMS hoặc cPanel.</p>
+<h3 id="chọn-nhà-cung-cấp-hosting-uy-tín-tin-cậy">Chọn nhà cung cấp hosting uy tín, tin cậy
+</h3><p>Web Hosting chất lượng không chỉ đảm bảo tốc độ mà còn quyết định hiệu suất vận hành lâu dài của website. Vì vậy, việc lựa chọn nhà cung cấp hosting cần được thực hiện cẩn thận, dựa trên các tiêu chí sau:</p>
+<ul>
+<li><strong>Hỗ trợ trực tuyến</strong>: Đảm bảo nhà cung cấp có dịch vụ hỗ trợ khách hàng 24/7, giúp bạn nhanh chóng giải quyết sự cố.</li>
+<li><strong>Quyền kiểm soát tài khoản hosting</strong>: Bạn cần được cung cấp toàn quyền quản lý tài khoản hosting, bao gồm quyền truy cập vào cPanel hoặc các công cụ tương đương.</li>
+<li><strong>Khả năng mở rộng</strong>: Hosting nên có khả năng nâng cấp tài nguyên khi nhu cầu của bạn tăng cao, như dung lượng lưu trữ, băng thông hoặc số lượng tên miền.</li>
+<li><strong>Chính sách hoàn tiền minh bạch</strong>: Các chính sách hoàn tiền linh hoạt sẽ giúp bạn an tâm hơn khi thử nghiệm dịch vụ.</li>
+<li><strong>Dịch vụ cộng thêm miễn phí</strong>: Ưu tiên nhà cung cấp hỗ trợ thêm các tiện ích như SSL miễn phí, sao lưu định kỳ hoặc dịch vụ di chuyển website.</li>
+<li><strong>Đăng ký tên miền được công nhận bởi ICANN</strong>: Để bảo vệ thương hiệu của bạn, hãy chọn nhà cung cấp tên miền uy tín và được chứng nhận bởi ICANN.</li>
+</ul>
+<blockquote>
+<p><strong>Lưu ý</strong>: Hãy tìm hiểu kỹ về đánh giá của người dùng và uy tín của nhà cung cấp thông qua các diễn đàn hoặc trang đánh giá trước khi đưa ra quyết định. Điều này sẽ giúp bạn chọn được dịch vụ phù hợp nhất với nhu cầu phát triển website.</p></blockquote>
+<h3 id="lựa-chọn-phương-pháp-upload-website-lên-hosting">Lựa chọn phương pháp upload website lên hosting
+</h3><p>Có 5 phương pháp chính để upload website lên hosting, tùy thuộc vào nhu cầu và công cụ bạn sử dụng:</p>
+<h5 id="sử-dụng-công-cụ-quản-lý-file-file-manager">Sử dụng công cụ quản lý file (File Manager)
+</h5><p>Là công cụ quản lý file trực tiếp trên nền tảng web của hosting, thường được tích hợp sẵn trong cPanel hoặc các trình quản lý hosting khác.</p>
+<p><strong>Ưu điểm:</strong></p>
+<ul>
+<li>Miễn phí.</li>
+<li>Dễ dàng sử dụng.</li>
+</ul>
+<p><strong>Nhược điểm:</strong></p>
+<ul>
+<li>Hạn chế dung lượng file tải lên (thường tối đa 256 MB).</li>
+<li>Chỉ giải nén được các file nhỏ hơn dung lượng này.</li>
+</ul>
+<blockquote>
+<p><strong>Lưu ý</strong>: Khi dùng File Manager, bạn chỉ có thể tải hoặc giải nén file có dung lượng tối đa 256MB. Nếu muốn tải file lớn hơn, sử dụng FTP và giải nén qua SSH sẽ là lựa chọn tối ưu.</p></blockquote>
+<p><img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-16.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Truy cập File Manager"
+	
+	
+></p>
+<p align="center"><em>Hình 1: Truy cập vào File Manager</em></p>
+<h5 id="sử-dụng-giao-thức-truyền-tải-file-ftp">Sử dụng giao thức truyền tải file (FTP)
+</h5><p>Giao thức FTP (File Transfer Protocol) cho phép bạn tải file lên hosting thông qua phần mềm FTP client như FileZilla. Đây là phương pháp hiệu quả và không giới hạn dung lượng file tải lên.</p>
+<p><strong>Ưu điểm:</strong></p>
+<ul>
+<li>Không giới hạn dung lượng tải lên.</li>
+<li>Tải file lớn nhanh chóng và tiện lợi.</li>
+</ul>
+<p><strong>Nhược điểm:</strong></p>
+<ul>
+<li>Cần cài đặt phần mềm FTP client.</li>
+<li>Cần thông tin đăng nhập FTP từ hosting.</li>
+<li>Bảo mật không cao, có thể sử dụng SFTP để an toàn hơn.</li>
+</ul>
+<p><img src="https://image.vietnix.vn/wp-content/uploads/2023/11/locating-ftp-details-4.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Thông tin FPT"
+	
+	
+></p>
+<p align="center"><em>Hình 2: Thông tin FPT</em></p>
+<h5 id="sử-dụng-plugin-di-chuyển-wordpress">Sử dụng Plugin Di Chuyển WordPress
+</h5><p>Nếu bạn sử dụng WordPress, các plugin như All in One WP Migration có thể giúp bạn di chuyển toàn bộ website một cách tự động.</p>
+<p><strong>Ưu điểm:</strong></p>
+<ul>
+<li>Dễ sử dụng, không cần kiến thức kỹ thuật cao.</li>
+<li>Kéo thả file đơn giản.</li>
+</ul>
+<p><strong>Nhược điểm:</strong></p>
+<ul>
+<li>Giới hạn dung lượng file tải lên (thường là 256 MB).</li>
+<li>Với file lớn hơn, cần chuyển sang FTP và SSH.</li>
+</ul>
+<blockquote>
+<p><strong>Lưu ý</strong>: Plugin này có giới hạn dung lượng, nếu muốn tải file lớn, bạn cần chuyển sang FTP và giải nén qua SSH. Sau khi upload, nhớ chuyển dữ liệu trong thư mục con ra ngoài <code>public_html</code> để website hoạt động chính xác.</p></blockquote>
+<p><img src="https://image.vietnix.vn/wp-content/uploads/2023/11/img_20230304150023-8.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Sử dụng WordPress Migration Plugin"
+	
+	
+></p>
+<p align="center"><em>Hình 3: Sử dụng WordPress Migration Plugin</em></p>
+<h5 id="sử-dụng-ssh-secure-shell">Sử dụng SSH (Secure Shell)
+</h5><p>SSH là cách tải và quản lý file qua dòng lệnh, phù hợp với những file lớn hoặc yêu cầu tốc độ cao.</p>
+<p><strong>Ưu điểm:</strong></p>
+<ul>
+<li>Nhanh chóng, không giới hạn dung lượng.</li>
+<li>Có thể giải nén file trực tiếp trên server.</li>
+</ul>
+<p><strong>Nhược điểm:</strong></p>
+<ul>
+<li>Yêu cầu kỹ năng sử dụng lệnh cơ bản và quyền truy cập SSH từ nhà cung cấp hosting.</li>
+</ul>
+<p><img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Su-dung-SSH-upload-website.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Sử dụng SSH upload website"
+	
+	
+></p>
+<p align="center"><em>Hình 4: Sử dụng SSH upload website</em></p>
+<h5 id="import-site--trình-nhập-website-tự-động">Import Site – Trình nhập website tự động
+</h5><p>Một số nhà cung cấp dịch vụ hosting cung cấp công cụ <strong>Import Site</strong> giúp tải và giải nén website vào thư mục <code>public_html</code> một cách nhanh chóng.</p>
+<p><strong>Ưu điểm:</strong></p>
+<ul>
+<li>Quá trình tải lên nhanh chóng và dễ dàng.</li>
+<li>Không cần nhiều kiến thức kỹ thuật.</li>
+</ul>
+<p><strong>Nhược điểm:</strong></p>
+<ul>
+<li>Phụ thuộc vào nhà cung cấp hosting có hỗ trợ công cụ này.</li>
+<li>Không phải nhà cung cấp hosting nào cũng cung cấp công cụ này.</li>
+</ul>
+<blockquote>
+<p><strong>Gợi ý</strong>: Kiểm tra với nhà cung cấp hosting xem họ có hỗ trợ công cụ nhập trang web hay không.</p></blockquote>
+<p><img src="https://image.vietnix.vn/wp-content/uploads/2023/11/import-website-tool-2.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Tool nhập website"
+	
+	
+></p>
+<p align="center"><em>Hình 5: Tool nhập website</em></p>
+<h5 id="nhờ-sự-hỗ-trợ-từ-nhà-cung-cấp-hosting">Nhờ sự hỗ trợ từ nhà cung cấp hosting
+</h5><p>Hầu hết các nhà cung cấp hosting đều có dịch vụ hỗ trợ di chuyển website, đặc biệt khi bạn chuyển từ dịch vụ hosting cũ sang nhà cung cấp mới.</p>
+<p><strong>Ưu điểm:</strong></p>
+<ul>
+<li>Tiết kiệm thời gian và tránh sai sót kỹ thuật.</li>
+<li>Được thực hiện bởi đội ngũ chuyên gia.</li>
+</ul>
+<p><strong>Nhược điểm:</strong></p>
+<ul>
+<li>Có thể mất phí nếu nhà cung cấp không hỗ trợ miễn phí.</li>
+<li>Thời gian xử lý phụ thuộc vào đội ngũ hỗ trợ.</li>
+</ul>
+<blockquote>
+<p><strong>Gợi ý</strong>: Hãy kiểm tra chính sách hỗ trợ di chuyển website của nhà cung cấp hosting trước khi yêu cầu dịch vụ.</p></blockquote>
+<p><img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Nho-su-ho-tro-tu-nha-cung-cap-hosting.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Nhờ sự hỗ trợ từ nhà cung cấp hosting"
+	
+	
+></p>
+<p align="center"><em>Hình 6: Nhờ sự hỗ trợ từ nhà cung cấp hosting</em></p>
+<blockquote>
+<p>📌 <strong>Lưu ý sau khi upload website lên hosting</strong></p>
+<ul>
+<li><strong>Di chuyển toàn bộ dữ liệu từ thư mục con (nếu có) ra ngoài <code>public_html</code></strong> để website hoạt động chính xác.</li>
+<li><strong>Kiểm tra lại cấu trúc file và kết nối database (nếu có)</strong> để tránh lỗi khi vận hành.</li>
+<li><strong>Chọn phương pháp phù hợp nhất</strong> dựa trên kích thước file, nền tảng website và khả năng kỹ thuật của bạn.</li>
+</ul></blockquote>
+<hr>
+<h2 id="lý-do-cần-upload-website-lên-hosting">Lý do cần upload website lên Hosting
+</h2><p>Việc upload website lên hosting không chỉ là bước cần thiết để đưa website của bạn ra công chúng, mà còn mang lại nhiều lợi ích quan trọng giúp website hoạt động ổn định, bảo mật và hiệu quả. Dưới đây là những lý do bạn nên thực hiện việc này:</p>
+<h3 id="xuất-bản-website-và-tiếp-cận-toàn-cầu">Xuất bản website và tiếp cận toàn cầu
+</h3><p>Khi bạn upload website lên hosting, website sẽ trở nên công khai và có thể truy cập từ bất kỳ đâu trên thế giới qua tên miền (domain) của bạn. Nếu không làm điều này, chỉ riêng bạn mới có thể truy cập website từ máy tính cá nhân.</p>
+<h3 id="bảo-mật-và-an-toàn-dữ-liệu">Bảo mật và an toàn dữ liệu
+</h3><p>Hosting chuyên nghiệp mang lại những biện pháp bảo mật mạnh mẽ, chẳng hạn như chứng chỉ SSL, tường lửa và các công cụ bảo vệ dữ liệu khác. Điều này giúp đảm bảo an toàn cho website và cả dữ liệu thương hiệu khỏi các nguy cơ tấn công, mất mát hoặc xâm nhập dữ liệu, một vấn đề mà việc lưu trữ website trên máy tính cá nhân sẽ khó đảm bảo được.</p>
+<h3 id="tăng-tốc-độ-và-hiệu-suất-website">Tăng tốc độ và hiệu suất Website
+</h3><p>Các máy chủ hosting được tối ưu để xử lý lưu lượng truy cập lớn và cung cấp tốc độ internet nhanh chóng, giúp tăng cường hiệu suất tải trang của website. Điều này có nghĩa là người dùng sẽ có trải nghiệm mượt mà hơn, đồng thời giảm thiểu tình trạng website bị &ldquo;lag&rdquo; hoặc tải chậm, một yếu tố quan trọng trong việc giữ chân người truy cập.</p>
+<p><img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Tang-toc-do-va-hieu-suat-Website.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Tăng tốc độ và hiệu suất Website"
+	
+	
+></p>
+<p align="center"><em>Hình 7: Tăng tốc độ và hiệu suất Website</em></p>
+<h3 id="tính-ổn-định-và-tin-cậy">Tính ổn định và tin cậy
+</h3><p>Khi website được lưu trữ trên hosting, bạn không phải lo lắng về việc duy trì phần cứng hay kết nối mạng. Các nhà cung cấp hosting sẽ đảm bảo server luôn hoạt động ổn định với thời gian uptime cao, giúp website của bạn luôn sẵn sàng phục vụ người dùng mà không gặp phải sự cố downtime kéo dài.</p>
+<h3 id="quản-lý-website-dễ-dàng-và-tiện-lợi">Quản lý website dễ dàng và tiện lợi
+</h3><p>Các nhà cung cấp hosting cung cấp giao diện quản lý thân thiện và dễ sử dụng, giúp bạn dễ dàng theo dõi, tối ưu và bảo trì website. Từ việc sao lưu dữ liệu, nâng cấp phần mềm cho đến việc tối ưu hóa hiệu suất, tất cả đều trở nên đơn giản hơn khi bạn sử dụng dịch vụ hosting chuyên nghiệp.</p>
+<h3 id="tính-mở-rộng-và-phát-triển-lâu-dài">Tính mở rộng và phát triển lâu dài
+</h3><p>Hosting không chỉ phục vụ website trong giai đoạn đầu, mà còn hỗ trợ khả năng mở rộng khi website của bạn phát triển. Nếu lưu trữ trên máy tính cá nhân, bạn sẽ gặp khó khăn khi website tăng trưởng về lưu lượng truy cập hay yêu cầu về tài nguyên. Hosting chuyên nghiệp sẽ giúp bạn dễ dàng nâng cấp tài nguyên mà không phải lo lắng về việc mất dữ liệu hay gián đoạn dịch vụ.</p>
+<p><img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Tinh-mo-rong-va-phat-trien-lau-dai.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Tính mở rộng và phát triển lâu dài"
+	
+	
+></p>
+<p align="center"><em>Hình 8: Tính mở rộng và phát triển lâu dài</em></p>
+<hr>
+<p>Tóm lại, việc upload website lên hosting mang lại những lợi ích vượt trội về bảo mật, hiệu suất, tính ổn định và khả năng quản lý, giúp website của bạn hoạt động hiệu quả và bền vững. Đây là bước quan trọng để không chỉ bảo vệ dữ liệu mà còn tạo ra một nền tảng vững chắc để phát triển website trong tương lai. Vì vậy, nếu bạn muốn website của mình hoạt động trơn tru và dễ dàng truy cập từ mọi nơi, việc upload lên hosting là điều không thể thiếu.</p>
+<hr>
+<h2 id="bước-1-chọn-cách-upload-file-website-lên-host">Bước 1: Chọn cách upload file website lên host
+</h2><h3 id="cách-1-upload-website-lên-hosting-bằng-file-manager-qua-cpanel">Cách 1: Upload website lên hosting bằng File Manager qua cPanel
+</h3><h3 id="cách-2-upload-website-lên-hosting-bằng-ftp-client">Cách 2: Upload website lên hosting bằng FTP client
+</h3><p>Sau khi bạn đã lựa chọn xong cách để upload, dưới đây là hướng dẫn cách upload website lên hosting đơn giản, bạn có thể tham khảo.</p>
+<hr>
+<p>&mdash;Cách 1: Upload website lên hosting bằng File Manager qua cPanel&mdash; (Dễ nhất)</p>
+<p>Truy cập cPanel của tài khoản hosting và làm theo hướng dẫn dưới đây:</p>
+<p>Bước 1: Click vào icon <strong>File Manager</strong>, đặt bên dưới mục <strong>Files</strong>.</p>
+<p><strong>Chọn File Manager</strong><br>
+<em>Hình ảnh minh họa: Chọn File Manager</em></p>
+<p><img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-1.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Chọn File Manager"
+	
+	
+></p>
+<p align="center"><em>Chọn File Manager</em></p>
+<p>Bước 2: Trong <strong>File Manager</strong>, mở thư mục <code>public_html</code>.</p>
+<p><strong>Mở thư mục public_html</strong><br>
+<em>Hình ảnh minh họa: Mở thư mục public_html</em></p>
+<p><img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-2.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Mở thư mục public_html"
+	
+	
+></p>
+<p align="center"><em>Mở thư mục public_html</em></p>
+<p>Bước 3: Chọn <strong>Upload</strong> sau khi truy cập vào thư mục <code>public_html</code>.</p>
+<p><strong>Chọn Upload</strong><br>
+<em>Hình ảnh minh họa: Chọn Upload</em></p>
+<p><img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-3.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Chọn Upload"
+	
+	
+></p>
+<p align="center"><em>Chọn Upload</em></p>
+<p>Bước 4: Chọn <strong>Select File</strong> để chọn từng file hoặc kéo thả vào vùng nhận file.</p>
+<p><strong>Chọn file</strong><br>
+<em>Hình ảnh minh họa: Chọn file</em></p>
+<p><img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-4.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Chọn file"
+	
+	
+></p>
+<p align="center"><em>Chọn file</em></p>
+<p>Bước 5: Trong ví dụ này, mình kéo thả file <code>wordpress.zip</code>.</p>
+<p><strong>Chọn file zip wordpress</strong><br>
+<em>Hình ảnh minh họa: Chọn file zip wordpress (hoặc file dist.zip/build.zip)</em></p>
+<p><img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-5.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Chọn file zip wordpress"
+	
+	
+></p>
+<p align="center"><em>Chọn file zip wordpress</em></p>
+<p>Bước 6: Khi upload xong, quay lại <strong>File Manager</strong> để thấy file archive đã xuất hiện trong thư mục <code>public_html</code>. Click chuột phải và nhấn <strong>Extract</strong> để giải nén file archive.</p>
+<p><strong>Extract file</strong><br>
+<em>Hình ảnh minh họa: Extract file</em></p>
+<p><img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-6.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Extract file"
+	
+	
+></p>
+<p align="center"><em>Extract file</em></p>
+<p>Bước 7: Chọn vị trí file archive cần extract, ở ví dụ này sẽ lưu vào <code>/public_html</code>.</p>
+<p><strong>Chọn vị trí file cần extract</strong><br>
+<em>Hình ảnh minh họa: Chọn vị trí file cần extract</em></p>
+<p><img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-7.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Chọn vị trí file cần extract"
+	
+	
+></p>
+<p align="center"><em>Chọn vị trí file cần extract</em></p>
+<p>Bước 8: Sau khi giải nén file, bạn có thể xem các file đã được giải nén trong thư mục <code>public_html</code>. Đây là thư mục gốc của website.</p>
+<p><strong>Quay lại thư mục ban đầu để xem</strong><br>
+<em>Hình ảnh minh họa: Quay lại thư mục ban đầu để xem</em></p>
+<p><img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-8.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Quay lại thư mục ban đầu để xem"
+	
+	
+></p>
+<p align="center"><em>Quay lại thư mục ban đầu để xem</em></p>
+<p>Bước 9: Trang web đã tải xong. Bạn có thể truy cập vào trang web bằng cách nhập URL vào trình duyệt.</p>
+<p><strong>Màn hình chọn ngôn ngữ trong quá trình cài đặt WordPress</strong>  <em><strong>(Nếu có)</strong></em></p>
+<hr>
+<p>&mdash;Cách 2: Upload website lên hosting bằng FTP client&mdash;</p>
+<p>Một số người dùng thích tải trang web của họ lên dịch vụ hosting qua <strong>FTP</strong>, ví dụ: <strong>FileZilla, SmartFTP, CoreFTP</strong> hoặc bất kỳ phần mềm nào khác. Trong các hướng dẫn sau, mình sẽ sử dụng <strong>FileZilla</strong>.</p>
+<p>Những lưu ý trước khi upload website lên hosting:</p>
+<ul>
+<li><strong>Kiến thức và kỹ năng của bạn:</strong> Nếu bạn không có nhiều kiến thức về hosting, <strong>File Manager</strong> sẽ dễ sử dụng hơn. Nếu bạn thành thạo, <strong>FTP client</strong> sẽ giúp tải lên nhanh hơn.</li>
+<li><strong>Kích thước của website:</strong> Nếu website có dung lượng lớn, <strong>FTP client</strong> sẽ thuận tiện hơn vì không giới hạn dung lượng tải lên.</li>
+<li><strong>Yêu cầu đặc thù của website:</strong> Nếu website yêu cầu cấu hình server đặc biệt, bạn nên hỏi nhà cung cấp hosting để chọn cách upload phù hợp.</li>
+</ul>
+<p>Bước 1: Trước tiên, bạn cần lấy thông tin FTP thông qua <strong>FTP Access</strong>. Nếu quên mật khẩu, bạn có thể đặt mật khẩu mới qua phần <strong>Change account password</strong>.</p>
+<p><strong>Lấy thông tin qua FTP Access</strong><br>
+<em>Hình ảnh minh họa: Lấy thông tin qua FTP Access</em></p>
+<p><img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-9.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Lấy thông tin qua FTP Access"
+	
+	
+></p>
+<p align="center"><em>Lấy thông tin qua FTP Access</em></p>
+<p>Bước 2: Mở <strong>FileZilla</strong>, điền thông tin FTP để truy cập và nhấn <strong>Quickconnect</strong>.</p>
+<p><strong>Chọn Quickconnect</strong><br>
+<em>Hình ảnh minh họa: Chọn Quickconnect</em></p>
+<p><img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-10.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Chọn Quickconnect"
+	
+	
+></p>
+<p align="center"><em>Chọn Quickconnect</em></p>
+<p>Bước 3: Sau khi kết nối với FileZilla, tìm dữ liệu trang web và kéo chúng từ bên trái của phần mềm sang bên phải, thư mục đích là <code>public_html</code>. Bạn cần giải nén file archive trước, vì FTP không có chức năng giải nén.</p>
+<p><strong>Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải</strong><br>
+<em>Hình ảnh minh họa: Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải</em></p>
+<p><img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-11.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải"
+	
+	
+></p>
+<p align="center"><em>Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải</em></p>
+<p>Bước 4: Tương tự, bạn có thể upload file nén qua <strong>FTP</strong> bằng cách kéo thả từ trái sang phải. Sau đó, giải nén chúng thông qua <strong>File Manager</strong>.</p>
+<p><strong>Upload file nén qua FTP</strong><br>
+<em>Hình ảnh minh họa: Upload file nén qua FTP</em></p>
+<p><img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-12.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Upload file nén qua FTP"
+	
+	
+></p>
+<p align="center"><em>Upload file nén qua FTP</em></p>
+<p>Bước 5: Sau khi tải trang web lên hosting, bạn có thể truy cập trang web bằng cách nhập URL vào trình duyệt. Bạn sẽ thấy trang cài đặt mặc định của website và có thể tùy chỉnh trang này để phù hợp với nhu cầu của mình.</p>
+<hr>
+<h2 id="bước-2-kiểm-tra-xem-file-đã-ở-trong-thư-mục-public_html-hay-chưa">Bước 2: Kiểm tra xem file đã ở trong thư mục public_html hay chưa
+</h2><p>Sau khi upload website lên hosting, bước đầu tiên bạn cần làm là kiểm tra xem các file đã được tải đầy đủ vào thư mục <code>public_html</code> chưa. Bạn có thể mở thư mục <code>public_html</code> và kiểm tra xem tất cả các file đã nằm trong đó chưa. Nếu bạn tạo ra thư mục mới sau khi upload và giải nén website backup, người dùng sẽ phải truy cập theo đường dẫn dạng <code>example.com/something</code> thay vì <code>example.com</code>. Để khắc phục điều này, bạn có thể sử dụng <strong>File Manager</strong> hoặc <strong>FTP</strong> theo các bước sau:</p>
+<ol>
+<li>Truy cập vào thư mục chứa các file của website.</li>
+<li>Chọn toàn bộ các file và nhấn chuột phải, sau đó chọn nút <strong>Move</strong>.</li>
+<li>Lựa chọn thư mục đích là <code>public_html</code> và nhấn <strong>Proceed</strong>.</li>
+</ol>
+<p>Nếu website của bạn đã được vận hành một thời gian, bạn cũng cần phải upload <strong>database</strong> lên hosting nếu chưa thực hiện.</p>
+<p>Sau khi đã đảm bảo các file đã được di chuyển đúng vào thư mục <code>public_html</code>, bạn có thể kiểm tra website bằng cách mở trình duyệt và truy cập vào tên miền của mình. Nếu tên miền chưa được trỏ đúng, bạn có thể sử dụng các phương pháp sau để kiểm tra và sửa lỗi DNS:</p>
+<ul>
+<li>Sửa <strong>file hosts</strong> trên máy tính để giả lập thay đổi DNS.</li>
+<li>Sử dụng các <strong>công cụ online</strong> để kiểm tra tên miền.</li>
+<li>Cài đặt <strong>plugin trình duyệt</strong> để tạo file host ảo.</li>
+</ul>
+<p>Ngoài ra, nếu bạn cần di chuyển website từ thư mục con lên thư mục gốc (<code>public_html</code>), bạn có thể sử dụng <strong>File Manager</strong> hoặc <strong>FTP</strong> để thực hiện. Và bạn đừng quên tải lại <strong>cơ sở dữ liệu</strong> lên hosting nếu cần thiết.</p>
+<hr>
+<h2 id="bước-3-tiến-hành-upload-database-lên-website-hosting">Bước 3: Tiến hành upload database lên website hosting
+</h2><blockquote>
+<p>Thực hiện bước này khi website của người dùng đã có sẵn <em><strong>database</strong></em>. Nếu không, bạn có thể bỏ qua bước này.</p></blockquote>
+<h3 id="tạo-database-trên-cpanel">Tạo database trên cPanel
+</h3><p>Tạo một database mới tại section <strong>MySQL Databases</strong>. Khi tạo database bạn cần điền và ghi chú lại những thông số database như sau:</p>
+<ul>
+<li><strong>MySQL Database</strong></li>
+<li><strong>MySQL User</strong></li>
+<li><strong>MySQL Host</strong></li>
+<li><strong>MySQL Password</strong></li>
+</ul>
+<p><img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-13.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Tạo database mới"
+	
+	
+></p>
+<p align="center"><em>Tạo database mới</em></p>
+<h3 id="di-chuyển-vào-phpmyadmin-của-database">Di chuyển vào phpMyAdmin của database
+</h3><p>Khi sử dụng <strong>phpMyAdmin</strong> để quản lý database, hãy <strong>import database MySQL</strong>. Nếu bạn muốn upload vào một database có sẵn, hãy xóa dữ liệu trước để tránh lỗi khi tải lên từ máy tính.</p>
+<p><img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-14.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Di chuyển vào phpMyAdmin"
+	
+	
+></p>
+<p align="center"><em>Di chuyển vào phpMyAdmin</em></p>
+<h3 id="di-chuyển-vào-tab-import-và-upload-dữ-liệu-vào-database">Di chuyển vào tab Import và upload dữ liệu vào database
+</h3><p>Nếu là lần đầu tạo database, chỉ cần vào tab <strong>Import</strong> để upload dữ liệu vào database trống. Bạn đã có một file SQL từ bản sao lưu của trang web, có thể là file dạng text với đuôi <code>.sql</code> hoặc dạng nén như <code>.sql.zip</code> hay <code>.sql.gz</code>. Hãy nhấn nút <strong>Choose File</strong> để chọn file cơ sở dữ liệu và sau đó bấm nút <strong>Go</strong> để bắt đầu quá trình tải lên. Khi <strong>phpMyAdmin</strong> hoàn tất và hiển thị thông báo <em>Import has been successfully finished, 302 queries executed</em>, có nghĩa là quá trình tải lên cơ sở dữ liệu đã hoàn tất.</p>
+<p><img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-15.webp"
+	
+	
+	
+	loading="lazy"
+	
+		alt="Import dữ liệu vào database"
+	
+	
+></p>
+<p align="center"><em>Import dữ liệu vào database</em></p>
+<h3 id="cập-nhật-file-cấu-hình-để-kết-nối-website-và-database">Cập nhật file cấu hình để kết nối website và database
+</h3><p>Sau khi tải database lên server, bạn cần mở <strong>file cấu hình PHP</strong> script để điền thông tin như host, tên database, tên người dùng và mật khẩu. File cấu hình có thể có tên và vị trí khác nhau tùy thuộc vào phần mềm bạn sử dụng. Ví dụ, với <strong>WordPress</strong>, file cấu hình là <code>wp-config.php</code> và nằm trong thư mục chứa <strong>WordPress</strong> (thường là <code>public_html</code>).</p>
+<blockquote>
+<p>⚠ <strong>Lưu ý:</strong></p>
+<ul>
+<li>Nếu cơ sở dữ liệu của bạn có kích thước lớn, hãy cân nhắc chia nhỏ database thành nhiều file để quá trình tải lên diễn ra nhanh chóng hơn.</li>
+<li>Nếu database chứa các ký tự đặc biệt, nhớ chuyển đổi chúng sang định dạng <strong>ASCII</strong> trước khi thực hiện upload.</li>
+<li>Trong trường hợp gặp lỗi khi import, bạn cần kiểm tra xem database có bị hỏng hay không. Nếu bị lỗi, hãy tạo lại một cơ sở dữ liệu mới và thử lại.</li>
+<li>Cuối cùng, sau khi upload xong, đừng quên kiểm tra website của bạn để đảm bảo mọi thứ hoạt động bình thường.</li>
+</ul></blockquote>
+<h3 id="cập-nhật-file-cấu-hình-để-kết-nối-website-và-database-1">Cập nhật file cấu hình để kết nối website và database
+</h3><p>Sau khi tải database lên server, bạn cần mở file cấu hình PHP script để điền thông tin như <strong>host</strong>, <strong>tên database</strong>, <strong>tên người dùng</strong> và <strong>mật khẩu</strong>.</p>
+<p>File cấu hình có thể có tên và vị trí khác nhau tùy thuộc vào phần mềm bạn sử dụng. Ví dụ, với <strong>WordPress</strong>, file cấu hình là <code>wp-config.php</code> và nằm trong thư mục chứa WordPress (thường là <code>public_html</code>).</p>
+<hr>
+<h2 id="bước-4-kiểm-tra-website-đã-hoạt-động-ổn-định-hay-chưa">Bước 4: Kiểm tra website đã hoạt động ổn định hay chưa
+</h2><p>Để đảm bảo website của bạn hoạt động ổn định sau khi tải lên và trỏ tên miền, bạn cần thực hiện một số bước kiểm tra quan trọng:</p>
+<h3 id="-kiểm-tra-truy-cập-website">🔍 Kiểm tra truy cập website
+</h3><ul>
+<li><strong>Truy cập bằng tên miền hoặc địa chỉ IP:</strong> Nếu bạn có thể truy cập thành công, website đã hoạt động ổn định.</li>
+<li><strong>Chờ DNS cập nhật:</strong> Nếu tên miền vừa được cập nhật, bạn có thể cần đợi khoảng <strong>24 giờ</strong> để DNS được quảng bá rộng rãi.</li>
+<li><strong>Kiểm tra ngay lập tức bằng:</strong>
+<ul>
+<li>🖥️ <strong>Sử dụng file host:</strong> Chỉnh sửa file host trên máy tính để mô phỏng thay đổi DNS.</li>
+<li>🌐 <strong>Công cụ online:</strong> Kiểm tra website bằng các dịch vụ kiểm tra DNS trực tuyến.</li>
+<li>🔌 <strong>Plugin browser:</strong> Cài đặt plugin giúp tạo file host ảo để kiểm tra các thay đổi DNS.</li>
+</ul>
+</li>
+</ul>
+<h3 id="-kiểm-tra-các-chức-năng-của-website">🛠️ Kiểm tra các chức năng của website
+</h3><ul>
+<li>Thử truy cập các trang khác nhau, kiểm tra liên kết.</li>
+<li>Kiểm tra xem các tính năng của website có hoạt động đúng không.</li>
+</ul>
+<h3 id="-kiểm-tra-tốc-độ-tải-trang">⚡ Kiểm tra tốc độ tải trang
+</h3><ul>
+<li>Sử dụng các công cụ như <strong>Google PageSpeed Insights, GTmetrix</strong> để kiểm tra hiệu suất.</li>
+</ul>
+<h3 id="-kiểm-tra-các-lỗi-trên-website">🚨 Kiểm tra các lỗi trên website
+</h3><ul>
+<li><strong>Lỗi 404:</strong> Trang không tìm thấy.</li>
+<li><strong>Lỗi 500:</strong> Lỗi máy chủ hosting.</li>
+<li><strong>Lỗi 503:</strong> Máy chủ đang bảo trì.</li>
+</ul>
+<h3 id="-kiểm-tra-trên-nhiều-trình-duyệt--thiết-bị">🌍 Kiểm tra trên nhiều trình duyệt &amp; thiết bị
+</h3><ul>
+<li>Dùng <strong>Chrome, Firefox, Safari, Edge</strong> trên <strong>máy tính, điện thoại, máy tính bảng</strong>.</li>
+</ul>
+<h3 id="-kiểm-tra-vào-các-thời-điểm-khác-nhau-trong-ngày">⏳ Kiểm tra vào các thời điểm khác nhau trong ngày
+</h3><ul>
+<li>Website có thể hoạt động khác nhau vào những thời điểm khác nhau.</li>
+</ul>
+<p>👉 <strong>Nếu phát hiện lỗi nhưng không biết cách xử lý, hãy liên hệ với nhà cung cấp hosting để được hỗ trợ.</strong> 🚀</p>
+<hr>
+<h2 id="-lời-kết">📌 Lời kết
+</h2><p>Upload website lên hosting là một bước quan trọng để website của bạn có thể hoạt động ổn định trên môi trường trực tuyến. Bằng cách chuẩn bị đúng đắn và thực hiện theo các bước hướng dẫn, bạn sẽ đảm bảo rằng website của mình luôn sẵn sàng phục vụ người dùng một cách hiệu quả.</p>
+<p>💡 Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ thêm, hãy để lại câu hỏi trong phần bình luận dưới đây. Mình sẽ sớm giúp bạn tìm ra lời giải đáp.</p>
+<p>Cảm ơn bạn đã theo dõi bài viết 🚀</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/website/">Website</a>
+        
+            <a href="/tags/hosting/">Hosting</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>VietNix</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="hoangduonng/blog_comments"
+        issue-term="pathname"
+        
+        label="comments"
+        
+        theme="icy-dark"
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+        2025 Hoàng Dương
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/" target="_blank" rel="noopener">Ngữ Uyển ❤️</a> <br />
+        Theme <no value> thiết kế bởi Jimmy
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.ac34731e87bad72b2c444674f2a0654c5fbc5e86fa9eab9fb7f610fbc3eadfb3.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

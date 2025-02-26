@@ -2,17 +2,616 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Hoàng Dương</title>
-        <link>https://tech.nguuyen.io.vn/</link>
+        <link>http://localhost:1313/</link>
         <description>Recent content on Hoàng Dương</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>vi</language>
-        <lastBuildDate>Tue, 25 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 26 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥</title>
+        <link>http://localhost:1313/posts/website/how-to-deploy-a-website/</link>
+        <pubDate>Wed, 26 Feb 2025 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/posts/website/how-to-deploy-a-website/</guid>
+        <description>&lt;img src="http://localhost:1313/images/website/upload-website-on-hosting.webp" alt="Featured image of post Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥" /&gt;&lt;h1 id=&#34;cách-up-website-lên-hosting-thông-qua-file-manager-và-cpanel-nhanh-nhất-từ-a-z&#34;&gt;Cách up website lên Hosting thông qua File Manager và cPanel nhanh nhất từ A-Z
+&lt;/h1&gt;&lt;hr&gt;
+&lt;p&gt;Việc upload website lên hosting là bước thiết yếu để đưa website của bạn hoạt động trên internet. Quá trình này không chỉ đơn giản là chuyển dữ liệu, mà còn liên quan đến việc đảm bảo mọi thứ hoạt động mượt mà và an toàn. Bài viết này sẽ giúp bạn hiểu rõ các bước cần thiết, từ chuẩn bị file và database, đến các công cụ hỗ trợ upload hiệu quả.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;điểm-chính-cần-nắm&#34;&gt;Điểm chính cần nắm
+&lt;/h2&gt;&lt;p&gt;Trước khi bắt tay vào việc upload website lên hosting, bạn cần lưu ý một số yếu tố quan trọng. Mình sẽ giúp bạn dễ dàng hiểu và nắm bắt các bước thực hiện:&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Bạn cần chuẩn bị gì khi upload website lên hosting&lt;/strong&gt;: Chuẩn bị file website, database, quyền truy cập control panel và phần mềm FTP như FileZilla.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Các cách upload website lên hosting&lt;/strong&gt;: Chọn hosting uy tín, sau đó sử dụng File Manager, FTP, plugin WordPress, SSH hoặc nhờ hỗ trợ từ nhà cung cấp.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Lý do cần upload website lên hosting&lt;/strong&gt;: Giúp công khai website, tăng bảo mật, cải thiện tốc độ và dễ quản lý.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Bốn bước để upload web lên hosting&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Upload file website vào thư mục &lt;code&gt;public_html&lt;/code&gt; qua File Manager hoặc FTP.&lt;/li&gt;
+&lt;li&gt;Kiểm tra xem các file đã đúng vị trí chưa.&lt;/li&gt;
+&lt;li&gt;Tạo database trên cPanel, import dữ liệu qua phpMyAdmin và cấu hình kết nối.&lt;/li&gt;
+&lt;li&gt;Truy cập website để kiểm tra xem mọi thứ đã hoạt động ổn định chưa.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;cần-chuẩn-bị-gì-khi-upload-website-lên-hosting&#34;&gt;Cần chuẩn bị gì khi upload website lên hosting?
+&lt;/h2&gt;&lt;p&gt;Để upload website lên hosting, trước tiên bạn cần phải chuẩn bị một số vấn đề sau đây:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;File website&lt;/strong&gt;: Những file này có thể là toàn bộ dữ liệu bên trong phần &lt;code&gt;public_html&lt;/code&gt; cũ hoặc file source code hay bản backup (sao lưu) dữ liệu mới nhất thay cho source code.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;📌 Lưu ý khi triển khai website React/Vue.js&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;Khi build một ứng dụng &lt;strong&gt;React&lt;/strong&gt; hoặc &lt;strong&gt;Vue.js&lt;/strong&gt;, ta không tải toàn bộ mã nguồn lên máy chủ,&lt;br&gt;
+mà chỉ cần upload &lt;strong&gt;thư mục chứa các file tĩnh đã được build&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Các bước build và nén tệp:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Chạy lệnh build:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;React:&lt;/strong&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;npm run build
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vue.js:&lt;/strong&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;npm run build
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;Sau khi build xong, thư mục output thường là &lt;code&gt;build/&lt;/code&gt; (&lt;strong&gt;React&lt;/strong&gt;) hoặc &lt;code&gt;dist/&lt;/code&gt; (&lt;strong&gt;Vue.js&lt;/strong&gt;).&lt;/li&gt;
+&lt;li&gt;Nén thư mục &lt;code&gt;build&lt;/code&gt; hoặc &lt;code&gt;dist&lt;/code&gt; thành file ZIP trước khi tải lên máy chủ.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;📤 Khi tải lên máy chủ:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nếu dùng &lt;strong&gt;cPanel&lt;/strong&gt;, có thể giải nén trực tiếp trong thư mục &lt;code&gt;public_html&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Nếu dùng &lt;strong&gt;SSH/SFTP&lt;/strong&gt;, tải lên và giải nén bằng lệnh:
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;unzip build.zip -d /var/www/html/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Đảm bảo &lt;strong&gt;cấu hình máy chủ (Apache/Nginx)&lt;/strong&gt; để trỏ vào thư mục chứa file &lt;code&gt;index.html&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;File database&lt;/strong&gt; (nếu có).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Truy cập control panel&lt;/strong&gt; của tài khoản hosting mới.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Phần mềm FTP client&lt;/strong&gt; như FileZilla.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Để tải trang web lên hosting, bạn cần truy cập control panel của tài khoản hosting bằng phần mềm FTP như FileZilla. Nếu trang web đã có, bạn có thể dễ dàng sao lưu và tải lên bằng tính năng sao lưu của CMS hoặc cPanel.&lt;/p&gt;
+&lt;h3 id=&#34;chọn-nhà-cung-cấp-hosting-uy-tín-tin-cậy&#34;&gt;Chọn nhà cung cấp hosting uy tín, tin cậy
+&lt;/h3&gt;&lt;p&gt;Web Hosting chất lượng không chỉ đảm bảo tốc độ mà còn quyết định hiệu suất vận hành lâu dài của website. Vì vậy, việc lựa chọn nhà cung cấp hosting cần được thực hiện cẩn thận, dựa trên các tiêu chí sau:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hỗ trợ trực tuyến&lt;/strong&gt;: Đảm bảo nhà cung cấp có dịch vụ hỗ trợ khách hàng 24/7, giúp bạn nhanh chóng giải quyết sự cố.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Quyền kiểm soát tài khoản hosting&lt;/strong&gt;: Bạn cần được cung cấp toàn quyền quản lý tài khoản hosting, bao gồm quyền truy cập vào cPanel hoặc các công cụ tương đương.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Khả năng mở rộng&lt;/strong&gt;: Hosting nên có khả năng nâng cấp tài nguyên khi nhu cầu của bạn tăng cao, như dung lượng lưu trữ, băng thông hoặc số lượng tên miền.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Chính sách hoàn tiền minh bạch&lt;/strong&gt;: Các chính sách hoàn tiền linh hoạt sẽ giúp bạn an tâm hơn khi thử nghiệm dịch vụ.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dịch vụ cộng thêm miễn phí&lt;/strong&gt;: Ưu tiên nhà cung cấp hỗ trợ thêm các tiện ích như SSL miễn phí, sao lưu định kỳ hoặc dịch vụ di chuyển website.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Đăng ký tên miền được công nhận bởi ICANN&lt;/strong&gt;: Để bảo vệ thương hiệu của bạn, hãy chọn nhà cung cấp tên miền uy tín và được chứng nhận bởi ICANN.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Lưu ý&lt;/strong&gt;: Hãy tìm hiểu kỹ về đánh giá của người dùng và uy tín của nhà cung cấp thông qua các diễn đàn hoặc trang đánh giá trước khi đưa ra quyết định. Điều này sẽ giúp bạn chọn được dịch vụ phù hợp nhất với nhu cầu phát triển website.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h3 id=&#34;lựa-chọn-phương-pháp-upload-website-lên-hosting&#34;&gt;Lựa chọn phương pháp upload website lên hosting
+&lt;/h3&gt;&lt;p&gt;Có 5 phương pháp chính để upload website lên hosting, tùy thuộc vào nhu cầu và công cụ bạn sử dụng:&lt;/p&gt;
+&lt;h5 id=&#34;sử-dụng-công-cụ-quản-lý-file-file-manager&#34;&gt;Sử dụng công cụ quản lý file (File Manager)
+&lt;/h5&gt;&lt;p&gt;Là công cụ quản lý file trực tiếp trên nền tảng web của hosting, thường được tích hợp sẵn trong cPanel hoặc các trình quản lý hosting khác.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Ưu điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Miễn phí.&lt;/li&gt;
+&lt;li&gt;Dễ dàng sử dụng.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Nhược điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Hạn chế dung lượng file tải lên (thường tối đa 256 MB).&lt;/li&gt;
+&lt;li&gt;Chỉ giải nén được các file nhỏ hơn dung lượng này.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Lưu ý&lt;/strong&gt;: Khi dùng File Manager, bạn chỉ có thể tải hoặc giải nén file có dung lượng tối đa 256MB. Nếu muốn tải file lớn hơn, sử dụng FTP và giải nén qua SSH sẽ là lựa chọn tối ưu.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-16.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Truy cập File Manager&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Hình 1: Truy cập vào File Manager&lt;/em&gt;&lt;/p&gt;
+&lt;h5 id=&#34;sử-dụng-giao-thức-truyền-tải-file-ftp&#34;&gt;Sử dụng giao thức truyền tải file (FTP)
+&lt;/h5&gt;&lt;p&gt;Giao thức FTP (File Transfer Protocol) cho phép bạn tải file lên hosting thông qua phần mềm FTP client như FileZilla. Đây là phương pháp hiệu quả và không giới hạn dung lượng file tải lên.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Ưu điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Không giới hạn dung lượng tải lên.&lt;/li&gt;
+&lt;li&gt;Tải file lớn nhanh chóng và tiện lợi.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Nhược điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cần cài đặt phần mềm FTP client.&lt;/li&gt;
+&lt;li&gt;Cần thông tin đăng nhập FTP từ hosting.&lt;/li&gt;
+&lt;li&gt;Bảo mật không cao, có thể sử dụng SFTP để an toàn hơn.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://image.vietnix.vn/wp-content/uploads/2023/11/locating-ftp-details-4.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Thông tin FPT&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Hình 2: Thông tin FPT&lt;/em&gt;&lt;/p&gt;
+&lt;h5 id=&#34;sử-dụng-plugin-di-chuyển-wordpress&#34;&gt;Sử dụng Plugin Di Chuyển WordPress
+&lt;/h5&gt;&lt;p&gt;Nếu bạn sử dụng WordPress, các plugin như All in One WP Migration có thể giúp bạn di chuyển toàn bộ website một cách tự động.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Ưu điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Dễ sử dụng, không cần kiến thức kỹ thuật cao.&lt;/li&gt;
+&lt;li&gt;Kéo thả file đơn giản.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Nhược điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Giới hạn dung lượng file tải lên (thường là 256 MB).&lt;/li&gt;
+&lt;li&gt;Với file lớn hơn, cần chuyển sang FTP và SSH.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Lưu ý&lt;/strong&gt;: Plugin này có giới hạn dung lượng, nếu muốn tải file lớn, bạn cần chuyển sang FTP và giải nén qua SSH. Sau khi upload, nhớ chuyển dữ liệu trong thư mục con ra ngoài &lt;code&gt;public_html&lt;/code&gt; để website hoạt động chính xác.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://image.vietnix.vn/wp-content/uploads/2023/11/img_20230304150023-8.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Sử dụng WordPress Migration Plugin&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Hình 3: Sử dụng WordPress Migration Plugin&lt;/em&gt;&lt;/p&gt;
+&lt;h5 id=&#34;sử-dụng-ssh-secure-shell&#34;&gt;Sử dụng SSH (Secure Shell)
+&lt;/h5&gt;&lt;p&gt;SSH là cách tải và quản lý file qua dòng lệnh, phù hợp với những file lớn hoặc yêu cầu tốc độ cao.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Ưu điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nhanh chóng, không giới hạn dung lượng.&lt;/li&gt;
+&lt;li&gt;Có thể giải nén file trực tiếp trên server.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Nhược điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Yêu cầu kỹ năng sử dụng lệnh cơ bản và quyền truy cập SSH từ nhà cung cấp hosting.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://image.vietnix.vn/wp-content/uploads/2024/09/Su-dung-SSH-upload-website.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Sử dụng SSH upload website&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Hình 4: Sử dụng SSH upload website&lt;/em&gt;&lt;/p&gt;
+&lt;h5 id=&#34;import-site--trình-nhập-website-tự-động&#34;&gt;Import Site – Trình nhập website tự động
+&lt;/h5&gt;&lt;p&gt;Một số nhà cung cấp dịch vụ hosting cung cấp công cụ &lt;strong&gt;Import Site&lt;/strong&gt; giúp tải và giải nén website vào thư mục &lt;code&gt;public_html&lt;/code&gt; một cách nhanh chóng.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Ưu điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Quá trình tải lên nhanh chóng và dễ dàng.&lt;/li&gt;
+&lt;li&gt;Không cần nhiều kiến thức kỹ thuật.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Nhược điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Phụ thuộc vào nhà cung cấp hosting có hỗ trợ công cụ này.&lt;/li&gt;
+&lt;li&gt;Không phải nhà cung cấp hosting nào cũng cung cấp công cụ này.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Gợi ý&lt;/strong&gt;: Kiểm tra với nhà cung cấp hosting xem họ có hỗ trợ công cụ nhập trang web hay không.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://image.vietnix.vn/wp-content/uploads/2023/11/import-website-tool-2.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Tool nhập website&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Hình 5: Tool nhập website&lt;/em&gt;&lt;/p&gt;
+&lt;h5 id=&#34;nhờ-sự-hỗ-trợ-từ-nhà-cung-cấp-hosting&#34;&gt;Nhờ sự hỗ trợ từ nhà cung cấp hosting
+&lt;/h5&gt;&lt;p&gt;Hầu hết các nhà cung cấp hosting đều có dịch vụ hỗ trợ di chuyển website, đặc biệt khi bạn chuyển từ dịch vụ hosting cũ sang nhà cung cấp mới.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Ưu điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tiết kiệm thời gian và tránh sai sót kỹ thuật.&lt;/li&gt;
+&lt;li&gt;Được thực hiện bởi đội ngũ chuyên gia.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Nhược điểm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Có thể mất phí nếu nhà cung cấp không hỗ trợ miễn phí.&lt;/li&gt;
+&lt;li&gt;Thời gian xử lý phụ thuộc vào đội ngũ hỗ trợ.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Gợi ý&lt;/strong&gt;: Hãy kiểm tra chính sách hỗ trợ di chuyển website của nhà cung cấp hosting trước khi yêu cầu dịch vụ.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://image.vietnix.vn/wp-content/uploads/2024/09/Nho-su-ho-tro-tu-nha-cung-cap-hosting.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Nhờ sự hỗ trợ từ nhà cung cấp hosting&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Hình 6: Nhờ sự hỗ trợ từ nhà cung cấp hosting&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;📌 &lt;strong&gt;Lưu ý sau khi upload website lên hosting&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Di chuyển toàn bộ dữ liệu từ thư mục con (nếu có) ra ngoài &lt;code&gt;public_html&lt;/code&gt;&lt;/strong&gt; để website hoạt động chính xác.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Kiểm tra lại cấu trúc file và kết nối database (nếu có)&lt;/strong&gt; để tránh lỗi khi vận hành.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Chọn phương pháp phù hợp nhất&lt;/strong&gt; dựa trên kích thước file, nền tảng website và khả năng kỹ thuật của bạn.&lt;/li&gt;
+&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;lý-do-cần-upload-website-lên-hosting&#34;&gt;Lý do cần upload website lên Hosting
+&lt;/h2&gt;&lt;p&gt;Việc upload website lên hosting không chỉ là bước cần thiết để đưa website của bạn ra công chúng, mà còn mang lại nhiều lợi ích quan trọng giúp website hoạt động ổn định, bảo mật và hiệu quả. Dưới đây là những lý do bạn nên thực hiện việc này:&lt;/p&gt;
+&lt;h3 id=&#34;xuất-bản-website-và-tiếp-cận-toàn-cầu&#34;&gt;Xuất bản website và tiếp cận toàn cầu
+&lt;/h3&gt;&lt;p&gt;Khi bạn upload website lên hosting, website sẽ trở nên công khai và có thể truy cập từ bất kỳ đâu trên thế giới qua tên miền (domain) của bạn. Nếu không làm điều này, chỉ riêng bạn mới có thể truy cập website từ máy tính cá nhân.&lt;/p&gt;
+&lt;h3 id=&#34;bảo-mật-và-an-toàn-dữ-liệu&#34;&gt;Bảo mật và an toàn dữ liệu
+&lt;/h3&gt;&lt;p&gt;Hosting chuyên nghiệp mang lại những biện pháp bảo mật mạnh mẽ, chẳng hạn như chứng chỉ SSL, tường lửa và các công cụ bảo vệ dữ liệu khác. Điều này giúp đảm bảo an toàn cho website và cả dữ liệu thương hiệu khỏi các nguy cơ tấn công, mất mát hoặc xâm nhập dữ liệu, một vấn đề mà việc lưu trữ website trên máy tính cá nhân sẽ khó đảm bảo được.&lt;/p&gt;
+&lt;h3 id=&#34;tăng-tốc-độ-và-hiệu-suất-website&#34;&gt;Tăng tốc độ và hiệu suất Website
+&lt;/h3&gt;&lt;p&gt;Các máy chủ hosting được tối ưu để xử lý lưu lượng truy cập lớn và cung cấp tốc độ internet nhanh chóng, giúp tăng cường hiệu suất tải trang của website. Điều này có nghĩa là người dùng sẽ có trải nghiệm mượt mà hơn, đồng thời giảm thiểu tình trạng website bị &amp;ldquo;lag&amp;rdquo; hoặc tải chậm, một yếu tố quan trọng trong việc giữ chân người truy cập.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://image.vietnix.vn/wp-content/uploads/2024/09/Tang-toc-do-va-hieu-suat-Website.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Tăng tốc độ và hiệu suất Website&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Hình 7: Tăng tốc độ và hiệu suất Website&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id=&#34;tính-ổn-định-và-tin-cậy&#34;&gt;Tính ổn định và tin cậy
+&lt;/h3&gt;&lt;p&gt;Khi website được lưu trữ trên hosting, bạn không phải lo lắng về việc duy trì phần cứng hay kết nối mạng. Các nhà cung cấp hosting sẽ đảm bảo server luôn hoạt động ổn định với thời gian uptime cao, giúp website của bạn luôn sẵn sàng phục vụ người dùng mà không gặp phải sự cố downtime kéo dài.&lt;/p&gt;
+&lt;h3 id=&#34;quản-lý-website-dễ-dàng-và-tiện-lợi&#34;&gt;Quản lý website dễ dàng và tiện lợi
+&lt;/h3&gt;&lt;p&gt;Các nhà cung cấp hosting cung cấp giao diện quản lý thân thiện và dễ sử dụng, giúp bạn dễ dàng theo dõi, tối ưu và bảo trì website. Từ việc sao lưu dữ liệu, nâng cấp phần mềm cho đến việc tối ưu hóa hiệu suất, tất cả đều trở nên đơn giản hơn khi bạn sử dụng dịch vụ hosting chuyên nghiệp.&lt;/p&gt;
+&lt;h3 id=&#34;tính-mở-rộng-và-phát-triển-lâu-dài&#34;&gt;Tính mở rộng và phát triển lâu dài
+&lt;/h3&gt;&lt;p&gt;Hosting không chỉ phục vụ website trong giai đoạn đầu, mà còn hỗ trợ khả năng mở rộng khi website của bạn phát triển. Nếu lưu trữ trên máy tính cá nhân, bạn sẽ gặp khó khăn khi website tăng trưởng về lưu lượng truy cập hay yêu cầu về tài nguyên. Hosting chuyên nghiệp sẽ giúp bạn dễ dàng nâng cấp tài nguyên mà không phải lo lắng về việc mất dữ liệu hay gián đoạn dịch vụ.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://image.vietnix.vn/wp-content/uploads/2024/09/Tinh-mo-rong-va-phat-trien-lau-dai.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Tính mở rộng và phát triển lâu dài&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Hình 8: Tính mở rộng và phát triển lâu dài&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;Tóm lại, việc upload website lên hosting mang lại những lợi ích vượt trội về bảo mật, hiệu suất, tính ổn định và khả năng quản lý, giúp website của bạn hoạt động hiệu quả và bền vững. Đây là bước quan trọng để không chỉ bảo vệ dữ liệu mà còn tạo ra một nền tảng vững chắc để phát triển website trong tương lai. Vì vậy, nếu bạn muốn website của mình hoạt động trơn tru và dễ dàng truy cập từ mọi nơi, việc upload lên hosting là điều không thể thiếu.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;bước-1-chọn-cách-upload-file-website-lên-host&#34;&gt;Bước 1: Chọn cách upload file website lên host
+&lt;/h2&gt;&lt;h3 id=&#34;cách-1-upload-website-lên-hosting-bằng-file-manager-qua-cpanel&#34;&gt;Cách 1: Upload website lên hosting bằng File Manager qua cPanel
+&lt;/h3&gt;&lt;h3 id=&#34;cách-2-upload-website-lên-hosting-bằng-ftp-client&#34;&gt;Cách 2: Upload website lên hosting bằng FTP client
+&lt;/h3&gt;&lt;p&gt;Sau khi bạn đã lựa chọn xong cách để upload, dưới đây là hướng dẫn cách upload website lên hosting đơn giản, bạn có thể tham khảo.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&amp;mdash;Cách 1: Upload website lên hosting bằng File Manager qua cPanel&amp;mdash; (Dễ nhất)&lt;/p&gt;
+&lt;p&gt;Truy cập cPanel của tài khoản hosting và làm theo hướng dẫn dưới đây:&lt;/p&gt;
+&lt;p&gt;Bước 1: Click vào icon &lt;strong&gt;File Manager&lt;/strong&gt;, đặt bên dưới mục &lt;strong&gt;Files&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Chọn File Manager&lt;/strong&gt;&lt;br&gt;
+&lt;em&gt;Hình ảnh minh họa: Chọn File Manager&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-1.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Chọn File Manager&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Chọn File Manager&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Bước 2: Trong &lt;strong&gt;File Manager&lt;/strong&gt;, mở thư mục &lt;code&gt;public_html&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Mở thư mục public_html&lt;/strong&gt;&lt;br&gt;
+&lt;em&gt;Hình ảnh minh họa: Mở thư mục public_html&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-2.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Mở thư mục public_html&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Mở thư mục public_html&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Bước 3: Chọn &lt;strong&gt;Upload&lt;/strong&gt; sau khi truy cập vào thư mục &lt;code&gt;public_html&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Chọn Upload&lt;/strong&gt;&lt;br&gt;
+&lt;em&gt;Hình ảnh minh họa: Chọn Upload&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-3.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Chọn Upload&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Chọn Upload&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Bước 4: Chọn &lt;strong&gt;Select File&lt;/strong&gt; để chọn từng file hoặc kéo thả vào vùng nhận file.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Chọn file&lt;/strong&gt;&lt;br&gt;
+&lt;em&gt;Hình ảnh minh họa: Chọn file&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-4.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Chọn file&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Chọn file&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Bước 5: Trong ví dụ này, mình kéo thả file &lt;code&gt;wordpress.zip&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Chọn file zip wordpress&lt;/strong&gt;&lt;br&gt;
+&lt;em&gt;Hình ảnh minh họa: Chọn file zip wordpress (hoặc file dist.zip/build.zip)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-5.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Chọn file zip wordpress&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Chọn file zip wordpress&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Bước 6: Khi upload xong, quay lại &lt;strong&gt;File Manager&lt;/strong&gt; để thấy file archive đã xuất hiện trong thư mục &lt;code&gt;public_html&lt;/code&gt;. Click chuột phải và nhấn &lt;strong&gt;Extract&lt;/strong&gt; để giải nén file archive.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Extract file&lt;/strong&gt;&lt;br&gt;
+&lt;em&gt;Hình ảnh minh họa: Extract file&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-6.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Extract file&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Extract file&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Bước 7: Chọn vị trí file archive cần extract, ở ví dụ này sẽ lưu vào &lt;code&gt;/public_html&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Chọn vị trí file cần extract&lt;/strong&gt;&lt;br&gt;
+&lt;em&gt;Hình ảnh minh họa: Chọn vị trí file cần extract&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-7.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Chọn vị trí file cần extract&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Chọn vị trí file cần extract&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Bước 8: Sau khi giải nén file, bạn có thể xem các file đã được giải nén trong thư mục &lt;code&gt;public_html&lt;/code&gt;. Đây là thư mục gốc của website.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Quay lại thư mục ban đầu để xem&lt;/strong&gt;&lt;br&gt;
+&lt;em&gt;Hình ảnh minh họa: Quay lại thư mục ban đầu để xem&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-8.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Quay lại thư mục ban đầu để xem&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Quay lại thư mục ban đầu để xem&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Bước 9: Trang web đã tải xong. Bạn có thể truy cập vào trang web bằng cách nhập URL vào trình duyệt.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Màn hình chọn ngôn ngữ trong quá trình cài đặt WordPress&lt;/strong&gt;  &lt;em&gt;&lt;strong&gt;(Nếu có)&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&amp;mdash;Cách 2: Upload website lên hosting bằng FTP client&amp;mdash;&lt;/p&gt;
+&lt;p&gt;Một số người dùng thích tải trang web của họ lên dịch vụ hosting qua &lt;strong&gt;FTP&lt;/strong&gt;, ví dụ: &lt;strong&gt;FileZilla, SmartFTP, CoreFTP&lt;/strong&gt; hoặc bất kỳ phần mềm nào khác. Trong các hướng dẫn sau, mình sẽ sử dụng &lt;strong&gt;FileZilla&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Những lưu ý trước khi upload website lên hosting:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Kiến thức và kỹ năng của bạn:&lt;/strong&gt; Nếu bạn không có nhiều kiến thức về hosting, &lt;strong&gt;File Manager&lt;/strong&gt; sẽ dễ sử dụng hơn. Nếu bạn thành thạo, &lt;strong&gt;FTP client&lt;/strong&gt; sẽ giúp tải lên nhanh hơn.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Kích thước của website:&lt;/strong&gt; Nếu website có dung lượng lớn, &lt;strong&gt;FTP client&lt;/strong&gt; sẽ thuận tiện hơn vì không giới hạn dung lượng tải lên.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Yêu cầu đặc thù của website:&lt;/strong&gt; Nếu website yêu cầu cấu hình server đặc biệt, bạn nên hỏi nhà cung cấp hosting để chọn cách upload phù hợp.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Bước 1: Trước tiên, bạn cần lấy thông tin FTP thông qua &lt;strong&gt;FTP Access&lt;/strong&gt;. Nếu quên mật khẩu, bạn có thể đặt mật khẩu mới qua phần &lt;strong&gt;Change account password&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Lấy thông tin qua FTP Access&lt;/strong&gt;&lt;br&gt;
+&lt;em&gt;Hình ảnh minh họa: Lấy thông tin qua FTP Access&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-9.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Lấy thông tin qua FTP Access&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Lấy thông tin qua FTP Access&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Bước 2: Mở &lt;strong&gt;FileZilla&lt;/strong&gt;, điền thông tin FTP để truy cập và nhấn &lt;strong&gt;Quickconnect&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Chọn Quickconnect&lt;/strong&gt;&lt;br&gt;
+&lt;em&gt;Hình ảnh minh họa: Chọn Quickconnect&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-10.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Chọn Quickconnect&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Chọn Quickconnect&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Bước 3: Sau khi kết nối với FileZilla, tìm dữ liệu trang web và kéo chúng từ bên trái của phần mềm sang bên phải, thư mục đích là &lt;code&gt;public_html&lt;/code&gt;. Bạn cần giải nén file archive trước, vì FTP không có chức năng giải nén.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải&lt;/strong&gt;&lt;br&gt;
+&lt;em&gt;Hình ảnh minh họa: Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-11.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Bước 4: Tương tự, bạn có thể upload file nén qua &lt;strong&gt;FTP&lt;/strong&gt; bằng cách kéo thả từ trái sang phải. Sau đó, giải nén chúng thông qua &lt;strong&gt;File Manager&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Upload file nén qua FTP&lt;/strong&gt;&lt;br&gt;
+&lt;em&gt;Hình ảnh minh họa: Upload file nén qua FTP&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-12.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Upload file nén qua FTP&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Upload file nén qua FTP&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Bước 5: Sau khi tải trang web lên hosting, bạn có thể truy cập trang web bằng cách nhập URL vào trình duyệt. Bạn sẽ thấy trang cài đặt mặc định của website và có thể tùy chỉnh trang này để phù hợp với nhu cầu của mình.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;bước-2-kiểm-tra-xem-file-đã-ở-trong-thư-mục-public_html-hay-chưa&#34;&gt;Bước 2: Kiểm tra xem file đã ở trong thư mục public_html hay chưa
+&lt;/h2&gt;&lt;p&gt;Sau khi upload website lên hosting, bước đầu tiên bạn cần làm là kiểm tra xem các file đã được tải đầy đủ vào thư mục &lt;code&gt;public_html&lt;/code&gt; chưa. Bạn có thể mở thư mục &lt;code&gt;public_html&lt;/code&gt; và kiểm tra xem tất cả các file đã nằm trong đó chưa. Nếu bạn tạo ra thư mục mới sau khi upload và giải nén website backup, người dùng sẽ phải truy cập theo đường dẫn dạng &lt;code&gt;example.com/something&lt;/code&gt; thay vì &lt;code&gt;example.com&lt;/code&gt;. Để khắc phục điều này, bạn có thể sử dụng &lt;strong&gt;File Manager&lt;/strong&gt; hoặc &lt;strong&gt;FTP&lt;/strong&gt; theo các bước sau:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Truy cập vào thư mục chứa các file của website.&lt;/li&gt;
+&lt;li&gt;Chọn toàn bộ các file và nhấn chuột phải, sau đó chọn nút &lt;strong&gt;Move&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Lựa chọn thư mục đích là &lt;code&gt;public_html&lt;/code&gt; và nhấn &lt;strong&gt;Proceed&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Nếu website của bạn đã được vận hành một thời gian, bạn cũng cần phải upload &lt;strong&gt;database&lt;/strong&gt; lên hosting nếu chưa thực hiện.&lt;/p&gt;
+&lt;p&gt;Sau khi đã đảm bảo các file đã được di chuyển đúng vào thư mục &lt;code&gt;public_html&lt;/code&gt;, bạn có thể kiểm tra website bằng cách mở trình duyệt và truy cập vào tên miền của mình. Nếu tên miền chưa được trỏ đúng, bạn có thể sử dụng các phương pháp sau để kiểm tra và sửa lỗi DNS:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Sửa &lt;strong&gt;file hosts&lt;/strong&gt; trên máy tính để giả lập thay đổi DNS.&lt;/li&gt;
+&lt;li&gt;Sử dụng các &lt;strong&gt;công cụ online&lt;/strong&gt; để kiểm tra tên miền.&lt;/li&gt;
+&lt;li&gt;Cài đặt &lt;strong&gt;plugin trình duyệt&lt;/strong&gt; để tạo file host ảo.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Ngoài ra, nếu bạn cần di chuyển website từ thư mục con lên thư mục gốc (&lt;code&gt;public_html&lt;/code&gt;), bạn có thể sử dụng &lt;strong&gt;File Manager&lt;/strong&gt; hoặc &lt;strong&gt;FTP&lt;/strong&gt; để thực hiện. Và bạn đừng quên tải lại &lt;strong&gt;cơ sở dữ liệu&lt;/strong&gt; lên hosting nếu cần thiết.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;bước-3-tiến-hành-upload-database-lên-website-hosting&#34;&gt;Bước 3: Tiến hành upload database lên website hosting
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;Thực hiện bước này khi website của người dùng đã có sẵn &lt;em&gt;&lt;strong&gt;database&lt;/strong&gt;&lt;/em&gt;. Nếu không, bạn có thể bỏ qua bước này.&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h3 id=&#34;tạo-database-trên-cpanel&#34;&gt;Tạo database trên cPanel
+&lt;/h3&gt;&lt;p&gt;Tạo một database mới tại section &lt;strong&gt;MySQL Databases&lt;/strong&gt;. Khi tạo database bạn cần điền và ghi chú lại những thông số database như sau:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;MySQL Database&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MySQL User&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MySQL Host&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MySQL Password&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-13.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Tạo database mới&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Tạo database mới&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id=&#34;di-chuyển-vào-phpmyadmin-của-database&#34;&gt;Di chuyển vào phpMyAdmin của database
+&lt;/h3&gt;&lt;p&gt;Khi sử dụng &lt;strong&gt;phpMyAdmin&lt;/strong&gt; để quản lý database, hãy &lt;strong&gt;import database MySQL&lt;/strong&gt;. Nếu bạn muốn upload vào một database có sẵn, hãy xóa dữ liệu trước để tránh lỗi khi tải lên từ máy tính.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-14.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Di chuyển vào phpMyAdmin&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Di chuyển vào phpMyAdmin&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id=&#34;di-chuyển-vào-tab-import-và-upload-dữ-liệu-vào-database&#34;&gt;Di chuyển vào tab Import và upload dữ liệu vào database
+&lt;/h3&gt;&lt;p&gt;Nếu là lần đầu tạo database, chỉ cần vào tab &lt;strong&gt;Import&lt;/strong&gt; để upload dữ liệu vào database trống. Bạn đã có một file SQL từ bản sao lưu của trang web, có thể là file dạng text với đuôi &lt;code&gt;.sql&lt;/code&gt; hoặc dạng nén như &lt;code&gt;.sql.zip&lt;/code&gt; hay &lt;code&gt;.sql.gz&lt;/code&gt;. Hãy nhấn nút &lt;strong&gt;Choose File&lt;/strong&gt; để chọn file cơ sở dữ liệu và sau đó bấm nút &lt;strong&gt;Go&lt;/strong&gt; để bắt đầu quá trình tải lên. Khi &lt;strong&gt;phpMyAdmin&lt;/strong&gt; hoàn tất và hiển thị thông báo &lt;em&gt;Import has been successfully finished, 302 queries executed&lt;/em&gt;, có nghĩa là quá trình tải lên cơ sở dữ liệu đã hoàn tất.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-15.webp&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;Import dữ liệu vào database&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Import dữ liệu vào database&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id=&#34;cập-nhật-file-cấu-hình-để-kết-nối-website-và-database&#34;&gt;Cập nhật file cấu hình để kết nối website và database
+&lt;/h3&gt;&lt;p&gt;Sau khi tải database lên server, bạn cần mở &lt;strong&gt;file cấu hình PHP&lt;/strong&gt; script để điền thông tin như host, tên database, tên người dùng và mật khẩu. File cấu hình có thể có tên và vị trí khác nhau tùy thuộc vào phần mềm bạn sử dụng. Ví dụ, với &lt;strong&gt;WordPress&lt;/strong&gt;, file cấu hình là &lt;code&gt;wp-config.php&lt;/code&gt; và nằm trong thư mục chứa &lt;strong&gt;WordPress&lt;/strong&gt; (thường là &lt;code&gt;public_html&lt;/code&gt;).&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;⚠ &lt;strong&gt;Lưu ý:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Nếu cơ sở dữ liệu của bạn có kích thước lớn, hãy cân nhắc chia nhỏ database thành nhiều file để quá trình tải lên diễn ra nhanh chóng hơn.&lt;/li&gt;
+&lt;li&gt;Nếu database chứa các ký tự đặc biệt, nhớ chuyển đổi chúng sang định dạng &lt;strong&gt;ASCII&lt;/strong&gt; trước khi thực hiện upload.&lt;/li&gt;
+&lt;li&gt;Trong trường hợp gặp lỗi khi import, bạn cần kiểm tra xem database có bị hỏng hay không. Nếu bị lỗi, hãy tạo lại một cơ sở dữ liệu mới và thử lại.&lt;/li&gt;
+&lt;li&gt;Cuối cùng, sau khi upload xong, đừng quên kiểm tra website của bạn để đảm bảo mọi thứ hoạt động bình thường.&lt;/li&gt;
+&lt;/ul&gt;&lt;/blockquote&gt;
+&lt;h3 id=&#34;cập-nhật-file-cấu-hình-để-kết-nối-website-và-database-1&#34;&gt;Cập nhật file cấu hình để kết nối website và database
+&lt;/h3&gt;&lt;p&gt;Sau khi tải database lên server, bạn cần mở file cấu hình PHP script để điền thông tin như &lt;strong&gt;host&lt;/strong&gt;, &lt;strong&gt;tên database&lt;/strong&gt;, &lt;strong&gt;tên người dùng&lt;/strong&gt; và &lt;strong&gt;mật khẩu&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;File cấu hình có thể có tên và vị trí khác nhau tùy thuộc vào phần mềm bạn sử dụng. Ví dụ, với &lt;strong&gt;WordPress&lt;/strong&gt;, file cấu hình là &lt;code&gt;wp-config.php&lt;/code&gt; và nằm trong thư mục chứa WordPress (thường là &lt;code&gt;public_html&lt;/code&gt;).&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;bước-4-kiểm-tra-website-đã-hoạt-động-ổn-định-hay-chưa&#34;&gt;Bước 4: Kiểm tra website đã hoạt động ổn định hay chưa
+&lt;/h2&gt;&lt;p&gt;Để đảm bảo website của bạn hoạt động ổn định sau khi tải lên và trỏ tên miền, bạn cần thực hiện một số bước kiểm tra quan trọng:&lt;/p&gt;
+&lt;h3 id=&#34;-kiểm-tra-truy-cập-website&#34;&gt;🔍 Kiểm tra truy cập website
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Truy cập bằng tên miền hoặc địa chỉ IP:&lt;/strong&gt; Nếu bạn có thể truy cập thành công, website đã hoạt động ổn định.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Chờ DNS cập nhật:&lt;/strong&gt; Nếu tên miền vừa được cập nhật, bạn có thể cần đợi khoảng &lt;strong&gt;24 giờ&lt;/strong&gt; để DNS được quảng bá rộng rãi.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Kiểm tra ngay lập tức bằng:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;🖥️ &lt;strong&gt;Sử dụng file host:&lt;/strong&gt; Chỉnh sửa file host trên máy tính để mô phỏng thay đổi DNS.&lt;/li&gt;
+&lt;li&gt;🌐 &lt;strong&gt;Công cụ online:&lt;/strong&gt; Kiểm tra website bằng các dịch vụ kiểm tra DNS trực tuyến.&lt;/li&gt;
+&lt;li&gt;🔌 &lt;strong&gt;Plugin browser:&lt;/strong&gt; Cài đặt plugin giúp tạo file host ảo để kiểm tra các thay đổi DNS.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-kiểm-tra-các-chức-năng-của-website&#34;&gt;🛠️ Kiểm tra các chức năng của website
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Thử truy cập các trang khác nhau, kiểm tra liên kết.&lt;/li&gt;
+&lt;li&gt;Kiểm tra xem các tính năng của website có hoạt động đúng không.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-kiểm-tra-tốc-độ-tải-trang&#34;&gt;⚡ Kiểm tra tốc độ tải trang
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Sử dụng các công cụ như &lt;strong&gt;Google PageSpeed Insights, GTmetrix&lt;/strong&gt; để kiểm tra hiệu suất.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-kiểm-tra-các-lỗi-trên-website&#34;&gt;🚨 Kiểm tra các lỗi trên website
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Lỗi 404:&lt;/strong&gt; Trang không tìm thấy.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lỗi 500:&lt;/strong&gt; Lỗi máy chủ hosting.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Lỗi 503:&lt;/strong&gt; Máy chủ đang bảo trì.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-kiểm-tra-trên-nhiều-trình-duyệt--thiết-bị&#34;&gt;🌍 Kiểm tra trên nhiều trình duyệt &amp;amp; thiết bị
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Dùng &lt;strong&gt;Chrome, Firefox, Safari, Edge&lt;/strong&gt; trên &lt;strong&gt;máy tính, điện thoại, máy tính bảng&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-kiểm-tra-vào-các-thời-điểm-khác-nhau-trong-ngày&#34;&gt;⏳ Kiểm tra vào các thời điểm khác nhau trong ngày
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Website có thể hoạt động khác nhau vào những thời điểm khác nhau.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;👉 &lt;strong&gt;Nếu phát hiện lỗi nhưng không biết cách xử lý, hãy liên hệ với nhà cung cấp hosting để được hỗ trợ.&lt;/strong&gt; 🚀&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-lời-kết&#34;&gt;📌 Lời kết
+&lt;/h2&gt;&lt;p&gt;Upload website lên hosting là một bước quan trọng để website của bạn có thể hoạt động ổn định trên môi trường trực tuyến. Bằng cách chuẩn bị đúng đắn và thực hiện theo các bước hướng dẫn, bạn sẽ đảm bảo rằng website của mình luôn sẵn sàng phục vụ người dùng một cách hiệu quả.&lt;/p&gt;
+&lt;p&gt;💡 Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ thêm, hãy để lại câu hỏi trong phần bình luận dưới đây. Mình sẽ sớm giúp bạn tìm ra lời giải đáp.&lt;/p&gt;
+&lt;p&gt;Cảm ơn bạn đã theo dõi bài viết 🚀&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Giám sát ứng dụng (Application Monitoring) 📊</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-eighteen/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-eighteen/</link>
         <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-eighteen/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-eighteen.webp" alt="Featured image of post Giám sát ứng dụng (Application Monitoring) 📊" /&gt;&lt;h1 id=&#34;-giám-sát-ứng-dụng-application-monitoring&#34;&gt;📊 Giám sát ứng dụng (Application Monitoring)
+        <guid>http://localhost:1313/posts/devops/devops-step-eighteen/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-eighteen.webp" alt="Featured image of post Giám sát ứng dụng (Application Monitoring) 📊" /&gt;&lt;h1 id=&#34;-giám-sát-ứng-dụng-application-monitoring&#34;&gt;📊 Giám sát ứng dụng (Application Monitoring)
 &lt;/h1&gt;&lt;p&gt;Giám sát ứng dụng là quá trình theo dõi và phân tích liên tục các ứng dụng phần mềm nhằm đảm bảo chúng hoạt động tối ưu, phát hiện sự cố và cung cấp những hiểu biết sâu sắc về hiệu suất của hệ thống. Việc giám sát bao gồm các chỉ số quan trọng như:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;⏳ &lt;strong&gt;Thời gian phản hồi&lt;/strong&gt;&lt;/li&gt;
@@ -143,11 +742,11 @@
         </item>
         <item>
         <title>GitOps - Tự động hoá triển khai với Git 🌟</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-twenty/</link>
         <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-twenty.webp" alt="Featured image of post GitOps - Tự động hoá triển khai với Git 🌟" /&gt;&lt;h1 id=&#34;-gitops---tự-động-hoá-triển-khai-với-git&#34;&gt;🌟 GitOps - Tự động hoá triển khai với Git
+        <guid>http://localhost:1313/posts/devops/devops-step-twenty/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-twenty.webp" alt="Featured image of post GitOps - Tự động hoá triển khai với Git 🌟" /&gt;&lt;h1 id=&#34;-gitops---tự-động-hoá-triển-khai-với-git&#34;&gt;🌟 GitOps - Tự động hoá triển khai với Git
 &lt;/h1&gt;&lt;h2 id=&#34;giới-thiệu&#34;&gt;Giới thiệu
 &lt;/h2&gt;&lt;p&gt;GitOps là một phương pháp quản lý hạ tầng và triển khai ứng dụng bằng cách sử dụng Git làm nguồn sự thật duy nhất (single source of truth). Phương pháp này giúp tự động hóa quy trình triển khai, đảm bảo tính nhất quán và tăng cường khả năng theo dõi các thay đổi.&lt;/p&gt;
 &lt;p&gt;GitOps mở rộng thực tiễn của DevOps bằng cách áp dụng các nguyên tắc của kiểm soát phiên bản (version control) và tích hợp liên tục (CI/CD) vào quản lý hạ tầng. Thay vì thực hiện thủ công, mọi thay đổi được thực hiện qua pull request và tự động đồng bộ với hệ thống thực tế.&lt;/p&gt;
@@ -291,11 +890,11 @@
         </item>
         <item>
         <title>Mẫu thiết kế đám mây (Cloud Design Patterns) 🌟</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty-two/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-twenty-two/</link>
         <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty-two/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-twenty-two.webp" alt="Featured image of post Mẫu thiết kế đám mây (Cloud Design Patterns) 🌟" /&gt;&lt;h1 id=&#34;-mẫu-thiết-kế-đám-mây-cloud-design-patterns&#34;&gt;🌟 Mẫu thiết kế đám mây (Cloud Design Patterns)
+        <guid>http://localhost:1313/posts/devops/devops-step-twenty-two/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-twenty-two.webp" alt="Featured image of post Mẫu thiết kế đám mây (Cloud Design Patterns) 🌟" /&gt;&lt;h1 id=&#34;-mẫu-thiết-kế-đám-mây-cloud-design-patterns&#34;&gt;🌟 Mẫu thiết kế đám mây (Cloud Design Patterns)
 &lt;/h1&gt;&lt;h2 id=&#34;giới-thiệu&#34;&gt;Giới thiệu
 &lt;/h2&gt;&lt;p&gt;Mẫu thiết kế đám mây là những giải pháp có thể tái sử dụng cho các vấn đề phổ biến trong kiến trúc điện toán đám mây. Các mẫu này giúp giải quyết các thách thức liên quan đến khả năng mở rộng, độ tin cậy, bảo mật và hiệu suất trong các hệ thống phân tán.&lt;/p&gt;
 &lt;p&gt;Chúng cung cấp các phương pháp tốt nhất để thiết kế và triển khai ứng dụng đám mây, bao gồm quản lý dữ liệu, xử lý tin nhắn, đảm bảo tính kiên cố (resiliency) và triển khai. Một số ví dụ phổ biến:&lt;/p&gt;
@@ -346,11 +945,11 @@ Sử dụng &lt;strong&gt;Prometheus + Grafana&lt;/strong&gt; để giám sát h
         </item>
         <item>
         <title>Quản lý Artifacts trong phát triển phần mềm 🏢</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-nineteen/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-nineteen/</link>
         <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-nineteen/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-nineteen.webp" alt="Featured image of post Quản lý Artifacts trong phát triển phần mềm 🏢" /&gt;&lt;h1 id=&#34;quản-lý-artifacts-trong-phát-triển-phần-mềm&#34;&gt;Quản lý Artifacts trong phát triển phần mềm
+        <guid>http://localhost:1313/posts/devops/devops-step-nineteen/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-nineteen.webp" alt="Featured image of post Quản lý Artifacts trong phát triển phần mềm 🏢" /&gt;&lt;h1 id=&#34;quản-lý-artifacts-trong-phát-triển-phần-mềm&#34;&gt;Quản lý Artifacts trong phát triển phần mềm
 &lt;/h1&gt;&lt;h2 id=&#34;-artifacts-là-gì&#34;&gt;🏗️ Artifacts là gì?
 &lt;/h2&gt;&lt;p&gt;Artifacts là các sản phẩm được tạo ra trong suốt vòng đời phát triển phần mềm. Chúng có thể bao gồm:&lt;/p&gt;
 &lt;ul&gt;
@@ -430,11 +1029,11 @@ Sử dụng &lt;strong&gt;Prometheus + Grafana&lt;/strong&gt; để giám sát h
         </item>
         <item>
         <title>Service Mesh - Quản lý giao tiếp giữa Microservices 🌐</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty-one/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-twenty-one/</link>
         <pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty-one/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-twenty-one.webp" alt="Featured image of post Service Mesh - Quản lý giao tiếp giữa Microservices 🌐" /&gt;&lt;h1 id=&#34;-service-mesh---quản-lý-giao-tiếp-giữa-microservices&#34;&gt;🌐 Service Mesh - Quản lý giao tiếp giữa Microservices
+        <guid>http://localhost:1313/posts/devops/devops-step-twenty-one/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-twenty-one.webp" alt="Featured image of post Service Mesh - Quản lý giao tiếp giữa Microservices 🌐" /&gt;&lt;h1 id=&#34;-service-mesh---quản-lý-giao-tiếp-giữa-microservices&#34;&gt;🌐 Service Mesh - Quản lý giao tiếp giữa Microservices
 &lt;/h1&gt;&lt;h2 id=&#34;-giới-thiệu&#34;&gt;📌 Giới thiệu
 &lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Service Mesh&lt;/strong&gt; là một lớp hạ tầng phần mềm giúp quản lý giao tiếp giữa các dịch vụ trong hệ thống &lt;em&gt;&lt;strong&gt;microservices&lt;/strong&gt;&lt;/em&gt;. Nó cung cấp các tính năng như &lt;strong&gt;cân bằng tải, bảo mật, quan sát, kiểm soát lưu lượng và khắc phục lỗi&lt;/strong&gt;, giúp dịch vụ giao tiếp với nhau một cách hiệu quả mà không cần thay đổi mã nguồn ứng dụng.&lt;/p&gt;
 &lt;p&gt;Các công cụ Service Mesh phổ biến gồm: &lt;strong&gt;Istio, Linkerd, Consul&lt;/strong&gt;.&lt;/p&gt;
@@ -621,11 +1220,11 @@ Sử dụng &lt;strong&gt;Prometheus + Grafana&lt;/strong&gt; để giám sát h
         </item>
         <item>
         <title>CI/CD - Tích hợp liên tục và triển khai liên tục 🚀</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-thirteen/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-thirteen/</link>
         <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-thirteen/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-thirteen.webp" alt="Featured image of post CI/CD - Tích hợp liên tục và triển khai liên tục 🚀" /&gt;&lt;h1 id=&#34;-cicd---tích-hợp-liên-tục-và-triển-khai-liên-tục&#34;&gt;🚀 CI/CD - Tích hợp liên tục và Triển khai liên tục
+        <guid>http://localhost:1313/posts/devops/devops-step-thirteen/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-thirteen.webp" alt="Featured image of post CI/CD - Tích hợp liên tục và triển khai liên tục 🚀" /&gt;&lt;h1 id=&#34;-cicd---tích-hợp-liên-tục-và-triển-khai-liên-tục&#34;&gt;🚀 CI/CD - Tích hợp liên tục và Triển khai liên tục
 &lt;/h1&gt;&lt;h2 id=&#34;-cicd-là-gì&#34;&gt;🔍 CI/CD là gì?
 &lt;/h2&gt;&lt;p&gt;CI/CD (Continuous Integration/Continuous Deployment) là một phương pháp giúp tự động hóa quá trình phát triển phần mềm, giúp giảm lỗi, tăng tốc độ triển khai và cải thiện chất lượng sản phẩm.&lt;/p&gt;
 &lt;ul&gt;
@@ -837,11 +1436,11 @@ Sử dụng &lt;strong&gt;Prometheus + Grafana&lt;/strong&gt; để giám sát h
         </item>
         <item>
         <title>Container Orchestration 🚢</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-seventeen/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-seventeen/</link>
         <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-seventeen/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-seventeen.webp" alt="Featured image of post Container Orchestration 🚢" /&gt;&lt;h1 id=&#34;-container-orchestration&#34;&gt;🚢 Container Orchestration
+        <guid>http://localhost:1313/posts/devops/devops-step-seventeen/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-seventeen.webp" alt="Featured image of post Container Orchestration 🚢" /&gt;&lt;h1 id=&#34;-container-orchestration&#34;&gt;🚢 Container Orchestration
 &lt;/h1&gt;&lt;h2 id=&#34;-container-orchestration-là-gì&#34;&gt;🔍 Container Orchestration là gì?
 &lt;/h2&gt;&lt;p&gt;Container orchestration là quá trình quản lý và tự động hóa vòng đời của container, bao gồm triển khai, mở rộng và kết nối mạng giữa các container trên nhiều máy chủ. Đây là công nghệ quan trọng để chạy các ứng dụng phức tạp trong môi trường sản xuất.&lt;/p&gt;
 &lt;p&gt;Bằng cách sử dụng các công cụ như &lt;strong&gt;Kubernetes, Docker Swarm,&lt;/strong&gt; và &lt;strong&gt;Apache Mesos&lt;/strong&gt;, các tổ chức có thể đảm bảo &lt;strong&gt;tính khả dụng cao, khả năng mở rộng và độ tin cậy&lt;/strong&gt; cho ứng dụng của mình. Container orchestration giúp tự động hóa các tác vụ vận hành và tạo nền tảng vững chắc cho &lt;strong&gt;microservices, cloud-native development,&lt;/strong&gt; và &lt;strong&gt;DevOps&lt;/strong&gt;.&lt;/p&gt;
@@ -1018,11 +1617,11 @@ Sử dụng &lt;strong&gt;Prometheus + Grafana&lt;/strong&gt; để giám sát h
         </item>
         <item>
         <title>Giám sát hạ tầng (Infrastructure Monitoring) 📊</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-fifteen/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-fifteen/</link>
         <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-fifteen/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-fifteen.webp" alt="Featured image of post Giám sát hạ tầng (Infrastructure Monitoring) 📊" /&gt;&lt;h1 id=&#34;-giám-sát-hạ-tầng-infrastructure-monitoring&#34;&gt;📊 Giám sát hạ tầng (Infrastructure Monitoring)
+        <guid>http://localhost:1313/posts/devops/devops-step-fifteen/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-fifteen.webp" alt="Featured image of post Giám sát hạ tầng (Infrastructure Monitoring) 📊" /&gt;&lt;h1 id=&#34;-giám-sát-hạ-tầng-infrastructure-monitoring&#34;&gt;📊 Giám sát hạ tầng (Infrastructure Monitoring)
 &lt;/h1&gt;&lt;h2 id=&#34;-giám-sát-là-gì&#34;&gt;🔍 Giám sát là gì?
 &lt;/h2&gt;&lt;p&gt;Giám sát hạ tầng là quá trình theo dõi hiệu suất và trạng thái của hệ thống, giúp phát hiện sự cố kịp thời và tối ưu hóa hoạt động. Đây là một lĩnh vực rộng lớn với nhiều công cụ khác nhau, mỗi công cụ có ưu nhược điểm riêng. Hiểu rõ các công cụ này sẽ giúp bạn chọn giải pháp phù hợp với mục tiêu giám sát của mình.&lt;/p&gt;
 &lt;hr&gt;
@@ -1100,11 +1699,11 @@ Sử dụng Zabbix để giám sát trạng thái của các server trong hệ t
         </item>
         <item>
         <title>Infrastructure Provisioning với Terraform 🟪🔳</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-eleven/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-eleven/</link>
         <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-eleven/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-eleven.webp" alt="Featured image of post Infrastructure Provisioning với Terraform 🟪🔳" /&gt;&lt;h1 id=&#34;-infrastructure-provisioning-với-terraform&#34;&gt;🚀 Infrastructure Provisioning với Terraform
+        <guid>http://localhost:1313/posts/devops/devops-step-eleven/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-eleven.webp" alt="Featured image of post Infrastructure Provisioning với Terraform 🟪🔳" /&gt;&lt;h1 id=&#34;-infrastructure-provisioning-với-terraform&#34;&gt;🚀 Infrastructure Provisioning với Terraform
 &lt;/h1&gt;&lt;h2 id=&#34;-provisioning-là-gì&#34;&gt;🔹 Provisioning là gì?
 &lt;/h2&gt;&lt;p&gt;Provisioning đề cập đến quá trình thiết lập và cấu hình hạ tầng CNTT cần thiết để hỗ trợ ứng dụng hoặc dịch vụ. Điều này bao gồm việc phân bổ và chuẩn bị tài nguyên như &lt;strong&gt;máy chủ, lưu trữ, mạng và môi trường phần mềm&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;Mặc dù provisioning có thể được thực hiện thủ công, nhưng trong DevOps hiện đại, quá trình này thường được tự động hóa bằng các công cụ như &lt;strong&gt;Terraform, Pulumi, CloudFormation&lt;/strong&gt;. Việc sử dụng Infrastructure-as-Code (&lt;strong&gt;IaC&lt;/strong&gt;) giúp định nghĩa toàn bộ quy trình provisioning trong các tệp script được quản lý phiên bản, giúp đảm bảo tính nhất quán, giảm lỗi do con người và cải thiện khả năng mở rộng, phục hồi sau thảm họa.&lt;/p&gt;
@@ -1190,11 +1789,11 @@ Sử dụng Zabbix để giám sát trạng thái của các server trong hệ t
         </item>
         <item>
         <title>Quản lý cấu hình (Configuration Management)🔧</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-twelve/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-twelve/</link>
         <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-twelve/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-twelve.webp" alt="Featured image of post Quản lý cấu hình (Configuration Management)🔧" /&gt;&lt;h1 id=&#34;-quản-lý-cấu-hình-configuration-management&#34;&gt;🔧 Quản lý cấu hình (Configuration Management)
+        <guid>http://localhost:1313/posts/devops/devops-step-twelve/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-twelve.webp" alt="Featured image of post Quản lý cấu hình (Configuration Management)🔧" /&gt;&lt;h1 id=&#34;-quản-lý-cấu-hình-configuration-management&#34;&gt;🔧 Quản lý cấu hình (Configuration Management)
 &lt;/h1&gt;&lt;p&gt;Quản lý cấu hình là quy trình quản lý và duy trì tính nhất quán của các thành phần trong hệ thống công nghệ thông tin. Trong lĩnh vực phần mềm, nó bao gồm việc giám sát, theo dõi và quản lý các thay đổi cấu hình của hệ thống trong suốt vòng đời sản phẩm. Việc áp dụng quản lý cấu hình giúp tăng tính đồng bộ, giảm nguy cơ lỗi, và đảm bảo sự tuân thủ các tiêu chuẩn trong quy trình CI/CD (Continuous Integration and Continuous Deployment).&lt;/p&gt;
 &lt;hr&gt;
 &lt;h2 id=&#34;-các-công-cụ-quản-lý-cấu-hình-phổ-biến&#34;&gt;🌐 Các công cụ quản lý cấu hình phổ biến
@@ -1334,11 +1933,11 @@ Sử dụng Zabbix để giám sát trạng thái của các server trong hệ t
         </item>
         <item>
         <title>Quản lý khoá bí mật (Secret Management)🔒</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-fourteen/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-fourteen/</link>
         <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-fourteen/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-fourteen.webp" alt="Featured image of post Quản lý khoá bí mật (Secret Management)🔒" /&gt;&lt;h1 id=&#34;-quản-lý-khoá-bí-mật-secret-management&#34;&gt;🔒 Quản lý khoá bí mật (Secret Management)
+        <guid>http://localhost:1313/posts/devops/devops-step-fourteen/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-fourteen.webp" alt="Featured image of post Quản lý khoá bí mật (Secret Management)🔒" /&gt;&lt;h1 id=&#34;-quản-lý-khoá-bí-mật-secret-management&#34;&gt;🔒 Quản lý khoá bí mật (Secret Management)
 &lt;/h1&gt;&lt;h2 id=&#34;-secret-management-là-gì&#34;&gt;🔍 Secret Management là gì?
 &lt;/h2&gt;&lt;p&gt;Secret Management là quá trình bảo vệ, lưu trữ và phân phối an toàn các thông tin nhạy cảm như mật khẩu, khóa API và chứng chỉ trong hệ thống công nghệ thông tin của tổ chức. Nó giúp ngăn chặn truy cập trái phép đồng thời đảm bảo các hệ thống và người dùng được ủy quyền có thể sử dụng thông tin khi cần thiết.&lt;/p&gt;
 &lt;p&gt;Secret Management thường bao gồm các tính năng:&lt;/p&gt;
@@ -1495,11 +2094,11 @@ Sử dụng Zabbix để giám sát trạng thái của các server trong hệ t
         </item>
         <item>
         <title>Quản lý logs (Logs Management) 📜</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-sixteen/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-sixteen/</link>
         <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-sixteen/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-sixteen.webp" alt="Featured image of post Quản lý logs (Logs Management) 📜" /&gt;&lt;h1 id=&#34;-quản-lý-logs-logs-management&#34;&gt;📜 Quản lý logs (Logs Management)
+        <guid>http://localhost:1313/posts/devops/devops-step-sixteen/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-sixteen.webp" alt="Featured image of post Quản lý logs (Logs Management) 📜" /&gt;&lt;h1 id=&#34;-quản-lý-logs-logs-management&#34;&gt;📜 Quản lý logs (Logs Management)
 &lt;/h1&gt;&lt;h2 id=&#34;-quản-lý-logs-là-gì&#34;&gt;🔍 Quản lý logs là gì?
 &lt;/h2&gt;&lt;p&gt;Quản lý logs là quá trình thu thập, tổng hợp, phân tích, lưu trữ và truy xuất logs từ các ứng dụng và hệ thống hạ tầng. Logs chứa thông tin quan trọng về hoạt động của hệ thống, giúp phát hiện sự cố, tối ưu hóa hiệu suất và đảm bảo tuân thủ bảo mật.&lt;/p&gt;
 &lt;hr&gt;
@@ -1607,11 +2206,11 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Serverless và các nền tảng liên quan ☁️</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-ten/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-ten/</link>
         <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-ten/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-ten.webp" alt="Featured image of post Serverless và các nền tảng liên quan ☁️" /&gt;&lt;h1 id=&#34;-serverless-và-các-nền-tảng-liên-quan&#34;&gt;☁️ Serverless và các nền tảng liên quan
+        <guid>http://localhost:1313/posts/devops/devops-step-ten/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-ten.webp" alt="Featured image of post Serverless và các nền tảng liên quan ☁️" /&gt;&lt;h1 id=&#34;-serverless-và-các-nền-tảng-liên-quan&#34;&gt;☁️ Serverless và các nền tảng liên quan
 &lt;/h1&gt;&lt;h2 id=&#34;-serverless-là-gì&#34;&gt;🚀 Serverless là gì?
 &lt;/h2&gt;&lt;p&gt;Serverless là mô hình điện toán đám mây nơi nhà cung cấp dịch vụ quản lý hoàn toàn cơ sở hạ tầng, giúp lập trình viên chỉ cần tập trung vào viết mã. Hệ thống sẽ &lt;strong&gt;tự động phân bổ tài nguyên&lt;/strong&gt; theo nhu cầu và chỉ tính phí dựa trên tài nguyên thực tế sử dụng. Kiến trúc serverless thường được áp dụng cho các &lt;strong&gt;ứng dụng microservices, xử lý sự kiện&lt;/strong&gt; và giúp giảm thiểu chi phí vận hành.&lt;/p&gt;
 &lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu:&lt;/strong&gt;&lt;/p&gt;
@@ -1694,11 +2293,11 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Application Gateway 🌐</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-seven/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-seven/</link>
         <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-seven/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-seven.webp" alt="Featured image of post Application Gateway 🌐" /&gt;&lt;h1 id=&#34;thiết-lập-các-thành-phần-mạng-quan-trọng&#34;&gt;Thiết lập các thành phần mạng quan trọng
+        <guid>http://localhost:1313/posts/devops/devops-step-seven/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-seven.webp" alt="Featured image of post Application Gateway 🌐" /&gt;&lt;h1 id=&#34;thiết-lập-các-thành-phần-mạng-quan-trọng&#34;&gt;Thiết lập các thành phần mạng quan trọng
 &lt;/h1&gt;&lt;p&gt;Bài viết này sẽ giúp bạn biết các thành phần mạng quan trọng:&lt;/p&gt;
 &lt;p&gt;🔹 &lt;strong&gt;Forward Proxy&lt;/strong&gt;&lt;br&gt;
 🔹 &lt;strong&gt;Reverse Proxy&lt;/strong&gt;&lt;br&gt;
@@ -1945,11 +2544,11 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Containers, Docker và LXC 🏗️</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-six/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-six/</link>
         <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-six/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-six.webp" alt="Featured image of post Containers, Docker và LXC 🏗️" /&gt;&lt;h1 id=&#34;-containers-docker-và-lxc&#34;&gt;📦 Containers, Docker và LXC
+        <guid>http://localhost:1313/posts/devops/devops-step-six/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-six.webp" alt="Featured image of post Containers, Docker và LXC 🏗️" /&gt;&lt;h1 id=&#34;-containers-docker-và-lxc&#34;&gt;📦 Containers, Docker và LXC
 &lt;/h1&gt;&lt;p&gt;Containers là môi trường nhẹ, di động và cách ly giúp đóng gói ứng dụng cùng với tất cả các phụ thuộc của chúng, đảm bảo triển khai đồng nhất trên nhiều môi trường khác nhau. Công nghệ container giúp đơn giản hóa quá trình triển khai ứng dụng, hỗ trợ mô hình kiến trúc microservices, và tối ưu hóa tài nguyên hệ thống.&lt;/p&gt;
 &lt;h2 id=&#34;-containers-là-gì&#34;&gt;🏗️ Containers là gì?
 &lt;/h2&gt;&lt;p&gt;Containers là một phương pháp ảo hóa ở cấp độ hệ điều hành, cho phép chạy nhiều ứng dụng cô lập trên cùng một kernel. Không giống như máy ảo (VM) yêu cầu hệ điều hành riêng biệt cho mỗi môi trường, container chỉ sử dụng nhân hệ điều hành của máy chủ, giúp giảm chi phí tài nguyên và tăng hiệu suất.&lt;/p&gt;
@@ -2019,11 +2618,11 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Dịch vụ Cloud 🌩️</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-nine/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-nine/</link>
         <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-nine/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-nine.webp" alt="Featured image of post Dịch vụ Cloud 🌩️" /&gt;&lt;h1 id=&#34;-các-nhà-cung-cấp-dịch-vụ-cloud&#34;&gt;🌩️ Các nhà cung cấp dịch vụ Cloud
+        <guid>http://localhost:1313/posts/devops/devops-step-nine/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-nine.webp" alt="Featured image of post Dịch vụ Cloud 🌩️" /&gt;&lt;h1 id=&#34;-các-nhà-cung-cấp-dịch-vụ-cloud&#34;&gt;🌩️ Các nhà cung cấp dịch vụ Cloud
 &lt;/h1&gt;&lt;h2 id=&#34;-cloud-providers&#34;&gt;🌐 Cloud Providers
 &lt;/h2&gt;&lt;p&gt;Các nhà cung cấp dịch vụ đám mây cung cấp một lớp API để trừu tượng hóa cơ sở hạ tầng, giúp triển khai tài nguyên dựa trên các tiêu chuẩn bảo mật và mô hình thanh toán. Dù thực tế các dịch vụ đám mây chạy trên các máy chủ trong trung tâm dữ liệu, nhưng nhờ vào các lớp trừu tượng, chúng tạo cảm giác như đang tương tác với một nền tảng duy nhất. Khả năng triển khai, cấu hình và bảo mật tài nguyên nhanh chóng đã giúp cloud trở thành yếu tố quan trọng trong thành công và sự phức tạp của DevOps hiện đại.&lt;/p&gt;
 &lt;p&gt;📖 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu:&lt;/strong&gt;&lt;/p&gt;
@@ -2142,11 +2741,11 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Dịch vụ lưu trữ mã nguồn 🐱</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-five/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-five/</link>
         <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-five/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-five.webp" alt="Featured image of post Dịch vụ lưu trữ mã nguồn 🐱" /&gt;&lt;h1 id=&#34;-dịch-vụ-lưu-trữ-mã-nguồn-repo-hosting-services&#34;&gt;🌍 Dịch vụ lưu trữ mã nguồn (Repo Hosting Services)
+        <guid>http://localhost:1313/posts/devops/devops-step-five/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-five.webp" alt="Featured image of post Dịch vụ lưu trữ mã nguồn 🐱" /&gt;&lt;h1 id=&#34;-dịch-vụ-lưu-trữ-mã-nguồn-repo-hosting-services&#34;&gt;🌍 Dịch vụ lưu trữ mã nguồn (Repo Hosting Services)
 &lt;/h1&gt;&lt;p&gt;Khi làm việc nhóm, bạn cần một nơi lưu trữ mã nguồn từ xa để mọi người có thể truy cập, tạo nhánh riêng, cũng như tạo hoặc xem xét các pull request. Các dịch vụ này thường bao gồm theo dõi vấn đề (issue tracking), đánh giá mã (code review) và tích hợp liên tục (CI/CD). Một số lựa chọn phổ biến gồm GitHub, GitLab, Bitbucket và AWS CodeCommit.&lt;/p&gt;
 &lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu thêm:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;
@@ -2233,11 +2832,11 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Giao thức mạng (Networking Protocols) 🖧</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-eight/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-eight/</link>
         <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-eight/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-eight.webp" alt="Featured image of post Giao thức mạng (Networking Protocols) 🖧" /&gt;&lt;h1 id=&#34;-giao-thức-mạng-networking-protocols&#34;&gt;🖧 Giao thức mạng (Networking Protocols)
+        <guid>http://localhost:1313/posts/devops/devops-step-eight/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-eight.webp" alt="Featured image of post Giao thức mạng (Networking Protocols) 🖧" /&gt;&lt;h1 id=&#34;-giao-thức-mạng-networking-protocols&#34;&gt;🖧 Giao thức mạng (Networking Protocols)
 &lt;/h1&gt;&lt;p&gt;Giao thức mạng là tập hợp các quy tắc chuẩn hóa giúp dữ liệu được truyền, nhận và hiểu đúng cách trên các mạng máy tính. Chúng xác định định dạng, thời gian, trình tự và kiểm soát lỗi trong quá trình truyền dữ liệu. Một số giao thức quan trọng bao gồm:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;TCP/IP&lt;/strong&gt;: Bộ giao thức nền tảng cho giao tiếp trên Internet.&lt;/li&gt;
@@ -2379,11 +2978,11 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Hệ thống quản lý phiên bản (Version Control Systems) 🛠️</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-four/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-four/</link>
         <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-four/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-four.webp" alt="Featured image of post Hệ thống quản lý phiên bản (Version Control Systems) 🛠️" /&gt;&lt;h2 id=&#34;-hệ-thống-quản-lý-phiên-bản-version-control-systems&#34;&gt;🔄 Hệ thống quản lý phiên bản (Version Control Systems)
+        <guid>http://localhost:1313/posts/devops/devops-step-four/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-four.webp" alt="Featured image of post Hệ thống quản lý phiên bản (Version Control Systems) 🛠️" /&gt;&lt;h2 id=&#34;-hệ-thống-quản-lý-phiên-bản-version-control-systems&#34;&gt;🔄 Hệ thống quản lý phiên bản (Version Control Systems)
 &lt;/h2&gt;&lt;p&gt;Version control systems (VCS) là các công cụ giúp theo dõi sự thay đổi của mã nguồn và tệp theo thời gian. Chúng hỗ trợ làm việc nhóm, quản lý lịch sử thay đổi và duy trì nhiều phiên bản của mã nguồn. Có hai loại VCS chính:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Hệ thống tập trung (Centralized VCS - CVCS)&lt;/strong&gt;: Sử dụng một kho lưu trữ trung tâm, ví dụ như &lt;strong&gt;Subversion (SVN)&lt;/strong&gt;, &lt;strong&gt;CVS&lt;/strong&gt;.&lt;/li&gt;
@@ -2565,11 +3164,11 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Kiến thức về Terminal 📟</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-three/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-three/</link>
         <pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-three/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-three.webp" alt="Featured image of post Kiến thức về Terminal 📟" /&gt;&lt;h2 id=&#34;-kiến-thức-về-terminal&#34;&gt;🖥️ Kiến thức về Terminal
+        <guid>http://localhost:1313/posts/devops/devops-step-three/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-three.webp" alt="Featured image of post Kiến thức về Terminal 📟" /&gt;&lt;h2 id=&#34;-kiến-thức-về-terminal&#34;&gt;🖥️ Kiến thức về Terminal
 &lt;/h2&gt;&lt;p&gt;Terminal là một giao diện văn bản giúp người dùng tương tác với hệ thống máy tính thông qua CLI (Command Line Interface - Giao diện dòng lệnh). Đây là công cụ quan trọng để quản lý hệ thống, thực thi lệnh, và tự động hóa các tác vụ.&lt;/p&gt;
 &lt;h3 id=&#34;-tài-nguyên-miễn-phí&#34;&gt;📚 Tài Nguyên Miễn Phí
 &lt;/h3&gt;&lt;ul&gt;
@@ -2738,11 +3337,11 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Học về Linux &amp; Hệ Điều Hành 🖥️</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-two/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-two/</link>
         <pubDate>Sat, 22 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-two/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-two.webp" alt="Featured image of post Học về Linux &amp; Hệ Điều Hành 🖥️" /&gt;&lt;h1 id=&#34;-bước-2-học-về-linux--hệ-điều-hành&#34;&gt;🖥️ Bước 2: Học về Linux &amp;amp; hệ điều hành
+        <guid>http://localhost:1313/posts/devops/devops-step-two/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-two.webp" alt="Featured image of post Học về Linux &amp; Hệ Điều Hành 🖥️" /&gt;&lt;h1 id=&#34;-bước-2-học-về-linux--hệ-điều-hành&#34;&gt;🖥️ Bước 2: Học về Linux &amp;amp; hệ điều hành
 &lt;/h1&gt;&lt;h2 id=&#34;-tại-sao-linux-quan-trọng-trong-devops&#34;&gt;📌 Tại sao Linux quan trọng trong DevOps?
 &lt;/h2&gt;&lt;p&gt;Linux là nền tảng của hầu hết các hệ thống server, container (Docker, Kubernetes), và cloud. DevOps cần nắm vững Linux để:&lt;/p&gt;
 &lt;ul&gt;
@@ -2887,11 +3486,11 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Chọn ngôn ngữ lập trình 🤗</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-step-one/</link>
+        <link>http://localhost:1313/posts/devops/devops-step-one/</link>
         <pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-one/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-step-one.webp" alt="Featured image of post Chọn ngôn ngữ lập trình 🤗" /&gt;&lt;h1 id=&#34;bước-1-chọn-ngôn-ngữ-lập-trình-cho-devops&#34;&gt;Bước 1: Chọn ngôn ngữ lập trình cho DevOps
+        <guid>http://localhost:1313/posts/devops/devops-step-one/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-one.webp" alt="Featured image of post Chọn ngôn ngữ lập trình 🤗" /&gt;&lt;h1 id=&#34;bước-1-chọn-ngôn-ngữ-lập-trình-cho-devops&#34;&gt;Bước 1: Chọn ngôn ngữ lập trình cho DevOps
 &lt;/h1&gt;&lt;h2 id=&#34;-tại-sao-cần-chọn-ngôn-ngữ-lập-trình&#34;&gt;📌 Tại sao cần chọn ngôn ngữ lập trình?
 &lt;/h2&gt;&lt;p&gt;Trong DevOps, bạn sẽ cần sử dụng ngôn ngữ lập trình để:&lt;/p&gt;
 &lt;ul&gt;
@@ -3087,11 +3686,11 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Lộ trình trở thành DevOps engineer 😎</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-roadmap/</link>
+        <link>http://localhost:1313/posts/devops/devops-roadmap/</link>
         <pubDate>Thu, 20 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-roadmap/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-roadmap.webp" alt="Featured image of post Lộ trình trở thành DevOps engineer 😎" /&gt;&lt;h1 id=&#34;lộ-trình-trở-thành-kỹ-sư-devops&#34;&gt;Lộ trình trở thành kỹ sư DevOps
+        <guid>http://localhost:1313/posts/devops/devops-roadmap/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-roadmap.webp" alt="Featured image of post Lộ trình trở thành DevOps engineer 😎" /&gt;&lt;h1 id=&#34;lộ-trình-trở-thành-kỹ-sư-devops&#34;&gt;Lộ trình trở thành kỹ sư DevOps
 &lt;/h1&gt;&lt;h2 id=&#34;hiểu-về-devops&#34;&gt;Hiểu về DevOps
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;DevOps&lt;/strong&gt; là sự kết hợp giữa phát triển phần mềm (development) và vận hành hệ thống (operations), nhằm tăng cường sự hợp tác và tự động hóa trong quy trình phát triển và triển khai phần mềm.&lt;/p&gt;&lt;/blockquote&gt;
@@ -3209,11 +3808,11 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Devops là gì ?</title>
-        <link>https://tech.nguuyen.io.vn/posts/devops/devops-intro/</link>
+        <link>http://localhost:1313/posts/devops/devops-intro/</link>
         <pubDate>Wed, 19 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/posts/devops/devops-intro/</guid>
-        <description>&lt;img src="https://tech.nguuyen.io.vn/images/devops-intro.webp" alt="Featured image of post Devops là gì ?" /&gt;&lt;h1 id=&#34;giới-thiệu-về-devops&#34;&gt;Giới thiệu về DevOps
+        <guid>http://localhost:1313/posts/devops/devops-intro/</guid>
+        <description>&lt;img src="http://localhost:1313/images/devops/devops-intro.webp" alt="Featured image of post Devops là gì ?" /&gt;&lt;h1 id=&#34;giới-thiệu-về-devops&#34;&gt;Giới thiệu về DevOps
 &lt;/h1&gt;&lt;h2 id=&#34;devops-là-gì&#34;&gt;DevOps là gì?
 &lt;/h2&gt;&lt;p&gt;DevOps là một phương pháp kết hợp giữa &lt;strong&gt;phát triển phần mềm (Development - Dev)&lt;/strong&gt; và &lt;strong&gt;vận hành hệ thống (Operations - Ops)&lt;/strong&gt; nhằm tối ưu hóa quá trình phát triển, triển khai và vận hành ứng dụng. DevOps giúp các nhóm phát triển và vận hành làm việc cùng nhau hiệu quả hơn thông qua các công cụ, quy trình tự động và văn hóa làm việc.&lt;/p&gt;
 &lt;h2 id=&#34;vì-sao-devops-quan-trọng&#34;&gt;Vì sao DevOps quan trọng?
@@ -3293,10 +3892,10 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Giới thiệu</title>
-        <link>https://tech.nguuyen.io.vn/gi%E1%BB%9Bi-thi%E1%BB%87u/</link>
+        <link>http://localhost:1313/gi%E1%BB%9Bi-thi%E1%BB%87u/</link>
         <pubDate>Wed, 19 Feb 2025 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/gi%E1%BB%9Bi-thi%E1%BB%87u/</guid>
+        <guid>http://localhost:1313/gi%E1%BB%9Bi-thi%E1%BB%87u/</guid>
         <description>&lt;h2 id=&#34;thông-tin-cá-nhân&#34;&gt;Thông tin cá nhân
 &lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Họ và tên:&lt;/strong&gt; Hoàng Dương&lt;/li&gt;
@@ -3330,18 +3929,18 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Archives</title>
-        <link>https://tech.nguuyen.io.vn/archives/</link>
+        <link>http://localhost:1313/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/archives/</guid>
+        <guid>http://localhost:1313/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>Liên kết</title>
-        <link>https://tech.nguuyen.io.vn/li%C3%AAn-k%E1%BA%BFt/</link>
+        <link>http://localhost:1313/li%C3%AAn-k%E1%BA%BFt/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/li%C3%AAn-k%E1%BA%BFt/</guid>
+        <guid>http://localhost:1313/li%C3%AAn-k%E1%BA%BFt/</guid>
         <description>&lt;h2 id=&#34;-kết-nối&#34;&gt;🌍 Kết nối
 &lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/HoangDuonng&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -3372,10 +3971,10 @@ Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập
         </item>
         <item>
         <title>Search</title>
-        <link>https://tech.nguuyen.io.vn/search/</link>
+        <link>http://localhost:1313/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://tech.nguuyen.io.vn/search/</guid>
+        <guid>http://localhost:1313/search/</guid>
         <description></description>
         </item>
         
