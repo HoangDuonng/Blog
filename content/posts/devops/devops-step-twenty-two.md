@@ -6,10 +6,8 @@ draft: false
 description: "Mẫu thiết kế đám mây là các giải pháp tái sử dụng giúp giải quyết các vấn đề về mở rộng, tin cậy, bảo mật và hiệu suất trong kiến trúc điện toán đám mây."
 categories: ["DevOps"]
 tags: ["devops"]
-image: "images/devops-step-twenty-two.webp"
+image: "images/devops/devops-step-twenty-two.webp"
 ---
-
-# 🌟 Mẫu thiết kế đám mây (Cloud Design Patterns)
 
 ##  Giới thiệu
 Mẫu thiết kế đám mây là những giải pháp có thể tái sử dụng cho các vấn đề phổ biến trong kiến trúc điện toán đám mây. Các mẫu này giúp giải quyết các thách thức liên quan đến khả năng mở rộng, độ tin cậy, bảo mật và hiệu suất trong các hệ thống phân tán.

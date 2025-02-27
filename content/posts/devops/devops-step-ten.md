@@ -6,10 +6,8 @@ draft: false
 description: "Serverless là mô hình điện toán đám mây nơi nhà cung cấp dịch vụ quản lý hạ tầng, tự động phân bổ tài nguyên theo nhu cầu và chỉ tính phí theo mức sử dụng, giúp lập trình viên tập trung vào viết mã và tối ưu vận hành."
 categories: ["DevOps"]
 tags: ["devops", "cloud"]
-image: "images/devops-step-ten.webp"
+image: "images/devops/devops-step-ten.webp"
 ---
-
-# ☁️ Serverless và các nền tảng liên quan
 
 ## 🚀 Serverless là gì?
 

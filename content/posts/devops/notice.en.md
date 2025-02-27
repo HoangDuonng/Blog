@@ -6,5 +6,5 @@ date: "2025-02-23"
 draft: false
 ---
 
-# ⚠️ Notice
+## ⚠️ Notice
 Currently, the website only supports English on the ***About me*** page. Other content is only available in Vietnamese. We are in the process of adding multilingual support in the future.

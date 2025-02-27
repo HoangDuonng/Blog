@@ -6,10 +6,10 @@ draft: false
 description: "Giám sát ứng dụng là quá trình theo dõi, phân tích hiệu suất và phát hiện sự cố của phần mềm để đảm bảo hoạt động ổn định và tối ưu."
 categories: ["DevOps"]
 tags: ["devops"]
-image: "images/devops-step-eighteen.webp"
+image: "images/devops/devops-step-eighteen.webp"
 ---
 
-# 📊 Giám sát ứng dụng (Application Monitoring)
+## 📊 Giám sát ứng dụng (Application Monitoring)
 
 Giám sát ứng dụng là quá trình theo dõi và phân tích liên tục các ứng dụng phần mềm nhằm đảm bảo chúng hoạt động tối ưu, phát hiện sự cố và cung cấp những hiểu biết sâu sắc về hiệu suất của hệ thống. Việc giám sát bao gồm các chỉ số quan trọng như:
 

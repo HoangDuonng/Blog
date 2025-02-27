@@ -6,10 +6,8 @@ draft: false
 description: "Bài viết hướng dẫn học Linux và hệ điều hành dành cho DevOps. Bao gồm các lệnh Linux cơ bản, quản lý tiến trình, người dùng, file system, và một script Bash kiểm tra tài nguyên hệ thống."
 categories: ["DevOps"]
 tags: ["devops", "linux", "bash"]
-image: "images/devops-step-two.webp"
+image: "images/devops/devops-step-two.webp"
 ---
-
-# 🖥️ Bước 2: Học về Linux & hệ điều hành
 
 ## 📌 Tại sao Linux quan trọng trong DevOps?
 Linux là nền tảng của hầu hết các hệ thống server, container (Docker, Kubernetes), và cloud. DevOps cần nắm vững Linux để:

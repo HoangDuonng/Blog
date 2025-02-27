@@ -8,7 +8,7 @@ aliases:
   - about-hoangduong
   - contact
 license: All Rights Reserved
-lastmod: '2025-02-19'
+lastmod: 2025-02-20T15:30:00+07:00
 comments: false
 redirect: "/about/"
 menu:

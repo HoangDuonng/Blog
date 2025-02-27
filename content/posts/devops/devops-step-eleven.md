@@ -6,10 +6,8 @@ draft: false
 description: "Provisioning là quá trình thiết lập và cấu hình hạ tầng công nghệ thông tin, bao gồm phân bổ tài nguyên như máy chủ, lưu trữ, mạng và phần mềm, thường được tự động hóa bằng hạ tầng dưới dạng mã để đảm bảo tính nhất quán, giảm lỗi và cải thiện khả năng mở rộng."
 categories: ["DevOps"]
 tags: ["devops", "terraform"]
-image: "images/devops-step-eleven.webp"
+image: "images/devops/devops-step-eleven.webp"
 ---
-
-# 🚀 Infrastructure Provisioning với Terraform
 
 ## 🔹 Provisioning là gì?
 

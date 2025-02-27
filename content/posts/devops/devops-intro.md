@@ -6,12 +6,10 @@ draft: false
 description: "Giới thiệu tổng quan về DevOps, lợi ích, các thành phần chính và công cụ phổ biến."
 categories: ["DevOps"]
 tags: ["devops"]
-image: "images/devops-intro.webp"
+image: "images/devops/devops-intro.webp"
 ---
 
-# Giới thiệu về DevOps
-
-## DevOps là gì?
+## Giới thiệu về DevOps?
 DevOps là một phương pháp kết hợp giữa **phát triển phần mềm (Development - Dev)** và **vận hành hệ thống (Operations - Ops)** nhằm tối ưu hóa quá trình phát triển, triển khai và vận hành ứng dụng. DevOps giúp các nhóm phát triển và vận hành làm việc cùng nhau hiệu quả hơn thông qua các công cụ, quy trình tự động và văn hóa làm việc.
 
 

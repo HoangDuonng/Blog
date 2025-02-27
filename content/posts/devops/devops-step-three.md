@@ -6,7 +6,7 @@ draft: false
 description: "Bài viết cung cấp kiến thức tổng quan về Terminal, giám sát hệ thống, công cụ mạng, xử lý văn bản và lập trình Bash, giúp người dùng làm việc hiệu quả hơn với Linux và DevOps."
 categories: ["DevOps"]
 tags: ["devops", "terminal", "bash"]
-image: "images/devops-step-three.webp"
+image: "images/devops/devops-step-three.webp"
 ---
 
 ## 🖥️ Kiến thức về Terminal

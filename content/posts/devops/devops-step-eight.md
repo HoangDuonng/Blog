@@ -6,10 +6,10 @@ draft: false
 description: "Giao thức mạng là tập hợp quy tắc chuẩn hóa đảm bảo dữ liệu được truyền, nhận và hiểu đúng cách bằng cách xác định định dạng, thời gian, trình tự và kiểm soát lỗi trong quá trình truyền."
 categories: ["DevOps"]
 tags: ["devops", "networking"]
-image: "images/devops-step-eight.webp"
+image: "images/devops/devops-step-eight.webp"
 ---
 
-# 🖧 Giao thức mạng (Networking Protocols)
+## 🖧 Giao thức mạng (Networking Protocols)
 
 Giao thức mạng là tập hợp các quy tắc chuẩn hóa giúp dữ liệu được truyền, nhận và hiểu đúng cách trên các mạng máy tính. Chúng xác định định dạng, thời gian, trình tự và kiểm soát lỗi trong quá trình truyền dữ liệu. Một số giao thức quan trọng bao gồm:
 
