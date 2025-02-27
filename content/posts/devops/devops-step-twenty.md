@@ -6,10 +6,8 @@ draft: false
 description: "GitOps là phương pháp quản lý hạ tầng và triển khai ứng dụng bằng Git làm nguồn sự thật duy nhất, tự động hóa quy trình triển khai, đảm bảo tính nhất quán, tăng cường khả năng theo dõi và mở rộng phương pháp phát triển và vận hành phần mềm bằng kiểm soát phiên bản cùng tích hợp và triển khai liên tục."
 categories: ["DevOps"]
 tags: ["devops", "git"]
-image: "images/devops-step-twenty.webp"
+image: "images/devops/devops-step-twenty.webp"
 ---
-
-# 🌟 GitOps - Tự động hoá triển khai với Git
 
 ## Giới thiệu
 GitOps là một phương pháp quản lý hạ tầng và triển khai ứng dụng bằng cách sử dụng Git làm nguồn sự thật duy nhất (single source of truth). Phương pháp này giúp tự động hóa quy trình triển khai, đảm bảo tính nhất quán và tăng cường khả năng theo dõi các thay đổi.

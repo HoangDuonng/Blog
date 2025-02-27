@@ -6,10 +6,8 @@ draft: false
 description: "Artifacts là các sản phẩm được tạo ra trong suốt vòng đời phát triển phần mềm."
 categories: ["DevOps"]
 tags: ["devops", "cloud"]
-image: "images/devops-step-nineteen.webp"
+image: "images/devops/devops-step-nineteen.webp"
 ---
-
-# Quản lý Artifacts trong phát triển phần mềm
 
 ## 🏗️ Artifacts là gì?
 Artifacts là các sản phẩm được tạo ra trong suốt vòng đời phát triển phần mềm. Chúng có thể bao gồm:

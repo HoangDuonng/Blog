@@ -6,10 +6,8 @@ draft: false
 description: "Continuous Integration và Continuous Deployment (CI/CD) là quy trình tự động hóa giúp tích hợp, kiểm thử và triển khai phần mềm liên tục, giảm lỗi và rút ngắn thời gian phát hành."
 categories: ["DevOps"]
 tags: ["devops", "cloud"]
-image: "images/devops-step-thirteen.webp"
+image: "images/devops/devops-step-thirteen.webp"
 ---
-
-# 🚀 CI/CD - Tích hợp liên tục và Triển khai liên tục
 
 ## 🔍 CI/CD là gì?
 CI/CD (Continuous Integration/Continuous Deployment) là một phương pháp giúp tự động hóa quá trình phát triển phần mềm, giúp giảm lỗi, tăng tốc độ triển khai và cải thiện chất lượng sản phẩm.

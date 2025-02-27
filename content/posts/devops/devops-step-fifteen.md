@@ -6,12 +6,10 @@ draft: false
 description: "Giám sát hạ tầng là quá trình theo dõi hiệu suất và trạng thái hệ thống nhằm phát hiện sự cố, tối ưu hóa hoạt động và lựa chọn công cụ phù hợp với mục tiêu giám sát."
 categories: ["DevOps"]
 tags: ["devops"]
-image: "images/devops-step-fifteen.webp"
+image: "images/devops/devops-step-fifteen.webp"
 ---
 
-# 📊 Giám sát hạ tầng (Infrastructure Monitoring)
-
-## 🔍 Giám sát là gì?
+## 🔍 Giám sát hạ tầng (Infrastructure Monitoring) là gì?
 Giám sát hạ tầng là quá trình theo dõi hiệu suất và trạng thái của hệ thống, giúp phát hiện sự cố kịp thời và tối ưu hóa hoạt động. Đây là một lĩnh vực rộng lớn với nhiều công cụ khác nhau, mỗi công cụ có ưu nhược điểm riêng. Hiểu rõ các công cụ này sẽ giúp bạn chọn giải pháp phù hợp với mục tiêu giám sát của mình.
 
 ---

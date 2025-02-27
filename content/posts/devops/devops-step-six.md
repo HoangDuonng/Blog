@@ -6,10 +6,10 @@ draft: false
 description: "Containers là môi trường nhẹ, di động và cách ly, giúp đóng gói ứng dụng cùng các phụ thuộc để triển khai đồng nhất, hỗ trợ microservices và tối ưu tài nguyên."
 categories: ["DevOps"]
 tags: ["devops", "docker", "containers"]
-image: "images/devops-step-six.webp"
+image: "images/devops/devops-step-six.webp"
 ---
 
-# 📦 Containers, Docker và LXC
+## 📦 Containers, Docker và LXC
 
 Containers là môi trường nhẹ, di động và cách ly giúp đóng gói ứng dụng cùng với tất cả các phụ thuộc của chúng, đảm bảo triển khai đồng nhất trên nhiều môi trường khác nhau. Công nghệ container giúp đơn giản hóa quá trình triển khai ứng dụng, hỗ trợ mô hình kiến trúc microservices, và tối ưu hóa tài nguyên hệ thống.
 

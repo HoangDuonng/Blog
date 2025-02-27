@@ -6,10 +6,8 @@ draft: false
 description: "Các nhà cung cấp dịch vụ đám mây cung cấp API trừu tượng hóa cơ sở hạ tầng, giúp triển khai, cấu hình và bảo mật tài nguyên nhanh chóng, tạo cảm giác về một nền tảng thống nhất dù chạy trên nhiều máy chủ, đồng thời đóng vai trò quan trọng trong DevOps hiện đại."
 categories: ["DevOps"]
 tags: ["devops", "cloud"]
-image: "images/devops-step-nine.webp"
+image: "images/devops/devops-step-nine.webp"
 ---
-
-# 🌩️ Các nhà cung cấp dịch vụ Cloud
 
 ## 🌐 Cloud Providers
 

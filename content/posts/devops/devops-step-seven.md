@@ -6,10 +6,10 @@ draft: false
 description: "Bài viết này giúp bạn thiết lập các thành phần mạng quan trọng để quản lý, bảo mật và tối ưu hóa luồng traffic giữa client và server."
 categories: ["DevOps"]
 tags: ["devops", "nginx", "proxy"]
-image: "images/devops-step-seven.webp"
+image: "images/devops/devops-step-seven.webp"
 ---
 
-# Thiết lập các thành phần mạng quan trọng
+## Thiết lập các thành phần mạng quan trọng
 
 Bài viết này sẽ giúp bạn biết các thành phần mạng quan trọng:
 

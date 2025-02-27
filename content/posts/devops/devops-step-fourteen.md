@@ -6,10 +6,8 @@ draft: false
 description: "Secret Management quá trình lưu trữ, quản lý và bảo vệ các thông tin nhạy cảm như mật khẩu, khóa API, chứng chỉ và token truy cập để ngăn chặn rò rỉ dữ liệu và đảm bảo bảo mật hệ thống."
 categories: ["DevOps"]
 tags: ["devops", "secret"]
-image: "images/devops-step-fourteen.webp"
+image: "images/devops/devops-step-fourteen.webp"
 ---
-
-# 🔒 Quản lý khoá bí mật (Secret Management)
 
 ## 🔍 Secret Management là gì?
 Secret Management là quá trình bảo vệ, lưu trữ và phân phối an toàn các thông tin nhạy cảm như mật khẩu, khóa API và chứng chỉ trong hệ thống công nghệ thông tin của tổ chức. Nó giúp ngăn chặn truy cập trái phép đồng thời đảm bảo các hệ thống và người dùng được ủy quyền có thể sử dụng thông tin khi cần thiết.

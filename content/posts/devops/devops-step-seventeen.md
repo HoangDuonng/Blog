@@ -6,10 +6,8 @@ draft: false
 description: "Container orchestration là quá trình quản lý và tự động hóa vòng đời container, giúp đảm bảo tính khả dụng, khả năng mở rộng và độ tin cậy cho ứng dụng bằng cách sử dụng các công cụ như Kubernetes, Docker Swarm và Apache Mesos."
 categories: ["DevOps"]
 tags: ["devops", "container"]
-image: "images/devops-step-seventeen.webp"
+image: "images/devops/devops-step-seventeen.webp"
 ---
-
-# 🚢 Container Orchestration
 
 ## 🔍 Container Orchestration là gì?
 Container orchestration là quá trình quản lý và tự động hóa vòng đời của container, bao gồm triển khai, mở rộng và kết nối mạng giữa các container trên nhiều máy chủ. Đây là công nghệ quan trọng để chạy các ứng dụng phức tạp trong môi trường sản xuất.

@@ -6,10 +6,10 @@ draft: false
 description: "Quản lý cấu hình là quy trình giám sát và duy trì tính nhất quán của hệ thống công nghệ thông tin trong suốt vòng đời sản phẩm, giúp đồng bộ hóa, giảm lỗi và đảm bảo tuân thủ các tiêu chuẩn trong quy trình tích hợp và triển khai liên tục."
 categories: ["DevOps"]
 tags: ["devops", "cloud"]
-image: "images/devops-step-twelve.webp"
+image: "images/devops/devops-step-twelve.webp"
 ---
 
-# 🔧 Quản lý cấu hình (Configuration Management)
+## 🔧 Quản lý cấu hình (Configuration Management)
 
 Quản lý cấu hình là quy trình quản lý và duy trì tính nhất quán của các thành phần trong hệ thống công nghệ thông tin. Trong lĩnh vực phần mềm, nó bao gồm việc giám sát, theo dõi và quản lý các thay đổi cấu hình của hệ thống trong suốt vòng đời sản phẩm. Việc áp dụng quản lý cấu hình giúp tăng tính đồng bộ, giảm nguy cơ lỗi, và đảm bảo sự tuân thủ các tiêu chuẩn trong quy trình CI/CD (Continuous Integration and Continuous Deployment).
 

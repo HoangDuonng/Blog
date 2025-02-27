@@ -6,7 +6,7 @@ draft: false
 description: "Bài viết cung cấp kiến thức tổng quan về hệ thống quản lý phiên bản (VCS), tập trung vào Git – công cụ phổ biến nhất. Nội dung bao gồm các khái niệm cơ bản, hướng dẫn cài đặt, các lệnh Git quan trọng được sắp xếp từ cơ bản đến nâng cao, cùng với tài nguyên học tập miễn phí, giúp người đọc nắm vững cách quản lý mã nguồn hiệu quả."
 categories: ["DevOps"]
 tags: ["devops", "git", "github"]
-image: "images/devops-step-four.webp"
+image: "images/devops/devops-step-four.webp"
 ---
 
 ## 🔄 Hệ thống quản lý phiên bản (Version Control Systems)

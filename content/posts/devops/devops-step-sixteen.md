@@ -6,10 +6,8 @@ draft: false
 description: "Quản lý logs là quá trình thu thập, lưu trữ, xử lý và phân tích log từ các hệ thống, ứng dụng và thiết bị nhằm theo dõi hoạt động, phát hiện sự cố, đảm bảo bảo mật và hỗ trợ khắc phục sự cố nhanh chóng."
 categories: ["DevOps"]
 tags: ["devops", "log"]
-image: "images/devops-step-sixteen.webp"
+image: "images/devops/devops-step-sixteen.webp"
 ---
-
-# 📜 Quản lý logs (Logs Management)
 
 ## 🔍 Quản lý logs là gì?
 Quản lý logs là quá trình thu thập, tổng hợp, phân tích, lưu trữ và truy xuất logs từ các ứng dụng và hệ thống hạ tầng. Logs chứa thông tin quan trọng về hoạt động của hệ thống, giúp phát hiện sự cố, tối ưu hóa hiệu suất và đảm bảo tuân thủ bảo mật.

@@ -6,10 +6,8 @@ draft: false
 description: "Service Mesh là một lớp hạ tầng phần mềm quản lý giao tiếp giữa các dịch vụ trong hệ thống microservices, cung cấp cân bằng tải, bảo mật, quan sát, kiểm soát lưu lượng, khắc phục lỗi và giúp dịch vụ giao tiếp hiệu quả mà không cần thay đổi mã nguồn."
 categories: ["DevOps"]
 tags: ["devops"]
-image: "images/devops-step-twenty-one.webp"
+image: "images/devops/devops-step-twenty-one.webp"
 ---
-
-# 🌐 Service Mesh - Quản lý giao tiếp giữa Microservices  
 
 ## 📌 Giới thiệu  
 **Service Mesh** là một lớp hạ tầng phần mềm giúp quản lý giao tiếp giữa các dịch vụ trong hệ thống ***microservices***. Nó cung cấp các tính năng như **cân bằng tải, bảo mật, quan sát, kiểm soát lưu lượng và khắc phục lỗi**, giúp dịch vụ giao tiếp với nhau một cách hiệu quả mà không cần thay đổi mã nguồn ứng dụng.  

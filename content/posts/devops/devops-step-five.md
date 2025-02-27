@@ -6,10 +6,10 @@ draft: false
 description: "Nền tảng lưu trữ mã nguồn từ xa giúp làm việc nhóm bằng cách quản lý nhánh, pull request, theo dõi vấn đề, đánh giá mã và tích hợp CI/CD."
 categories: ["DevOps"]
 tags: ["devops", "git", "github"]
-image: "images/devops-step-five.webp"
+image: "images/devops/devops-step-five.webp"
 ---
 
-# 🌍 Dịch vụ lưu trữ mã nguồn (Repo Hosting Services)
+## 🌍 Dịch vụ lưu trữ mã nguồn (Repo Hosting Services)
 
 Khi làm việc nhóm, bạn cần một nơi lưu trữ mã nguồn từ xa để mọi người có thể truy cập, tạo nhánh riêng, cũng như tạo hoặc xem xét các pull request. Các dịch vụ này thường bao gồm theo dõi vấn đề (issue tracking), đánh giá mã (code review) và tích hợp liên tục (CI/CD). Một số lựa chọn phổ biến gồm GitHub, GitLab, Bitbucket và AWS CodeCommit.
 
