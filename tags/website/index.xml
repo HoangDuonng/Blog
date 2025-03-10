@@ -6,7 +6,83 @@
         <description>Recent content in Website on Hoàng Dương</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>vi</language>
-        <lastBuildDate>Thu, 27 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/website/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 10 Mar 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/website/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Giới thiệu về Nginx 🚀</title>
+        <link>https://tech.nguuyen.io.vn/posts/website/nginx-introduction-guide/</link>
+        <pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate>
+        
+        <guid>https://tech.nguuyen.io.vn/posts/website/nginx-introduction-guide/</guid>
+        <description>&lt;img src="https://tech.nguuyen.io.vn/images/website/nginx-introduction-guide.webp" alt="Featured image of post Giới thiệu về Nginx 🚀" /&gt;&lt;h2 id=&#34;-nginx-là-gì&#34;&gt;🔀 Nginx là gì?
+&lt;/h2&gt;&lt;p align=&#34;center&#34;&gt;
+  &lt;img src=&#34;https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi.jpg&#34; alt=&#34;NGINX là một phần mềm web server mã nguồn mở đáng tin cậy&#34;&gt;
+&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;NGINX là một phần mềm web server mã nguồn mở đáng tin cậy&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Nginx là một phần mềm web server mã nguồn mở, hoạt động theo kiến trúc bất đồng bộ (asynchronous) hướng sự kiện (event-driven). ban đầu được phát triển để phục vụ http cache, nhưng sau này được mở rộng để hỗ trợ reverse proxy, http load balancing và các giao thức truyền mail như imap4, pop3, smtp.&lt;/p&gt;
+&lt;p&gt;Ra mắt vào tháng 10/2014, Nginx được nhiều công ty lớn như google, adobe, netflix, wordpress sử dụng nhờ khả năng xử lý hàng nghìn kết nối đồng thời.&lt;/p&gt;
+&lt;h2 id=&#34;-cách-hoạt-động-của-nginx&#34;&gt;⚙️ Cách hoạt động của Nginx
+&lt;/h2&gt;&lt;p align=&#34;center&#34;&gt;
+  &lt;img src=&#34;https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-nginx-cung-hoat-dong-tuong-tu-nhu-cac-server-khac.jpg&#34; alt=&#34;NGINX cũng hoạt động tương tự như các server khác&#34;&gt;
+&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;NGINX cũng hoạt động tương tự như các server khác&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Nginx hoạt động theo mô hình xử lý bất đồng bộ, khác với cách xử lý tuần tự của các web server truyền thống.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Mỗi tiến trình (process) sẽ có nhiều worker connections để xử lý các yêu cầu.&lt;/li&gt;
+&lt;li&gt;Worker connections gửi yêu cầu đến worker process, worker process chuyển tiếp đến master process để xử lý.&lt;/li&gt;
+&lt;li&gt;Nhờ cơ chế này, một worker connection có thể xử lý đến 1024 yêu cầu cùng lúc, giúp Nginx xử lý hàng ngàn yêu cầu hiệu quả.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-các-tính-năng-của-nginx&#34;&gt;🔥 Các tính năng của Nginx
+&lt;/h2&gt;&lt;p align=&#34;center&#34;&gt;
+  &lt;img src=&#34;https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-may-chu-nginx-co-nhieu-tinh-nang-va-uu-diem-vuot-troi-trong-lap-trinh.png&#34; alt=&#34;Máy chủ NGINX có nhiều tính năng và ưu điểm vượt trội trong lập trình&#34;&gt;
+&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Máy chủ NGINX có nhiều tính năng và ưu điểm vượt trội trong lập trình&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Nginx sở hữu nhiều tính năng vượt trội:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;⚡ xử lý hơn 10.000 kết nối đồng thời với mức sử dụng bộ nhớ thấp.&lt;/li&gt;
+&lt;li&gt;📂 phục vụ tập tin tĩnh (static files) và lập chỉ mục tập tin.&lt;/li&gt;
+&lt;li&gt;🔄 cân bằng tải và hỗ trợ proxy ngược với bộ nhớ đệm (cache).&lt;/li&gt;
+&lt;li&gt;🚀 hỗ trợ fastcgi, uwsgi, scgi và memcached.&lt;/li&gt;
+&lt;li&gt;🛠️ kiến trúc modular và nén gzip tự động.&lt;/li&gt;
+&lt;li&gt;🔐 hỗ trợ mã hóa ssl/tls.&lt;/li&gt;
+&lt;li&gt;🔀 rewrite url bằng regular expressions.&lt;/li&gt;
+&lt;li&gt;🌐 hỗ trợ websockets và giới hạn số kết nối đồng thời.&lt;/li&gt;
+&lt;li&gt;📡 tương thích với ipv6.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-so-sánh-nginx-và-apache-server&#34;&gt;⚖️ So sánh Nginx và Apache server
+&lt;/h2&gt;&lt;p align=&#34;center&#34;&gt;
+  &lt;img src=&#34;https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-so-voi-apache-server-nginx-server-co-kha-nhieu-uu-diem.jpg&#34; alt=&#34;So với Apache server, NGINX server có khá nhiều ưu điểm&#34;&gt;
+&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;So với Apache server, NGINX server có khá nhiều ưu điểm&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id=&#34;-apache-server&#34;&gt;&lt;strong&gt;🖥️ Apache server:&lt;/strong&gt;
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;xử lý yêu cầu bằng mô hình chia luồng (forked threaded) hoặc keep-alive.&lt;/li&gt;
+&lt;li&gt;có thể xử lý cả nội dung tĩnh và động.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-nginx-server&#34;&gt;&lt;strong&gt;🌍 Nginx server:&lt;/strong&gt;
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;sử dụng vòng lặp sự kiện không đồng bộ (non-blocking event loop).&lt;/li&gt;
+&lt;li&gt;xử lý nội dung tĩnh hiệu quả hơn Apache.&lt;/li&gt;
+&lt;li&gt;tốc độ xử lý truy vấn nhanh hơn và tiết kiệm tài nguyên hơn.&lt;/li&gt;
+&lt;li&gt;cần bộ xử lý riêng để hỗ trợ nội dung động.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-hướng-dẫn-kiểm-tra-nginx-của-website&#34;&gt;🔎 Hướng dẫn kiểm tra Nginx của website
+&lt;/h2&gt;&lt;p align=&#34;center&#34;&gt;
+  &lt;img src=&#34;https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-ban-co-the-dua-vao-cac-cong-cu-san-co-de-kiem-tra-website-co-chay-nginx.png&#34; alt=&#34;Bạn có thể dựa vào các công cụ sẵn có để kiếm tra website có chạy Nginx&#34;&gt;
+&lt;/p&gt;
+&lt;p align=&#34;center&#34;&gt;&lt;em&gt;Bạn có thể dựa vào các công cụ sẵn có để kiếm tra website có chạy Nginx&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Bạn có thể kiểm tra website có chạy Nginx hay không bằng cách kiểm tra http header:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Mở trang web cần kiểm tra trên trình duyệt chrome.&lt;/li&gt;
+&lt;li&gt;Nhấn &lt;strong&gt;ctrl + shift + i&lt;/strong&gt; hoặc &lt;strong&gt;f12&lt;/strong&gt; để mở chrome devtools.&lt;/li&gt;
+&lt;li&gt;Chuyển sang tab &lt;strong&gt;network&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Chọn một request bất kỳ và xem phần &lt;strong&gt;headers&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Ngoài ra, bạn có thể sử dụng công cụ như &lt;strong&gt;pingdom&lt;/strong&gt; hoặc &lt;strong&gt;gtmetrix&lt;/strong&gt; để kiểm tra.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-lời-kết&#34;&gt;🎯 Lời kết
+&lt;/h2&gt;&lt;p&gt;Nginx đã và đang trở thành một trong những web server phổ biến nhất nhờ hiệu suất cao, khả năng xử lý hàng nghìn kết nối đồng thời và nhiều tính năng mạnh mẽ. Dù bạn cần một giải pháp để phục vụ nội dung tĩnh, cân bằng tải hay làm reverse proxy, Nginx đều có thể đáp ứng một cách hiệu quả. Hy vọng bài viết này giúp bạn hiểu rõ hơn về Nginx và cách nó hoạt động. Nếu bạn đang cân nhắc triển khai một web server tối ưu cho dự án của mình, hãy thử nghiệm Nginx và khám phá những lợi ích mà nó mang lại! 🚀😊&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Trỏ tên miền về hosting 🌐</title>
         <link>https://tech.nguuyen.io.vn/posts/website/domain-to-hosting-setup/</link>
         <pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate>

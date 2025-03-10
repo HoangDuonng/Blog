@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="vi" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Hướng dẫn ba cách trỏ tên miền về hosting dễ dàng, nhanh chóng nhất 🎉">
-<title>Trỏ tên miền về hosting 🌐</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Nginx là web server mã nguồn mở, hoạt động bất đồng bộ, ban đầu dùng cho HTTP cache nhưng mở rộng hỗ trợ reverse proxy, load balancing và mail proxy, được nhiều công ty lớn sử dụng nhờ khả năng xử lý hàng nghìn kết nối đồng thời.">
+<title>Giới thiệu về Nginx 🚀</title>
 
-<link rel='canonical' href='https://tech.nguuyen.io.vn/posts/website/domain-to-hosting-setup/'>
+<link rel='canonical' href='https://tech.nguuyen.io.vn/posts/website/nginx-introduction-guide/'>
 
-<link rel="stylesheet" href="/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css"><meta property='og:title' content="Trỏ tên miền về hosting 🌐">
-<meta property='og:description' content="Hướng dẫn ba cách trỏ tên miền về hosting dễ dàng, nhanh chóng nhất 🎉">
-<meta property='og:url' content='https://tech.nguuyen.io.vn/posts/website/domain-to-hosting-setup/'>
+<link rel="stylesheet" href="/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css"><meta property='og:title' content="Giới thiệu về Nginx 🚀">
+<meta property='og:description' content="Nginx là web server mã nguồn mở, hoạt động bất đồng bộ, ban đầu dùng cho HTTP cache nhưng mở rộng hỗ trợ reverse proxy, load balancing và mail proxy, được nhiều công ty lớn sử dụng nhờ khả năng xử lý hàng nghìn kết nối đồng thời.">
+<meta property='og:url' content='https://tech.nguuyen.io.vn/posts/website/nginx-introduction-guide/'>
 <meta property='og:site_name' content='Hoàng Dương'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='website' /><meta property='article:tag' content='hosting' /><meta property='article:published_time' content='2025-02-27T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-02-27T00:00:00&#43;00:00'/><meta property='og:image' content='https://tech.nguuyen.io.vn/images/website/domain-to-hosting-setup.webp' />
-<meta name="twitter:title" content="Trỏ tên miền về hosting 🌐">
-<meta name="twitter:description" content="Hướng dẫn ba cách trỏ tên miền về hosting dễ dàng, nhanh chóng nhất 🎉"><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://tech.nguuyen.io.vn/images/website/domain-to-hosting-setup.webp' />
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='website' /><meta property='article:tag' content='nginx' /><meta property='article:published_time' content='2025-03-10T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-03-10T00:00:00&#43;00:00'/><meta property='og:image' content='https://tech.nguuyen.io.vn/images/website/nginx-introduction-guide.webp' />
+<meta name="twitter:title" content="Giới thiệu về Nginx 🚀">
+<meta name="twitter:description" content="Nginx là web server mã nguồn mở, hoạt động bất đồng bộ, ban đầu dùng cho HTTP cache nhưng mở rộng hỗ trợ reverse proxy, load balancing và mail proxy, được nhiều công ty lớn sử dụng nhờ khả năng xử lý hàng nghìn kết nối đồng thời."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://tech.nguuyen.io.vn/images/website/nginx-introduction-guide.webp' />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <style>
      
@@ -293,29 +293,17 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#-tại-sao-cần-phải-trỏ-tên-miền-về-hosting">🌐 Tại sao cần phải trỏ tên miền về hosting?</a>
+    <li><a href="#-nginx-là-gì">🔀 Nginx là gì?</a></li>
+    <li><a href="#-cách-hoạt-động-của-nginx">⚙️ Cách hoạt động của Nginx</a></li>
+    <li><a href="#-các-tính-năng-của-nginx">🔥 Các tính năng của Nginx</a></li>
+    <li><a href="#-so-sánh-nginx-và-apache-server">⚖️ So sánh Nginx và Apache server</a>
       <ol>
-        <li><a href="#lý-do-cần-trỏ-tên-miền">Lý do cần trỏ tên miền</a></li>
-        <li><a href="#cách-thực-hiện-">Cách thực hiện 🔧</a></li>
+        <li><a href="#-apache-server"><strong>🖥️ Apache server:</strong></a></li>
+        <li><a href="#-nginx-server"><strong>🌍 Nginx server:</strong></a></li>
       </ol>
     </li>
-    <li><a href="#ba-cách-trỏ-tên-miền-về-hosting-đơn-giản-nhất-">Ba cách trỏ tên miền về hosting đơn giản nhất 🚀</a>
-      <ol>
-        <li><a href="#trỏ-tên-miền-bằng-nameserver">Trỏ tên miền bằng nameserver</a></li>
-        <li><a href="#trỏ-tên-miền-bằng-ip-a-record">Trỏ tên miền bằng IP (A record)</a></li>
-        <li><a href="#trỏ-tên-miền-bằng-nameserver-trung-gian">Trỏ tên miền bằng nameserver trung gian</a></li>
-      </ol>
-    </li>
-    <li><a href="#một-số-lỗi-thường-gặp-khi-trỏ-tên-miền-về-hosting-">Một số lỗi thường gặp khi trỏ tên miền về hosting ⚠️</a>
-      <ol>
-        <li><a href="#-sai-tên-miền-của-hosting">🚫 Sai tên miền của hosting</a></li>
-        <li><a href="#-sử-dụng-cả-hai-cách-trỏ-tên-miền">🚫 Sử dụng cả hai cách trỏ tên miền</a></li>
-        <li><a href="#-nhập-sai-loại-bản-ghi-dns">🚫 Nhập sai loại bản ghi DNS</a></li>
-        <li><a href="#-nhập-sai-địa-chỉ-ip-của-hosting">🚫 Nhập sai địa chỉ IP của hosting</a></li>
-      </ol>
-    </li>
-    <li><a href="#video-hướng-dẫn-chi-tiết-">Video hướng dẫn chi tiết 🎥</a></li>
-    <li><a href="#lời-kết-">Lời kết 🌟</a></li>
+    <li><a href="#-hướng-dẫn-kiểm-tra-nginx-của-website">🔎 Hướng dẫn kiểm tra Nginx của website</a></li>
+    <li><a href="#-lời-kết">🎯 Lời kết</a></li>
   </ol>
 </nav>
         </div>
@@ -330,9 +318,9 @@
     <article class="has-image main-article">
     <header class="article-header">
         <div class="article-image">
-            <a href="/posts/website/domain-to-hosting-setup/">
+            <a href="/posts/website/nginx-introduction-guide/">
                 
-                    <img src="/images/website/domain-to-hosting-setup.webp" loading="lazy" alt="Featured image of post Trỏ tên miền về hosting 🌐" />
+                    <img src="/images/website/nginx-introduction-guide.webp" loading="lazy" alt="Featured image of post Giới thiệu về Nginx 🚀" />
                 
             </a>
         </div>
@@ -351,12 +339,12 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/posts/website/domain-to-hosting-setup/">Trỏ tên miền về hosting 🌐</a>
+            <a href="/posts/website/nginx-introduction-guide/">Giới thiệu về Nginx 🚀</a>
         </h2>
     
         
         <h3 class="article-subtitle">
-            Hướng dẫn ba cách trỏ tên miền về hosting dễ dàng, nhanh chóng nhất 🎉
+            Nginx là web server mã nguồn mở, hoạt động bất đồng bộ, ban đầu dùng cho HTTP cache nhưng mở rộng hỗ trợ reverse proxy, load balancing và mail proxy, được nhiều công ty lớn sử dụng nhờ khả năng xử lý hàng nghìn kết nối đồng thời.
         </h3>
         
     </div>
@@ -377,7 +365,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">27/02/2025</time>
+                <time class="article-time--published">10/03/2025</time>
             </div>
         
 
@@ -392,7 +380,7 @@
 
 
                 <time class="article-time--reading">
-                    4 phút đọc
+                    3 phút đọc
                 </time>
             </div>
         
@@ -423,140 +411,74 @@
     <section class="article-content">
     
     
-    <h2 id="-tại-sao-cần-phải-trỏ-tên-miền-về-hosting">🌐 Tại sao cần phải trỏ tên miền về hosting?
-</h2><p>Tên miền và hosting là hai yếu tố quan trọng giúp website hoạt động.</p>
+    <h2 id="-nginx-là-gì">🔀 Nginx là gì?
+</h2><p align="center">
+  <img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi.jpg" alt="NGINX là một phần mềm web server mã nguồn mở đáng tin cậy">
+</p>
+<p align="center"><em>NGINX là một phần mềm web server mã nguồn mở đáng tin cậy</em></p>
+<p>Nginx là một phần mềm web server mã nguồn mở, hoạt động theo kiến trúc bất đồng bộ (asynchronous) hướng sự kiện (event-driven). ban đầu được phát triển để phục vụ http cache, nhưng sau này được mở rộng để hỗ trợ reverse proxy, http load balancing và các giao thức truyền mail như imap4, pop3, smtp.</p>
+<p>Ra mắt vào tháng 10/2014, Nginx được nhiều công ty lớn như google, adobe, netflix, wordpress sử dụng nhờ khả năng xử lý hàng nghìn kết nối đồng thời.</p>
+<h2 id="-cách-hoạt-động-của-nginx">⚙️ Cách hoạt động của Nginx
+</h2><p align="center">
+  <img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-nginx-cung-hoat-dong-tuong-tu-nhu-cac-server-khac.jpg" alt="NGINX cũng hoạt động tương tự như các server khác">
+</p>
+<p align="center"><em>NGINX cũng hoạt động tương tự như các server khác</em></p>
+<p>Nginx hoạt động theo mô hình xử lý bất đồng bộ, khác với cách xử lý tuần tự của các web server truyền thống.</p>
 <ul>
-<li><strong>Tên miền</strong> là địa chỉ website.</li>
-<li><strong>Hosting</strong> là nơi lưu trữ dữ liệu website.</li>
+<li>Mỗi tiến trình (process) sẽ có nhiều worker connections để xử lý các yêu cầu.</li>
+<li>Worker connections gửi yêu cầu đến worker process, worker process chuyển tiếp đến master process để xử lý.</li>
+<li>Nhờ cơ chế này, một worker connection có thể xử lý đến 1024 yêu cầu cùng lúc, giúp Nginx xử lý hàng ngàn yêu cầu hiệu quả.</li>
 </ul>
-<h3 id="lý-do-cần-trỏ-tên-miền">Lý do cần trỏ tên miền
+<h2 id="-các-tính-năng-của-nginx">🔥 Các tính năng của Nginx
+</h2><p align="center">
+  <img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-may-chu-nginx-co-nhieu-tinh-nang-va-uu-diem-vuot-troi-trong-lap-trinh.png" alt="Máy chủ NGINX có nhiều tính năng và ưu điểm vượt trội trong lập trình">
+</p>
+<p align="center"><em>Máy chủ NGINX có nhiều tính năng và ưu điểm vượt trội trong lập trình</em></p>
+<p>Nginx sở hữu nhiều tính năng vượt trội:</p>
+<ul>
+<li>⚡ xử lý hơn 10.000 kết nối đồng thời với mức sử dụng bộ nhớ thấp.</li>
+<li>📂 phục vụ tập tin tĩnh (static files) và lập chỉ mục tập tin.</li>
+<li>🔄 cân bằng tải và hỗ trợ proxy ngược với bộ nhớ đệm (cache).</li>
+<li>🚀 hỗ trợ fastcgi, uwsgi, scgi và memcached.</li>
+<li>🛠️ kiến trúc modular và nén gzip tự động.</li>
+<li>🔐 hỗ trợ mã hóa ssl/tls.</li>
+<li>🔀 rewrite url bằng regular expressions.</li>
+<li>🌐 hỗ trợ websockets và giới hạn số kết nối đồng thời.</li>
+<li>📡 tương thích với ipv6.</li>
+</ul>
+<h2 id="-so-sánh-nginx-và-apache-server">⚖️ So sánh Nginx và Apache server
+</h2><p align="center">
+  <img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-so-voi-apache-server-nginx-server-co-kha-nhieu-uu-diem.jpg" alt="So với Apache server, NGINX server có khá nhiều ưu điểm">
+</p>
+<p align="center"><em>So với Apache server, NGINX server có khá nhiều ưu điểm</em></p>
+<h3 id="-apache-server"><strong>🖥️ Apache server:</strong>
 </h3><ul>
-<li>Kết nối tên miền với hosting để website hiển thị trên internet.</li>
-<li>Giúp mọi người truy cập website bằng địa chỉ dễ nhớ.</li>
+<li>xử lý yêu cầu bằng mô hình chia luồng (forked threaded) hoặc keep-alive.</li>
+<li>có thể xử lý cả nội dung tĩnh và động.</li>
 </ul>
-<h3 id="cách-thực-hiện-">Cách thực hiện 🔧
+<h3 id="-nginx-server"><strong>🌍 Nginx server:</strong>
 </h3><ul>
-<li>Lấy thông tin <strong>nameserver</strong> hoặc <strong>IP</strong> từ nhà cung cấp.</li>
-<li>Cấu hình trong trang quản lý domain.</li>
+<li>sử dụng vòng lặp sự kiện không đồng bộ (non-blocking event loop).</li>
+<li>xử lý nội dung tĩnh hiệu quả hơn Apache.</li>
+<li>tốc độ xử lý truy vấn nhanh hơn và tiết kiệm tài nguyên hơn.</li>
+<li>cần bộ xử lý riêng để hỗ trợ nội dung động.</li>
 </ul>
-<hr>
-<h2 id="ba-cách-trỏ-tên-miền-về-hosting-đơn-giản-nhất-">Ba cách trỏ tên miền về hosting đơn giản nhất 🚀
-</h2><h3 id="trỏ-tên-miền-bằng-nameserver">Trỏ tên miền bằng nameserver
-</h3><p><strong>Các bước thực hiện:</strong></p>
+<h2 id="-hướng-dẫn-kiểm-tra-nginx-của-website">🔎 Hướng dẫn kiểm tra Nginx của website
+</h2><p align="center">
+  <img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-ban-co-the-dua-vao-cac-cong-cu-san-co-de-kiem-tra-website-co-chay-nginx.png" alt="Bạn có thể dựa vào các công cụ sẵn có để kiếm tra website có chạy Nginx">
+</p>
+<p align="center"><em>Bạn có thể dựa vào các công cụ sẵn có để kiếm tra website có chạy Nginx</em></p>
+<p>Bạn có thể kiểm tra website có chạy Nginx hay không bằng cách kiểm tra http header:</p>
 <ol>
-<li>Đăng nhập trình quản trị tên miền.</li>
-<li>Chọn tên miền cần trỏ.</li>
+<li>Mở trang web cần kiểm tra trên trình duyệt chrome.</li>
+<li>Nhấn <strong>ctrl + shift + i</strong> hoặc <strong>f12</strong> để mở chrome devtools.</li>
+<li>Chuyển sang tab <strong>network</strong>.</li>
+<li>Chọn một request bất kỳ và xem phần <strong>headers</strong>.</li>
 </ol>
-<p><img src="https://image.vietnix.vn/wp-content/uploads/2024/03/chon-ten-mien-muon-tro-ve-hosting-2.webp"
-	
-	
-	
-	loading="lazy"
-	
-		alt="Chọn tên miền muốn trỏ về hosting"
-	
-	
-></p>
-<p align="center"><em>Chọn tên miền muốn trỏ về hosting</em></p>
-<ol start="3">
-<li>Thay đổi nameserver mặc định thành nameserver của hosting (thông tin này có trong <em><strong>email</strong></em> từ nhà cung cấp hosting).</li>
-</ol>
-<p><img src="https://image.vietnix.vn/wp-content/uploads/2024/03/thay-doi-nameserver-1.webp"
-	
-	
-	
-	loading="lazy"
-	
-		alt="Thay đổi Nameserver mặc định thành Nameserver của hosting đã đăng ký"
-	
-	
-></p>
-<p align="center"><em>Thay đổi Nameserver mặc định thành Nameserver của hosting đã đăng ký</em></p>
-<ol start="4">
-<li>Chờ cập nhật (vài phút đến vài giờ, tuỳ vào server có thể cao nhất tới <em><strong>24h</strong></em>).</li>
-<li>Kiểm tra bằng cách truy cập tên miền.</li>
-</ol>
-<h3 id="trỏ-tên-miền-bằng-ip-a-record">Trỏ tên miền bằng IP (A record)
-</h3><p><strong>Các bước thực hiện:</strong></p>
-<ol>
-<li>Đăng nhập trình quản trị tên miền.</li>
-</ol>
-<p><img src="https://image.vietnix.vn/wp-content/uploads/2024/03/chon-muc-cau-hinh-dns-1.webp"
-	
-	
-	
-	loading="lazy"
-	
-		alt="Chọn tên miền muốn trỏ về hosting, sau đó chọn mục cấu hình DNS"
-	
-	
-></p>
-<p align="center"><em>Chọn tên miền muốn trỏ về hosting, sau đó chọn mục cấu hình DNS</em></p>
-<ol start="2">
-<li>Chọn mục cấu hình DNS.</li>
-<li>Thêm 2 bản ghi A record:
-<ul>
-<li><code>@</code> → IP của hosting (Địa chỉ IP của hosting từ email nhà cung cấp gửi).</li>
-<li><code>www</code> → IP của hosting.</li>
-</ul>
-</li>
-</ol>
-<p><img src="https://image.vietnix.vn/wp-content/uploads/2024/03/them-2-ban-a-record.webp"
-	
-	
-	
-	loading="lazy"
-	
-		alt="Thêm hai bản A record"
-	
-	
-></p>
-<p align="center"><em>Thêm hai bản A record</em></p>
-<ol start="4">
-<li>Lưu thay đổi và chờ cập nhật (Quá trình này có thể nhanh hoặc lâu tùy thuộc vào hệ thống DNS. Có thể từ vài phút đến vài giờ).</li>
-</ol>
-<h3 id="trỏ-tên-miền-bằng-nameserver-trung-gian">Trỏ tên miền bằng nameserver trung gian
-</h3><p>Để trỏ tên miền về hosting bằng Nameserver trung gian như CloudFlare, Namecheap FreeDNS, Incapsula, bạn có thể thực hiện theo các bước sau:</p>
-<p><strong>Các bước thực hiện:</strong></p>
-<ol>
-<li>Đăng ký tài khoản tại Nameserver trung gian &gt; Xác nhận các bản ghi cần thiết để thêm website vào Nameserver trung gian.</li>
-<li>Truy cập vào khu vực quản lý tên miền của nhà cung cấp và thực hiện thay đổi Nameserver để trỏ tên miền về hosting qua Nameserver trung gian.</li>
-<li>Chờ cập nhật để hoàn tất.</li>
-</ol>
-<h2 id="một-số-lỗi-thường-gặp-khi-trỏ-tên-miền-về-hosting-">Một số lỗi thường gặp khi trỏ tên miền về hosting ⚠️
-</h2><p>Khi trỏ tên miền về hosting, bạn có thể gặp một số lỗi phổ biến khiến website không hoạt động đúng cách. Hiểu và khắc phục các lỗi này sẽ giúp đảm bảo quá trình cấu hình diễn ra suôn sẻ.</p>
-<h3 id="-sai-tên-miền-của-hosting">🚫 Sai tên miền của hosting
-</h3><p>Khi đăng ký hosting, nhà cung cấp yêu cầu khai báo tên miền. Nếu nhập sai hoặc trỏ về một tên miền không khớp, website sẽ không hoạt động.</p>
-<h3 id="-sử-dụng-cả-hai-cách-trỏ-tên-miền">🚫 Sử dụng cả hai cách trỏ tên miền
-</h3><p>Nếu bạn đã trỏ tên miền bằng <strong>nameserver</strong>, không nên thay đổi sang <strong>IP (A record)</strong> và ngược lại, vì điều này có thể gây lỗi xung đột DNS.</p>
-<h3 id="-nhập-sai-loại-bản-ghi-dns">🚫 Nhập sai loại bản ghi DNS
-</h3><p>Có nhiều loại bản ghi DNS như:</p>
-<ul>
-<li><strong>A record</strong>: Trỏ tên miền về IP của hosting.</li>
-<li><strong>CNAME</strong>: Chuyển hướng một tên miền sang tên miền khác.</li>
-<li><strong>MX record</strong>: Cấu hình email.</li>
-</ul>
-<p>Nhập sai loại bản ghi có thể làm gián đoạn kết nối đến hosting.</p>
-<h3 id="-nhập-sai-địa-chỉ-ip-của-hosting">🚫 Nhập sai địa chỉ IP của hosting
-</h3><p>IP hosting thường dài và dễ nhập sai. Bạn nên <strong>sao chép trực tiếp</strong> từ email của nhà cung cấp để tránh nhầm lẫn với IP của máy tính cá nhân hoặc thiết bị khác.</p>
-<p>Nếu gặp lỗi, hãy kiểm tra lại thông tin và chờ một thời gian để DNS cập nhật hoàn tất.</p>
+<p>Ngoài ra, bạn có thể sử dụng công cụ như <strong>pingdom</strong> hoặc <strong>gtmetrix</strong> để kiểm tra.</p>
 <hr>
-<h2 id="video-hướng-dẫn-chi-tiết-">Video hướng dẫn chi tiết 🎥
-</h2><p>Nếu bạn muốn xem hướng dẫn trực quan hơn, có thể tham khảo video dưới đây. Video này sẽ giúp bạn hiểu rõ từng bước trong việc trỏ tên miền về hosting, từ cách lấy thông tin nameserver đến việc cập nhật trong trình quản lý tên miền.</p>
-<p><div class="video-wrapper">
-    <iframe loading="lazy" 
-            src="https://www.youtube-nocookie.com/embed/7RjjF8Ee7Ws" 
-            allowfullscreen 
-            title="YouTube Video"
-    >
-    </iframe>
-</div>
-
-<blockquote>
-    <p></p><span class="cite"><span>― </span><span>Nguồn, </span><a href="https://www.youtube.com/@F8VNOfficial"><cite>F8 Official ✔️</cite></a></span></blockquote></p>
-<hr>
-<h2 id="lời-kết-">Lời kết 🌟
-</h2><p>Việc trỏ tên miền về hosting là một bước quan trọng để website của bạn có thể hoạt động chính xác trên Internet. Dù thực hiện theo cách nào—sử dụng nameserver, A record, hay nameserver trung gian—bạn cũng cần kiểm tra kỹ thông tin và kiên nhẫn chờ DNS cập nhật. Nếu gặp lỗi, hãy xem lại cài đặt và thử lại 🔄. Chúc bạn thực hiện thành công và website hoạt động ổn định! 🚀 Nếu có vấn đề, cứ để lại comment, tôi sẽ xem thử nhé! 💬😊</p>
+<h2 id="-lời-kết">🎯 Lời kết
+</h2><p>Nginx đã và đang trở thành một trong những web server phổ biến nhất nhờ hiệu suất cao, khả năng xử lý hàng nghìn kết nối đồng thời và nhiều tính năng mạnh mẽ. Dù bạn cần một giải pháp để phục vụ nội dung tĩnh, cân bằng tải hay làm reverse proxy, Nginx đều có thể đáp ứng một cách hiệu quả. Hy vọng bài viết này giúp bạn hiểu rõ hơn về Nginx và cách nó hoạt động. Nếu bạn đang cân nhắc triển khai một web server tối ưu cho dự án của mình, hãy thử nghiệm Nginx và khám phá những lợi ích mà nó mang lại! 🚀😊</p>
 
 </section>
 
@@ -567,7 +489,7 @@
         
             <a href="/tags/website/">Website</a>
         
-            <a href="/tags/hosting/">Hosting</a>
+            <a href="/tags/nginx/">Nginx</a>
         
     </section>
 
@@ -582,7 +504,7 @@
 
 
 
-        <span>VietNix</span>
+        <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
     </footer>
 
@@ -601,6 +523,25 @@
             
                 
 <article class="has-image">
+    <a href="/posts/website/domain-to-hosting-setup/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/website/domain-to-hosting-setup.webp" loading="lazy" data-key="" data-hash="/images/website/domain-to-hosting-setup.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Trỏ tên miền về hosting 🌐</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
     <a href="/posts/website/how-to-deploy-a-website/">
         
         
@@ -613,25 +554,6 @@
 
         <div class="article-details">
             <h2 class="article-title">Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/posts/website/nginx-introduction-guide/">
-        
-        
-            <div class="article-image">
-                
-                    <img src="/images/website/nginx-introduction-guide.webp" loading="lazy" data-key="" data-hash="/images/website/nginx-introduction-guide.webp"/>
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Giới thiệu về Nginx 🚀</h2>
         </div>
     </a>
 </article>
