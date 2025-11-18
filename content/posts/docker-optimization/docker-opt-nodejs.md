@@ -2,7 +2,7 @@
 title: "Tối ưu Docker cho Node.js"
 author: "Hoàng Dương"
 date: "2025-11-18"
-draft: true
+draft: false
 description: "Phân tích các kỹ thuật tối ưu Dockerfile từ Dockerfile Contest 2025 cho workflow React/Node."
 categories: ["Docker Optimization"]
 tags: ["docker", "nodejs", "performance"]
