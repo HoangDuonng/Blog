@@ -1,191 +1,172 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-    <channel>
-        <title>Container on Hoàng Dương</title>
-        <link>http://localhost:1313/tags/container/</link>
-        <description>Recent content in Container on Hoàng Dương</description>
-        <generator>Hugo -- gohugo.io</generator>
-        <language>vi</language>
-        <lastBuildDate>Mon, 24 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/container/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Container Orchestration 🚢</title>
-        <link>http://localhost:1313/posts/devops/devops-step-seventeen/</link>
-        <pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/posts/devops/devops-step-seventeen/</guid>
-        <description>&lt;img src="http://localhost:1313/images/devops/devops-step-seventeen.webp" alt="Featured image of post Container Orchestration 🚢" /&gt;&lt;h2 id=&#34;-container-orchestration-là-gì&#34;&gt;🔍 Container Orchestration là gì?
-&lt;/h2&gt;&lt;p&gt;Container orchestration là quá trình quản lý và tự động hóa vòng đời của container, bao gồm triển khai, mở rộng và kết nối mạng giữa các container trên nhiều máy chủ. Đây là công nghệ quan trọng để chạy các ứng dụng phức tạp trong môi trường sản xuất.&lt;/p&gt;
-&lt;p&gt;Bằng cách sử dụng các công cụ như &lt;strong&gt;Kubernetes, Docker Swarm,&lt;/strong&gt; và &lt;strong&gt;Apache Mesos&lt;/strong&gt;, các tổ chức có thể đảm bảo &lt;strong&gt;tính khả dụng cao, khả năng mở rộng và độ tin cậy&lt;/strong&gt; cho ứng dụng của mình. Container orchestration giúp tự động hóa các tác vụ vận hành và tạo nền tảng vững chắc cho &lt;strong&gt;microservices, cloud-native development,&lt;/strong&gt; và &lt;strong&gt;DevOps&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí hữu ích:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;📦 &lt;a class=&#34;link&#34; href=&#34;https://www.redhat.com/en/topics/containers/what-is-container-orchestration&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Container Orchestration là gì?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🚀 &lt;a class=&#34;link&#34; href=&#34;https://kubernetes.io/docs/tutorials/kubernetes-basics/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Kubernetes là gì?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🐳 &lt;a class=&#34;link&#34; href=&#34;https://docs.docker.com/engine/swarm/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Docker Swarm&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=PH-2FfFD2PU&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Giới thiệu về Kubernetes&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;-kubernetes&#34;&gt;☸️ Kubernetes
-&lt;/h2&gt;&lt;p&gt;Kubernetes là nền tảng mã nguồn mở phổ biến nhất để quản lý container. Nó cho phép triển khai container trên nhiều máy chủ, xác định mức độ sẵn sàng, logic triển khai và mở rộng thông qua YAML.&lt;/p&gt;
-&lt;p&gt;Kubernetes có nguồn gốc từ &lt;strong&gt;Borg&lt;/strong&gt;, nền tảng nội bộ của Google, và đã trở thành &lt;strong&gt;kỹ năng quan trọng đối với các kỹ sư DevOps&lt;/strong&gt;. Nhiều tổ chức đã thành lập &lt;strong&gt;đội ngũ Platform Engineering&lt;/strong&gt; chuyên về Kubernetes để hỗ trợ các nhóm phát triển sản phẩm.&lt;/p&gt;
-&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí hữu ích:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;🗺️ &lt;a class=&#34;link&#34; href=&#34;https://roadmap.sh/kubernetes&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Lộ trình Kubernetes chuyên sâu&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🌐 &lt;a class=&#34;link&#34; href=&#34;https://kubernetes.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Trang web chính thức của Kubernetes&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;📖 &lt;a class=&#34;link&#34; href=&#34;https://thenewstack.io/primer-how-kubernetes-came-to-be-what-it-is-and-why-you-should-care/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Tổng quan về Kubernetes&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=2T86xAtR6Fo&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Khóa học Kubernetes hoàn chỉnh - Từ cơ bản đến nâng cao&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;📌 Ví dụ:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;12
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;13
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;14
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;15
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;16
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;17
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;apiVersion&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;apps&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;v1&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;kind&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;Deployment&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;metadata&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nx&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;my&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nx&#34;&gt;spec&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nx&#34;&gt;replicas&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;3&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nx&#34;&gt;selector&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;matchLabels&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;my&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;nx&#34;&gt;template&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;metadata&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;nx&#34;&gt;labels&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;my&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nx&#34;&gt;spec&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;nx&#34;&gt;containers&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;name&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;my&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;nx&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;my&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;app&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;image&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;latest&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id=&#34;-gke--eks--aks&#34;&gt;☁️ GKE / EKS / AKS
-&lt;/h2&gt;&lt;h3 id=&#34;-gke---google-kubernetes-engine&#34;&gt;🔹 GKE - Google Kubernetes Engine
-&lt;/h3&gt;&lt;p&gt;Google Kubernetes Engine (GKE) là dịch vụ Kubernetes được quản lý bởi Google Cloud. Nó giúp triển khai, quản lý và mở rộng ứng dụng container với Kubernetes mà không cần tự quản lý cụm máy chủ.&lt;/p&gt;
-&lt;h3 id=&#34;-eks---amazon-elastic-kubernetes-service&#34;&gt;🔹 EKS - Amazon Elastic Kubernetes Service
-&lt;/h3&gt;&lt;p&gt;Amazon Elastic Kubernetes Service (EKS) là dịch vụ Kubernetes được AWS cung cấp. Nó tự động quản lý control plane của Kubernetes và tích hợp với các dịch vụ AWS khác.&lt;/p&gt;
-&lt;h3 id=&#34;-aks---azure-kubernetes-service&#34;&gt;🔹 AKS - Azure Kubernetes Service
-&lt;/h3&gt;&lt;p&gt;Azure Kubernetes Service (AKS) là dịch vụ Kubernetes của Microsoft Azure. AKS hỗ trợ giám sát, bảo mật, mở rộng tự động và tích hợp với Azure DevOps.&lt;/p&gt;
-&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí hữu ích:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;☁️ &lt;a class=&#34;link&#34; href=&#34;https://cloud.google.com/kubernetes-engine&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Google Kubernetes Engine (GKE)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🟧 &lt;a class=&#34;link&#34; href=&#34;https://aws.amazon.com/eks/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Amazon Elastic Kubernetes Service (EKS)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🔵 &lt;a class=&#34;link&#34; href=&#34;https://azure.microsoft.com/en-us/products/kubernetes-service/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Azure Kubernetes Service (AKS)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=CukYk43agA4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Hướng dẫn AWS EKS&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=Rl5M1CzgEH4&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Google Kubernetes Engine là gì?&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id=&#34;-ecs--fargate&#34;&gt;🚀 ECS / Fargate
-&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;ECS&lt;/strong&gt; là dịch vụ quản lý container chạy trên EC2 của AWS, cho phép kiểm soát hạ tầng máy chủ.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Fargate&lt;/strong&gt; là dịch vụ quản lý container &lt;strong&gt;serverless&lt;/strong&gt;, giúp chạy container mà không cần quản lý máy chủ hoặc cụm máy.&lt;/p&gt;
-&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí hữu ích:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Tài liệu AWS Fargate&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://docs.aws.amazon.com/ecs/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Tài liệu AWS ECS&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=yi22xrvPnPk&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Tổng quan về AWS Fargate&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=esISkPlnxL0&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Hướng dẫn AWS ECS&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;strong&gt;📌 Ví dụ:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;s2&#34;&gt;&amp;#34;family&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;my-task&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;s2&#34;&gt;&amp;#34;containerDefinitions&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;s2&#34;&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;my-container&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;s2&#34;&gt;&amp;#34;image&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;my-container-image:latest&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;s2&#34;&gt;&amp;#34;memory&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;512&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;      &lt;span class=&#34;s2&#34;&gt;&amp;#34;cpu&amp;#34;&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;256&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;  &lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id=&#34;-docker-swarm&#34;&gt;🐳 Docker Swarm
-&lt;/h2&gt;&lt;p&gt;Docker Swarm là tập hợp các máy (vật lý hoặc ảo) chạy Docker và được cấu hình thành một cụm (&lt;strong&gt;cluster&lt;/strong&gt;). Quản lý cụm được thực hiện bởi &lt;strong&gt;swarm manager&lt;/strong&gt;, và các máy tham gia cụm được gọi là &lt;strong&gt;nodes&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;📚 &lt;strong&gt;Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;📄 &lt;a class=&#34;link&#34; href=&#34;https://docs.docker.com/engine/swarm/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Tài liệu Docker Swarm&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🔧 &lt;a class=&#34;link&#34; href=&#34;https://thenewstack.io/tutorial-manage-docker-swarm-with-portainer/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Quản lý Docker Swarm với Portainer&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;📦 &lt;a class=&#34;link&#34; href=&#34;https://thenewstack.io/tutorial-create-a-docker-swarm-with-persistent-storage-using-glusterfs/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Tạo Docker Swarm với bộ nhớ lưu trữ GlusterFS&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🎥 &lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=Xaea-XnJTJU&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Giới thiệu Docker Swarm | Hướng dẫn từng bước&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;p&gt;&lt;strong&gt;📌 Ví dụ:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
-&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
-&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-javascript&#34; data-lang=&#34;javascript&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// Khởi tạo Swarm
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;docker&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;swarm&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;init&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;// Triển khai dịch vụ trên Swarm
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;$&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;docker&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;service&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;create&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;name&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;web&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;nx&#34;&gt;p&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;80&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;80&lt;/span&gt; &lt;span class=&#34;nx&#34;&gt;nginx&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id=&#34;-kết-luận&#34;&gt;✅ Kết luận
-&lt;/h2&gt;&lt;p&gt;Container orchestration đóng vai trò quan trọng trong việc quản lý ứng dụng container, giúp &lt;strong&gt;đơn giản hóa vận hành, tối ưu tài nguyên và tăng cường tính sẵn sàng&lt;/strong&gt;. Các công cụ như &lt;strong&gt;Kubernetes, Docker Swarm, ECS, Fargate&lt;/strong&gt; cung cấp nhiều giải pháp linh hoạt cho các doanh nghiệp hiện đại. Việc lựa chọn công cụ phù hợp sẽ giúp doanh nghiệp &lt;strong&gt;tận dụng tối đa sức mạnh của container hóa và điện toán đám mây&lt;/strong&gt;. 🚀&lt;/p&gt;
-&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Application Monitoring&lt;/strong&gt;&lt;/em&gt;  theo dõi, đo lường và phân tích hiệu suất, trạng thái và hành vi của ứng dụng để phát hiện sự cố, tối ưu hóa hiệu suất và đảm bảo trải nghiệm người dùng tốt. Các công cụ phổ biến như Prometheus, Grafana, Datadog, New Relic giúp thu thập dữ liệu từ ứng dụng, máy chủ và hạ tầng để cung cấp cảnh báo và báo cáo chi tiết.&lt;/p&gt;
-</description>
-        </item>
-        
-    </channel>
-</rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Container on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/container/</link><description>Recent content in Container on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Mon, 24 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/container/index.xml" rel="self" type="application/rss+xml"/><item><title>Container Orchestration 🚢</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-seventeen/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-seventeen/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-seventeen.webp" alt="Featured image of post Container Orchestration 🚢" />&lt;h2 id="-container-orchestration-là-gì">🔍 Container Orchestration là gì?
+&lt;/h2>&lt;p>Container orchestration là quá trình quản lý và tự động hóa vòng đời của container, bao gồm triển khai, mở rộng và kết nối mạng giữa các container trên nhiều máy chủ. Đây là công nghệ quan trọng để chạy các ứng dụng phức tạp trong môi trường sản xuất.&lt;/p>
+&lt;p>Bằng cách sử dụng các công cụ như &lt;strong>Kubernetes, Docker Swarm,&lt;/strong> và &lt;strong>Apache Mesos&lt;/strong>, các tổ chức có thể đảm bảo &lt;strong>tính khả dụng cao, khả năng mở rộng và độ tin cậy&lt;/strong> cho ứng dụng của mình. Container orchestration giúp tự động hóa các tác vụ vận hành và tạo nền tảng vững chắc cho &lt;strong>microservices, cloud-native development,&lt;/strong> và &lt;strong>DevOps&lt;/strong>.&lt;/p>
+&lt;p>📚 &lt;strong>Tài nguyên miễn phí hữu ích:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>📦 &lt;a class="link" href="https://www.redhat.com/en/topics/containers/what-is-container-orchestration" target="_blank" rel="noopener"
+>Container Orchestration là gì?&lt;/a>&lt;/li>
+&lt;li>🚀 &lt;a class="link" href="https://kubernetes.io/docs/tutorials/kubernetes-basics/" target="_blank" rel="noopener"
+>Kubernetes là gì?&lt;/a>&lt;/li>
+&lt;li>🐳 &lt;a class="link" href="https://docs.docker.com/engine/swarm/" target="_blank" rel="noopener"
+>Docker Swarm&lt;/a>&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=PH-2FfFD2PU" target="_blank" rel="noopener"
+>Giới thiệu về Kubernetes&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-kubernetes">☸️ Kubernetes
+&lt;/h2>&lt;p>Kubernetes là nền tảng mã nguồn mở phổ biến nhất để quản lý container. Nó cho phép triển khai container trên nhiều máy chủ, xác định mức độ sẵn sàng, logic triển khai và mở rộng thông qua YAML.&lt;/p>
+&lt;p>Kubernetes có nguồn gốc từ &lt;strong>Borg&lt;/strong>, nền tảng nội bộ của Google, và đã trở thành &lt;strong>kỹ năng quan trọng đối với các kỹ sư DevOps&lt;/strong>. Nhiều tổ chức đã thành lập &lt;strong>đội ngũ Platform Engineering&lt;/strong> chuyên về Kubernetes để hỗ trợ các nhóm phát triển sản phẩm.&lt;/p>
+&lt;p>📚 &lt;strong>Tài nguyên miễn phí hữu ích:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>🗺️ &lt;a class="link" href="https://roadmap.sh/kubernetes" target="_blank" rel="noopener"
+>Lộ trình Kubernetes chuyên sâu&lt;/a>&lt;/li>
+&lt;li>🌐 &lt;a class="link" href="https://kubernetes.io/" target="_blank" rel="noopener"
+>Trang web chính thức của Kubernetes&lt;/a>&lt;/li>
+&lt;li>📖 &lt;a class="link" href="https://thenewstack.io/primer-how-kubernetes-came-to-be-what-it-is-and-why-you-should-care/" target="_blank" rel="noopener"
+>Tổng quan về Kubernetes&lt;/a>&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=2T86xAtR6Fo" target="_blank" rel="noopener"
+>Khóa học Kubernetes hoàn chỉnh - Từ cơ bản đến nâng cao&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>📌 Ví dụ:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="nx">apiVersion&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">apps&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nx">v1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">kind&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">Deployment&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">metadata&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">name&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">my&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">spec&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">replicas&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">3&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">selector&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">matchLabels&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">app&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">my&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">template&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">metadata&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">labels&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">app&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">my&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">spec&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">containers&lt;/span>&lt;span class="o">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">-&lt;/span> &lt;span class="nx">name&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">my&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">image&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">my&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">app&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="nx">image&lt;/span>&lt;span class="o">:&lt;/span>&lt;span class="nx">latest&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-gke--eks--aks">☁️ GKE / EKS / AKS
+&lt;/h2>&lt;h3 id="-gke---google-kubernetes-engine">🔹 GKE - Google Kubernetes Engine
+&lt;/h3>&lt;p>Google Kubernetes Engine (GKE) là dịch vụ Kubernetes được quản lý bởi Google Cloud. Nó giúp triển khai, quản lý và mở rộng ứng dụng container với Kubernetes mà không cần tự quản lý cụm máy chủ.&lt;/p>
+&lt;h3 id="-eks---amazon-elastic-kubernetes-service">🔹 EKS - Amazon Elastic Kubernetes Service
+&lt;/h3>&lt;p>Amazon Elastic Kubernetes Service (EKS) là dịch vụ Kubernetes được AWS cung cấp. Nó tự động quản lý control plane của Kubernetes và tích hợp với các dịch vụ AWS khác.&lt;/p>
+&lt;h3 id="-aks---azure-kubernetes-service">🔹 AKS - Azure Kubernetes Service
+&lt;/h3>&lt;p>Azure Kubernetes Service (AKS) là dịch vụ Kubernetes của Microsoft Azure. AKS hỗ trợ giám sát, bảo mật, mở rộng tự động và tích hợp với Azure DevOps.&lt;/p>
+&lt;p>📚 &lt;strong>Tài nguyên miễn phí hữu ích:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>☁️ &lt;a class="link" href="https://cloud.google.com/kubernetes-engine" target="_blank" rel="noopener"
+>Google Kubernetes Engine (GKE)&lt;/a>&lt;/li>
+&lt;li>🟧 &lt;a class="link" href="https://aws.amazon.com/eks/" target="_blank" rel="noopener"
+>Amazon Elastic Kubernetes Service (EKS)&lt;/a>&lt;/li>
+&lt;li>🔵 &lt;a class="link" href="https://azure.microsoft.com/en-us/products/kubernetes-service/" target="_blank" rel="noopener"
+>Azure Kubernetes Service (AKS)&lt;/a>&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=CukYk43agA4" target="_blank" rel="noopener"
+>Hướng dẫn AWS EKS&lt;/a>&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=Rl5M1CzgEH4" target="_blank" rel="noopener"
+>Google Kubernetes Engine là gì?&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-ecs--fargate">🚀 ECS / Fargate
+&lt;/h2>&lt;p>&lt;strong>ECS&lt;/strong> là dịch vụ quản lý container chạy trên EC2 của AWS, cho phép kiểm soát hạ tầng máy chủ.&lt;/p>
+&lt;p>&lt;strong>Fargate&lt;/strong> là dịch vụ quản lý container &lt;strong>serverless&lt;/strong>, giúp chạy container mà không cần quản lý máy chủ hoặc cụm máy.&lt;/p>
+&lt;p>📚 &lt;strong>Tài nguyên miễn phí hữu ích:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>📄 &lt;a class="link" href="https://docs.aws.amazon.com/AmazonECS/latest/developerguide/AWS_Fargate.html" target="_blank" rel="noopener"
+>Tài liệu AWS Fargate&lt;/a>&lt;/li>
+&lt;li>📄 &lt;a class="link" href="https://docs.aws.amazon.com/ecs/" target="_blank" rel="noopener"
+>Tài liệu AWS ECS&lt;/a>&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=yi22xrvPnPk" target="_blank" rel="noopener"
+>Tổng quan về AWS Fargate&lt;/a>&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=esISkPlnxL0" target="_blank" rel="noopener"
+>Hướng dẫn AWS ECS&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>&lt;strong>📌 Ví dụ:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;family&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;my-task&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;containerDefinitions&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;name&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;my-container&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;image&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;my-container-image:latest&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;memory&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">512&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;cpu&amp;#34;&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="mi">256&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-docker-swarm">🐳 Docker Swarm
+&lt;/h2>&lt;p>Docker Swarm là tập hợp các máy (vật lý hoặc ảo) chạy Docker và được cấu hình thành một cụm (&lt;strong>cluster&lt;/strong>). Quản lý cụm được thực hiện bởi &lt;strong>swarm manager&lt;/strong>, và các máy tham gia cụm được gọi là &lt;strong>nodes&lt;/strong>.&lt;/p>
+&lt;p>📚 &lt;strong>Tài nguyên hữu ích:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>📄 &lt;a class="link" href="https://docs.docker.com/engine/swarm/" target="_blank" rel="noopener"
+>Tài liệu Docker Swarm&lt;/a>&lt;/li>
+&lt;li>🔧 &lt;a class="link" href="https://thenewstack.io/tutorial-manage-docker-swarm-with-portainer/" target="_blank" rel="noopener"
+>Quản lý Docker Swarm với Portainer&lt;/a>&lt;/li>
+&lt;li>📦 &lt;a class="link" href="https://thenewstack.io/tutorial-create-a-docker-swarm-with-persistent-storage-using-glusterfs/" target="_blank" rel="noopener"
+>Tạo Docker Swarm với bộ nhớ lưu trữ GlusterFS&lt;/a>&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=Xaea-XnJTJU" target="_blank" rel="noopener"
+>Giới thiệu Docker Swarm | Hướng dẫn từng bước&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;p>&lt;strong>📌 Ví dụ:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Khởi tạo Swarm
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="nx">$&lt;/span> &lt;span class="nx">docker&lt;/span> &lt;span class="nx">swarm&lt;/span> &lt;span class="nx">init&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Triển khai dịch vụ trên Swarm
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="nx">$&lt;/span> &lt;span class="nx">docker&lt;/span> &lt;span class="nx">service&lt;/span> &lt;span class="nx">create&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="nx">name&lt;/span> &lt;span class="nx">web&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="nx">p&lt;/span> &lt;span class="mi">80&lt;/span>&lt;span class="o">:&lt;/span>&lt;span class="mi">80&lt;/span> &lt;span class="nx">nginx&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-kết-luận">✅ Kết luận
+&lt;/h2>&lt;p>Container orchestration đóng vai trò quan trọng trong việc quản lý ứng dụng container, giúp &lt;strong>đơn giản hóa vận hành, tối ưu tài nguyên và tăng cường tính sẵn sàng&lt;/strong>. Các công cụ như &lt;strong>Kubernetes, Docker Swarm, ECS, Fargate&lt;/strong> cung cấp nhiều giải pháp linh hoạt cho các doanh nghiệp hiện đại. Việc lựa chọn công cụ phù hợp sẽ giúp doanh nghiệp &lt;strong>tận dụng tối đa sức mạnh của container hóa và điện toán đám mây&lt;/strong>. 🚀&lt;/p>
+&lt;p>👉 &lt;strong>Bước tiếp theo:&lt;/strong> Tìm hiểu về &lt;em>&lt;strong>Application Monitoring&lt;/strong>&lt;/em> theo dõi, đo lường và phân tích hiệu suất, trạng thái và hành vi của ứng dụng để phát hiện sự cố, tối ưu hóa hiệu suất và đảm bảo trải nghiệm người dùng tốt. Các công cụ phổ biến như Prometheus, Grafana, Datadog, New Relic giúp thu thập dữ liệu từ ứng dụng, máy chủ và hạ tầng để cung cấp cảnh báo và báo cáo chi tiết.&lt;/p></description></item></channel></rss>

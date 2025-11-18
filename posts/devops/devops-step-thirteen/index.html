@@ -1,927 +1,127 @@
-<!DOCTYPE html>
-<html lang="vi" dir="ltr">
-    <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Continuous Integration và Continuous Deployment (CI/CD) là quy trình tự động hóa giúp tích hợp, kiểm thử và triển khai phần mềm liên tục, giảm lỗi và rút ngắn thời gian phát hành.">
-<title>CI/CD - Tích hợp liên tục và triển khai liên tục 🚀</title>
-
-<link rel='canonical' href='http://localhost:1313/posts/devops/devops-step-thirteen/'>
-
-<link rel="stylesheet" href="/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css"><meta property='og:title' content="CI/CD - Tích hợp liên tục và triển khai liên tục 🚀">
-<meta property='og:description' content="Continuous Integration và Continuous Deployment (CI/CD) là quy trình tự động hóa giúp tích hợp, kiểm thử và triển khai phần mềm liên tục, giảm lỗi và rút ngắn thời gian phát hành.">
-<meta property='og:url' content='http://localhost:1313/posts/devops/devops-step-thirteen/'>
-<meta property='og:site_name' content='Hoàng Dương'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='devops' /><meta property='article:tag' content='cloud' /><meta property='article:published_time' content='2025-02-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2025-02-24T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/images/devops/devops-step-thirteen.webp' />
-<meta name="twitter:title" content="CI/CD - Tích hợp liên tục và triển khai liên tục 🚀">
-<meta name="twitter:description" content="Continuous Integration và Continuous Deployment (CI/CD) là quy trình tự động hóa giúp tích hợp, kiểm thử và triển khai phần mềm liên tục, giảm lỗi và rút ngắn thời gian phát hành."><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='http://localhost:1313/images/devops/devops-step-thirteen.webp' />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-<style>
-     
-    :root {
-        --article-font-family: "Roboto", var(--base-font-family);
-    }
-</style>
-
-<script>
-    (function () {
-        const customFont = document.createElement('link');
-        customFont.href = "https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap";
-    
-        customFont.type = "text/css";
-        customFont.rel = "stylesheet";
-    
-        document.head.appendChild(customFont);
-    }());
-</script>
-    </head>
-    <body class="
-    article-page
-    ">
-    <script>
-        (function() {
-            const colorSchemeKey = 'StackColorScheme';
-            if(!localStorage.getItem(colorSchemeKey)){
-                localStorage.setItem(colorSchemeKey, "auto");
-            }
-        })();
-    </script><script>
-    (function() {
-        const colorSchemeKey = 'StackColorScheme';
-        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
-        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-
-        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
-            
-
-            document.documentElement.dataset.scheme = 'dark';
-        } else {
-            document.documentElement.dataset.scheme = 'light';
-        }
-    })();
-</script>
-<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Hiển thị Menu">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
-
-    <header>
-        
-            
-            <figure class="site-avatar">
-                <a href="/">
-                
-                    
-                    
-                    
-                        
-                        <img src="/img/hoang_hu_f5b001d7581bed29.png" width="300"
-                            height="300" class="site-logo" loading="lazy" alt="Avatar">
-                    
-                
-                </a>
-                
-                    <span class="emoji">🍥</span>
-                
-            </figure>
-            
-        
-        
-        <div class="site-meta">
-            <h1 class="site-name"><a href="/">Hoàng Dương</a></h1>
-            <h2 class="site-description">And, when you want something, all the universe conspires in helping you to achieve it.</h2>
-        </div>
-    </header><ol class="menu-social">
-            
-                <li>
-                    <a 
-                        href='https://github.com/HoangDuonng'
-                        target="_blank"
-                        title="GitHub"
-                        rel="me"
-                    >
-                        
-                        
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-</svg>
-                        
-                    </a>
-                </li>
-            
-                <li>
-                    <a 
-                        href='https://www.instagram.com/ngu_uuen/'
-                        target="_blank"
-                        title="Instagram"
-                        rel="me"
-                    >
-                        
-                        
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <rect x="3" y="3" width="18" height="18" rx="3" />
-  <circle cx="12" cy="12" r="4" />
-  <path d="M16.5 7.5h.01" />
-</svg>
-
-                        
-                    </a>
-                </li>
-            
-        </ol><ol class="menu" id="main-menu">
-        
-        
-        
-        <li >
-            <a href='/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="5 12 3 12 12 3 21 12 19 12" />
-  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-</svg>
-
-
-
-                
-                <span>Trang chủ</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/gi%E1%BB%9Bi-thi%E1%BB%87u/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="7" r="4" />
-  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-</svg>
-
-
-
-                
-                <span>Về tôi</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/archives/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <rect x="3" y="4" width="18" height="4" rx="2" />
-  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
-  <line x1="10" y1="12" x2="14" y2="12" />
-</svg>
-
-
-
-                
-                <span>Lưu trữ</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/search/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="10" cy="10" r="7" />
-  <line x1="21" y1="21" x2="15" y2="15" />
-</svg>
-
-
-
-                
-                <span>Tìm kiếm</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/li%C3%AAn-k%E1%BA%BFt/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
-  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
-</svg>
-
-
-
-                
-                <span>Liên kết</span>
-            </a>
-        </li>
-        
-        <li class="menu-bottom-section">
-            <ol class="menu">
-                    
-                        <li id="i18n-switch">  
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M4 5h7" />
-  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
-  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
-  <path d="M12 20l4 -9l4 9" />
-  <path d="M19.1 18h-6.2" />
-</svg>
-
-
-
-                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
-                                
-                                    <option value="http://localhost:1313/" selected>Tiếng Việt</option>
-                                
-                                    <option value="http://localhost:1313/en/" >English</option>
-                                
-                            </select>
-                        </li>
-                    
-                
-
-                
-                    <li id="dark-mode-toggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="8" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="16" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                        <span>Chế độ tối</span>
-                    </li>
-                
-            </ol>
-        </li>
-    </ol>
-</aside>
-
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        
-        <h2 class="widget-title section-title">Mục lục</h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ol>
-    <li><a href="#-cicd-là-gì">🔍 CI/CD là gì?</a></li>
-    <li><a href="#-các-công-cụ-cicd-phổ-biến">🌟 Các công cụ CI/CD phổ biến</a>
-      <ol>
-        <li><a href="#-jenkins">🔧 Jenkins</a></li>
-        <li><a href="#-circleci">🔄 CircleCI</a></li>
-        <li><a href="#-gitlab-cicd">🛠️ GitLab CI/CD</a></li>
-        <li><a href="#-github-actions">⚡ GitHub Actions</a></li>
-      </ol>
-    </li>
-    <li><a href="#-kết-luận">🎯 Kết luận</a></li>
-  </ol>
-</nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
-            <main class="main full-width">
-    <article class="has-image main-article">
-    <header class="article-header">
-        <div class="article-image">
-            <a href="/posts/devops/devops-step-thirteen/">
-                
-                    <img src="/images/devops/devops-step-thirteen.webp" loading="lazy" alt="Featured image of post CI/CD - Tích hợp liên tục và triển khai liên tục 🚀" />
-                
-            </a>
-        </div>
-    
-
-    <div class="article-details">
-    
-    <header class="article-category">
-        
-            <a href="/categories/devops/" style="background-color: #2a9d8f; color: #fff;">
-                DevOps
-            </a>
-        
-    </header>
-    
-
-    <div class="article-title-wrapper">
-        <h2 class="article-title">
-            <a href="/posts/devops/devops-step-thirteen/">CI/CD - Tích hợp liên tục và triển khai liên tục 🚀</a>
-        </h2>
-    
-        
-        <h3 class="article-subtitle">
-            Continuous Integration và Continuous Deployment (CI/CD) là quy trình tự động hóa giúp tích hợp, kiểm thử và triển khai phần mềm liên tục, giảm lỗi và rút ngắn thời gian phát hành.
-        </h3>
-        
-    </div>
-
-    
-    
-    
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">24/02/2025</time>
-            </div>
-        
-
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-                <time class="article-time--reading">
-                    4 phút đọc
-                </time>
-            </div>
-        
-
-        
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="7" r="4" />
-  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-</svg>
-
-
-
-                    <span class="article-author--name">
-                        Hoàng Dương
-                    </span>
-                </div>
-        
-    </footer>
-    
-
-    
-</div>
-
-</header>
-
-    <section class="article-content">
-    
-    
-    <h2 id="-cicd-là-gì">🔍 CI/CD là gì?
-</h2><p>CI/CD (Continuous Integration/Continuous Deployment) là một phương pháp giúp tự động hóa quá trình phát triển phần mềm, giúp giảm lỗi, tăng tốc độ triển khai và cải thiện chất lượng sản phẩm.</p>
-<ul>
-<li><strong>Continuous Integration (CI):</strong> Tích hợp liên tục, giúp phát hiện lỗi sớm bằng cách tự động kiểm thử mỗi khi có thay đổi trong mã nguồn.</li>
-<li><strong>Continuous Deployment (CD):</strong> Triển khai liên tục, đảm bảo phần mềm được phát hành một cách tự động và nhanh chóng.</li>
-</ul>
-<hr>
-<h2 id="-các-công-cụ-cicd-phổ-biến">🌟 Các công cụ CI/CD phổ biến
-</h2><h3 id="-jenkins">🔧 Jenkins
-</h3><p>Jenkins là một máy chủ tự động hóa mã nguồn mở phổ biến, giúp xây dựng, kiểm thử và triển khai phần mềm một cách tự động.</p>
-<p>📌 <strong>Đặc điểm nổi bật:</strong></p>
-<ul>
-<li>Hỗ trợ nhiều plugin, dễ dàng tích hợp với các công cụ DevOps.</li>
-<li>Giao diện web trực quan, dễ dàng cấu hình.</li>
-<li>Hỗ trợ cả môi trường Windows và Linux.</li>
-</ul>
-<p>💡 <strong>Ví dụ:</strong> Cấu hình một pipeline đơn giản trong Jenkinsfile</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-groovy" data-lang="groovy"><span class="line"><span class="cl"><span class="n">pipeline</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">agent</span> <span class="n">any</span>
-</span></span><span class="line"><span class="cl">    <span class="n">stages</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Build&#39;</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">echo</span> <span class="s1">&#39;Building the application...&#39;</span>
-</span></span><span class="line"><span class="cl">            <span class="o">}</span>
-</span></span><span class="line"><span class="cl">        <span class="o">}</span>
-</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Test&#39;</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">echo</span> <span class="s1">&#39;Running tests...&#39;</span>
-</span></span><span class="line"><span class="cl">            <span class="o">}</span>
-</span></span><span class="line"><span class="cl">        <span class="o">}</span>
-</span></span><span class="line"><span class="cl">        <span class="n">stage</span><span class="o">(</span><span class="s1">&#39;Deploy&#39;</span><span class="o">)</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">            <span class="n">steps</span> <span class="o">{</span>
-</span></span><span class="line"><span class="cl">                <span class="n">echo</span> <span class="s1">&#39;Deploying the application...&#39;</span>
-</span></span><span class="line"><span class="cl">            <span class="o">}</span>
-</span></span><span class="line"><span class="cl">        <span class="o">}</span>
-</span></span><span class="line"><span class="cl">    <span class="o">}</span>
-</span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>📖 <strong>Tài nguyên hữu ích:</strong></p>
-<ul>
-<li><a class="link" href="https://www.jenkins.io/"  target="_blank" rel="noopener"
-    >🔗 Trang chủ Jenkins</a></li>
-<li><a class="link" href="https://www.youtube.com/watch?v=6YZvp2GwT0A"  target="_blank" rel="noopener"
-    >🎥 Hướng dẫn Jenkins từ A-Z</a></li>
-</ul>
-<hr>
-<h3 id="-circleci">🔄 CircleCI
-</h3><p>CircleCI là một nền tảng CI/CD mạnh mẽ, hỗ trợ nhiều ngôn ngữ lập trình và tích hợp tốt với GitHub, Bitbucket.</p>
-<p>📌 <strong>Đặc điểm nổi bật:</strong></p>
-<ul>
-<li>Hỗ trợ build song song để tăng tốc độ xử lý.</li>
-<li>Tích hợp tốt với Docker và Kubernetes.</li>
-<li>Có phiên bản cloud và self-hosted.</li>
-</ul>
-<p>💡 <strong>Ví dụ:</strong> Cấu hình một pipeline CircleCI trong <code>.circleci/config.yml</code></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span><span class="lnt">9
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="m">2.1</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">build</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">docker</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">image</span><span class="p">:</span><span class="w"> </span><span class="l">circleci/node:14</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">checkout</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">npm install</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">npm test</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>📖 <strong>Tài nguyên hữu ích:</strong></p>
-<ul>
-<li><a class="link" href="https://circleci.com/"  target="_blank" rel="noopener"
-    >🔗 Trang chủ CircleCI</a></li>
-<li><a class="link" href="https://www.youtube.com/watch?v=_XaYv9zvHUk"  target="_blank" rel="noopener"
-    >🎥 Video hướng dẫn CircleCI</a></li>
-</ul>
-<hr>
-<h3 id="-gitlab-cicd">🛠️ GitLab CI/CD
-</h3><p>GitLab CI/CD là một hệ thống tích hợp sẵn trong GitLab, cho phép tự động hóa quá trình kiểm thử và triển khai ngay trong Git repository.</p>
-<p>📌 <strong>Đặc điểm nổi bật:</strong></p>
-<ul>
-<li>Hỗ trợ tự động hóa toàn bộ pipeline từ build, test đến deploy.</li>
-<li>Có sẵn trong GitLab, không cần công cụ bên ngoài.</li>
-<li>Hỗ trợ cả chạy pipeline trên Docker container.</li>
-</ul>
-<p>💡 <strong>Ví dụ:</strong> Cấu hình pipeline GitLab CI/CD trong <code>.gitlab-ci.yml</code></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">stages</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">build</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">test</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span>- <span class="l">deploy</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">test</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">stage</span><span class="p">:</span><span class="w"> </span><span class="l">test</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">script</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="l">npm install</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span>- <span class="l">npm test</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>📖 <strong>Tài nguyên hữu ích:</strong></p>
-<ul>
-<li><a class="link" href="https://gitlab.com/"  target="_blank" rel="noopener"
-    >🔗 Trang chủ GitLab</a></li>
-<li><a class="link" href="https://www.youtube.com/watch?v=z7nLsJvEyMY"  target="_blank" rel="noopener"
-    >🎥 Hướng dẫn GitLab CI/CD</a></li>
-</ul>
-<hr>
-<h3 id="-github-actions">⚡ GitHub Actions
-</h3><p>GitHub Actions là công cụ CI/CD được tích hợp trực tiếp vào GitHub, giúp tự động hóa quá trình kiểm thử và triển khai mỗi khi có thay đổi trong repository.</p>
-<p>📌 <strong>Đặc điểm nổi bật:</strong></p>
-<ul>
-<li>Tích hợp chặt chẽ với GitHub, dễ dàng thiết lập workflow.</li>
-<li>Hỗ trợ nhiều hệ điều hành và ngôn ngữ lập trình.</li>
-<li>Có thể sử dụng marketplace với hàng nghìn actions có sẵn.</li>
-</ul>
-<p>💡 <strong>Ví dụ:</strong> Workflow GitHub Actions trong <code>.github/workflows/main.yml</code></p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Node.js CI</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="l">push, pull_request]</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">build</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v3</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Setup Node.js</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/setup-node@v3</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">node-version</span><span class="p">:</span><span class="w"> </span><span class="m">14</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">npm install</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">npm test</span><span class="w">
-</span></span></span></code></pre></td></tr></table>
-</div>
-</div><p>📖 <strong>Tài nguyên hữu ích:</strong></p>
-<ul>
-<li><a class="link" href="https://docs.github.com/en/actions"  target="_blank" rel="noopener"
-    >🔗 Trang chủ GitHub Actions</a></li>
-<li><a class="link" href="https://www.youtube.com/watch?v=nyKZTKQS_EQ"  target="_blank" rel="noopener"
-    >🎥 Video hướng dẫn GitHub Actions</a></li>
-</ul>
-<hr>
-<h2 id="-kết-luận">🎯 Kết luận
-</h2><p>CI/CD giúp tăng tốc quá trình phát triển phần mềm, giảm thiểu lỗi và nâng cao chất lượng sản phẩm. Tùy theo nhu cầu và môi trường làm việc, bạn có thể chọn <strong>Jenkins, CircleCI, GitLab CI/CD hoặc GitHub Actions</strong> để triển khai hệ thống CI/CD của mình. 🚀</p>
-<p>👉 <strong>Bước tiếp theo:</strong> Tìm hiểu về <em><strong>Secret Management</strong></em>  quá trình lưu trữ, quản lý và bảo vệ các thông tin nhạy cảm như mật khẩu, khóa API, chứng chỉ và token truy cập để ngăn chặn rò rỉ dữ liệu và đảm bảo bảo mật hệ thống. 💡</p>
-
-</section>
-
-
-    <footer class="article-footer">
-    
-    <section class="article-tags">
-        
-            <a href="/tags/devops/">Devops</a>
-        
-            <a href="/tags/cloud/">Cloud</a>
-        
-    </section>
-
-
-    
-    <section class="article-copyright">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
-</svg>
-
-
-
-        <span>Licensed under CC BY-NC-SA 4.0</span>
-    </section>
-    </footer>
-
-
-    
-</article>
-
-    
-
-    
-
-<aside class="related-content--wrapper">
-    <h2 class="section-title">Bài viết liên quan</h2>
-    <div class="related-content">
-        <div class="flex article-list--tile">
-            
-                
-<article class="has-image">
-    <a href="/posts/devops/devops-step-nineteen/">
-        
-        
-            <div class="article-image">
-                
-                    <img src="/images/devops/devops-step-nineteen.webp" loading="lazy" data-key="" data-hash="/images/devops/devops-step-nineteen.webp"/>
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Quản lý Artifacts trong phát triển phần mềm 🏢</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/posts/devops/devops-step-twelve/">
-        
-        
-            <div class="article-image">
-                
-                    <img src="/images/devops/devops-step-twelve.webp" loading="lazy" data-key="" data-hash="/images/devops/devops-step-twelve.webp"/>
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Quản lý cấu hình (Configuration Management)🔧</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/posts/devops/devops-step-ten/">
-        
-        
-            <div class="article-image">
-                
-                    <img src="/images/devops/devops-step-ten.webp" loading="lazy" data-key="" data-hash="/images/devops/devops-step-ten.webp"/>
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Serverless và các nền tảng liên quan ☁️</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/posts/devops/devops-step-nine/">
-        
-        
-            <div class="article-image">
-                
-                    <img src="/images/devops/devops-step-nine.webp" loading="lazy" data-key="" data-hash="/images/devops/devops-step-nine.webp"/>
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Dịch vụ Cloud 🌩️</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/posts/devops/devops-step-twenty/">
-        
-        
-            <div class="article-image">
-                
-                    <img src="/images/devops/devops-step-twenty.webp" loading="lazy" data-key="" data-hash="/images/devops/devops-step-twenty.webp"/>
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">GitOps - Tự động hoá triển khai với Git 🌟</h2>
-        </div>
-    </a>
-</article>
-
-            
-        </div>
-    </div>
-</aside>
-
-     
-    
-        
-    <script src="https://utteranc.es/client.js" 
-        repo="hoangduonng/blog_comments"
-        issue-term="pathname"
-        
-        label="comments"
-        
-        theme="icy-dark"
-        crossorigin="anonymous"
-        async
-        >
-</script>
-
-<style>
-    .utterances {
-        max-width: unset;
-    }
-</style>
-
-<script>
-    let utterancesLoaded = false;
-
-    function setUtterancesTheme(theme) {
-        let utterances = document.querySelector('.utterances iframe');
-        if (utterances) {
-            utterances.contentWindow.postMessage(
-                {
-                    type: 'set-theme',
-                    theme: `github-${theme}`
-                },
-                'https://utteranc.es'
-            );
-        }
-    }
-
-    addEventListener('message', event => {
-        if (event.origin !== 'https://utteranc.es') return;
-
-        
-        utterancesLoaded = true;
-        setUtterancesTheme(document.documentElement.dataset.scheme)
-    });
-
-    window.addEventListener('onColorSchemeChange', (e) => {
-        if (!utterancesLoaded) return;
-        setUtterancesTheme(e.detail)
-    })
-</script>
-
-
-    
-
-    <footer class="site-footer">
-    <section class="copyright">
-        &copy; 
-        
-        2025 Hoàng Dương
-    </section>
-    
-    <section class="powerby">
-        Built with <a href="https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/" target="_blank" rel="noopener">Ngữ Uyển ❤️</a> <br />
-        Theme <no value> thiết kế bởi Jimmy
-    </section>
-</footer>
-
-
-    
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    
-    <div class="pswp__bg"></div>
-
-    
-    <div class="pswp__scroll-wrap">
-
-        
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                
-                
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
-                defer
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
-                defer
-                >
-            </script><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
-            ><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
-            >
-
-            </main>
-        </div>
-        <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
-                
-                >
-            </script><script type="text/javascript" src="/ts/main.ac34731e87bad72b2c444674f2a0654c5fbc5e86fa9eab9fb7f610fbc3eadfb3.js" defer></script>
-<script>
-    (function () {
-        const customFont = document.createElement('link');
-        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
-
-        customFont.type = "text/css";
-        customFont.rel = "stylesheet";
-
-        document.head.appendChild(customFont);
-    }());
-</script>
-
-    </body>
-</html>
+<!doctype html><html lang=vi dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Continuous Integration và Continuous Deployment (CI/CD) là quy trình tự động hóa giúp tích hợp, kiểm thử và triển khai phần mềm liên tục, giảm lỗi và rút ngắn thời gian phát hành."><title>CI/CD - Tích hợp liên tục và triển khai liên tục 🚀</title>
+<link rel=canonical href=https://tech.nguuyen.io.vn/posts/devops/devops-step-thirteen/><link rel=stylesheet href=/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css><meta property='og:title' content="CI/CD - Tích hợp liên tục và triển khai liên tục 🚀"><meta property='og:description' content="Continuous Integration và Continuous Deployment (CI/CD) là quy trình tự động hóa giúp tích hợp, kiểm thử và triển khai phần mềm liên tục, giảm lỗi và rút ngắn thời gian phát hành."><meta property='og:url' content='https://tech.nguuyen.io.vn/posts/devops/devops-step-thirteen/'><meta property='og:site_name' content='Hoàng Dương'><meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:tag' content='devops'><meta property='article:tag' content='cloud'><meta property='article:published_time' content='2025-02-24T00:00:00+00:00'><meta property='article:modified_time' content='2025-02-24T00:00:00+00:00'><meta property='og:image' content='https://tech.nguuyen.io.vn/images/devops/devops-step-thirteen.webp'><meta name=twitter:title content="CI/CD - Tích hợp liên tục và triển khai liên tục 🚀"><meta name=twitter:description content="Continuous Integration và Continuous Deployment (CI/CD) là quy trình tự động hóa giúp tích hợp, kiểm thử và triển khai phần mềm liên tục, giảm lỗi và rút ngắn thời gian phát hành."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://tech.nguuyen.io.vn/images/devops/devops-step-thirteen.webp'><link rel=icon type=image/x-icon href=/favicon.ico><style>:root{--article-font-family:"Roboto", var(--base-font-family)}</style><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Hiển thị Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/hoang_hu_f5b001d7581bed29.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Hoàng Dương</a></h1><h2 class=site-description>And, when you want something, all the universe conspires in helping you to achieve it.</h2></div></header><ol class=menu-social><li><a href=https://github.com/HoangDuonng target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.instagram.com/ngu_uuen/ target=_blank title=Instagram rel=me><svg class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="4"/><path d="M16.5 7.5h.01"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Trang chủ</span></a></li><li><a href=/gi%E1%BB%9Bi-thi%E1%BB%87u/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>Về tôi</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Lưu trữ</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Tìm kiếm</span></a></li><li><a href=/li%C3%AAn-k%E1%BA%BFt/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Liên kết</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://tech.nguuyen.io.vn/ selected>Tiếng Việt</option><option value=https://tech.nguuyen.io.vn/en/>English</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Chế độ tối</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><h2 class="widget-title section-title">Mục lục</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#-cicd-là-gì>🔍 CI/CD là gì?</a></li><li><a href=#-các-công-cụ-cicd-phổ-biến>🌟 Các công cụ CI/CD phổ biến</a><ol><li><a href=#-jenkins>🔧 Jenkins</a></li><li><a href=#-circleci>🔄 CircleCI</a></li><li><a href=#-gitlab-cicd>🛠️ GitLab CI/CD</a></li><li><a href=#-github-actions>⚡ GitHub Actions</a></li></ol></li><li><a href=#-kết-luận>🎯 Kết luận</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/posts/devops/devops-step-thirteen/><img src=/images/devops/devops-step-thirteen.webp loading=lazy alt="Featured image of post CI/CD - Tích hợp liên tục và triển khai liên tục 🚀"></a></div><div class=article-details><header class=article-category><a href=/categories/devops/ style=background-color:#2a9d8f;color:#fff>DevOps</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/devops/devops-step-thirteen/>CI/CD - Tích hợp liên tục và triển khai liên tục 🚀</a></h2><h3 class=article-subtitle>Continuous Integration và Continuous Deployment (CI/CD) là quy trình tự động hóa giúp tích hợp, kiểm thử và triển khai phần mềm liên tục, giảm lỗi và rút ngắn thời gian phát hành.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>24/02/2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>4 phút đọc</time></div><div><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span class=article-author--name>Hoàng Dương</span></div></footer></div></header><section class=article-content><h2 id=-cicd-là-gì>🔍 CI/CD là gì?</h2><p>CI/CD (Continuous Integration/Continuous Deployment) là một phương pháp giúp tự động hóa quá trình phát triển phần mềm, giúp giảm lỗi, tăng tốc độ triển khai và cải thiện chất lượng sản phẩm.</p><ul><li><strong>Continuous Integration (CI):</strong> Tích hợp liên tục, giúp phát hiện lỗi sớm bằng cách tự động kiểm thử mỗi khi có thay đổi trong mã nguồn.</li><li><strong>Continuous Deployment (CD):</strong> Triển khai liên tục, đảm bảo phần mềm được phát hành một cách tự động và nhanh chóng.</li></ul><hr><h2 id=-các-công-cụ-cicd-phổ-biến>🌟 Các công cụ CI/CD phổ biến</h2><h3 id=-jenkins>🔧 Jenkins</h3><p>Jenkins là một máy chủ tự động hóa mã nguồn mở phổ biến, giúp xây dựng, kiểm thử và triển khai phần mềm một cách tự động.</p><p>📌 <strong>Đặc điểm nổi bật:</strong></p><ul><li>Hỗ trợ nhiều plugin, dễ dàng tích hợp với các công cụ DevOps.</li><li>Giao diện web trực quan, dễ dàng cấu hình.</li><li>Hỗ trợ cả môi trường Windows và Linux.</li></ul><p>💡 <strong>Ví dụ:</strong> Cấu hình một pipeline đơn giản trong Jenkinsfile</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-groovy data-lang=groovy><span class=line><span class=cl><span class=n>pipeline</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>agent</span> <span class=n>any</span>
+</span></span><span class=line><span class=cl>    <span class=n>stages</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>        <span class=n>stage</span><span class=o>(</span><span class=s1>&#39;Build&#39;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>steps</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>echo</span> <span class=s1>&#39;Building the application...&#39;</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>stage</span><span class=o>(</span><span class=s1>&#39;Test&#39;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>steps</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>echo</span> <span class=s1>&#39;Running tests...&#39;</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=n>stage</span><span class=o>(</span><span class=s1>&#39;Deploy&#39;</span><span class=o>)</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>steps</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>echo</span> <span class=s1>&#39;Deploying the application...&#39;</span>
+</span></span><span class=line><span class=cl>            <span class=o>}</span>
+</span></span><span class=line><span class=cl>        <span class=o>}</span>
+</span></span><span class=line><span class=cl>    <span class=o>}</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>📖 <strong>Tài nguyên hữu ích:</strong></p><ul><li><a class=link href=https://www.jenkins.io/ target=_blank rel=noopener>🔗 Trang chủ Jenkins</a></li><li><a class=link href="https://www.youtube.com/watch?v=6YZvp2GwT0A" target=_blank rel=noopener>🎥 Hướng dẫn Jenkins từ A-Z</a></li></ul><hr><h3 id=-circleci>🔄 CircleCI</h3><p>CircleCI là một nền tảng CI/CD mạnh mẽ, hỗ trợ nhiều ngôn ngữ lập trình và tích hợp tốt với GitHub, Bitbucket.</p><p>📌 <strong>Đặc điểm nổi bật:</strong></p><ul><li>Hỗ trợ build song song để tăng tốc độ xử lý.</li><li>Tích hợp tốt với Docker và Kubernetes.</li><li>Có phiên bản cloud và self-hosted.</li></ul><p>💡 <strong>Ví dụ:</strong> Cấu hình một pipeline CircleCI trong <code>.circleci/config.yml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>version</span><span class=p>:</span><span class=w> </span><span class=m>2.1</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>build</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>docker</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>circleci/node:14</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>checkout</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>npm install</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>npm test</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>📖 <strong>Tài nguyên hữu ích:</strong></p><ul><li><a class=link href=https://circleci.com/ target=_blank rel=noopener>🔗 Trang chủ CircleCI</a></li><li><a class=link href="https://www.youtube.com/watch?v=_XaYv9zvHUk" target=_blank rel=noopener>🎥 Video hướng dẫn CircleCI</a></li></ul><hr><h3 id=-gitlab-cicd>🛠️ GitLab CI/CD</h3><p>GitLab CI/CD là một hệ thống tích hợp sẵn trong GitLab, cho phép tự động hóa quá trình kiểm thử và triển khai ngay trong Git repository.</p><p>📌 <strong>Đặc điểm nổi bật:</strong></p><ul><li>Hỗ trợ tự động hóa toàn bộ pipeline từ build, test đến deploy.</li><li>Có sẵn trong GitLab, không cần công cụ bên ngoài.</li><li>Hỗ trợ cả chạy pipeline trên Docker container.</li></ul><p>💡 <strong>Ví dụ:</strong> Cấu hình pipeline GitLab CI/CD trong <code>.gitlab-ci.yml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>stages</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=l>build</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=l>test</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span>- <span class=l>deploy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>test</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>stage</span><span class=p>:</span><span class=w> </span><span class=l>test</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>script</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>npm install</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span>- <span class=l>npm test</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>📖 <strong>Tài nguyên hữu ích:</strong></p><ul><li><a class=link href=https://gitlab.com/ target=_blank rel=noopener>🔗 Trang chủ GitLab</a></li><li><a class=link href="https://www.youtube.com/watch?v=z7nLsJvEyMY" target=_blank rel=noopener>🎥 Hướng dẫn GitLab CI/CD</a></li></ul><hr><h3 id=-github-actions>⚡ GitHub Actions</h3><p>GitHub Actions là công cụ CI/CD được tích hợp trực tiếp vào GitHub, giúp tự động hóa quá trình kiểm thử và triển khai mỗi khi có thay đổi trong repository.</p><p>📌 <strong>Đặc điểm nổi bật:</strong></p><ul><li>Tích hợp chặt chẽ với GitHub, dễ dàng thiết lập workflow.</li><li>Hỗ trợ nhiều hệ điều hành và ngôn ngữ lập trình.</li><li>Có thể sử dụng marketplace với hàng nghìn actions có sẵn.</li></ul><p>💡 <strong>Ví dụ:</strong> Workflow GitHub Actions trong <code>.github/workflows/main.yml</code></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Node.js CI</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>on</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>push, pull_request]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>build</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Setup Node.js</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/setup-node@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>node-version</span><span class=p>:</span><span class=w> </span><span class=m>14</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>npm install</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>run</span><span class=p>:</span><span class=w> </span><span class=l>npm test</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>📖 <strong>Tài nguyên hữu ích:</strong></p><ul><li><a class=link href=https://docs.github.com/en/actions target=_blank rel=noopener>🔗 Trang chủ GitHub Actions</a></li><li><a class=link href="https://www.youtube.com/watch?v=nyKZTKQS_EQ" target=_blank rel=noopener>🎥 Video hướng dẫn GitHub Actions</a></li></ul><hr><h2 id=-kết-luận>🎯 Kết luận</h2><p>CI/CD giúp tăng tốc quá trình phát triển phần mềm, giảm thiểu lỗi và nâng cao chất lượng sản phẩm. Tùy theo nhu cầu và môi trường làm việc, bạn có thể chọn <strong>Jenkins, CircleCI, GitLab CI/CD hoặc GitHub Actions</strong> để triển khai hệ thống CI/CD của mình. 🚀</p><p>👉 <strong>Bước tiếp theo:</strong> Tìm hiểu về <em><strong>Secret Management</strong></em> quá trình lưu trữ, quản lý và bảo vệ các thông tin nhạy cảm như mật khẩu, khóa API, chứng chỉ và token truy cập để ngăn chặn rò rỉ dữ liệu và đảm bảo bảo mật hệ thống. 💡</p></section><footer class=article-footer><section class=article-tags><a href=/tags/devops/>Devops</a>
+<a href=/tags/cloud/>Cloud</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Bài viết liên quan</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/posts/devops/devops-step-nineteen/><div class=article-image><img src=/images/devops/devops-step-nineteen.webp loading=lazy data-key data-hash=/images/devops/devops-step-nineteen.webp></div><div class=article-details><h2 class=article-title>Quản lý Artifacts trong phát triển phần mềm 🏢</h2></div></a></article><article class=has-image><a href=/posts/devops/devops-step-twelve/><div class=article-image><img src=/images/devops/devops-step-twelve.webp loading=lazy data-key data-hash=/images/devops/devops-step-twelve.webp></div><div class=article-details><h2 class=article-title>Quản lý cấu hình (Configuration Management)🔧</h2></div></a></article><article class=has-image><a href=/posts/devops/devops-step-ten/><div class=article-image><img src=/images/devops/devops-step-ten.webp loading=lazy data-key data-hash=/images/devops/devops-step-ten.webp></div><div class=article-details><h2 class=article-title>Serverless và các nền tảng liên quan ☁️</h2></div></a></article><article class=has-image><a href=/posts/devops/devops-step-nine/><div class=article-image><img src=/images/devops/devops-step-nine.webp loading=lazy data-key data-hash=/images/devops/devops-step-nine.webp></div><div class=article-details><h2 class=article-title>Dịch vụ Cloud 🌩️</h2></div></a></article><article class=has-image><a href=/posts/devops/devops-step-twenty/><div class=article-image><img src=/images/devops/devops-step-twenty.webp loading=lazy data-key data-hash=/images/devops/devops-step-twenty.webp></div><div class=article-details><h2 class=article-title>GitOps - Tự động hoá triển khai với Git 🌟</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=hoangduonng/blog_comments issue-term=pathname label=comments theme=icy-dark crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2025 Hoàng Dương</section><section class=powerby>Built with <a href=https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/ target=_blank rel=noopener>Ngữ Uyển ❤️</a><br>Theme <no value>thiết kế bởi Jimmy</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
