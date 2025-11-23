@@ -1,4 +1,1022 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/posts/</link><description>Recent content in Posts on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Tue, 18 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Tối ưu Docker cho Node.js</title><link>https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-nodejs/</link><pubDate>Tue, 18 Nov 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-nodejs/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker-optimization/docker-optimization-react.webp" alt="Featured image of post Tối ưu Docker cho Node.js" />&lt;h2 id="dockerfile-contest-2025--reactnode-tối-ưu-extreme">Dockerfile Contest 2025 – React/Node tối ưu extreme
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/posts/</link><description>Recent content in Posts on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 23 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Tối ưu Docker cho Python</title><link>https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-python/</link><pubDate>Sun, 23 Nov 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-python/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker-optimization/docker-optimization-python.webp" alt="Featured image of post Tối ưu Docker cho Python" />&lt;h2 id="dockerfile-contest-2025--python-tối-ưu-extreme">Dockerfile Contest 2025 – Python tối ưu extreme
+&lt;/h2>&lt;p>Dockerfile Contest 2025 thúc đẩy cộng đồng DevOps Việt Nam đánh giá lại cách viết Dockerfile để đạt &lt;strong>bảo mật, tối ưu, tường minh&lt;/strong>. Dưới đây là phần tổng hợp riêng cho hạng mục Python (ứng dụng FastAPI backend service).&lt;/p>
+&lt;hr>
+&lt;h2 id="i-hạng-mục-python-tối-ưu-cho-backend-service">I. Hạng mục PYTHON (Tối ưu cho Backend Service)
+&lt;/h2>&lt;p>Hạng mục Python tập trung vào việc tối ưu kích thước image, bảo mật (patch CVE), và hiệu năng runtime cho các ứng dụng FastAPI. Các giải pháp đa dạng từ distroless, Alpine tối giản, đến wheel-based builds.&lt;/p>
+&lt;h3 id="1-dockerfile-top-1-python--thanh-nguyen-the">1. Dockerfile TOP 1 (Python) – Thanh Nguyen The
+&lt;/h3>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Kỹ thuật&lt;/th>
+&lt;th>Giải thích theo tác giả&lt;/th>
+&lt;th>Nguồn tham khảo&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>UV Package Manager&lt;/strong>&lt;/td>
+&lt;td>Sử dụng &lt;code>uv&lt;/code> thay vì pip để tăng tốc độ cài đặt dependencies và quản lý virtual environment hiệu quả hơn.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Distroless Base Image&lt;/strong>&lt;/td>
+&lt;td>Dùng &lt;code>gcr.io/distroless/base-debian12:nonroot&lt;/code> để giảm attack surface, không có shell, package manager, hoặc các công cụ không cần thiết.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Multi-arch Support&lt;/strong>&lt;/td>
+&lt;td>Hỗ trợ cả amd64 và arm64 bằng cách copy shared libraries theo kiến trúc tương ứng.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Shared Libraries Copy&lt;/strong>&lt;/td>
+&lt;td>Copy các thư viện cần thiết (libc, libm, libz, libgcc_s) từ builder stage để ứng dụng chạy được trong distroless.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Security Patching&lt;/strong>&lt;/td>
+&lt;td>Nâng cấp starlette lên 0.49.1 để fix CVE-2025-62727 và CVE-2025-54121 mà không cần sửa pyproject.toml.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>LD_LIBRARY_PATH&lt;/strong>&lt;/td>
+&lt;td>Thiết lập biến môi trường để hệ thống tìm thấy shared libraries tại thư mục tùy chỉnh.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>&lt;strong>Dockerfile TOP 1 (Python)&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;span class="lnt">69
+&lt;/span>&lt;span class="lnt">70
+&lt;/span>&lt;span class="lnt">71
+&lt;/span>&lt;span class="lnt">72
+&lt;/span>&lt;span class="lnt">73
+&lt;/span>&lt;span class="lnt">74
+&lt;/span>&lt;span class="lnt">75
+&lt;/span>&lt;span class="lnt">76
+&lt;/span>&lt;span class="lnt">77
+&lt;/span>&lt;span class="lnt">78
+&lt;/span>&lt;span class="lnt">79
+&lt;/span>&lt;span class="lnt">80
+&lt;/span>&lt;span class="lnt">81
+&lt;/span>&lt;span class="lnt">82
+&lt;/span>&lt;span class="lnt">83
+&lt;/span>&lt;span class="lnt">84
+&lt;/span>&lt;span class="lnt">85
+&lt;/span>&lt;span class="lnt">86
+&lt;/span>&lt;span class="lnt">87
+&lt;/span>&lt;span class="lnt">88
+&lt;/span>&lt;span class="lnt">89
+&lt;/span>&lt;span class="lnt">90
+&lt;/span>&lt;span class="lnt">91
+&lt;/span>&lt;span class="lnt">92
+&lt;/span>&lt;span class="lnt">93
+&lt;/span>&lt;span class="lnt">94
+&lt;/span>&lt;span class="lnt">95
+&lt;/span>&lt;span class="lnt">96
+&lt;/span>&lt;span class="lnt">97
+&lt;/span>&lt;span class="lnt">98
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">ghcr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">io&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">astral&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">sh&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">uv&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">bookworm&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">slim&lt;/span>&lt;span class="err">@&lt;/span>&lt;span class="n">sha256&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">6&lt;/span>&lt;span class="n">b8ac7bb76766ffe9f6cc20f56789755d539e8d0e605d8983131227c5c8b87a1&lt;/span> &lt;span class="n">AS&lt;/span> &lt;span class="n">builder&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENV&lt;/span> &lt;span class="n">UV_LINK_MODE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">copy&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">TARGETARCH&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy shared libraries đủ để chạy ứng dụng trong môi trường distroless&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Kiểm tra shared libraries cần thiết với lệnh:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># ldd $(which python3) và các thư viện khác trong virtual environment sau khi cài đặt các package cần thiết (kiểm tra trước khi build)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Mỗi kiến trúc sẽ đặt thư viện trong các thư mục khác nhau, ví dụ: /lib/x86_64-linux-gnu/ cho amd64, /lib/aarch64-linux-gnu/ cho arm64&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># do đó cần xác định kiến trúc và copy từ thư mục tương ứng. &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># TARGETARCH là built-in arg của docker buildx, tự động nhận giá trị (amd64 hoặc arm64) khi build multi-arch&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Shared libraries copy ở lệnh phía dưới là chưa đủ để chạy ứng dụng, tuy nhiên gcr.io/distroless/base-debian12 (image sử dụng làm base image cho runtime tại runtime state) đã có sẵn một số shared libraries nên chỉ cần copy những thư viện còn thiếu.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># gcr.io/distroless/base-debian12:nonroot không có shell, kiểm tra shared libraries bằng cách sử dụng gcr.io/distroless/base-debian12:debug&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># gcr.io/distroless/base-debian12:debug tương tự gcr.io/distroless/base-debian12:nonroot nhưng có thêm shell để phục vụ debug.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="k">if&lt;/span> &lt;span class="p">[&lt;/span> &lt;span class="s2">&amp;#34;$TARGETARCH&amp;#34;&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;amd64&amp;#34;&lt;/span> &lt;span class="p">];&lt;/span> &lt;span class="n">then&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">LIBARCH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;x86_64&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">elif&lt;/span> &lt;span class="p">[&lt;/span> &lt;span class="s2">&amp;#34;$TARGETARCH&amp;#34;&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;arm64&amp;#34;&lt;/span> &lt;span class="p">];&lt;/span> &lt;span class="n">then&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">LIBARCH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;aarch64&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">LIBARCH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;unknown&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fi&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">mkdir&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">p&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">multi&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">arch&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cp&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/$&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="n">LIBARCH&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">linux&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">gnu&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">libc&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">so&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">6&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">multi&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">arch&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cp&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/$&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="n">LIBARCH&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">linux&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">gnu&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">libm&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">so&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">6&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">multi&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">arch&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cp&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/$&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="n">LIBARCH&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">linux&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">gnu&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">libz&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">so&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">1&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">multi&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">arch&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cp&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/$&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="n">LIBARCH&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">linux&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">gnu&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">libgcc_s&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">so&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">1&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">multi&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">arch&lt;/span>&lt;span class="o">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">build&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Sử dụng cache để tăng tốc độ build&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Cài đặt dependencies trong uv virtual environment&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Sử dụng mount type=bind để bind các file uv.lock và pyproject.toml từ host vào container mount thay vì copy.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># --frozen để đảm bảo chỉ cài đặt đúng phiên bản dependencies trong uv.lock, không update uv.lock&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># --no-install-project để không cài đặt project hiện tại (chỉ cài đặt dependencies)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># --no-dev để không cài đặt dev dependencies&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># --no-editable để không cài đặt editable mode&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># starlette 0.46.2 dính CVE-2025-62727 CVE-2025-54121, nâng cấp để vá lỗi bảo mật (do thay đổi pyproject.toml và file uv.lock sẽ vi phạm nội quy nên chạy lệnh install riêng)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">uv&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">bind&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">source&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">uv&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">lock&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">uv&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">lock&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">bind&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">source&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">pyproject&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">toml&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">pyproject&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">toml&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">uv&lt;/span> &lt;span class="n">sync&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">frozen&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">install&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">project&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">dev&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">editable&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">uv&lt;/span> &lt;span class="n">pip&lt;/span> &lt;span class="n">install&lt;/span> &lt;span class="s2">&amp;#34;starlette==0.49.1&amp;#34;&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">deps&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Sử dụng distroless làm base image cho runtime để đảm bảo tính bảo mật và tối ưu kích thước image&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Chọn distroless thay vì alpine vì alpine sử dụng musl libc, trong khi python và nhiều thư viện phổ biến trong python được biên dịch với glibc, dẫn đến các vấn đề tương thích.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># distroless giúp ứng dụng chạy ổn định hơn và cũng rất nhẹ.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># cc-debian12 có nhiều shared libraries cần thiết cho python và các package phổ biến hơn so với base-debian12&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># tuy nhiên khi đã kiểm tra kỹ các shared libraries cần thiết (với lệnh ldd) và copy đầy đủ từ builder stage thì base-debian12 sẽ giúp tối ưu kích thước image hơn mà vẫn đảm bảo ứng dụng chạy ổn định.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">gcr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">io&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">distroless&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">base&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">debian12&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">nonroot&lt;/span>&lt;span class="err">@&lt;/span>&lt;span class="n">sha256&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">10136&lt;/span>&lt;span class="n">f394cbc891efa9f20974a48843f21a6b3cbde55b1778582195d6726fa85&lt;/span> &lt;span class="n">AS&lt;/span> &lt;span class="n">runtime&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LABEL&lt;/span> &lt;span class="n">maintainer&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Thanh Nguyen The&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LABEL&lt;/span> &lt;span class="n">maintainer&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">email&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;thanhnt.devops@gmail.com&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LABEL&lt;/span> &lt;span class="n">maintainer&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">company&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;VIETNAM NATIONAL CYBER SECURITY TECHNOLOGY CORPORATION&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LABEL&lt;/span> &lt;span class="n">maintainer&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">youtube&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;DevOps Mentor&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LABEL&lt;/span> &lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">description&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Secure, minimal Python app using UV and Distroless&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy các thư viện và python từ builder stage&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">multi&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">arch&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">multi&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">arch&lt;/span>&lt;span class="o">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">libpython3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">13.&lt;/span>&lt;span class="n">so&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">1.0&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">libpython3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">13.&lt;/span>&lt;span class="n">so&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">1.0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span>&lt;span class="o">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy virtual environment từ builder&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">chown&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">nonroot&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">nonroot&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">build&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">venv&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">venv&lt;/span>&lt;span class="o">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy source code - chỉ copy những gì cần thiết&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">chown&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">nonroot&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">nonroot&lt;/span> &lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="o">./&lt;/span>&lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Thiết lập environment variables&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Do runtime limit là 1 vCPU, 512MB RAM nên thiết lập WORKERS=2 thay vì 3 (nguy cơ OOM). Công thức worker = (2 x số lượng vCPU + 1) chỉ áp dụng trong trường hợp &amp;gt; 1GB RAM&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># LD_LIBRARY_PATH để hệ thống có thể tìm thấy các shared libraries cần thiết tại thư mục mới thay vì thư mục mặc đinh (/lib/x86_64-linux-gnu hoặc /lib/aarch64-linux-gnu)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># shared libraries không có trong /lib/multi-arch sẽ tiếp tục được load từ thư mục mặc định của hệ thống&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENV&lt;/span> &lt;span class="n">PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/app/.venv/bin/:$PATH&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONPATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/app/src/&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">LANG&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">C&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">UTF&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">8&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONUNBUFFERED&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONFAULTHANDLER&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONDONTWRITEBYTECODE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONHASHSEED&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">random&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">HOST&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">0.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.0&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PORT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">8080&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">WORKERS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">2&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">LOGGING__LEVEL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">INFO&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">LOGGING__FORMAT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">PLAIN&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">COFFEE_API__HOST&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;https://api.sampleapis.com/coffee/&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">APP_VERSION&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">0.1&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">0&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">GIT_COMMIT_SHA&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">sha&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">LD_LIBRARY_PATH&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">multi&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">arch&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># nonroot user mặc định đã được sử dụng trong distroless base-debian12:nonroot nên không cần thiết phải thêm lệnh phía dưới&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># USER nonroot:nonroot&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Expose port mặc định&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">EXPOSE&lt;/span> &lt;span class="mi">8080&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Command để chạy ứng dụng&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENTRYPOINT&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;python&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;src/python_service_template/app.py&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h3 id="2-dockerfile-top-2-python--newnol">2. Dockerfile TOP 2 (Python) – newnol
+&lt;/h3>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Kỹ thuật&lt;/th>
+&lt;th>Giải thích theo tác giả&lt;/th>
+&lt;th>Nguồn tham khảo&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>Alpine Base Image&lt;/strong>&lt;/td>
+&lt;td>Sử dụng &lt;code>python:3.13-alpine&lt;/code> để có image nhỏ hơn so với Debian-based images.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Security Patches&lt;/strong>&lt;/td>
+&lt;td>Cập nhật các package có CVE: starlette, fastapi, aiohttp, pydantic, structlog, uvloop, uvicorn lên phiên bản an toàn.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Ultra Aggressive Optimization&lt;/strong>&lt;/td>
+&lt;td>Strip tất cả &lt;code>.so&lt;/code> files, xóa &lt;code>__pycache__&lt;/code>, test, doc, examples, typing stubs, license files để giảm kích thước.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Python Stdlib Cleanup&lt;/strong>&lt;/td>
+&lt;td>Xóa các module không cần thiết như pip, setuptools, wheel, tkinter, distutils, lib2to3, idlelib, test, unittest.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Non-root User&lt;/strong>&lt;/td>
+&lt;td>Tạo user UID 10001 với quyền tối thiểu để tăng bảo mật.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Healthcheck&lt;/strong>&lt;/td>
+&lt;td>Sử dụng wget để kiểm tra endpoint &lt;code>/health/&lt;/code> với timeout ngắn.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>&lt;strong>Dockerfile TOP 2 (Python)&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;span class="lnt">102
+&lt;/span>&lt;span class="lnt">103
+&lt;/span>&lt;span class="lnt">104
+&lt;/span>&lt;span class="lnt">105
+&lt;/span>&lt;span class="lnt">106
+&lt;/span>&lt;span class="lnt">107
+&lt;/span>&lt;span class="lnt">108
+&lt;/span>&lt;span class="lnt">109
+&lt;/span>&lt;span class="lnt">110
+&lt;/span>&lt;span class="lnt">111
+&lt;/span>&lt;span class="lnt">112
+&lt;/span>&lt;span class="lnt">113
+&lt;/span>&lt;span class="lnt">114
+&lt;/span>&lt;span class="lnt">115
+&lt;/span>&lt;span class="lnt">116
+&lt;/span>&lt;span class="lnt">117
+&lt;/span>&lt;span class="lnt">118
+&lt;/span>&lt;span class="lnt">119
+&lt;/span>&lt;span class="lnt">120
+&lt;/span>&lt;span class="lnt">121
+&lt;/span>&lt;span class="lnt">122
+&lt;/span>&lt;span class="lnt">123
+&lt;/span>&lt;span class="lnt">124
+&lt;/span>&lt;span class="lnt">125
+&lt;/span>&lt;span class="lnt">126
+&lt;/span>&lt;span class="lnt">127
+&lt;/span>&lt;span class="lnt">128
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># syntax=docker/dockerfile:1.7&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># =============================================================================&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># DOCKERFILE ULTRA OPTIMIZED + SECURITY PATCHED&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Mục tiêu: Nhẹ (&amp;lt;110MB) + Bảo mật cao (0 CVEs)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># =============================================================================&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># -----------------------------------------------------------------------------&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Stage 1: Dependencies Builder&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># -----------------------------------------------------------------------------&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">python&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">3.13&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">alpine&lt;/span>&lt;span class="err">@&lt;/span>&lt;span class="n">sha256&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">e5fa639e49b85986c4481e28faa2564b45aa8021413f31026c3856e5911618b1&lt;/span> &lt;span class="n">AS&lt;/span> &lt;span class="n">deps&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENV&lt;/span> &lt;span class="n">PIP_NO_CACHE_DIR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PIP_DISABLE_PIP_VERSION_CHECK&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONDONTWRITEBYTECODE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONUNBUFFERED&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">apk&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">apk&lt;/span> &lt;span class="n">add&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">cache&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">virtual&lt;/span> &lt;span class="o">.&lt;/span>&lt;span class="n">build&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">deps&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">build&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">base&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">python3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">dev&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cargo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Install dependencies với PATCHED versions để fix CVEs&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Note: FastAPI 0.116+ required for starlette 0.49.1+ support&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">pip&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">python&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">m&lt;/span> &lt;span class="n">pip&lt;/span> &lt;span class="n">install&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">dir&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">prefix&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">install&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;aiohttp&amp;gt;=3.12.14,&amp;lt;4.0.0&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;asgi-correlation-id&amp;gt;=4.3.4,&amp;lt;5.0.0&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;fastapi&amp;gt;=0.116.0&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;prometheus-fastapi-instrumentator&amp;gt;=7.0.0,&amp;lt;8.0.0&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;pydantic&amp;gt;=2.11.0,&amp;lt;3.0.0&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;pydantic-settings&amp;gt;=2.9.1,&amp;lt;3.0.0&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;structlog&amp;gt;=25.3.0,&amp;lt;26.0.0&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;uvloop&amp;gt;=0.21.0,&amp;lt;0.22.0&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s2">&amp;#34;uvicorn[standard]&amp;gt;=0.30.0,&amp;lt;0.31.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># ULTRA AGGRESSIVE optimization&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">apk&lt;/span> &lt;span class="n">add&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">cache&lt;/span> &lt;span class="n">binutils&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Strip ALL .so files aggressively&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">find&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">install&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">type&lt;/span> &lt;span class="n">f&lt;/span> \&lt;span class="p">(&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;*.so*&amp;#39;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;*.a&amp;#39;&lt;/span> \&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">exec&lt;/span> &lt;span class="n">strip&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">strip&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">all&lt;/span> &lt;span class="p">{}&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;/&lt;/span>&lt;span class="n">dev&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">null&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="bp">true&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Remove all bytecode&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">find&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">install&lt;/span> \&lt;span class="p">(&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">type&lt;/span> &lt;span class="n">d&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="n">__pycache__&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">type&lt;/span> &lt;span class="n">f&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;*.py[co]&amp;#39;&lt;/span> \&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">delete&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;/&lt;/span>&lt;span class="n">dev&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">null&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="bp">true&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Remove test/doc/examples&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">find&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">install&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">type&lt;/span> &lt;span class="n">d&lt;/span> \&lt;span class="p">(&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="n">tests&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="n">testing&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="n">test&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="n">doc&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="n">docs&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="n">example&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="n">examples&lt;/span> \&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">prune&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">exec&lt;/span> &lt;span class="n">rm&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">rf&lt;/span> &lt;span class="p">{}&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;/&lt;/span>&lt;span class="n">dev&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">null&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="bp">true&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Minimize .dist-info&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">find&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">install&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;*.dist-info&amp;#39;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">type&lt;/span> &lt;span class="n">d&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">exec&lt;/span> &lt;span class="n">sh&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">c&lt;/span> &lt;span class="s1">&amp;#39;cd &amp;#34;$1&amp;#34; &amp;amp;&amp;amp; find . -type f ! -name &amp;#34;METADATA&amp;#34; ! -name &amp;#34;top_level.txt&amp;#34; ! -name &amp;#34;RECORD&amp;#34; -delete&amp;#39;&lt;/span> &lt;span class="n">_&lt;/span> &lt;span class="p">{}&lt;/span> \&lt;span class="p">;&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;/&lt;/span>&lt;span class="n">dev&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">null&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="bp">true&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Remove typing stubs, headers, C files&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">find&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">install&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">type&lt;/span> &lt;span class="n">f&lt;/span> \&lt;span class="p">(&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;*.pyi&amp;#39;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;*.c&amp;#39;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;*.h&amp;#39;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;*.cpp&amp;#39;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;*.cc&amp;#39;&lt;/span> \&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">delete&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Remove license files&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">find&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">install&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">type&lt;/span> &lt;span class="n">f&lt;/span> \&lt;span class="p">(&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;LICENSE*&amp;#39;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;COPYING*&amp;#39;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;NOTICE*&amp;#39;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;AUTHORS*&amp;#39;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;CHANGELOG*&amp;#39;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">o&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">name&lt;/span> &lt;span class="s1">&amp;#39;README*&amp;#39;&lt;/span> \&lt;span class="p">)&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">delete&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;/&lt;/span>&lt;span class="n">dev&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">null&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="bp">true&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">apk&lt;/span> &lt;span class="n">del&lt;/span> &lt;span class="n">binutils&lt;/span> &lt;span class="o">.&lt;/span>&lt;span class="n">build&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">deps&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># -----------------------------------------------------------------------------&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Stage 2: Runtime (ULTRA MINIMAL + SECURE)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># -----------------------------------------------------------------------------&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">python&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">3.13&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">alpine&lt;/span>&lt;span class="err">@&lt;/span>&lt;span class="n">sha256&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">e5fa639e49b85986c4481e28faa2564b45aa8021413f31026c3856e5911618b1&lt;/span> &lt;span class="n">AS&lt;/span> &lt;span class="n">runtime&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LABEL&lt;/span> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">title&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Python Service Template&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">description&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Production-ready FastAPI service - Optimized &amp;amp; Secured&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">version&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;0.1.0&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">authors&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;newnol &amp;lt;contact@newnol.io.vn&amp;gt;&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">maintainer&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;newnol&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">security&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">scan&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;trivy-passed&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENV&lt;/span> &lt;span class="n">PYTHONDONTWRITEBYTECODE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONUNBUFFERED&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PIP_NO_CACHE_DIR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">HOST&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">0.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.0&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PORT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">5000&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">WORKERS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONPATH&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">src&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">TZ&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">UTC&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Install ONLY wget for healthcheck&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">apk&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">apk&lt;/span> &lt;span class="n">add&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">cache&lt;/span> &lt;span class="n">wget&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Create non-root user&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">addgroup&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">g&lt;/span> &lt;span class="mi">10001&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">S&lt;/span> &lt;span class="n">app&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">adduser&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">u&lt;/span> &lt;span class="mi">10001&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">S&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">G&lt;/span> &lt;span class="n">app&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">h&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">nologin&lt;/span> &lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy dependencies&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">deps&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">chown&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">app&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">install&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy source (minimal)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">chown&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">app&lt;/span> &lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="o">./&lt;/span>&lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Permissions&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">chmod&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">R&lt;/span> &lt;span class="mi">550&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># EXTREME Python stdlib cleanup&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">rm&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">rf&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">ensurepip&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">site&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">packages&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">pip&lt;/span>&lt;span class="o">*&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">site&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">packages&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">setuptools&lt;/span>&lt;span class="o">*&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">site&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">packages&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">wheel&lt;/span>&lt;span class="o">*&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">distutils&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib2to3&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">idlelib&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">tkinter&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">turtledemo&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">test&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">unittest&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">test&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">pip&lt;/span>&lt;span class="o">*&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="n">to3&lt;/span>&lt;span class="o">*&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">idle&lt;/span>&lt;span class="o">*&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;/&lt;/span>&lt;span class="n">dev&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">null&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="bp">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Clean up more unused stdlib modules&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">cd&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">python3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">13&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">rm&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">rf&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">turtle&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">py&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pydoc_data&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;/&lt;/span>&lt;span class="n">dev&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">null&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="bp">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">USER&lt;/span> &lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">EXPOSE&lt;/span> &lt;span class="mi">5000&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Heathcheck &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">HEALTHCHECK&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">interval&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">15&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">timeout&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">start&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">period&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">retries&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">2&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CMD&lt;/span> &lt;span class="n">wget&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">verbose&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">tries&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">O&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">dev&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">null&lt;/span> &lt;span class="n">http&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">//&lt;/span>&lt;span class="mf">127.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.1&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">$&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="n">PORT&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="n">exit&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">STOPSIGNAL&lt;/span> &lt;span class="n">SIGTERM&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">CMD&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;python&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;src/python_service_template/app.py&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h3 id="3-dockerfile-top-python--wheel-based-build">3. Dockerfile TOP (Python) – Wheel-based Build
+&lt;/h3>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Kỹ thuật&lt;/th>
+&lt;th>Giải thích&lt;/th>
+&lt;th>Nguồn tham khảo&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>Wheel-based Installation&lt;/strong>&lt;/td>
+&lt;td>Build tất cả dependencies thành wheel files, sau đó cài đặt offline để tăng tốc độ build và đảm bảo reproducibility.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Dynamic Security Patching&lt;/strong>&lt;/td>
+&lt;td>Sử dụng Python script để parse &lt;code>pyproject.toml&lt;/code>, tự động nâng cấp fastapi và starlette lên phiên bản an toàn mà không cần sửa file gốc.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>PIP_ONLY_BINARY&lt;/strong>&lt;/td>
+&lt;td>Chỉ sử dụng wheel files, không build từ source, giúp build nhanh hơn và tránh lỗi compilation.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Offline Installation&lt;/strong>&lt;/td>
+&lt;td>Cài đặt từ wheel files local, không cần kết nối internet ở runtime stage.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Native Healthcheck&lt;/strong>&lt;/td>
+&lt;td>Sử dụng Python &lt;code>http.client&lt;/code> thay vì external tools như curl/wget, giảm dependencies.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Non-root User&lt;/strong>&lt;/td>
+&lt;td>Tạo user UID 10001 với home directory riêng để tăng bảo mật.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>&lt;strong>Dockerfile TOP (Python)&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;span class="lnt">102
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># syntax=docker/dockerfile:1.7&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">#&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">##############################&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># builder&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">##############################&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">python&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">3.13&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">slim&lt;/span> &lt;span class="n">AS&lt;/span> &lt;span class="n">builder&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENV&lt;/span> &lt;span class="n">PIP_DISABLE_PIP_VERSION_CHECK&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PIP_NO_CACHE_DIR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PIP_ONLY_BINARY&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">all&lt;/span>&lt;span class="p">:&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONDONTWRITEBYTECODE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONUNBUFFERED&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Pre-cache manifests&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">pyproject&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">toml&lt;/span> &lt;span class="n">README&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">md&lt;/span> &lt;span class="n">LICENSE&lt;/span>&lt;span class="o">*&lt;/span> &lt;span class="o">./&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Fix HIGH vulnerable issue: CVE-2025-62727 by upgrading starlette and fastapi.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">pip&lt;/span> &lt;span class="n">python&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span>&lt;span class="s1">&amp;#39;PY&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">import&lt;/span> &lt;span class="n">tomllib&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">pathlib&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">re&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">parse_req&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">s&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="nb">str&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">m&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">re&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">match&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">r&lt;/span>&lt;span class="s1">&amp;#39;^\s*([A-Za-z0-9_.-]+)(\[[^\]]+\])?\s*(.*)$&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">s&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">extras&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">rest&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">group&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">group&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="ow">or&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">),&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">m&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">group&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="ow">or&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">name&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">extras&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">rest&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">re&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">split&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sa">r&lt;/span>&lt;span class="s1">&amp;#39;[&amp;gt;&amp;lt;=~!; ]&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">s&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="p">)[&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="n">name&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">s&lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="n">len&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="p">):]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">data&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">tomllib&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">loads&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">pathlib&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Path&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;pyproject.toml&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">read_text&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">deps&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">data&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;project&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">{})&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;dependencies&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">[])&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">safe&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">[]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">present&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">set&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="n">d&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">deps&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">name&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">extras&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">rest&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">parse_req&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">norm&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">name&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">lower&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">replace&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;_&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="s1">&amp;#39;-&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">norm&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s1">&amp;#39;fastapi&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">safe&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">f&lt;/span>&lt;span class="s1">&amp;#39;fastapi{extras}&amp;gt;=0.118,&amp;lt;0.121&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">safe&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">present&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">norm&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="s1">&amp;#39;starlette&amp;#39;&lt;/span> &lt;span class="ow">not&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="n">present&lt;/span>&lt;span class="p">:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">safe&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">append&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;starlette&amp;gt;=0.49.1,&amp;lt;0.50&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">pathlib&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Path&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;/requirements.safe.txt&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">write_text&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">join&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">safe&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Resolved safe deps:&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="o">*&lt;/span>&lt;span class="n">safe&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">sep&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s1">- &amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">PY&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Wheel ALL dependencies from the safe list&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">pip&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pip&lt;/span> &lt;span class="n">wheel&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">wheel&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">dir&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">wheels&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">r&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">requirements&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">safe&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">txt&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Build wheel of the project itself&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="o">./&lt;/span>&lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">pip&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pip&lt;/span> &lt;span class="n">wheel&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">wheel&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">dir&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">wheels&lt;/span> &lt;span class="o">.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">##############################&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># runtime&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">##############################&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">python&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">3.13&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">slim&lt;/span> &lt;span class="n">AS&lt;/span> &lt;span class="n">runtime&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">VERSION&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">0.1&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">VCS_REF&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">sha&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">BUILD_DATE&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LABEL&lt;/span> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">title&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;python-service-template&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">description&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Dockerfile contest build&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">version&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="n">VERSION&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">revision&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="n">VCS_REF&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">created&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="n">BUILD_DATE&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">licenses&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Apache-2.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENV&lt;/span> &lt;span class="n">PYTHONDONTWRITEBYTECODE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONUNBUFFERED&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONOPTIMIZE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">2&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">HOST&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">0.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.0&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PORT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">5000&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">WORKERS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">APP_VERSION&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="n">VERSION&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">GIT_COMMIT_SHA&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="n">VCS_REF&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Non-root&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">useradd&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">create&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">home&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">uid&lt;/span> &lt;span class="mi">10001&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">shell&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">nologin&lt;/span> &lt;span class="n">appuser&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">home&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">appuser&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Install offline: install ALL safe deps, then the app wheel with --no-deps&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">wheels&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">wheels&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">requirements&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">safe&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">txt&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">requirements&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">safe&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">txt&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">pip&lt;/span> &lt;span class="n">install&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">index&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">find&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">links&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">wheels&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">r&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">requirements&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">safe&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">txt&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">pip&lt;/span> &lt;span class="n">install&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">index&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">find&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">links&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">wheels&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">deps&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">python&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">service&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">template&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">compile&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">rm&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">rf&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">wheels&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">requirements&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">safe&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">txt&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">EXPOSE&lt;/span> &lt;span class="mi">5000&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">HEALTHCHECK&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">interval&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">30&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">timeout&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">2&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">start&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">period&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">retries&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">3&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CMD&lt;/span> &lt;span class="n">python&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">c&lt;/span> &lt;span class="s2">&amp;#34;import sys, http.client; c=http.client.HTTPConnection(&amp;#39;127.0.0.1&amp;#39;, int(__import__(&amp;#39;os&amp;#39;).environ.get(&amp;#39;PORT&amp;#39;,&amp;#39;5000&amp;#39;)), timeout=1); c.request(&amp;#39;GET&amp;#39;,&amp;#39;/health&amp;#39;); r=c.getresponse(); sys.exit(0 if r.status==200 else 1)&amp;#34;&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="n">exit&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">USER&lt;/span> &lt;span class="mi">10001&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">10001&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">CMD&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;python&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;-m&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;python_service_template.app&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h3 id="4-dockerfile-top-python--khiem-doan">4. Dockerfile TOP (Python) – Khiem Doan
+&lt;/h3>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Kỹ thuật&lt;/th>
+&lt;th>Giải thích&lt;/th>
+&lt;th>Nguồn tham khảo&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>UV Package Manager&lt;/strong>&lt;/td>
+&lt;td>Sử dụng &lt;code>uv&lt;/code> để quản lý dependencies nhanh hơn pip, với cache mount để tăng tốc rebuild.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Alpine + Tini&lt;/strong>&lt;/td>
+&lt;td>Sử dụng Alpine Linux nhẹ và tini làm init system để xử lý signals đúng cách.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Security Patching&lt;/strong>&lt;/td>
+&lt;td>Nâng cấp starlette lên 0.50.0 để fix các CVE mà không cần sửa pyproject.toml.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Non-root User&lt;/strong>&lt;/td>
+&lt;td>Tạo user nonroot với UID/GID 14406, một UID không phổ biến để tránh conflict.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Healthcheck với curl&lt;/strong>&lt;/td>
+&lt;td>Sử dụng curl để kiểm tra health endpoint và grep để verify response JSON.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>OCI Labels&lt;/strong>&lt;/td>
+&lt;td>Thêm đầy đủ OCI labels với metadata về version, build date, revision, source.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>&lt;strong>Dockerfile TOP (Python)&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;span class="lnt">69
+&lt;/span>&lt;span class="lnt">70
+&lt;/span>&lt;span class="lnt">71
+&lt;/span>&lt;span class="lnt">72
+&lt;/span>&lt;span class="lnt">73
+&lt;/span>&lt;span class="lnt">74
+&lt;/span>&lt;span class="lnt">75
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># syntax=docker/dockerfile:1.19&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">python&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">3.13&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">alpine3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">22&lt;/span> &lt;span class="n">AS&lt;/span> &lt;span class="n">deps&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">pip&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">pip&lt;/span> &lt;span class="n">install&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">compile&lt;/span> &lt;span class="n">uv&lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="mf">0.9&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">pyproject&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">toml&lt;/span> &lt;span class="n">uv&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">lock&lt;/span> &lt;span class="o">./&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">uv&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">uv&lt;/span> &lt;span class="n">sync&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">frozen&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">dev&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">install&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">project&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">uv&lt;/span> &lt;span class="n">pip&lt;/span> &lt;span class="n">install&lt;/span> &lt;span class="n">starlette&lt;/span>&lt;span class="o">==&lt;/span>&lt;span class="mf">0.50&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">python&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">3.13&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">alpine3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">22&lt;/span> &lt;span class="n">AS&lt;/span> &lt;span class="n">final&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">pip&lt;/span> &lt;span class="n">install&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">U&lt;/span> &lt;span class="n">pip&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">apk&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">apk&lt;/span> &lt;span class="n">add&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">cache&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">curl&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">8.14&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">r2&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">tini&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">0.19&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">r3&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">VERSION&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;0.1.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">BUILD_DATE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;2025-11-10T00:00:00Z&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">REVISION&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;unknown&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">GIT_COMMIT_SHA&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;unknown&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LABEL&lt;/span> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">title&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;python-service-template&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">description&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;A batteries-included template for building robust, production-ready Python backend services with FastAPI&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">authors&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Khiem Doan&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">version&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="n">VERSION&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">created&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="n">BUILD_DATE&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">revision&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="n">REVISION&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">source&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;https://github.com/khiemdoan/&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">licenses&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;MIT&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENV&lt;/span> &lt;span class="n">USER&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">nonroot&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">GROUP&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">nonroot&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">UID&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">14406&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">GID&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">14406&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">addgroup&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">g&lt;/span> &lt;span class="s2">&amp;#34;$GID&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;$GROUP&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">adduser&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">D&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">u&lt;/span> &lt;span class="s2">&amp;#34;$UID&amp;#34;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">G&lt;/span> &lt;span class="s2">&amp;#34;$GROUP&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;$USER&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">USER&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="n">USER&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">chown&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="n">USER&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">$&lt;/span>&lt;span class="n">GROUP&lt;/span> &lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">deps&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">chown&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="n">USER&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">$&lt;/span>&lt;span class="n">GROUP&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">venv&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">venv&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENV&lt;/span> &lt;span class="n">PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/app/.venv/bin:$PATH&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONPATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/app/src&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONUNBUFFERED&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PYTHONDONTWRITEBYTECODE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">HOST&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">0.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.0&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PORT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">3000&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">WORKERS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">LOGGING__LEVEL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">INFO&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">LOGGING__FORMAT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">PLAIN&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">COFFEE_API__HOST&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">https&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">//&lt;/span>&lt;span class="n">api&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sampleapis&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">com&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">coffee&lt;/span>&lt;span class="o">/&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">APP_VERSION&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="n">VERSION&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">GIT_COMMIT_SHA&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="n">GIT_COMMIT_SHA&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">EXPOSE&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="n">PORT&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">HEALTHCHECK&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">timeout&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="n">s&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CMD&lt;/span> &lt;span class="n">curl&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">f&lt;/span> &lt;span class="s2">&amp;#34;http://localhost:${PORT}/health/&amp;#34;&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">grep&lt;/span> &lt;span class="s1">&amp;#39;&amp;#34;heartbeat&amp;#34;:&amp;#34;HEALTHY&amp;#34;&amp;#39;&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="n">exit&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENTRYPOINT&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;/sbin/tini&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;--&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">CMD&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;python&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;src/python_service_template/app.py&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="ghi-chú-triển-khai">Ghi chú triển khai
+&lt;/h2>&lt;ul>
+&lt;li>Các Dockerfile trên chỉ mang tính tham khảo kiến trúc; khi áp dụng vào dự án Python/FastAPI của bạn, hãy giữ nguyên nguyên tắc: multi-stage build, security patching, non-root user, pin SHA256 cho base images.&lt;/li>
+&lt;li>&lt;strong>Distroless vs Alpine&lt;/strong>: Distroless an toàn hơn (không có shell, package manager) nhưng cần copy shared libraries thủ công. Alpine nhẹ và dễ debug hơn nhưng có thể gặp vấn đề tương thích với một số Python packages.&lt;/li>
+&lt;li>&lt;strong>UV vs PIP&lt;/strong>: UV nhanh hơn pip đáng kể (10-100x) và quản lý virtual environment tốt hơn, nhưng cần cài đặt thêm.&lt;/li>
+&lt;li>&lt;strong>Security&lt;/strong>: Luôn cập nhật dependencies để fix CVE, đặc biệt là các package phổ biến như starlette, fastapi, uvicorn.&lt;/li>
+&lt;li>&lt;strong>Healthcheck&lt;/strong>: Nên sử dụng native Python &lt;code>http.client&lt;/code> hoặc curl/wget tùy vào base image và yêu cầu bảo mật.&lt;/li>
+&lt;/ul></description></item><item><title>Tối ưu Docker cho Node.js</title><link>https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-nodejs/</link><pubDate>Tue, 18 Nov 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-nodejs/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker-optimization/docker-optimization-react.webp" alt="Featured image of post Tối ưu Docker cho Node.js" />&lt;h2 id="dockerfile-contest-2025--reactnode-tối-ưu-extreme">Dockerfile Contest 2025 – React/Node tối ưu extreme
 &lt;/h2>&lt;p>Dockerfile Contest 2025 thúc đẩy cộng đồng DevOps Việt Nam đánh giá lại cách viết Dockerfile để đạt &lt;strong>bảo mật, tối ưu, tường minh&lt;/strong>. Dưới đây là phần tổng hợp riêng cho hạng mục React (ứng dụng Node.js build ra static assets).&lt;/p>
 &lt;hr>
 &lt;h2 id="i-hạng-mục-react-tối-ưu-cho-static-web-serving">I. Hạng mục REACT (Tối ưu cho Static Web Serving)

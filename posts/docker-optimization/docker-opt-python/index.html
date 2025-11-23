@@ -1,0 +1,831 @@
+<!doctype html><html lang=vi dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Phân tích các kỹ thuật tối ưu Dockerfile từ Dockerfile Contest 2025 cho ứng dụng Python/FastAPI."><title>Tối ưu Docker cho Python</title>
+<link rel=canonical href=https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-python/><link rel=stylesheet href=/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css><meta property='og:title' content="Tối ưu Docker cho Python"><meta property='og:description' content="Phân tích các kỹ thuật tối ưu Dockerfile từ Dockerfile Contest 2025 cho ứng dụng Python/FastAPI."><meta property='og:url' content='https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-python/'><meta property='og:site_name' content='Hoàng Dương'><meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:tag' content='docker'><meta property='article:tag' content='python'><meta property='article:tag' content='fastapi'><meta property='article:tag' content='performance'><meta property='article:published_time' content='2025-11-23T00:00:00+00:00'><meta property='article:modified_time' content='2025-11-23T00:00:00+00:00'><meta property='og:image' content='https://tech.nguuyen.io.vn/images/docker-optimization/docker-optimization-python.webp'><meta name=twitter:title content="Tối ưu Docker cho Python"><meta name=twitter:description content="Phân tích các kỹ thuật tối ưu Dockerfile từ Dockerfile Contest 2025 cho ứng dụng Python/FastAPI."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://tech.nguuyen.io.vn/images/docker-optimization/docker-optimization-python.webp'><link rel=icon type=image/x-icon href=/favicon.ico><style>:root{--article-font-family:"Roboto", var(--base-font-family)}</style><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Hiển thị Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/hoang_hu_f5b001d7581bed29.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Hoàng Dương</a></h1><h2 class=site-description>And, when you want something, all the universe conspires in helping you to achieve it.</h2></div></header><ol class=menu-social><li><a href=https://github.com/HoangDuonng target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.instagram.com/ngu_uuen/ target=_blank title=Instagram rel=me><svg class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="4"/><path d="M16.5 7.5h.01"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Trang chủ</span></a></li><li><a href=/gi%E1%BB%9Bi-thi%E1%BB%87u/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>Về tôi</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Lưu trữ</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Tìm kiếm</span></a></li><li><a href=/li%C3%AAn-k%E1%BA%BFt/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Liên kết</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://tech.nguuyen.io.vn/ selected>Tiếng Việt</option><option value=https://tech.nguuyen.io.vn/en/>English</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Chế độ tối</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><h2 class="widget-title section-title">Mục lục</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#dockerfile-contest-2025--python-tối-ưu-extreme>Dockerfile Contest 2025 – Python tối ưu extreme</a></li><li><a href=#i-hạng-mục-python-tối-ưu-cho-backend-service>I. Hạng mục PYTHON (Tối ưu cho Backend Service)</a><ol><li><a href=#1-dockerfile-top-1-python--thanh-nguyen-the>1. Dockerfile TOP 1 (Python) – Thanh Nguyen The</a></li><li><a href=#2-dockerfile-top-2-python--newnol>2. Dockerfile TOP 2 (Python) – newnol</a></li><li><a href=#3-dockerfile-top-python--wheel-based-build>3. Dockerfile TOP (Python) – Wheel-based Build</a></li><li><a href=#4-dockerfile-top-python--khiem-doan>4. Dockerfile TOP (Python) – Khiem Doan</a></li></ol></li><li><a href=#ghi-chú-triển-khai>Ghi chú triển khai</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/posts/docker-optimization/docker-opt-python/><img src=/images/docker-optimization/docker-optimization-python.webp loading=lazy alt="Featured image of post Tối ưu Docker cho Python"></a></div><div class=article-details><header class=article-category><a href=/categories/docker-optimization/ style=background-color:#1f6feb;color:#fff>Docker Optimization</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/docker-optimization/docker-opt-python/>Tối ưu Docker cho Python</a></h2><h3 class=article-subtitle>Phân tích các kỹ thuật tối ưu Dockerfile từ Dockerfile Contest 2025 cho ứng dụng Python/FastAPI.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>23/11/2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>14 phút đọc</time></div><div><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span class=article-author--name>Hoàng Dương</span></div></footer></div></header><section class=article-content><h2 id=dockerfile-contest-2025--python-tối-ưu-extreme>Dockerfile Contest 2025 – Python tối ưu extreme</h2><p>Dockerfile Contest 2025 thúc đẩy cộng đồng DevOps Việt Nam đánh giá lại cách viết Dockerfile để đạt <strong>bảo mật, tối ưu, tường minh</strong>. Dưới đây là phần tổng hợp riêng cho hạng mục Python (ứng dụng FastAPI backend service).</p><hr><h2 id=i-hạng-mục-python-tối-ưu-cho-backend-service>I. Hạng mục PYTHON (Tối ưu cho Backend Service)</h2><p>Hạng mục Python tập trung vào việc tối ưu kích thước image, bảo mật (patch CVE), và hiệu năng runtime cho các ứng dụng FastAPI. Các giải pháp đa dạng từ distroless, Alpine tối giản, đến wheel-based builds.</p><h3 id=1-dockerfile-top-1-python--thanh-nguyen-the>1. Dockerfile TOP 1 (Python) – Thanh Nguyen The</h3><div class=table-wrapper><table><thead><tr><th>Kỹ thuật</th><th>Giải thích theo tác giả</th><th>Nguồn tham khảo</th></tr></thead><tbody><tr><td><strong>UV Package Manager</strong></td><td>Sử dụng <code>uv</code> thay vì pip để tăng tốc độ cài đặt dependencies và quản lý virtual environment hiệu quả hơn.</td><td></td></tr><tr><td><strong>Distroless Base Image</strong></td><td>Dùng <code>gcr.io/distroless/base-debian12:nonroot</code> để giảm attack surface, không có shell, package manager, hoặc các công cụ không cần thiết.</td><td></td></tr><tr><td><strong>Multi-arch Support</strong></td><td>Hỗ trợ cả amd64 và arm64 bằng cách copy shared libraries theo kiến trúc tương ứng.</td><td></td></tr><tr><td><strong>Shared Libraries Copy</strong></td><td>Copy các thư viện cần thiết (libc, libm, libz, libgcc_s) từ builder stage để ứng dụng chạy được trong distroless.</td><td></td></tr><tr><td><strong>Security Patching</strong></td><td>Nâng cấp starlette lên 0.49.1 để fix CVE-2025-62727 và CVE-2025-54121 mà không cần sửa pyproject.toml.</td><td></td></tr><tr><td><strong>LD_LIBRARY_PATH</strong></td><td>Thiết lập biến môi trường để hệ thống tìm thấy shared libraries tại thư mục tùy chỉnh.</td><td></td></tr></tbody></table></div><p><strong>Dockerfile TOP 1 (Python)</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span><span class=lnt>76
+</span><span class=lnt>77
+</span><span class=lnt>78
+</span><span class=lnt>79
+</span><span class=lnt>80
+</span><span class=lnt>81
+</span><span class=lnt>82
+</span><span class=lnt>83
+</span><span class=lnt>84
+</span><span class=lnt>85
+</span><span class=lnt>86
+</span><span class=lnt>87
+</span><span class=lnt>88
+</span><span class=lnt>89
+</span><span class=lnt>90
+</span><span class=lnt>91
+</span><span class=lnt>92
+</span><span class=lnt>93
+</span><span class=lnt>94
+</span><span class=lnt>95
+</span><span class=lnt>96
+</span><span class=lnt>97
+</span><span class=lnt>98
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=n>FROM</span> <span class=n>ghcr</span><span class=o>.</span><span class=n>io</span><span class=o>/</span><span class=n>astral</span><span class=o>-</span><span class=n>sh</span><span class=o>/</span><span class=n>uv</span><span class=p>:</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span><span class=o>-</span><span class=n>bookworm</span><span class=o>-</span><span class=n>slim</span><span class=err>@</span><span class=n>sha256</span><span class=p>:</span><span class=mi>6</span><span class=n>b8ac7bb76766ffe9f6cc20f56789755d539e8d0e605d8983131227c5c8b87a1</span> <span class=n>AS</span> <span class=n>builder</span>
+</span></span><span class=line><span class=cl><span class=n>ENV</span> <span class=n>UV_LINK_MODE</span><span class=o>=</span><span class=n>copy</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>TARGETARCH</span>
+</span></span><span class=line><span class=cl><span class=c1># Copy shared libraries đủ để chạy ứng dụng trong môi trường distroless</span>
+</span></span><span class=line><span class=cl><span class=c1># Kiểm tra shared libraries cần thiết với lệnh:</span>
+</span></span><span class=line><span class=cl><span class=c1># ldd $(which python3) và các thư viện khác trong virtual environment sau khi cài đặt các package cần thiết (kiểm tra trước khi build)</span>
+</span></span><span class=line><span class=cl><span class=c1># Mỗi kiến trúc sẽ đặt thư viện trong các thư mục khác nhau, ví dụ: /lib/x86_64-linux-gnu/ cho amd64, /lib/aarch64-linux-gnu/ cho arm64</span>
+</span></span><span class=line><span class=cl><span class=c1># do đó cần xác định kiến trúc và copy từ thư mục tương ứng. </span>
+</span></span><span class=line><span class=cl><span class=c1># TARGETARCH là built-in arg của docker buildx, tự động nhận giá trị (amd64 hoặc arm64) khi build multi-arch</span>
+</span></span><span class=line><span class=cl><span class=c1># Shared libraries copy ở lệnh phía dưới là chưa đủ để chạy ứng dụng, tuy nhiên gcr.io/distroless/base-debian12 (image sử dụng làm base image cho runtime tại runtime state) đã có sẵn một số shared libraries nên chỉ cần copy những thư viện còn thiếu.</span>
+</span></span><span class=line><span class=cl><span class=c1># gcr.io/distroless/base-debian12:nonroot không có shell, kiểm tra shared libraries bằng cách sử dụng gcr.io/distroless/base-debian12:debug</span>
+</span></span><span class=line><span class=cl><span class=c1># gcr.io/distroless/base-debian12:debug tương tự gcr.io/distroless/base-debian12:nonroot nhưng có thêm shell để phục vụ debug.</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=k>if</span> <span class=p>[</span> <span class=s2>&#34;$TARGETARCH&#34;</span> <span class=o>=</span> <span class=s2>&#34;amd64&#34;</span> <span class=p>];</span> <span class=n>then</span> \
+</span></span><span class=line><span class=cl>        <span class=n>LIBARCH</span><span class=o>=</span><span class=s2>&#34;x86_64&#34;</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=k>elif</span> <span class=p>[</span> <span class=s2>&#34;$TARGETARCH&#34;</span> <span class=o>=</span> <span class=s2>&#34;arm64&#34;</span> <span class=p>];</span> <span class=n>then</span> \
+</span></span><span class=line><span class=cl>        <span class=n>LIBARCH</span><span class=o>=</span><span class=s2>&#34;aarch64&#34;</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=k>else</span> \
+</span></span><span class=line><span class=cl>        <span class=n>LIBARCH</span><span class=o>=</span><span class=s2>&#34;unknown&#34;</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>fi</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>mkdir</span> <span class=o>-</span><span class=n>p</span> <span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>multi</span><span class=o>-</span><span class=n>arch</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>cp</span> <span class=o>/</span><span class=n>lib</span><span class=o>/$</span><span class=p>{</span><span class=n>LIBARCH</span><span class=p>}</span><span class=o>-</span><span class=n>linux</span><span class=o>-</span><span class=n>gnu</span><span class=o>/</span><span class=n>libc</span><span class=o>.</span><span class=n>so</span><span class=o>.</span><span class=mi>6</span> <span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>multi</span><span class=o>-</span><span class=n>arch</span><span class=o>/</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>cp</span> <span class=o>/</span><span class=n>lib</span><span class=o>/$</span><span class=p>{</span><span class=n>LIBARCH</span><span class=p>}</span><span class=o>-</span><span class=n>linux</span><span class=o>-</span><span class=n>gnu</span><span class=o>/</span><span class=n>libm</span><span class=o>.</span><span class=n>so</span><span class=o>.</span><span class=mi>6</span> <span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>multi</span><span class=o>-</span><span class=n>arch</span><span class=o>/</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>cp</span> <span class=o>/</span><span class=n>lib</span><span class=o>/$</span><span class=p>{</span><span class=n>LIBARCH</span><span class=p>}</span><span class=o>-</span><span class=n>linux</span><span class=o>-</span><span class=n>gnu</span><span class=o>/</span><span class=n>libz</span><span class=o>.</span><span class=n>so</span><span class=o>.</span><span class=mi>1</span> <span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>multi</span><span class=o>-</span><span class=n>arch</span><span class=o>/</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>cp</span> <span class=o>/</span><span class=n>lib</span><span class=o>/$</span><span class=p>{</span><span class=n>LIBARCH</span><span class=p>}</span><span class=o>-</span><span class=n>linux</span><span class=o>-</span><span class=n>gnu</span><span class=o>/</span><span class=n>libgcc_s</span><span class=o>.</span><span class=n>so</span><span class=o>.</span><span class=mi>1</span> <span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>multi</span><span class=o>-</span><span class=n>arch</span><span class=o>/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>build</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Sử dụng cache để tăng tốc độ build</span>
+</span></span><span class=line><span class=cl><span class=c1># Cài đặt dependencies trong uv virtual environment</span>
+</span></span><span class=line><span class=cl><span class=c1># Sử dụng mount type=bind để bind các file uv.lock và pyproject.toml từ host vào container mount thay vì copy.</span>
+</span></span><span class=line><span class=cl><span class=c1># --frozen để đảm bảo chỉ cài đặt đúng phiên bản dependencies trong uv.lock, không update uv.lock</span>
+</span></span><span class=line><span class=cl><span class=c1># --no-install-project để không cài đặt project hiện tại (chỉ cài đặt dependencies)</span>
+</span></span><span class=line><span class=cl><span class=c1># --no-dev để không cài đặt dev dependencies</span>
+</span></span><span class=line><span class=cl><span class=c1># --no-editable để không cài đặt editable mode</span>
+</span></span><span class=line><span class=cl><span class=c1># starlette 0.46.2 dính CVE-2025-62727 CVE-2025-54121, nâng cấp để vá lỗi bảo mật (do thay đổi pyproject.toml và file uv.lock sẽ vi phạm nội quy nên chạy lệnh install riêng)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=n>root</span><span class=o>/.</span><span class=n>cache</span><span class=o>/</span><span class=n>uv</span> \
+</span></span><span class=line><span class=cl>    <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>bind</span><span class=p>,</span><span class=n>source</span><span class=o>=</span><span class=n>uv</span><span class=o>.</span><span class=n>lock</span><span class=p>,</span><span class=n>target</span><span class=o>=</span><span class=n>uv</span><span class=o>.</span><span class=n>lock</span> \
+</span></span><span class=line><span class=cl>    <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>bind</span><span class=p>,</span><span class=n>source</span><span class=o>=</span><span class=n>pyproject</span><span class=o>.</span><span class=n>toml</span><span class=p>,</span><span class=n>target</span><span class=o>=</span><span class=n>pyproject</span><span class=o>.</span><span class=n>toml</span> \
+</span></span><span class=line><span class=cl>    <span class=n>uv</span> <span class=n>sync</span> <span class=o>--</span><span class=n>frozen</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>install</span><span class=o>-</span><span class=n>project</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>dev</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>editable</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>uv</span> <span class=n>pip</span> <span class=n>install</span> <span class=s2>&#34;starlette==0.49.1&#34;</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>deps</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Sử dụng distroless làm base image cho runtime để đảm bảo tính bảo mật và tối ưu kích thước image</span>
+</span></span><span class=line><span class=cl><span class=c1># Chọn distroless thay vì alpine vì alpine sử dụng musl libc, trong khi python và nhiều thư viện phổ biến trong python được biên dịch với glibc, dẫn đến các vấn đề tương thích.</span>
+</span></span><span class=line><span class=cl><span class=c1># distroless giúp ứng dụng chạy ổn định hơn và cũng rất nhẹ.</span>
+</span></span><span class=line><span class=cl><span class=c1># cc-debian12 có nhiều shared libraries cần thiết cho python và các package phổ biến hơn so với base-debian12</span>
+</span></span><span class=line><span class=cl><span class=c1># tuy nhiên khi đã kiểm tra kỹ các shared libraries cần thiết (với lệnh ldd) và copy đầy đủ từ builder stage thì base-debian12 sẽ giúp tối ưu kích thước image hơn mà vẫn đảm bảo ứng dụng chạy ổn định.</span>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=n>gcr</span><span class=o>.</span><span class=n>io</span><span class=o>/</span><span class=n>distroless</span><span class=o>/</span><span class=n>base</span><span class=o>-</span><span class=n>debian12</span><span class=p>:</span><span class=n>nonroot</span><span class=err>@</span><span class=n>sha256</span><span class=p>:</span><span class=mi>10136</span><span class=n>f394cbc891efa9f20974a48843f21a6b3cbde55b1778582195d6726fa85</span> <span class=n>AS</span> <span class=n>runtime</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>LABEL</span> <span class=n>maintainer</span><span class=o>=</span><span class=s2>&#34;Thanh Nguyen The&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>LABEL</span> <span class=n>maintainer</span><span class=o>.</span><span class=n>email</span><span class=o>=</span><span class=s2>&#34;thanhnt.devops@gmail.com&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>LABEL</span> <span class=n>maintainer</span><span class=o>.</span><span class=n>company</span><span class=o>=</span><span class=s2>&#34;VIETNAM NATIONAL CYBER SECURITY TECHNOLOGY CORPORATION&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>LABEL</span> <span class=n>maintainer</span><span class=o>.</span><span class=n>youtube</span><span class=o>=</span><span class=s2>&#34;DevOps Mentor&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>LABEL</span> <span class=n>image</span><span class=o>.</span><span class=n>description</span><span class=o>=</span><span class=s2>&#34;Secure, minimal Python app using UV and Distroless&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy các thư viện và python từ builder stage</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>multi</span><span class=o>-</span><span class=n>arch</span><span class=o>/</span> <span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>multi</span><span class=o>-</span><span class=n>arch</span><span class=o>/</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>libpython3</span><span class=o>.</span><span class=mf>13.</span><span class=n>so</span><span class=o>.</span><span class=mf>1.0</span> <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>libpython3</span><span class=o>.</span><span class=mf>13.</span><span class=n>so</span><span class=o>.</span><span class=mf>1.0</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span><span class=o>/</span> <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span><span class=o>/</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>bin</span><span class=o>/</span><span class=n>python</span> <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>bin</span><span class=o>/</span><span class=n>python3</span>
+</span></span><span class=line><span class=cl><span class=c1># Copy virtual environment từ builder</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>--</span><span class=n>chown</span><span class=o>=</span><span class=n>nonroot</span><span class=p>:</span><span class=n>nonroot</span> <span class=o>/</span><span class=n>build</span><span class=o>/.</span><span class=n>venv</span><span class=o>/</span> <span class=o>/</span><span class=n>app</span><span class=o>/.</span><span class=n>venv</span><span class=o>/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy source code - chỉ copy những gì cần thiết</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>chown</span><span class=o>=</span><span class=n>nonroot</span><span class=p>:</span><span class=n>nonroot</span> <span class=n>src</span><span class=o>/</span> <span class=o>./</span><span class=n>src</span><span class=o>/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Thiết lập environment variables</span>
+</span></span><span class=line><span class=cl><span class=c1># Do runtime limit là 1 vCPU, 512MB RAM nên thiết lập WORKERS=2 thay vì 3 (nguy cơ OOM). Công thức worker = (2 x số lượng vCPU + 1) chỉ áp dụng trong trường hợp &gt; 1GB RAM</span>
+</span></span><span class=line><span class=cl><span class=c1># LD_LIBRARY_PATH để hệ thống có thể tìm thấy các shared libraries cần thiết tại thư mục mới thay vì thư mục mặc đinh (/lib/x86_64-linux-gnu hoặc /lib/aarch64-linux-gnu)</span>
+</span></span><span class=line><span class=cl><span class=c1># shared libraries không có trong /lib/multi-arch sẽ tiếp tục được load từ thư mục mặc định của hệ thống</span>
+</span></span><span class=line><span class=cl><span class=n>ENV</span> <span class=n>PATH</span><span class=o>=</span><span class=s2>&#34;/app/.venv/bin/:$PATH&#34;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONPATH</span><span class=o>=</span><span class=s2>&#34;/app/src/&#34;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>LANG</span><span class=o>=</span><span class=n>C</span><span class=o>.</span><span class=n>UTF</span><span class=o>-</span><span class=mi>8</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONUNBUFFERED</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONFAULTHANDLER</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONDONTWRITEBYTECODE</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONHASHSEED</span><span class=o>=</span><span class=n>random</span> \
+</span></span><span class=line><span class=cl>    <span class=n>HOST</span><span class=o>=</span><span class=mf>0.0</span><span class=o>.</span><span class=mf>0.0</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PORT</span><span class=o>=</span><span class=mi>8080</span> \
+</span></span><span class=line><span class=cl>    <span class=n>WORKERS</span><span class=o>=</span><span class=mi>2</span> \
+</span></span><span class=line><span class=cl>    <span class=n>LOGGING__LEVEL</span><span class=o>=</span><span class=n>INFO</span> \
+</span></span><span class=line><span class=cl>    <span class=n>LOGGING__FORMAT</span><span class=o>=</span><span class=n>PLAIN</span> \
+</span></span><span class=line><span class=cl>    <span class=n>COFFEE_API__HOST</span><span class=o>=</span><span class=s2>&#34;https://api.sampleapis.com/coffee/&#34;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>APP_VERSION</span><span class=o>=</span><span class=mf>0.1</span><span class=o>.</span><span class=mi>0</span> \
+</span></span><span class=line><span class=cl>    <span class=n>GIT_COMMIT_SHA</span><span class=o>=</span><span class=n>sha</span> \
+</span></span><span class=line><span class=cl>    <span class=n>LD_LIBRARY_PATH</span><span class=o>=/</span><span class=n>lib</span><span class=o>/</span><span class=n>multi</span><span class=o>-</span><span class=n>arch</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># nonroot user mặc định đã được sử dụng trong distroless base-debian12:nonroot nên không cần thiết phải thêm lệnh phía dưới</span>
+</span></span><span class=line><span class=cl><span class=c1># USER nonroot:nonroot</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Expose port mặc định</span>
+</span></span><span class=line><span class=cl><span class=n>EXPOSE</span> <span class=mi>8080</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Command để chạy ứng dụng</span>
+</span></span><span class=line><span class=cl><span class=n>ENTRYPOINT</span> <span class=p>[</span><span class=s2>&#34;python&#34;</span><span class=p>,</span> <span class=s2>&#34;src/python_service_template/app.py&#34;</span><span class=p>]</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h3 id=2-dockerfile-top-2-python--newnol>2. Dockerfile TOP 2 (Python) – newnol</h3><div class=table-wrapper><table><thead><tr><th>Kỹ thuật</th><th>Giải thích theo tác giả</th><th>Nguồn tham khảo</th></tr></thead><tbody><tr><td><strong>Alpine Base Image</strong></td><td>Sử dụng <code>python:3.13-alpine</code> để có image nhỏ hơn so với Debian-based images.</td><td></td></tr><tr><td><strong>Security Patches</strong></td><td>Cập nhật các package có CVE: starlette, fastapi, aiohttp, pydantic, structlog, uvloop, uvicorn lên phiên bản an toàn.</td><td></td></tr><tr><td><strong>Ultra Aggressive Optimization</strong></td><td>Strip tất cả <code>.so</code> files, xóa <code>__pycache__</code>, test, doc, examples, typing stubs, license files để giảm kích thước.</td><td></td></tr><tr><td><strong>Python Stdlib Cleanup</strong></td><td>Xóa các module không cần thiết như pip, setuptools, wheel, tkinter, distutils, lib2to3, idlelib, test, unittest.</td><td></td></tr><tr><td><strong>Non-root User</strong></td><td>Tạo user UID 10001 với quyền tối thiểu để tăng bảo mật.</td><td></td></tr><tr><td><strong>Healthcheck</strong></td><td>Sử dụng wget để kiểm tra endpoint <code>/health/</code> với timeout ngắn.</td><td></td></tr></tbody></table></div><p><strong>Dockerfile TOP 2 (Python)</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=c1># syntax=docker/dockerfile:1.7</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># =============================================================================</span>
+</span></span><span class=line><span class=cl><span class=c1># DOCKERFILE ULTRA OPTIMIZED + SECURITY PATCHED</span>
+</span></span><span class=line><span class=cl><span class=c1># Mục tiêu: Nhẹ (&lt;110MB) + Bảo mật cao (0 CVEs)</span>
+</span></span><span class=line><span class=cl><span class=c1># =============================================================================</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># -----------------------------------------------------------------------------</span>
+</span></span><span class=line><span class=cl><span class=c1># Stage 1: Dependencies Builder</span>
+</span></span><span class=line><span class=cl><span class=c1># -----------------------------------------------------------------------------</span>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=n>python</span><span class=p>:</span><span class=mf>3.13</span><span class=o>-</span><span class=n>alpine</span><span class=err>@</span><span class=n>sha256</span><span class=p>:</span><span class=n>e5fa639e49b85986c4481e28faa2564b45aa8021413f31026c3856e5911618b1</span> <span class=n>AS</span> <span class=n>deps</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ENV</span> <span class=n>PIP_NO_CACHE_DIR</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PIP_DISABLE_PIP_VERSION_CHECK</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONDONTWRITEBYTECODE</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONUNBUFFERED</span><span class=o>=</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=k>var</span><span class=o>/</span><span class=n>cache</span><span class=o>/</span><span class=n>apk</span> \
+</span></span><span class=line><span class=cl>    <span class=n>apk</span> <span class=n>add</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>cache</span> <span class=o>--</span><span class=n>virtual</span> <span class=o>.</span><span class=n>build</span><span class=o>-</span><span class=n>deps</span> \
+</span></span><span class=line><span class=cl>      <span class=n>build</span><span class=o>-</span><span class=n>base</span> \
+</span></span><span class=line><span class=cl>      <span class=n>python3</span><span class=o>-</span><span class=n>dev</span> \
+</span></span><span class=line><span class=cl>      <span class=n>cargo</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Install dependencies với PATCHED versions để fix CVEs</span>
+</span></span><span class=line><span class=cl><span class=c1># Note: FastAPI 0.116+ required for starlette 0.49.1+ support</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=n>root</span><span class=o>/.</span><span class=n>cache</span><span class=o>/</span><span class=n>pip</span> \
+</span></span><span class=line><span class=cl>    <span class=n>python</span> <span class=o>-</span><span class=n>m</span> <span class=n>pip</span> <span class=n>install</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>cache</span><span class=o>-</span><span class=n>dir</span> <span class=o>--</span><span class=n>prefix</span><span class=o>=/</span><span class=n>install</span> \
+</span></span><span class=line><span class=cl>         <span class=s2>&#34;aiohttp&gt;=3.12.14,&lt;4.0.0&#34;</span> \
+</span></span><span class=line><span class=cl>         <span class=s2>&#34;asgi-correlation-id&gt;=4.3.4,&lt;5.0.0&#34;</span> \
+</span></span><span class=line><span class=cl>         <span class=s2>&#34;fastapi&gt;=0.116.0&#34;</span> \
+</span></span><span class=line><span class=cl>         <span class=s2>&#34;prometheus-fastapi-instrumentator&gt;=7.0.0,&lt;8.0.0&#34;</span> \
+</span></span><span class=line><span class=cl>         <span class=s2>&#34;pydantic&gt;=2.11.0,&lt;3.0.0&#34;</span> \
+</span></span><span class=line><span class=cl>         <span class=s2>&#34;pydantic-settings&gt;=2.9.1,&lt;3.0.0&#34;</span> \
+</span></span><span class=line><span class=cl>         <span class=s2>&#34;structlog&gt;=25.3.0,&lt;26.0.0&#34;</span> \
+</span></span><span class=line><span class=cl>         <span class=s2>&#34;uvloop&gt;=0.21.0,&lt;0.22.0&#34;</span> \
+</span></span><span class=line><span class=cl>         <span class=s2>&#34;uvicorn[standard]&gt;=0.30.0,&lt;0.31.0&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># ULTRA AGGRESSIVE optimization</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>apk</span> <span class=n>add</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>cache</span> <span class=n>binutils</span> \
+</span></span><span class=line><span class=cl> <span class=c1># Strip ALL .so files aggressively</span>
+</span></span><span class=line><span class=cl> <span class=o>&amp;&amp;</span> <span class=n>find</span> <span class=o>/</span><span class=n>install</span> <span class=o>-</span><span class=n>type</span> <span class=n>f</span> \<span class=p>(</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;*.so*&#39;</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;*.a&#39;</span> \<span class=p>)</span> <span class=o>-</span><span class=n>exec</span> <span class=n>strip</span> <span class=o>--</span><span class=n>strip</span><span class=o>-</span><span class=n>all</span> <span class=p>{}</span> <span class=o>+</span> <span class=mi>2</span><span class=o>&gt;/</span><span class=n>dev</span><span class=o>/</span><span class=n>null</span> <span class=o>||</span> <span class=bp>true</span> \
+</span></span><span class=line><span class=cl> <span class=c1># Remove all bytecode</span>
+</span></span><span class=line><span class=cl> <span class=o>&amp;&amp;</span> <span class=n>find</span> <span class=o>/</span><span class=n>install</span> \<span class=p>(</span> <span class=o>-</span><span class=n>type</span> <span class=n>d</span> <span class=o>-</span><span class=n>name</span> <span class=n>__pycache__</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>type</span> <span class=n>f</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;*.py[co]&#39;</span> \<span class=p>)</span> <span class=o>-</span><span class=n>delete</span> <span class=mi>2</span><span class=o>&gt;/</span><span class=n>dev</span><span class=o>/</span><span class=n>null</span> <span class=o>||</span> <span class=bp>true</span> \
+</span></span><span class=line><span class=cl> <span class=c1># Remove test/doc/examples</span>
+</span></span><span class=line><span class=cl> <span class=o>&amp;&amp;</span> <span class=n>find</span> <span class=o>/</span><span class=n>install</span> <span class=o>-</span><span class=n>type</span> <span class=n>d</span> \<span class=p>(</span> <span class=o>-</span><span class=n>name</span> <span class=n>tests</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=n>testing</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=n>test</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=n>doc</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=n>docs</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=n>example</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=n>examples</span> \<span class=p>)</span> <span class=o>-</span><span class=n>prune</span> <span class=o>-</span><span class=n>exec</span> <span class=n>rm</span> <span class=o>-</span><span class=n>rf</span> <span class=p>{}</span> <span class=o>+</span> <span class=mi>2</span><span class=o>&gt;/</span><span class=n>dev</span><span class=o>/</span><span class=n>null</span> <span class=o>||</span> <span class=bp>true</span> \
+</span></span><span class=line><span class=cl> <span class=c1># Minimize .dist-info</span>
+</span></span><span class=line><span class=cl> <span class=o>&amp;&amp;</span> <span class=n>find</span> <span class=o>/</span><span class=n>install</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;*.dist-info&#39;</span> <span class=o>-</span><span class=n>type</span> <span class=n>d</span> <span class=o>-</span><span class=n>exec</span> <span class=n>sh</span> <span class=o>-</span><span class=n>c</span> <span class=s1>&#39;cd &#34;$1&#34; &amp;&amp; find . -type f ! -name &#34;METADATA&#34; ! -name &#34;top_level.txt&#34; ! -name &#34;RECORD&#34; -delete&#39;</span> <span class=n>_</span> <span class=p>{}</span> \<span class=p>;</span> <span class=mi>2</span><span class=o>&gt;/</span><span class=n>dev</span><span class=o>/</span><span class=n>null</span> <span class=o>||</span> <span class=bp>true</span> \
+</span></span><span class=line><span class=cl> <span class=c1># Remove typing stubs, headers, C files</span>
+</span></span><span class=line><span class=cl> <span class=o>&amp;&amp;</span> <span class=n>find</span> <span class=o>/</span><span class=n>install</span> <span class=o>-</span><span class=n>type</span> <span class=n>f</span> \<span class=p>(</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;*.pyi&#39;</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;*.c&#39;</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;*.h&#39;</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;*.cpp&#39;</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;*.cc&#39;</span> \<span class=p>)</span> <span class=o>-</span><span class=n>delete</span> \
+</span></span><span class=line><span class=cl> <span class=c1># Remove license files</span>
+</span></span><span class=line><span class=cl> <span class=o>&amp;&amp;</span> <span class=n>find</span> <span class=o>/</span><span class=n>install</span> <span class=o>-</span><span class=n>type</span> <span class=n>f</span> \<span class=p>(</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;LICENSE*&#39;</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;COPYING*&#39;</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;NOTICE*&#39;</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;AUTHORS*&#39;</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;CHANGELOG*&#39;</span> <span class=o>-</span><span class=n>o</span> <span class=o>-</span><span class=n>name</span> <span class=s1>&#39;README*&#39;</span> \<span class=p>)</span> <span class=o>-</span><span class=n>delete</span> <span class=mi>2</span><span class=o>&gt;/</span><span class=n>dev</span><span class=o>/</span><span class=n>null</span> <span class=o>||</span> <span class=bp>true</span> \
+</span></span><span class=line><span class=cl> <span class=o>&amp;&amp;</span> <span class=n>apk</span> <span class=n>del</span> <span class=n>binutils</span> <span class=o>.</span><span class=n>build</span><span class=o>-</span><span class=n>deps</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># -----------------------------------------------------------------------------</span>
+</span></span><span class=line><span class=cl><span class=c1># Stage 2: Runtime (ULTRA MINIMAL + SECURE)</span>
+</span></span><span class=line><span class=cl><span class=c1># -----------------------------------------------------------------------------</span>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=n>python</span><span class=p>:</span><span class=mf>3.13</span><span class=o>-</span><span class=n>alpine</span><span class=err>@</span><span class=n>sha256</span><span class=p>:</span><span class=n>e5fa639e49b85986c4481e28faa2564b45aa8021413f31026c3856e5911618b1</span> <span class=n>AS</span> <span class=n>runtime</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>LABEL</span> <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>title</span><span class=o>=</span><span class=s2>&#34;Python Service Template&#34;</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>description</span><span class=o>=</span><span class=s2>&#34;Production-ready FastAPI service - Optimized &amp; Secured&#34;</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>version</span><span class=o>=</span><span class=s2>&#34;0.1.0&#34;</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>authors</span><span class=o>=</span><span class=s2>&#34;newnol &lt;contact@newnol.io.vn&gt;&#34;</span> \
+</span></span><span class=line><span class=cl>      <span class=n>maintainer</span><span class=o>=</span><span class=s2>&#34;newnol&#34;</span> \
+</span></span><span class=line><span class=cl>      <span class=n>security</span><span class=o>.</span><span class=n>scan</span><span class=o>=</span><span class=s2>&#34;trivy-passed&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ENV</span> <span class=n>PYTHONDONTWRITEBYTECODE</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONUNBUFFERED</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PIP_NO_CACHE_DIR</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>HOST</span><span class=o>=</span><span class=mf>0.0</span><span class=o>.</span><span class=mf>0.0</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PORT</span><span class=o>=</span><span class=mi>5000</span> \
+</span></span><span class=line><span class=cl>    <span class=n>WORKERS</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONPATH</span><span class=o>=/</span><span class=n>app</span><span class=o>/</span><span class=n>src</span> \
+</span></span><span class=line><span class=cl>    <span class=n>TZ</span><span class=o>=</span><span class=n>UTC</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Install ONLY wget for healthcheck</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=k>var</span><span class=o>/</span><span class=n>cache</span><span class=o>/</span><span class=n>apk</span> \
+</span></span><span class=line><span class=cl>    <span class=n>apk</span> <span class=n>add</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>cache</span> <span class=n>wget</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Create non-root user</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>addgroup</span> <span class=o>-</span><span class=n>g</span> <span class=mi>10001</span> <span class=o>-</span><span class=n>S</span> <span class=n>app</span> \
+</span></span><span class=line><span class=cl> <span class=o>&amp;&amp;</span> <span class=n>adduser</span> <span class=o>-</span><span class=n>u</span> <span class=mi>10001</span> <span class=o>-</span><span class=n>S</span> <span class=o>-</span><span class=n>G</span> <span class=n>app</span> <span class=o>-</span><span class=n>h</span> <span class=o>/</span><span class=n>app</span> <span class=o>-</span><span class=n>s</span> <span class=o>/</span><span class=n>sbin</span><span class=o>/</span><span class=n>nologin</span> <span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy dependencies</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>deps</span> <span class=o>--</span><span class=n>chown</span><span class=o>=</span><span class=n>app</span><span class=p>:</span><span class=n>app</span> <span class=o>/</span><span class=n>install</span> <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy source (minimal)</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>chown</span><span class=o>=</span><span class=n>app</span><span class=p>:</span><span class=n>app</span> <span class=n>src</span><span class=o>/</span> <span class=o>./</span><span class=n>src</span><span class=o>/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Permissions</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>chmod</span> <span class=o>-</span><span class=n>R</span> <span class=mi>550</span> <span class=o>/</span><span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># EXTREME Python stdlib cleanup</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>rm</span> <span class=o>-</span><span class=n>rf</span> \
+</span></span><span class=line><span class=cl>    <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span><span class=o>/</span><span class=n>ensurepip</span> \
+</span></span><span class=line><span class=cl>    <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span><span class=o>/</span><span class=n>site</span><span class=o>-</span><span class=n>packages</span><span class=o>/</span><span class=n>pip</span><span class=o>*</span> \
+</span></span><span class=line><span class=cl>    <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span><span class=o>/</span><span class=n>site</span><span class=o>-</span><span class=n>packages</span><span class=o>/</span><span class=n>setuptools</span><span class=o>*</span> \
+</span></span><span class=line><span class=cl>    <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span><span class=o>/</span><span class=n>site</span><span class=o>-</span><span class=n>packages</span><span class=o>/</span><span class=n>wheel</span><span class=o>*</span> \
+</span></span><span class=line><span class=cl>    <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span><span class=o>/</span><span class=n>distutils</span> \
+</span></span><span class=line><span class=cl>    <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span><span class=o>/</span><span class=n>lib2to3</span> \
+</span></span><span class=line><span class=cl>    <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span><span class=o>/</span><span class=n>idlelib</span> \
+</span></span><span class=line><span class=cl>    <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span><span class=o>/</span><span class=n>tkinter</span> \
+</span></span><span class=line><span class=cl>    <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span><span class=o>/</span><span class=n>turtledemo</span> \
+</span></span><span class=line><span class=cl>    <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span><span class=o>/</span><span class=n>test</span> \
+</span></span><span class=line><span class=cl>    <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span><span class=o>/</span><span class=n>unittest</span><span class=o>/</span><span class=n>test</span> \
+</span></span><span class=line><span class=cl>    <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>bin</span><span class=o>/</span><span class=n>pip</span><span class=o>*</span> \
+</span></span><span class=line><span class=cl>    <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>bin</span><span class=o>/</span><span class=mi>2</span><span class=n>to3</span><span class=o>*</span> \
+</span></span><span class=line><span class=cl>    <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>bin</span><span class=o>/</span><span class=n>idle</span><span class=o>*</span> \
+</span></span><span class=line><span class=cl>    <span class=mi>2</span><span class=o>&gt;/</span><span class=n>dev</span><span class=o>/</span><span class=n>null</span> <span class=o>||</span> <span class=bp>true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Clean up more unused stdlib modules</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>cd</span> <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>local</span><span class=o>/</span><span class=n>lib</span><span class=o>/</span><span class=n>python3</span><span class=o>.</span><span class=mi>13</span> <span class=o>&amp;&amp;</span> <span class=n>rm</span> <span class=o>-</span><span class=n>rf</span> \
+</span></span><span class=line><span class=cl>    <span class=n>turtle</span><span class=o>.</span><span class=n>py</span> \
+</span></span><span class=line><span class=cl>    <span class=n>pydoc_data</span> \
+</span></span><span class=line><span class=cl>    <span class=mi>2</span><span class=o>&gt;/</span><span class=n>dev</span><span class=o>/</span><span class=n>null</span> <span class=o>||</span> <span class=bp>true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>USER</span> <span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>EXPOSE</span> <span class=mi>5000</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Heathcheck </span>
+</span></span><span class=line><span class=cl><span class=n>HEALTHCHECK</span> <span class=o>--</span><span class=n>interval</span><span class=o>=</span><span class=mi>15</span><span class=n>s</span> <span class=o>--</span><span class=n>timeout</span><span class=o>=</span><span class=mi>3</span><span class=n>s</span> <span class=o>--</span><span class=n>start</span><span class=o>-</span><span class=n>period</span><span class=o>=</span><span class=mi>10</span><span class=n>s</span> <span class=o>--</span><span class=n>retries</span><span class=o>=</span><span class=mi>2</span> \
+</span></span><span class=line><span class=cl>    <span class=n>CMD</span> <span class=n>wget</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>verbose</span> <span class=o>--</span><span class=n>tries</span><span class=o>=</span><span class=mi>1</span> <span class=o>-</span><span class=n>O</span> <span class=o>/</span><span class=n>dev</span><span class=o>/</span><span class=n>null</span> <span class=n>http</span><span class=p>:</span><span class=o>//</span><span class=mf>127.0</span><span class=o>.</span><span class=mf>0.1</span><span class=p>:</span><span class=o>$</span><span class=p>{</span><span class=n>PORT</span><span class=p>}</span><span class=o>/</span><span class=n>health</span><span class=o>/</span> <span class=o>||</span> <span class=n>exit</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>STOPSIGNAL</span> <span class=n>SIGTERM</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>CMD</span> <span class=p>[</span><span class=s2>&#34;python&#34;</span><span class=p>,</span> <span class=s2>&#34;src/python_service_template/app.py&#34;</span><span class=p>]</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h3 id=3-dockerfile-top-python--wheel-based-build>3. Dockerfile TOP (Python) – Wheel-based Build</h3><div class=table-wrapper><table><thead><tr><th>Kỹ thuật</th><th>Giải thích</th><th>Nguồn tham khảo</th></tr></thead><tbody><tr><td><strong>Wheel-based Installation</strong></td><td>Build tất cả dependencies thành wheel files, sau đó cài đặt offline để tăng tốc độ build và đảm bảo reproducibility.</td><td></td></tr><tr><td><strong>Dynamic Security Patching</strong></td><td>Sử dụng Python script để parse <code>pyproject.toml</code>, tự động nâng cấp fastapi và starlette lên phiên bản an toàn mà không cần sửa file gốc.</td><td></td></tr><tr><td><strong>PIP_ONLY_BINARY</strong></td><td>Chỉ sử dụng wheel files, không build từ source, giúp build nhanh hơn và tránh lỗi compilation.</td><td></td></tr><tr><td><strong>Offline Installation</strong></td><td>Cài đặt từ wheel files local, không cần kết nối internet ở runtime stage.</td><td></td></tr><tr><td><strong>Native Healthcheck</strong></td><td>Sử dụng Python <code>http.client</code> thay vì external tools như curl/wget, giảm dependencies.</td><td></td></tr><tr><td><strong>Non-root User</strong></td><td>Tạo user UID 10001 với home directory riêng để tăng bảo mật.</td><td></td></tr></tbody></table></div><p><strong>Dockerfile TOP (Python)</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=c1># syntax=docker/dockerfile:1.7</span>
+</span></span><span class=line><span class=cl><span class=c1>#</span>
+</span></span><span class=line><span class=cl><span class=c1>##############################</span>
+</span></span><span class=line><span class=cl><span class=c1># builder</span>
+</span></span><span class=line><span class=cl><span class=c1>##############################</span>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=n>python</span><span class=p>:</span><span class=mf>3.13</span><span class=o>-</span><span class=n>slim</span> <span class=n>AS</span> <span class=n>builder</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ENV</span> <span class=n>PIP_DISABLE_PIP_VERSION_CHECK</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PIP_NO_CACHE_DIR</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PIP_ONLY_BINARY</span><span class=o>=</span><span class=p>:</span><span class=n>all</span><span class=p>:</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONDONTWRITEBYTECODE</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONUNBUFFERED</span><span class=o>=</span><span class=mi>1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Pre-cache manifests</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>pyproject</span><span class=o>.</span><span class=n>toml</span> <span class=n>README</span><span class=o>.</span><span class=n>md</span> <span class=n>LICENSE</span><span class=o>*</span> <span class=o>./</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Fix HIGH vulnerable issue: CVE-2025-62727 by upgrading starlette and fastapi.</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=n>root</span><span class=o>/.</span><span class=n>cache</span><span class=o>/</span><span class=n>pip</span> <span class=n>python</span> <span class=o>-</span> <span class=o>&lt;&lt;</span><span class=s1>&#39;PY&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=n>tomllib</span><span class=p>,</span> <span class=n>pathlib</span><span class=p>,</span> <span class=n>re</span>
+</span></span><span class=line><span class=cl><span class=k>def</span> <span class=nf>parse_req</span><span class=p>(</span><span class=n>s</span><span class=p>:</span><span class=nb>str</span><span class=p>):</span>
+</span></span><span class=line><span class=cl>    <span class=n>m</span> <span class=o>=</span> <span class=n>re</span><span class=o>.</span><span class=n>match</span><span class=p>(</span><span class=sa>r</span><span class=s1>&#39;^\s*([A-Za-z0-9_.-]+)(\[[^\]]+\])?\s*(.*)$&#39;</span><span class=p>,</span> <span class=n>s</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>m</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>name</span><span class=p>,</span> <span class=n>extras</span><span class=p>,</span> <span class=n>rest</span> <span class=o>=</span> <span class=n>m</span><span class=o>.</span><span class=n>group</span><span class=p>(</span><span class=mi>1</span><span class=p>),</span> <span class=p>(</span><span class=n>m</span><span class=o>.</span><span class=n>group</span><span class=p>(</span><span class=mi>2</span><span class=p>)</span> <span class=ow>or</span> <span class=s1>&#39;&#39;</span><span class=p>),</span> <span class=p>(</span><span class=n>m</span><span class=o>.</span><span class=n>group</span><span class=p>(</span><span class=mi>3</span><span class=p>)</span> <span class=ow>or</span> <span class=s1>&#39;&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>        <span class=k>return</span> <span class=n>name</span><span class=p>,</span> <span class=n>extras</span><span class=p>,</span> <span class=n>rest</span>
+</span></span><span class=line><span class=cl>    <span class=n>name</span> <span class=o>=</span> <span class=n>re</span><span class=o>.</span><span class=n>split</span><span class=p>(</span><span class=sa>r</span><span class=s1>&#39;[&gt;&lt;=~!; ]&#39;</span><span class=p>,</span> <span class=n>s</span><span class=p>,</span> <span class=mi>1</span><span class=p>)[</span><span class=mi>0</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=n>name</span><span class=p>,</span> <span class=s1>&#39;&#39;</span><span class=p>,</span> <span class=n>s</span><span class=p>[</span><span class=n>len</span><span class=p>(</span><span class=n>name</span><span class=p>):]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>data</span> <span class=o>=</span> <span class=n>tomllib</span><span class=o>.</span><span class=n>loads</span><span class=p>(</span><span class=n>pathlib</span><span class=o>.</span><span class=n>Path</span><span class=p>(</span><span class=s1>&#39;pyproject.toml&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>read_text</span><span class=p>())</span>
+</span></span><span class=line><span class=cl><span class=n>deps</span> <span class=o>=</span> <span class=n>data</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s1>&#39;project&#39;</span><span class=p>,</span> <span class=p>{})</span><span class=o>.</span><span class=n>get</span><span class=p>(</span><span class=s1>&#39;dependencies&#39;</span><span class=p>,</span> <span class=p>[])</span>
+</span></span><span class=line><span class=cl><span class=n>safe</span> <span class=o>=</span> <span class=p>[]</span>
+</span></span><span class=line><span class=cl><span class=n>present</span> <span class=o>=</span> <span class=n>set</span><span class=p>()</span>
+</span></span><span class=line><span class=cl><span class=k>for</span> <span class=n>d</span> <span class=ow>in</span> <span class=n>deps</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>name</span><span class=p>,</span> <span class=n>extras</span><span class=p>,</span> <span class=n>rest</span> <span class=o>=</span> <span class=n>parse_req</span><span class=p>(</span><span class=n>d</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>norm</span> <span class=o>=</span> <span class=n>name</span><span class=o>.</span><span class=n>lower</span><span class=p>()</span><span class=o>.</span><span class=n>replace</span><span class=p>(</span><span class=s1>&#39;_&#39;</span><span class=p>,</span><span class=s1>&#39;-&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>norm</span> <span class=o>==</span> <span class=s1>&#39;fastapi&#39;</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>safe</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>f</span><span class=s1>&#39;fastapi{extras}&gt;=0.118,&lt;0.121&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=k>else</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>        <span class=n>safe</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=n>d</span><span class=p>)</span>
+</span></span><span class=line><span class=cl>    <span class=n>present</span><span class=o>.</span><span class=n>add</span><span class=p>(</span><span class=n>norm</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=s1>&#39;starlette&#39;</span> <span class=ow>not</span> <span class=ow>in</span> <span class=n>present</span><span class=p>:</span>
+</span></span><span class=line><span class=cl>    <span class=n>safe</span><span class=o>.</span><span class=n>append</span><span class=p>(</span><span class=s1>&#39;starlette&gt;=0.49.1,&lt;0.50&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>pathlib</span><span class=o>.</span><span class=n>Path</span><span class=p>(</span><span class=s1>&#39;/requirements.safe.txt&#39;</span><span class=p>)</span><span class=o>.</span><span class=n>write_text</span><span class=p>(</span><span class=s1>&#39;</span><span class=se>\n</span><span class=s1>&#39;</span><span class=o>.</span><span class=n>join</span><span class=p>(</span><span class=n>safe</span><span class=p>)</span> <span class=o>+</span> <span class=s1>&#39;</span><span class=se>\n</span><span class=s1>&#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=nb>print</span><span class=p>(</span><span class=s1>&#39;Resolved safe deps:&#39;</span><span class=p>,</span> <span class=o>*</span><span class=n>safe</span><span class=p>,</span> <span class=n>sep</span><span class=o>=</span><span class=s1>&#39;</span><span class=se>\n</span><span class=s1>- &#39;</span><span class=p>)</span>
+</span></span><span class=line><span class=cl><span class=n>PY</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Wheel ALL dependencies from the safe list</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=n>root</span><span class=o>/.</span><span class=n>cache</span><span class=o>/</span><span class=n>pip</span> \
+</span></span><span class=line><span class=cl>    <span class=n>pip</span> <span class=n>wheel</span> <span class=o>--</span><span class=n>wheel</span><span class=o>-</span><span class=n>dir</span> <span class=o>/</span><span class=n>wheels</span> <span class=o>-</span><span class=n>r</span> <span class=o>/</span><span class=n>requirements</span><span class=o>.</span><span class=n>safe</span><span class=o>.</span><span class=n>txt</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Build wheel of the project itself</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>src</span><span class=o>/</span> <span class=o>./</span><span class=n>src</span><span class=o>/</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=n>root</span><span class=o>/.</span><span class=n>cache</span><span class=o>/</span><span class=n>pip</span> \
+</span></span><span class=line><span class=cl>    <span class=n>pip</span> <span class=n>wheel</span> <span class=o>--</span><span class=n>wheel</span><span class=o>-</span><span class=n>dir</span> <span class=o>/</span><span class=n>wheels</span> <span class=o>.</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1>##############################</span>
+</span></span><span class=line><span class=cl><span class=c1># runtime</span>
+</span></span><span class=line><span class=cl><span class=c1>##############################</span>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=n>python</span><span class=p>:</span><span class=mf>3.13</span><span class=o>-</span><span class=n>slim</span> <span class=n>AS</span> <span class=n>runtime</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>VERSION</span><span class=o>=</span><span class=mf>0.1</span><span class=o>.</span><span class=mi>0</span>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>VCS_REF</span><span class=o>=</span><span class=n>sha</span>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>BUILD_DATE</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>LABEL</span> <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>title</span><span class=o>=</span><span class=s2>&#34;python-service-template&#34;</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>description</span><span class=o>=</span><span class=s2>&#34;Dockerfile contest build&#34;</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>version</span><span class=o>=$</span><span class=n>VERSION</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>revision</span><span class=o>=$</span><span class=n>VCS_REF</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>created</span><span class=o>=$</span><span class=n>BUILD_DATE</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>licenses</span><span class=o>=</span><span class=s2>&#34;Apache-2.0&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ENV</span> <span class=n>PYTHONDONTWRITEBYTECODE</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONUNBUFFERED</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONOPTIMIZE</span><span class=o>=</span><span class=mi>2</span> \
+</span></span><span class=line><span class=cl>    <span class=n>HOST</span><span class=o>=</span><span class=mf>0.0</span><span class=o>.</span><span class=mf>0.0</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PORT</span><span class=o>=</span><span class=mi>5000</span> \
+</span></span><span class=line><span class=cl>    <span class=n>WORKERS</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>APP_VERSION</span><span class=o>=$</span><span class=n>VERSION</span> \
+</span></span><span class=line><span class=cl>    <span class=n>GIT_COMMIT_SHA</span><span class=o>=$</span><span class=n>VCS_REF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Non-root</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>useradd</span> <span class=o>--</span><span class=n>create</span><span class=o>-</span><span class=n>home</span> <span class=o>--</span><span class=n>uid</span> <span class=mi>10001</span> <span class=o>--</span><span class=n>shell</span> <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>sbin</span><span class=o>/</span><span class=n>nologin</span> <span class=n>appuser</span>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>home</span><span class=o>/</span><span class=n>appuser</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Install offline: install ALL safe deps, then the app wheel with --no-deps</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>/</span><span class=n>wheels</span> <span class=o>/</span><span class=n>wheels</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>/</span><span class=n>requirements</span><span class=o>.</span><span class=n>safe</span><span class=o>.</span><span class=n>txt</span> <span class=o>/</span><span class=n>requirements</span><span class=o>.</span><span class=n>safe</span><span class=o>.</span><span class=n>txt</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>pip</span> <span class=n>install</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>index</span> <span class=o>--</span><span class=n>find</span><span class=o>-</span><span class=n>links</span><span class=o>=/</span><span class=n>wheels</span> <span class=o>-</span><span class=n>r</span> <span class=o>/</span><span class=n>requirements</span><span class=o>.</span><span class=n>safe</span><span class=o>.</span><span class=n>txt</span> \
+</span></span><span class=line><span class=cl>    <span class=o>&amp;&amp;</span> <span class=n>pip</span> <span class=n>install</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>index</span> <span class=o>--</span><span class=n>find</span><span class=o>-</span><span class=n>links</span><span class=o>=/</span><span class=n>wheels</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>deps</span> \
+</span></span><span class=line><span class=cl>       <span class=n>python</span><span class=o>-</span><span class=n>service</span><span class=o>-</span><span class=n>template</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>compile</span> \
+</span></span><span class=line><span class=cl>    <span class=o>&amp;&amp;</span> <span class=n>rm</span> <span class=o>-</span><span class=n>rf</span> <span class=o>/</span><span class=n>wheels</span> <span class=o>/</span><span class=n>requirements</span><span class=o>.</span><span class=n>safe</span><span class=o>.</span><span class=n>txt</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>EXPOSE</span> <span class=mi>5000</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>HEALTHCHECK</span> <span class=o>--</span><span class=n>interval</span><span class=o>=</span><span class=mi>30</span><span class=n>s</span> <span class=o>--</span><span class=n>timeout</span><span class=o>=</span><span class=mi>2</span><span class=n>s</span> <span class=o>--</span><span class=n>start</span><span class=o>-</span><span class=n>period</span><span class=o>=</span><span class=mi>10</span><span class=n>s</span> <span class=o>--</span><span class=n>retries</span><span class=o>=</span><span class=mi>3</span> \
+</span></span><span class=line><span class=cl>  <span class=n>CMD</span> <span class=n>python</span> <span class=o>-</span><span class=n>c</span> <span class=s2>&#34;import sys, http.client; c=http.client.HTTPConnection(&#39;127.0.0.1&#39;, int(__import__(&#39;os&#39;).environ.get(&#39;PORT&#39;,&#39;5000&#39;)), timeout=1); c.request(&#39;GET&#39;,&#39;/health&#39;); r=c.getresponse(); sys.exit(0 if r.status==200 else 1)&#34;</span> <span class=o>||</span> <span class=n>exit</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>USER</span> <span class=mi>10001</span><span class=p>:</span><span class=mi>10001</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>CMD</span> <span class=p>[</span><span class=s2>&#34;python&#34;</span><span class=p>,</span> <span class=s2>&#34;-m&#34;</span><span class=p>,</span> <span class=s2>&#34;python_service_template.app&#34;</span><span class=p>]</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h3 id=4-dockerfile-top-python--khiem-doan>4. Dockerfile TOP (Python) – Khiem Doan</h3><div class=table-wrapper><table><thead><tr><th>Kỹ thuật</th><th>Giải thích</th><th>Nguồn tham khảo</th></tr></thead><tbody><tr><td><strong>UV Package Manager</strong></td><td>Sử dụng <code>uv</code> để quản lý dependencies nhanh hơn pip, với cache mount để tăng tốc rebuild.</td><td></td></tr><tr><td><strong>Alpine + Tini</strong></td><td>Sử dụng Alpine Linux nhẹ và tini làm init system để xử lý signals đúng cách.</td><td></td></tr><tr><td><strong>Security Patching</strong></td><td>Nâng cấp starlette lên 0.50.0 để fix các CVE mà không cần sửa pyproject.toml.</td><td></td></tr><tr><td><strong>Non-root User</strong></td><td>Tạo user nonroot với UID/GID 14406, một UID không phổ biến để tránh conflict.</td><td></td></tr><tr><td><strong>Healthcheck với curl</strong></td><td>Sử dụng curl để kiểm tra health endpoint và grep để verify response JSON.</td><td></td></tr><tr><td><strong>OCI Labels</strong></td><td>Thêm đầy đủ OCI labels với metadata về version, build date, revision, source.</td><td></td></tr></tbody></table></div><p><strong>Dockerfile TOP (Python)</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span><span class=lnt>72
+</span><span class=lnt>73
+</span><span class=lnt>74
+</span><span class=lnt>75
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=c1># syntax=docker/dockerfile:1.19</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=n>python</span><span class=p>:</span><span class=mf>3.13</span><span class=o>-</span><span class=n>alpine3</span><span class=o>.</span><span class=mi>22</span> <span class=n>AS</span> <span class=n>deps</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=n>root</span><span class=o>/.</span><span class=n>cache</span><span class=o>/</span><span class=n>pip</span> \
+</span></span><span class=line><span class=cl>    <span class=n>pip</span> <span class=n>install</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>compile</span> <span class=n>uv</span><span class=o>==</span><span class=mf>0.9</span><span class=o>.</span><span class=mi>2</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>pyproject</span><span class=o>.</span><span class=n>toml</span> <span class=n>uv</span><span class=o>.</span><span class=n>lock</span> <span class=o>./</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=n>root</span><span class=o>/.</span><span class=n>cache</span><span class=o>/</span><span class=n>uv</span> \
+</span></span><span class=line><span class=cl>    <span class=n>uv</span> <span class=n>sync</span> <span class=o>--</span><span class=n>frozen</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>dev</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>install</span><span class=o>-</span><span class=n>project</span> \
+</span></span><span class=line><span class=cl>    <span class=o>&amp;&amp;</span> <span class=n>uv</span> <span class=n>pip</span> <span class=n>install</span> <span class=n>starlette</span><span class=o>==</span><span class=mf>0.50</span><span class=o>.</span><span class=mi>0</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=n>python</span><span class=p>:</span><span class=mf>3.13</span><span class=o>-</span><span class=n>alpine3</span><span class=o>.</span><span class=mi>22</span> <span class=n>AS</span> <span class=n>final</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>pip</span> <span class=n>install</span> <span class=o>-</span><span class=n>U</span> <span class=n>pip</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=k>var</span><span class=o>/</span><span class=n>cache</span><span class=o>/</span><span class=n>apk</span> \
+</span></span><span class=line><span class=cl>    <span class=n>apk</span> <span class=n>add</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>cache</span> \
+</span></span><span class=line><span class=cl>    <span class=n>curl</span><span class=o>=</span><span class=mf>8.14</span><span class=o>.</span><span class=mi>1</span><span class=o>-</span><span class=n>r2</span> \
+</span></span><span class=line><span class=cl>    <span class=n>tini</span><span class=o>=</span><span class=mf>0.19</span><span class=o>.</span><span class=mi>0</span><span class=o>-</span><span class=n>r3</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>VERSION</span><span class=o>=</span><span class=s2>&#34;0.1.0&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>BUILD_DATE</span><span class=o>=</span><span class=s2>&#34;2025-11-10T00:00:00Z&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>REVISION</span><span class=o>=</span><span class=s2>&#34;unknown&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>GIT_COMMIT_SHA</span><span class=o>=</span><span class=s2>&#34;unknown&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>LABEL</span> <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>title</span><span class=o>=</span><span class=s2>&#34;python-service-template&#34;</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>description</span><span class=o>=</span><span class=s2>&#34;A batteries-included template for building robust, production-ready Python backend services with FastAPI&#34;</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>authors</span><span class=o>=</span><span class=s2>&#34;Khiem Doan&#34;</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>version</span><span class=o>=$</span><span class=n>VERSION</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>created</span><span class=o>=$</span><span class=n>BUILD_DATE</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>revision</span><span class=o>=$</span><span class=n>REVISION</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>source</span><span class=o>=</span><span class=s2>&#34;https://github.com/khiemdoan/&#34;</span> \
+</span></span><span class=line><span class=cl>      <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>licenses</span><span class=o>=</span><span class=s2>&#34;MIT&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ENV</span> <span class=n>USER</span><span class=o>=</span><span class=n>nonroot</span> \
+</span></span><span class=line><span class=cl>    <span class=n>GROUP</span><span class=o>=</span><span class=n>nonroot</span> \
+</span></span><span class=line><span class=cl>    <span class=n>UID</span><span class=o>=</span><span class=mi>14406</span> \
+</span></span><span class=line><span class=cl>    <span class=n>GID</span><span class=o>=</span><span class=mi>14406</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>addgroup</span> <span class=o>-</span><span class=n>g</span> <span class=s2>&#34;$GID&#34;</span> <span class=s2>&#34;$GROUP&#34;</span> \
+</span></span><span class=line><span class=cl>    <span class=o>&amp;&amp;</span> <span class=n>adduser</span> <span class=o>-</span><span class=n>D</span> <span class=o>-</span><span class=n>u</span> <span class=s2>&#34;$UID&#34;</span> <span class=o>-</span><span class=n>G</span> <span class=s2>&#34;$GROUP&#34;</span> <span class=s2>&#34;$USER&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>USER</span> <span class=o>$</span><span class=n>USER</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>chown</span><span class=o>=$</span><span class=n>USER</span><span class=p>:</span><span class=o>$</span><span class=n>GROUP</span> <span class=n>src</span><span class=o>/</span> <span class=n>src</span><span class=o>/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>deps</span> <span class=o>--</span><span class=n>chown</span><span class=o>=$</span><span class=n>USER</span><span class=p>:</span><span class=o>$</span><span class=n>GROUP</span> <span class=o>/</span><span class=n>app</span><span class=o>/.</span><span class=n>venv</span> <span class=o>/</span><span class=n>app</span><span class=o>/.</span><span class=n>venv</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ENV</span> <span class=n>PATH</span><span class=o>=</span><span class=s2>&#34;/app/.venv/bin:$PATH&#34;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONPATH</span><span class=o>=</span><span class=s2>&#34;/app/src&#34;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONUNBUFFERED</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PYTHONDONTWRITEBYTECODE</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>HOST</span><span class=o>=</span><span class=mf>0.0</span><span class=o>.</span><span class=mf>0.0</span> \
+</span></span><span class=line><span class=cl>    <span class=n>PORT</span><span class=o>=</span><span class=mi>3000</span> \
+</span></span><span class=line><span class=cl>    <span class=n>WORKERS</span><span class=o>=</span><span class=mi>1</span> \
+</span></span><span class=line><span class=cl>    <span class=n>LOGGING__LEVEL</span><span class=o>=</span><span class=n>INFO</span> \
+</span></span><span class=line><span class=cl>    <span class=n>LOGGING__FORMAT</span><span class=o>=</span><span class=n>PLAIN</span> \
+</span></span><span class=line><span class=cl>    <span class=n>COFFEE_API__HOST</span><span class=o>=</span><span class=n>https</span><span class=p>:</span><span class=o>//</span><span class=n>api</span><span class=o>.</span><span class=n>sampleapis</span><span class=o>.</span><span class=n>com</span><span class=o>/</span><span class=n>coffee</span><span class=o>/</span> \
+</span></span><span class=line><span class=cl>    <span class=n>APP_VERSION</span><span class=o>=$</span><span class=n>VERSION</span> \
+</span></span><span class=line><span class=cl>    <span class=n>GIT_COMMIT_SHA</span><span class=o>=$</span><span class=n>GIT_COMMIT_SHA</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>EXPOSE</span> <span class=o>$</span><span class=n>PORT</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>HEALTHCHECK</span> <span class=o>--</span><span class=n>timeout</span><span class=o>=</span><span class=mi>1</span><span class=n>s</span> \
+</span></span><span class=line><span class=cl>    <span class=n>CMD</span> <span class=n>curl</span> <span class=o>-</span><span class=n>f</span> <span class=s2>&#34;http://localhost:${PORT}/health/&#34;</span> <span class=o>|</span> <span class=n>grep</span> <span class=s1>&#39;&#34;heartbeat&#34;:&#34;HEALTHY&#34;&#39;</span> <span class=o>||</span> <span class=n>exit</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ENTRYPOINT</span> <span class=p>[</span><span class=s2>&#34;/sbin/tini&#34;</span><span class=p>,</span> <span class=s2>&#34;--&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>CMD</span> <span class=p>[</span><span class=s2>&#34;python&#34;</span><span class=p>,</span> <span class=s2>&#34;src/python_service_template/app.py&#34;</span><span class=p>]</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=ghi-chú-triển-khai>Ghi chú triển khai</h2><ul><li>Các Dockerfile trên chỉ mang tính tham khảo kiến trúc; khi áp dụng vào dự án Python/FastAPI của bạn, hãy giữ nguyên nguyên tắc: multi-stage build, security patching, non-root user, pin SHA256 cho base images.</li><li><strong>Distroless vs Alpine</strong>: Distroless an toàn hơn (không có shell, package manager) nhưng cần copy shared libraries thủ công. Alpine nhẹ và dễ debug hơn nhưng có thể gặp vấn đề tương thích với một số Python packages.</li><li><strong>UV vs PIP</strong>: UV nhanh hơn pip đáng kể (10-100x) và quản lý virtual environment tốt hơn, nhưng cần cài đặt thêm.</li><li><strong>Security</strong>: Luôn cập nhật dependencies để fix CVE, đặc biệt là các package phổ biến như starlette, fastapi, uvicorn.</li><li><strong>Healthcheck</strong>: Nên sử dụng native Python <code>http.client</code> hoặc curl/wget tùy vào base image và yêu cầu bảo mật.</li></ul></section><footer class=article-footer><section class=article-tags><a href=/tags/docker/>Docker</a>
+<a href=/tags/python/>Python</a>
+<a href=/tags/fastapi/>Fastapi</a>
+<a href=/tags/performance/>Performance</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>DevOpsVN</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Bài viết liên quan</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/posts/docker-optimization/docker-opt-nodejs/><div class=article-image><img src=/images/docker-optimization/docker-optimization-react.webp loading=lazy data-key data-hash=/images/docker-optimization/docker-optimization-react.webp></div><div class=article-details><h2 class=article-title>Tối ưu Docker cho Node.js</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=hoangduonng/blog_comments issue-term=pathname label=comments theme=icy-dark crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2025 Hoàng Dương</section><section class=powerby>Built with <a href=https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/ target=_blank rel=noopener>Ngữ Uyển ❤️</a><br>Theme <no value>thiết kế bởi Jimmy</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
