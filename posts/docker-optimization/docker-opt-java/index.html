@@ -1,0 +1,913 @@
+<!doctype html><html lang=vi dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Phân tích các kỹ thuật tối ưu Dockerfile từ Dockerfile Contest 2025 cho ứng dụng Java Spring Boot."><title>Tối ưu Docker cho Java</title>
+<link rel=canonical href=https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-java/><link rel=stylesheet href=/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css><meta property='og:title' content="Tối ưu Docker cho Java"><meta property='og:description' content="Phân tích các kỹ thuật tối ưu Dockerfile từ Dockerfile Contest 2025 cho ứng dụng Java Spring Boot."><meta property='og:url' content='https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-java/'><meta property='og:site_name' content='Hoàng Dương'><meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:tag' content='docker'><meta property='article:tag' content='java'><meta property='article:tag' content='spring-boot'><meta property='article:tag' content='performance'><meta property='article:published_time' content='2025-11-29T00:00:00+00:00'><meta property='article:modified_time' content='2025-11-29T00:00:00+00:00'><meta property='og:image' content='https://tech.nguuyen.io.vn/images/docker-optimization/docker-optimization-java.webp'><meta name=twitter:title content="Tối ưu Docker cho Java"><meta name=twitter:description content="Phân tích các kỹ thuật tối ưu Dockerfile từ Dockerfile Contest 2025 cho ứng dụng Java Spring Boot."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://tech.nguuyen.io.vn/images/docker-optimization/docker-optimization-java.webp'><link rel=icon type=image/x-icon href=/favicon.ico><style>:root{--article-font-family:"Roboto", var(--base-font-family)}</style><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Hiển thị Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/hoang_hu_f5b001d7581bed29.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Hoàng Dương</a></h1><h2 class=site-description>And, when you want something, all the universe conspires in helping you to achieve it.</h2></div></header><ol class=menu-social><li><a href=https://github.com/HoangDuonng target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.instagram.com/ngu_uuen/ target=_blank title=Instagram rel=me><svg class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="4"/><path d="M16.5 7.5h.01"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Trang chủ</span></a></li><li><a href=/gi%E1%BB%9Bi-thi%E1%BB%87u/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>Về tôi</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Lưu trữ</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Tìm kiếm</span></a></li><li><a href=/li%C3%AAn-k%E1%BA%BFt/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Liên kết</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://tech.nguuyen.io.vn/ selected>Tiếng Việt</option><option value=https://tech.nguuyen.io.vn/en/>English</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Chế độ tối</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><h2 class="widget-title section-title">Mục lục</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#dockerfile-contest-2025--java-tối-ưu-extreme>Dockerfile Contest 2025 – Java tối ưu extreme</a></li><li><a href=#i-hạng-mục-java-spring-boot-service>I. Hạng mục JAVA (Spring Boot Service)</a><ol><li><a href=#1-dockerfile-top-1-java--spring-boot-template--distroless>1. Dockerfile TOP 1 (Java) – Spring Boot Template + Distroless</a></li><li><a href=#2-dockerfile-top-2-java--gradle-auto-dependency-update--custom-healthcheck>2. Dockerfile TOP 2 (Java) – Gradle Auto Dependency Update + Custom Healthcheck</a></li><li><a href=#3-dockerfile-top-java--dung-cao-alpine-jdkjre-tối-ưu>3. Dockerfile TOP (Java) – Dung Cao (Alpine JDK/JRE tối ưu)</a></li><li><a href=#4-dockerfile-top-tham-khảo--java--hmcts-spring-boot-template-layered--jlink>4. Dockerfile TOP (tham khảo – Java) – HMCTS Spring Boot Template (Layered + jlink)</a></li></ol></li><li><a href=#ghi-chú-triển-khai>Ghi chú triển khai</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/posts/docker-optimization/docker-opt-java/><img src=/images/docker-optimization/docker-optimization-java.webp loading=lazy alt="Featured image of post Tối ưu Docker cho Java"></a></div><div class=article-details><header class=article-category><a href=/categories/docker-optimization/ style=background-color:#1f6feb;color:#fff>Docker Optimization</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/docker-optimization/docker-opt-java/>Tối ưu Docker cho Java</a></h2><h3 class=article-subtitle>Phân tích các kỹ thuật tối ưu Dockerfile từ Dockerfile Contest 2025 cho ứng dụng Java Spring Boot.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>29/11/2025</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>14 phút đọc</time></div><div><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span class=article-author--name>Hoàng Dương</span></div></footer></div></header><section class=article-content><h2 id=dockerfile-contest-2025--java-tối-ưu-extreme>Dockerfile Contest 2025 – Java tối ưu extreme</h2><p>Dockerfile Contest 2025 thúc đẩy cộng đồng DevOps Việt Nam đánh giá lại cách viết Dockerfile để đạt <strong>bảo mật, tối ưu, tường minh</strong>. Bài viết này tổng hợp riêng cho hạng mục <strong>Java Spring Boot</strong>, nơi các tác giả tập trung tối ưu JRE, giảm kích thước image và chuẩn hóa quy trình build.</p><hr><h2 id=i-hạng-mục-java-spring-boot-service>I. Hạng mục JAVA (Spring Boot Service)</h2><p>Hạng mục Java tập trung vào các ý tưởng:</p><ul><li><strong>Tối ưu JRE</strong>: dùng <code>jlink</code> và <code>jdeps</code> để tạo custom JRE chỉ chứa module cần thiết.</li><li><strong>Tối ưu security & dependency</strong>: tự động cập nhật dependency an toàn, giảm CVE.</li><li><strong>Multi-stage build</strong>: tách rõ stage build và runtime, dùng distroless hoặc base image tối ưu.</li><li><strong>Healthcheck rõ ràng</strong>: dùng <code>wget</code> hoặc Java native healthcheck để giám sát container.</li></ul><h3 id=1-dockerfile-top-1-java--spring-boot-template--distroless>1. Dockerfile TOP 1 (Java) – Spring Boot Template + Distroless</h3><div class=table-wrapper><table><thead><tr><th>Kỹ thuật</th><th>Giải thích theo tác giả</th><th>Nguồn tham khảo</th></tr></thead><tbody><tr><td><strong>Custom JRE bằng jlink</strong></td><td>Dùng <code>jdeps</code> phân tích fat JAR để lấy danh sách module, sau đó <code>jlink</code> tạo JRE chỉ chứa module cần, giảm đáng kể kích thước runtime.</td><td></td></tr><tr><td><strong>Multi-stage build rõ ràng</strong></td><td>Stage <code>build</code> dùng <code>eclipse-temurin:21-jdk</code> để build Gradle; stage runtime dùng <code>gcr.io/distroless/base-debian12</code> chỉ chạy JRE.</td><td></td></tr><tr><td><strong>Phân tách Healthcheck Stage</strong></td><td>Tạo stage <code>healthcheck</code> dùng BusyBox, copy <code>wget</code> vào runtime để healthcheck mà không phải cài thêm full curl/wget từ package manager.</td><td></td></tr><tr><td><strong>Distroless Runtime</strong></td><td>Dùng distroless base để giảm attack surface (không shell, không package manager), image gọn và an toàn hơn.</td><td></td></tr><tr><td><strong>Pin nguồn & license</strong></td><td>Thêm LABEL <code>org.opencontainers.image.source</code>, <code>version</code>, <code>licenses</code> để dễ truy vết source code và tuân thủ license.</td><td></td></tr></tbody></table></div><p><strong>Dockerfile TOP 1 (JAVA)</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span><span class=lnt>60
+</span><span class=lnt>61
+</span><span class=lnt>62
+</span><span class=lnt>63
+</span><span class=lnt>64
+</span><span class=lnt>65
+</span><span class=lnt>66
+</span><span class=lnt>67
+</span><span class=lnt>68
+</span><span class=lnt>69
+</span><span class=lnt>70
+</span><span class=lnt>71
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=c1># Build stage</span>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=n>eclipse</span><span class=o>-</span><span class=n>temurin</span><span class=p>:</span><span class=mi>21</span><span class=o>-</span><span class=n>jdk</span> <span class=n>AS</span> <span class=n>build</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy gradle wrapper and properties first for better caching</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>gradlew</span> <span class=n>gradlew</span><span class=o>.</span><span class=n>bat</span> <span class=n>build</span><span class=o>.</span><span class=n>gradle</span> <span class=o>./</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>gradle</span><span class=o>/</span> <span class=n>gradle</span><span class=o>/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Download Gradle distribution (cached)</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=n>root</span><span class=o>/.</span><span class=n>gradle</span> <span class=o>./</span><span class=n>gradlew</span> <span class=o>--</span><span class=n>version</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy source code</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>src</span><span class=o>/</span> <span class=n>src</span><span class=o>/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Build the application</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=n>root</span><span class=o>/.</span><span class=n>gradle</span> <span class=o>./</span><span class=n>gradlew</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>daemon</span> <span class=n>clean</span> <span class=n>bootJar</span> \
+</span></span><span class=line><span class=cl>    <span class=o>-</span><span class=n>Dspring</span><span class=o>-</span><span class=n>framework</span><span class=o>.</span><span class=n>version</span><span class=o>=</span><span class=mf>6.2</span><span class=o>.</span><span class=mi>11</span> \
+</span></span><span class=line><span class=cl>    <span class=o>-</span><span class=n>Dtomcat</span><span class=o>.</span><span class=n>version</span><span class=o>=</span><span class=mf>10.1</span><span class=o>.</span><span class=mi>47</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Extract the application dependencies</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>jar</span> <span class=n>xf</span> <span class=n>build</span><span class=o>/</span><span class=n>libs</span><span class=o>/</span><span class=n>spring</span><span class=o>-</span><span class=n>boot</span><span class=o>-</span><span class=n>template</span><span class=o>.</span><span class=n>jar</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Analyze the dependencies contained into the fat jar</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>jdeps</span> <span class=o>--</span><span class=n>ignore</span><span class=o>-</span><span class=n>missing</span><span class=o>-</span><span class=n>deps</span> <span class=o>-</span><span class=n>q</span>  \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>recursive</span>  \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>multi</span><span class=o>-</span><span class=n>release</span> <span class=mi>21</span>  \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=nb>print</span><span class=o>-</span><span class=n>module</span><span class=o>-</span><span class=n>deps</span>  \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=k>class</span><span class=o>-</span><span class=n>path</span> <span class=s1>&#39;BOOT-INF/lib/*&#39;</span>  \
+</span></span><span class=line><span class=cl>  <span class=n>build</span><span class=o>/</span><span class=n>libs</span><span class=o>/</span><span class=n>spring</span><span class=o>-</span><span class=n>boot</span><span class=o>-</span><span class=n>template</span><span class=o>.</span><span class=n>jar</span> <span class=o>&gt;</span> <span class=n>deps</span><span class=o>.</span><span class=n>info</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Create the custom JRE</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>jlink</span> \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>verbose</span> \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>add</span><span class=o>-</span><span class=n>modules</span> <span class=o>$</span><span class=p>(</span><span class=n>cat</span> <span class=n>deps</span><span class=o>.</span><span class=n>info</span><span class=p>)</span> \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>compress</span> <span class=n>zip</span><span class=o>-</span><span class=mi>9</span> \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>header</span><span class=o>-</span><span class=n>files</span> \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>man</span><span class=o>-</span><span class=n>pages</span> \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>output</span> <span class=o>/</span><span class=n>custom_jre</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Healthcheck stage</span>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=n>busybox</span><span class=p>:</span><span class=mf>1.36</span><span class=o>.</span><span class=mi>0</span><span class=o>-</span><span class=n>musl</span> <span class=n>AS</span> <span class=n>healthcheck</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Runtime stage</span>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=n>gcr</span><span class=o>.</span><span class=n>io</span><span class=o>/</span><span class=n>distroless</span><span class=o>/</span><span class=n>base</span><span class=o>-</span><span class=n>debian12</span>
+</span></span><span class=line><span class=cl><span class=n>ENV</span> <span class=n>JAVA_HOME</span><span class=o>=/</span><span class=n>opt</span><span class=o>/</span><span class=n>java</span><span class=o>/</span><span class=n>openjdk</span>
+</span></span><span class=line><span class=cl><span class=n>ENV</span> <span class=n>PATH</span><span class=o>=</span><span class=s2>&#34;$JAVA_HOME/bin:$PATH&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>build</span> <span class=o>/</span><span class=n>custom_jre</span> <span class=o>$</span><span class=n>JAVA_HOME</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy wget for healthcheck</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>healthcheck</span> <span class=o>/</span><span class=n>bin</span><span class=o>/</span><span class=n>wget</span> <span class=o>/</span><span class=n>usr</span><span class=o>/</span><span class=n>bin</span><span class=o>/</span><span class=n>wget</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy application insights config</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>lib</span><span class=o>/</span><span class=n>applicationinsights</span><span class=o>.</span><span class=n>json</span> <span class=o>./</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy the built JAR</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>build</span> <span class=o>/</span><span class=n>app</span><span class=o>/</span><span class=n>build</span><span class=o>/</span><span class=n>libs</span><span class=o>/</span><span class=n>spring</span><span class=o>-</span><span class=n>boot</span><span class=o>-</span><span class=n>template</span><span class=o>.</span><span class=n>jar</span> <span class=o>/</span><span class=n>app</span><span class=o>.</span><span class=n>jar</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Add labels</span>
+</span></span><span class=line><span class=cl><span class=n>LABEL</span> <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>source</span><span class=o>=</span><span class=s2>&#34;https://github.com/hmcts/spring-boot-template&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>version</span><span class=o>=</span><span class=s2>&#34;0.0.1&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>licenses</span><span class=o>=</span><span class=s2>&#34;MIT&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>EXPOSE</span> <span class=mi>8080</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>HEALTHCHECK</span> <span class=o>--</span><span class=n>interval</span><span class=o>=</span><span class=mi>30</span><span class=n>s</span> <span class=o>--</span><span class=n>timeout</span><span class=o>=</span><span class=mi>3</span><span class=n>s</span> <span class=o>--</span><span class=n>start</span><span class=o>-</span><span class=n>period</span><span class=o>=</span><span class=mi>10</span><span class=n>s</span> <span class=o>--</span><span class=n>retries</span><span class=o>=</span><span class=mi>3</span> \
+</span></span><span class=line><span class=cl>  <span class=n>CMD</span> <span class=p>[</span><span class=s2>&#34;/usr/bin/wget&#34;</span><span class=p>,</span> <span class=s2>&#34;--quiet&#34;</span><span class=p>,</span> <span class=s2>&#34;--output-document=/dev/null&#34;</span><span class=p>,</span> <span class=s2>&#34;http://localhost:8080/health&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>CMD</span> <span class=p>[</span><span class=s2>&#34;java&#34;</span><span class=p>,</span> <span class=s2>&#34;-jar&#34;</span><span class=p>,</span> <span class=s2>&#34;/app.jar&#34;</span><span class=p>]</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h3 id=2-dockerfile-top-2-java--gradle-auto-dependency-update--custom-healthcheck>2. Dockerfile TOP 2 (Java) – Gradle Auto Dependency Update + Custom Healthcheck</h3><div class=table-wrapper><table><thead><tr><th>Kỹ thuật</th><th>Giải thích theo tác giả</th><th>Nguồn tham khảo</th></tr></thead><tbody><tr><td><strong>Gradle Dependency Updates</strong></td><td>Dùng plugin <code>dependencyUpdates</code> để sinh report, sau đó script shell parse report và tự động update version plugin/ext/dependency trong <code>build.gradle</code>.</td><td></td></tr><tr><td><strong>Force Dependency Upgrade</strong></td><td>Biến <code>DEPENDENCIES_FORCE_UPDATE</code> cho phép chỉ định <code>group:name:version</code> để ép cập nhật những dependency quan trọng, thường là những lib dính CVE.</td><td></td></tr><tr><td><strong>Native Java Healthcheck</strong></td><td>Viết class <code>HealthCheck.java</code> dùng <code>HttpURLConnection</code> gọi <code>/health</code>, giúp healthcheck không phụ thuộc curl/wget.</td><td></td></tr><tr><td><strong>Distroless Base Java</strong></td><td>Runtime dùng <code>hmctspublic.azurecr.io/base/java:21-distroless</code>, image Java 21 tối ưu sẵn cho production.</td><td></td></tr><tr><td><strong>Cache Gradle</strong></td><td>Mount cache <code>/root/.gradle</code> để tăng tốc <code>./gradlew</code> trong stage build.</td><td></td></tr></tbody></table></div><p><strong>Dockerfile TOP 2 (JAVA)</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=c1># Stage 1 — Build application using Gradle</span>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=n>gradle</span><span class=p>:</span><span class=mf>8.14</span><span class=o>.</span><span class=mi>3</span><span class=o>-</span><span class=n>jdk21</span><span class=o>-</span><span class=n>alpine</span> <span class=n>AS</span> <span class=n>builder</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Caching wrapper and build configuration before build </span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>gradlew</span> <span class=o>./</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>gradle</span> <span class=n>gradle</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>build</span><span class=o>.</span><span class=n>gradle</span> <span class=n>build</span><span class=o>.</span><span class=n>gradle</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Caching gradle/download</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>./</span><span class=n>gradlew</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>daemon</span> <span class=n>help</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy src code</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>src</span><span class=o>/</span><span class=n>main</span> <span class=n>src</span><span class=o>/</span><span class=n>main</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Check dependency need to update</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>./</span><span class=n>gradlew</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>daemon</span> <span class=n>dependencyUpdates</span> <span class=o>-</span><span class=n>Drevision</span><span class=o>=</span><span class=n>release</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Auto update for auto vulnerability fixing </span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>REPORT_FILE</span><span class=o>=</span><span class=s2>&#34;build/dependencyUpdates/report.txt&#34;</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>echo</span> <span class=s2>&#34;=== Parsing $REPORT_FILE ===&#34;</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    \
+</span></span><span class=line><span class=cl>    <span class=n>PLUGINS_TO_UPGRADE</span><span class=o>=$</span><span class=p>{</span><span class=n>PLUGINS_TO_UPGRADE</span><span class=p>:</span><span class=o>-</span><span class=s2>&#34;org.springframework.boot org.sonarqube com.github.ben-manes.versions uk.gov.hmcts.java&#34;</span><span class=p>}</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>EXTS_TO_UPGRADE</span><span class=o>=$</span><span class=p>{</span><span class=n>EXTS_TO_UPGRADE</span><span class=p>:</span><span class=o>-</span><span class=s2>&#34;org.apache.logging.log4j ch.qos.logback&#34;</span><span class=p>}</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>DEPENDENCIES_FORCE_UPDATE</span><span class=o>=$</span><span class=p>{</span><span class=n>DEPENDENCIES_FORCE_UPDATE</span><span class=p>:</span><span class=o>-</span><span class=s2>&#34;org.apache.commons:commons-lang3:3.19.0&#34;</span><span class=p>}</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    \
+</span></span><span class=line><span class=cl>    <span class=n>escape_sed</span><span class=p>()</span> <span class=p>{</span> <span class=n>printf</span> <span class=s1>&#39;</span><span class=si>%s</span><span class=se>\n</span><span class=s1>&#39;</span> <span class=s2>&#34;$1&#34;</span> <span class=o>|</span> <span class=n>sed</span> <span class=s1>&#39;s/[.[\*^$/&amp;]/</span><span class=se>\\</span><span class=s1>&amp;/g&#39;</span><span class=p>;</span> <span class=p>}</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    \
+</span></span><span class=line><span class=cl>    <span class=c1># --- Plugin updates ---</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>plugin</span> <span class=ow>in</span> <span class=o>$</span><span class=n>PLUGINS_TO_UPGRADE</span><span class=p>;</span> <span class=k>do</span> \
+</span></span><span class=line><span class=cl>    <span class=n>LINE</span><span class=o>=$</span><span class=p>(</span><span class=n>grep</span> <span class=o>-</span><span class=n>A1</span> <span class=s2>&#34;$plugin&#34;</span> <span class=s2>&#34;$REPORT_FILE&#34;</span> <span class=o>|</span> <span class=n>grep</span> <span class=s1>&#39;\[&#39;</span> <span class=o>|</span> <span class=n>head</span> <span class=o>-</span><span class=mi>1</span> <span class=o>||</span> <span class=bp>true</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=n>OLD_VERSION</span><span class=o>=$</span><span class=p>(</span><span class=n>echo</span> <span class=s2>&#34;$LINE&#34;</span> <span class=o>|</span> <span class=n>sed</span> <span class=o>-</span><span class=n>E</span> <span class=s1>&#39;s/.*\[(.*) -&gt; .*\].*/</span><span class=se>\1</span><span class=s1>/&#39;</span> <span class=o>||</span> <span class=bp>true</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=n>NEW_VERSION</span><span class=o>=$</span><span class=p>(</span><span class=n>echo</span> <span class=s2>&#34;$LINE&#34;</span> <span class=o>|</span> <span class=n>sed</span> <span class=o>-</span><span class=n>E</span> <span class=s1>&#39;s/.*\[.* -&gt; (.*)\].*/</span><span class=se>\1</span><span class=s1>/&#39;</span> <span class=o>||</span> <span class=bp>true</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>[</span> <span class=o>-</span><span class=n>n</span> <span class=s2>&#34;$NEW_VERSION&#34;</span> <span class=p>]</span> <span class=o>&amp;&amp;</span> <span class=p>[</span> <span class=s2>&#34;$NEW_VERSION&#34;</span> <span class=o>!=</span> <span class=s2>&#34;$OLD_VERSION&#34;</span> <span class=p>];</span> <span class=n>then</span> \
+</span></span><span class=line><span class=cl>    <span class=n>echo</span> <span class=s2>&#34;===== Upgrading plugin $plugin: $OLD_VERSION → $NEW_VERSION&#34;</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>ESC_OLD</span><span class=o>=$</span><span class=p>(</span><span class=n>escape_sed</span> <span class=s2>&#34;$OLD_VERSION&#34;</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=n>ESC_NEW</span><span class=o>=$</span><span class=p>(</span><span class=n>escape_sed</span> <span class=s2>&#34;$NEW_VERSION&#34;</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=n>sed</span> <span class=o>-</span><span class=n>i</span> <span class=s2>&#34;s#id &#39;$plugin&#39; version &#39;$ESC_OLD&#39;#id &#39;$plugin&#39; version &#39;$ESC_NEW&#39;#g&#34;</span> <span class=n>build</span><span class=o>.</span><span class=n>gradle</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>fi</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>done</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    \
+</span></span><span class=line><span class=cl>    <span class=c1># --- ext{} version updates ---</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>prefix</span> <span class=ow>in</span> <span class=o>$</span><span class=n>EXTS_TO_UPGRADE</span><span class=p>;</span> <span class=k>do</span> \
+</span></span><span class=line><span class=cl>    <span class=n>LINE</span><span class=o>=$</span><span class=p>(</span><span class=n>grep</span> <span class=o>-</span><span class=n>A1</span> <span class=s2>&#34;$prefix&#34;</span> <span class=s2>&#34;$REPORT_FILE&#34;</span> <span class=o>|</span> <span class=n>grep</span> <span class=s1>&#39;\[&#39;</span> <span class=o>|</span> <span class=n>head</span> <span class=o>-</span><span class=mi>1</span> <span class=o>||</span> <span class=bp>true</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=n>OLD_VERSION</span><span class=o>=$</span><span class=p>(</span><span class=n>echo</span> <span class=s2>&#34;$LINE&#34;</span> <span class=o>|</span> <span class=n>sed</span> <span class=o>-</span><span class=n>E</span> <span class=s1>&#39;s/.*\[(.*) -&gt; .*\].*/</span><span class=se>\1</span><span class=s1>/&#39;</span> <span class=o>||</span> <span class=bp>true</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=n>NEW_VERSION</span><span class=o>=$</span><span class=p>(</span><span class=n>echo</span> <span class=s2>&#34;$LINE&#34;</span> <span class=o>|</span> <span class=n>sed</span> <span class=o>-</span><span class=n>E</span> <span class=s1>&#39;s/.*\[.* -&gt; (.*)\].*/</span><span class=se>\1</span><span class=s1>/&#39;</span> <span class=o>||</span> <span class=bp>true</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>[</span> <span class=o>-</span><span class=n>n</span> <span class=s2>&#34;$NEW_VERSION&#34;</span> <span class=p>]</span> <span class=o>&amp;&amp;</span> <span class=p>[</span> <span class=s2>&#34;$NEW_VERSION&#34;</span> <span class=o>!=</span> <span class=s2>&#34;$OLD_VERSION&#34;</span> <span class=p>];</span> <span class=n>then</span> \
+</span></span><span class=line><span class=cl>    <span class=n>echo</span> <span class=s2>&#34;===== Upgrading prefix $prefix: $OLD_VERSION → $NEW_VERSION&#34;</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>ESC_OLD</span><span class=o>=$</span><span class=p>(</span><span class=n>escape_sed</span> <span class=s2>&#34;$OLD_VERSION&#34;</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=n>ESC_NEW</span><span class=o>=$</span><span class=p>(</span><span class=n>escape_sed</span> <span class=s2>&#34;$NEW_VERSION&#34;</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=n>sed</span> <span class=o>-</span><span class=n>i</span> <span class=s2>&#34;s/</span><span class=se>\&#34;</span><span class=s2>$ESC_OLD</span><span class=se>\&#34;</span><span class=s2>/</span><span class=se>\&#34;</span><span class=s2>$ESC_NEW</span><span class=se>\&#34;</span><span class=s2>/g&#34;</span> <span class=n>build</span><span class=o>.</span><span class=n>gradle</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>fi</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>done</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    \
+</span></span><span class=line><span class=cl>    <span class=c1># --- Force dependency updates with explicit GAV ---</span>
+</span></span><span class=line><span class=cl>    <span class=k>for</span> <span class=n>dep</span> <span class=ow>in</span> <span class=o>$</span><span class=n>DEPENDENCIES_FORCE_UPDATE</span><span class=p>;</span> <span class=k>do</span> \
+</span></span><span class=line><span class=cl>    <span class=n>GROUP</span><span class=o>=$</span><span class=p>(</span><span class=n>echo</span> <span class=s2>&#34;$dep&#34;</span> <span class=o>|</span> <span class=n>cut</span> <span class=o>-</span><span class=n>d</span><span class=s1>&#39;:&#39;</span> <span class=o>-</span><span class=n>f1</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=n>NAME</span><span class=o>=$</span><span class=p>(</span><span class=n>echo</span> <span class=s2>&#34;$dep&#34;</span> <span class=o>|</span> <span class=n>cut</span> <span class=o>-</span><span class=n>d</span><span class=s1>&#39;:&#39;</span> <span class=o>-</span><span class=n>f2</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=n>NEW_VERSION</span><span class=o>=$</span><span class=p>(</span><span class=n>echo</span> <span class=s2>&#34;$dep&#34;</span> <span class=o>|</span> <span class=n>cut</span> <span class=o>-</span><span class=n>d</span><span class=s1>&#39;:&#39;</span> <span class=o>-</span><span class=n>f3</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=p>[</span> <span class=o>-</span><span class=n>z</span> <span class=s2>&#34;$GROUP&#34;</span> <span class=p>]</span> <span class=o>||</span> <span class=p>[</span> <span class=o>-</span><span class=n>z</span> <span class=s2>&#34;$NAME&#34;</span> <span class=p>]</span> <span class=o>||</span> <span class=p>[</span> <span class=o>-</span><span class=n>z</span> <span class=s2>&#34;$NEW_VERSION&#34;</span> <span class=p>];</span> <span class=n>then</span> \
+</span></span><span class=line><span class=cl>    <span class=n>echo</span> <span class=s2>&#34;======  Invalid DEPENDENCIES_FORCE_UPDATE format for $dep, expected group:name:version&#34;</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=k>continue</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>fi</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>echo</span> <span class=s2>&#34;====== Forcing dependency update: $GROUP:$NAME → $NEW_VERSION&#34;</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>ESC_GROUP</span><span class=o>=$</span><span class=p>(</span><span class=n>escape_sed</span> <span class=s2>&#34;$GROUP&#34;</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=n>ESC_NAME</span><span class=o>=$</span><span class=p>(</span><span class=n>escape_sed</span> <span class=s2>&#34;$NAME&#34;</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=n>ESC_NEW</span><span class=o>=$</span><span class=p>(</span><span class=n>escape_sed</span> <span class=s2>&#34;$NEW_VERSION&#34;</span><span class=p>);</span> \
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=n>grep</span> <span class=o>-</span><span class=n>q</span> <span class=s2>&#34;$ESC_GROUP&#34;</span> <span class=n>build</span><span class=o>.</span><span class=n>gradle</span> <span class=o>|</span> <span class=n>grep</span> <span class=o>-</span><span class=n>q</span> <span class=s2>&#34;$ESC_NAME&#34;</span><span class=p>;</span> <span class=n>then</span> \
+</span></span><span class=line><span class=cl>    <span class=c1># Replace existing dependency version</span>
+</span></span><span class=line><span class=cl>    <span class=n>sed</span> <span class=o>-</span><span class=n>i</span> <span class=s2>&#34;s#group: &#39;$ESC_GROUP&#39;, name: &#39;$ESC_NAME&#39;, version: &#39;[^&#39;]*&#39;#group: &#39;$ESC_GROUP&#39;, name: &#39;$ESC_NAME&#39;, version: &#39;$ESC_NEW&#39;#g&#34;</span> <span class=n>build</span><span class=o>.</span><span class=n>gradle</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=k>else</span> \
+</span></span><span class=line><span class=cl>    <span class=c1># Insert new dependency inside dependencies { }</span>
+</span></span><span class=line><span class=cl>    <span class=n>echo</span> <span class=s2>&#34;====== Adding new dependency $GROUP:$NAME:$NEW_VERSION&#34;</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>sed</span> <span class=o>-</span><span class=n>i</span> <span class=s2>&#34;/dependencies\s*{/a\    implementation group: &#39;$GROUP&#39;, name: &#39;$NAME&#39;, version: &#39;$NEW_VERSION&#39;&#34;</span> <span class=n>build</span><span class=o>.</span><span class=n>gradle</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>fi</span><span class=p>;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>done</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    \
+</span></span><span class=line><span class=cl>    <span class=n>echo</span> <span class=s2>&#34;Version upgrade complete!&#34;</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>    <span class=n>cat</span> <span class=n>build</span><span class=o>.</span><span class=n>gradle</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Build the application JAR after dependency check</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>./</span><span class=n>gradlew</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>daemon</span> <span class=n>bootJar</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Generate java healthcheck class</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>mkdir</span> <span class=o>-</span><span class=n>p</span> <span class=o>/</span><span class=n>app</span><span class=o>/</span><span class=n>health</span> <span class=o>&amp;&amp;</span> <span class=n>cat</span> <span class=o>&gt;</span> <span class=o>/</span><span class=n>app</span><span class=o>/</span><span class=n>health</span><span class=o>/</span><span class=n>HealthCheck</span><span class=o>.</span><span class=n>java</span> <span class=o>&lt;&lt;</span><span class=s1>&#39;EOF&#39;</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=n>java</span><span class=o>.</span><span class=n>net</span><span class=o>.</span><span class=n>HttpURLConnection</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=n>java</span><span class=o>.</span><span class=n>net</span><span class=o>.</span><span class=n>URL</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=n>import</span> <span class=n>java</span><span class=o>.</span><span class=n>time</span><span class=o>.</span><span class=n>Instant</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>public</span> <span class=k>class</span> <span class=n>HealthCheck</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=n>public</span> <span class=k>static</span> <span class=n>void</span> <span class=n>main</span><span class=p>(</span><span class=ne>String</span><span class=p>[]</span> <span class=n>args</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=ne>String</span> <span class=n>healthUrl</span> <span class=o>=</span> <span class=s2>&#34;http://localhost:8080/health&#34;</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=n>try</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>URL</span> <span class=n>url</span> <span class=o>=</span> <span class=n>new</span> <span class=n>URL</span><span class=p>(</span><span class=n>healthUrl</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>HttpURLConnection</span> <span class=n>conn</span> <span class=o>=</span> <span class=p>(</span><span class=n>HttpURLConnection</span><span class=p>)</span> <span class=n>url</span><span class=o>.</span><span class=n>openConnection</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>            <span class=n>conn</span><span class=o>.</span><span class=n>setConnectTimeout</span><span class=p>(</span><span class=mi>2000</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>conn</span><span class=o>.</span><span class=n>setReadTimeout</span><span class=p>(</span><span class=mi>2000</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=n>conn</span><span class=o>.</span><span class=n>setRequestMethod</span><span class=p>(</span><span class=s2>&#34;GET&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>            <span class=ne>int</span> <span class=n>code</span> <span class=o>=</span> <span class=n>conn</span><span class=o>.</span><span class=n>getResponseCode</span><span class=p>();</span>
+</span></span><span class=line><span class=cl>            <span class=k>if</span> <span class=p>(</span><span class=n>code</span> <span class=o>==</span> <span class=mi>200</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>System</span><span class=o>.</span><span class=n>out</span><span class=o>.</span><span class=n>println</span><span class=p>(</span><span class=n>Instant</span><span class=o>.</span><span class=n>now</span><span class=p>()</span> <span class=o>+</span> <span class=s2>&#34;Healthcheck OK (&#34;</span> <span class=o>+</span> <span class=n>code</span> <span class=o>+</span> <span class=s2>&#34;)&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=n>System</span><span class=o>.</span><span class=n>exit</span><span class=p>(</span><span class=mi>0</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span> <span class=k>else</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>                <span class=n>System</span><span class=o>.</span><span class=n>err</span><span class=o>.</span><span class=n>println</span><span class=p>(</span><span class=n>Instant</span><span class=o>.</span><span class=n>now</span><span class=p>()</span> <span class=o>+</span> <span class=s2>&#34;Healthcheck failed (&#34;</span> <span class=o>+</span> <span class=n>code</span> <span class=o>+</span> <span class=s2>&#34;)&#34;</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>                <span class=n>System</span><span class=o>.</span><span class=n>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>            <span class=p>}</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span> <span class=n>catch</span> <span class=p>(</span><span class=n>Exception</span> <span class=n>e</span><span class=p>)</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=n>System</span><span class=o>.</span><span class=n>err</span><span class=o>.</span><span class=n>println</span><span class=p>(</span><span class=n>Instant</span><span class=o>.</span><span class=n>now</span><span class=p>()</span> <span class=o>+</span> <span class=s2>&#34; Healthcheck error: &#34;</span> <span class=o>+</span> <span class=n>e</span><span class=o>.</span><span class=n>getMessage</span><span class=p>());</span>
+</span></span><span class=line><span class=cl>            <span class=n>System</span><span class=o>.</span><span class=n>exit</span><span class=p>(</span><span class=mi>1</span><span class=p>);</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=n>EOF</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Compile HealthCheck.java file</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>javac</span> <span class=o>/</span><span class=n>app</span><span class=o>/</span><span class=n>health</span><span class=o>/</span><span class=n>HealthCheck</span><span class=o>.</span><span class=n>java</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Stage 2 — Runtime image (auto-updated base)</span>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=n>hmctspublic</span><span class=o>.</span><span class=n>azurecr</span><span class=o>.</span><span class=n>io</span><span class=o>/</span><span class=n>base</span><span class=o>/</span><span class=n>java</span><span class=p>:</span><span class=mi>21</span><span class=o>-</span><span class=n>distroless</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy compiled app</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>/</span><span class=n>app</span><span class=o>/</span><span class=n>build</span><span class=o>/</span><span class=n>libs</span><span class=o>/*.</span><span class=n>jar</span> <span class=n>app</span><span class=o>.</span><span class=n>jar</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy complied healthcheck class</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>/</span><span class=n>app</span><span class=o>/</span><span class=n>health</span><span class=o>/</span><span class=n>HealthCheck</span><span class=o>.</span><span class=k>class</span> <span class=o>/</span><span class=n>app</span><span class=o>/</span><span class=n>HealthCheck</span><span class=o>.</span><span class=k>class</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>EXPOSE</span> <span class=mi>8080</span>
+</span></span><span class=line><span class=cl><span class=n>ENTRYPOINT</span> <span class=p>[</span><span class=s2>&#34;java&#34;</span><span class=p>,</span> <span class=s2>&#34;-jar&#34;</span><span class=p>,</span> <span class=s2>&#34;app.jar&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>HEALTHCHECK</span> <span class=o>--</span><span class=n>interval</span><span class=o>=</span><span class=mi>15</span><span class=n>s</span> <span class=o>--</span><span class=n>timeout</span><span class=o>=</span><span class=mi>5</span><span class=n>s</span> <span class=o>--</span><span class=n>start</span><span class=o>-</span><span class=n>period</span><span class=o>=</span><span class=mi>10</span><span class=n>s</span> <span class=o>--</span><span class=n>retries</span><span class=o>=</span><span class=mi>3</span> \
+</span></span><span class=line><span class=cl>    <span class=n>CMD</span> <span class=p>[</span><span class=s2>&#34;java&#34;</span><span class=p>,</span> <span class=s2>&#34;HealthCheck&#34;</span><span class=p>]</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h3 id=3-dockerfile-top-java--dung-cao-alpine-jdkjre-tối-ưu>3. Dockerfile TOP (Java) – Dung Cao (Alpine JDK/JRE tối ưu)</h3><div class=table-wrapper><table><thead><tr><th>Kỹ thuật</th><th>Giải thích theo tác giả</th><th>Nguồn tham khảo</th></tr></thead><tbody><tr><td><strong>Tách riêng JDK/JRE bằng ARG</strong></td><td>Dùng <code>ARG BUILD_JDK_IMAGE</code> và <code>RUNTIME_IMAGE</code> để dễ đổi base image (JDK cho build, JRE cho runtime), vẫn giữ Dockerfile đơn giản.</td><td></td></tr><tr><td><strong>Gradle cache với BuildKit</strong></td><td>Dùng <code>--mount=type=cache,target=/cache/.gradle</code> cho các lệnh <code>./gradlew</code> để tối ưu thời gian build lặp lại.</td><td></td></tr><tr><td><strong>Không chạy test trong build image</strong></td><td><code>bootJar -x test</code> giúp build nhanh hơn cho môi trường CI/CD và Docker contest (ưu tiên ra artifact).</td><td></td></tr><tr><td><strong>Non-root user + chown</strong></td><td>Tạo user/group <code>app</code>, <code>--chown=app:app</code> khi copy JAR đảm bảo runtime an toàn, tuân CIS Docker Benchmark.</td><td></td></tr><tr><td><strong>Healthcheck với curl</strong></td><td>Cài <code>curl</code> (apk add &ndash;no-cache) rồi dùng <code>curl -fsS</code> tới <code>/health</code> cho healthcheck rõ ràng, dễ debug.</td><td></td></tr><tr><td><strong>JVM tuning cho container</strong></td><td><code>JAVA_OPTS</code> bật <code>UseContainerSupport</code>, <code>MaxRAMPercentage=75</code>, <code>G1GC</code>, <code>ExitOnOutOfMemoryError</code>, heap dump path… giúp JVM hiểu giới hạn container và fail-fast khi OOM.</td><td></td></tr></tbody></table></div><p><strong>Dockerfile TOP (JAVA) – Dung Cao</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=c1># Dockerfile.txt</span>
+</span></span><span class=line><span class=cl><span class=c1># === Alpine build optimized for Dockerfile Contest 2025 ===</span>
+</span></span><span class=line><span class=cl><span class=c1># Focus: security, lightweight, clear, maintainable</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Build-time arguments</span>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>BUILD_JDK_IMAGE</span><span class=o>=</span><span class=n>eclipse</span><span class=o>-</span><span class=n>temurin</span><span class=p>:</span><span class=mi>21</span><span class=o>-</span><span class=n>jdk</span><span class=o>-</span><span class=n>alpine</span><span class=o>-</span><span class=mf>3.22</span>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>RUNTIME_IMAGE</span><span class=o>=</span><span class=n>eclipse</span><span class=o>-</span><span class=n>temurin</span><span class=p>:</span><span class=mi>21</span><span class=o>-</span><span class=n>jre</span><span class=o>-</span><span class=n>alpine</span><span class=o>-</span><span class=mf>3.22</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># ---------- Stage: builder ----------</span>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=o>$</span><span class=p>{</span><span class=n>BUILD_JDK_IMAGE</span><span class=p>}</span> <span class=n>AS</span> <span class=n>builder</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Set non-interactive environment &amp; reproducible timezone</span>
+</span></span><span class=line><span class=cl><span class=n>ENV</span> <span class=n>TZ</span><span class=o>=</span><span class=n>UTC</span> \
+</span></span><span class=line><span class=cl>  <span class=n>LANG</span><span class=o>=</span><span class=n>C</span><span class=o>.</span><span class=n>UTF</span><span class=o>-</span><span class=mi>8</span> \
+</span></span><span class=line><span class=cl>  <span class=n>LC_ALL</span><span class=o>=</span><span class=n>C</span><span class=o>.</span><span class=n>UTF</span><span class=o>-</span><span class=mi>8</span> \
+</span></span><span class=line><span class=cl>  <span class=n>GRADLE_USER_HOME</span><span class=o>=/</span><span class=n>cache</span><span class=o>/.</span><span class=n>gradle</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>workspace</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy Gradle wrapper and descriptors</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>gradlew</span> <span class=o>.</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>gradle</span><span class=o>/</span> <span class=n>gradle</span><span class=o>/</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>build</span><span class=o>.</span><span class=n>gradle</span> <span class=o>./</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>chmod</span> <span class=o>+</span><span class=n>x</span> <span class=o>./</span><span class=n>gradlew</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Resolve dependencies using BuildKit cache mount</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=n>cache</span><span class=o>/.</span><span class=n>gradle</span> \
+</span></span><span class=line><span class=cl>  <span class=o>./</span><span class=n>gradlew</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>daemon</span> <span class=n>dependencies</span> <span class=o>||</span> <span class=bp>true</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy application source</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>src</span><span class=o>/</span> <span class=n>src</span><span class=o>/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=n>cache</span><span class=o>/.</span><span class=n>gradle</span> \
+</span></span><span class=line><span class=cl>  <span class=o>./</span><span class=n>gradlew</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>daemon</span> <span class=n>clean</span> <span class=n>bootJar</span> <span class=o>-</span><span class=n>x</span> <span class=n>test</span> \
+</span></span><span class=line><span class=cl>  <span class=o>-</span><span class=n>Dspring</span><span class=o>-</span><span class=n>framework</span><span class=o>.</span><span class=n>version</span><span class=o>=</span><span class=mf>6.2</span><span class=o>.</span><span class=mi>11</span> \
+</span></span><span class=line><span class=cl>  <span class=o>-</span><span class=n>Dcommons</span><span class=o>-</span><span class=n>lang3</span><span class=o>.</span><span class=n>version</span><span class=o>=</span><span class=mf>3.18</span><span class=o>.</span><span class=mi>0</span> \
+</span></span><span class=line><span class=cl>  <span class=o>-</span><span class=n>Dtomcat</span><span class=o>.</span><span class=n>version</span><span class=o>=</span><span class=mf>10.1</span><span class=o>.</span><span class=mi>47</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># ---------- Stage: runtime ----------</span>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=o>$</span><span class=p>{</span><span class=n>RUNTIME_IMAGE</span><span class=p>}</span> <span class=n>AS</span> <span class=n>runtime</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>VERSION</span>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>VCS_REF</span>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>BUILD_DATE</span>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>LICENSE</span><span class=o>=</span><span class=s2>&#34;MIT License&#34;</span>
+</span></span><span class=line><span class=cl><span class=n>ARG</span> <span class=n>SOURCE</span><span class=o>=</span><span class=s2>&#34;contest-submission&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># OCI Labels (metadata)</span>
+</span></span><span class=line><span class=cl><span class=n>LABEL</span> <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>title</span><span class=o>=</span><span class=s2>&#34;spring-boot-template&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>description</span><span class=o>=</span><span class=s2>&#34;Spring Boot Java application built for Dockerfile Contest 2025&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>url</span><span class=o>=</span><span class=s2>&#34;${SOURCE}&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>source</span><span class=o>=</span><span class=s2>&#34;${SOURCE}&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>version</span><span class=o>=</span><span class=s2>&#34;${VERSION}&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>revision</span><span class=o>=</span><span class=s2>&#34;${VCS_REF}&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>licenses</span><span class=o>=</span><span class=s2>&#34;${LICENSE}&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>created</span><span class=o>=</span><span class=s2>&#34;${BUILD_DATE}&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>authors</span><span class=o>=</span><span class=s2>&#34;Dung Cao&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Create non-root user</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>addgroup</span> <span class=o>-</span><span class=n>S</span> <span class=n>app</span> <span class=o>&amp;&amp;</span> <span class=n>adduser</span> <span class=o>-</span><span class=n>S</span> <span class=n>app</span> <span class=o>-</span><span class=n>G</span> <span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy application jar</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>lib</span><span class=o>/</span><span class=n>applicationinsights</span><span class=o>.</span><span class=n>json</span> <span class=n>applicationinsights</span><span class=o>.</span><span class=n>json</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>--</span><span class=n>chown</span><span class=o>=</span><span class=n>app</span><span class=p>:</span><span class=n>app</span> <span class=o>/</span><span class=n>workspace</span><span class=o>/</span><span class=n>build</span><span class=o>/</span><span class=n>libs</span><span class=o>/*.</span><span class=n>jar</span> <span class=n>app</span><span class=o>.</span><span class=n>jar</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Install curl for healthcheck</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>apk</span> <span class=n>add</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>cache</span> <span class=n>curl</span> \
+</span></span><span class=line><span class=cl>  <span class=o>&amp;&amp;</span> <span class=n>rm</span> <span class=o>-</span><span class=n>rf</span> <span class=o>/</span><span class=k>var</span><span class=o>/</span><span class=n>cache</span><span class=o>/</span><span class=n>apk</span><span class=o>/*</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Expose HTTP port</span>
+</span></span><span class=line><span class=cl><span class=n>EXPOSE</span> <span class=mi>8080</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Healthcheck</span>
+</span></span><span class=line><span class=cl><span class=n>HEALTHCHECK</span> <span class=o>--</span><span class=n>interval</span><span class=o>=</span><span class=mi>10</span><span class=n>s</span> <span class=o>--</span><span class=n>timeout</span><span class=o>=</span><span class=mi>3</span><span class=n>s</span> <span class=o>--</span><span class=n>start</span><span class=o>-</span><span class=n>period</span><span class=o>=</span><span class=mi>10</span><span class=n>s</span> <span class=o>--</span><span class=n>retries</span><span class=o>=</span><span class=mi>3</span> \
+</span></span><span class=line><span class=cl>  <span class=n>CMD</span> <span class=n>curl</span> <span class=o>-</span><span class=n>fsS</span> <span class=n>http</span><span class=p>:</span><span class=o>//</span><span class=mf>127.0</span><span class=o>.</span><span class=mf>0.1</span><span class=p>:</span><span class=mi>8080</span><span class=o>/</span><span class=n>health</span> <span class=o>||</span> <span class=n>exit</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># JVM optimization</span>
+</span></span><span class=line><span class=cl><span class=n>ENV</span> <span class=n>JAVA_OPTS</span><span class=o>=</span><span class=s2>&#34;</span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -XX:+UseContainerSupport </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -XX:MaxRAMPercentage=75.0 </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -Djava.security.egd=file:/dev/./urandom </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -Dserver.shutdown=graceful </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -Dspring.lifecycle.timeout-per-shutdown-phase=10s </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -Dfile.encoding=UTF-8 </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -XX:+ExitOnOutOfMemoryError </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -XX:+UseG1GC </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -XX:+HeapDumpOnOutOfMemoryError </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -XX:HeapDumpPath=/tmp </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  &#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Graceful termination signal</span>
+</span></span><span class=line><span class=cl><span class=n>STOPSIGNAL</span> <span class=n>SIGTERM</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Switch to non-root user</span>
+</span></span><span class=line><span class=cl><span class=n>USER</span> <span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># --- Entry point ---</span>
+</span></span><span class=line><span class=cl><span class=n>ENTRYPOINT</span> <span class=p>[</span><span class=s2>&#34;sh&#34;</span><span class=p>,</span> <span class=s2>&#34;-c&#34;</span><span class=p>,</span> <span class=s2>&#34;exec java ${JAVA_OPTS} -jar /app/app.jar&#34;</span><span class=p>]</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h3 id=4-dockerfile-top-tham-khảo--java--hmcts-spring-boot-template-layered--jlink>4. Dockerfile TOP (tham khảo – Java) – HMCTS Spring Boot Template (Layered + jlink)</h3><div class=table-wrapper><table><thead><tr><th>Kỹ thuật</th><th>Giải thích theo tác giả</th><th>Nguồn tham khảo</th></tr></thead><tbody><tr><td><strong>Gradle cache + tách layer</strong></td><td>Dùng BuildKit cache <code>id=gradle-cache</code> cho Gradle, sau đó dùng <code>jarmode=layertools</code> để extract các lớp <code>dependencies</code>, <code>spring-boot-loader</code>, <code>snapshot-dependencies</code>, <code>application</code> giúp cache Docker layer tối đa.</td><td></td></tr><tr><td><strong>Custom JRE với jlink</strong></td><td>Chạy <code>jlink</code> với danh sách module Java chọn tay để tạo JRE tối thiểu (<code>/jre-minimal</code>), giảm hơn 100MB so với JDK full.</td><td></td></tr><tr><td><strong>Alpine runtime tối thiểu</strong></td><td>Runtime base <code>alpine:3.21</code> chỉ cài <code>ca-certificates</code>, <code>tzdata</code>, <code>tini</code>, <code>curl</code>, sau đó chạy với non-root <code>appuser</code>.</td><td></td></tr><tr><td><strong>JAVA_TOOL_OPTIONS cho container</strong></td><td>Tối ưu JVM: <code>UseContainerSupport</code>, <code>MaxRAMPercentage</code>, <code>UseG1GC</code>, <code>UseStringDeduplication</code>, <code>ExitOnOutOfMemoryError</code>,… để tối ưu memory & GC trong container.</td><td></td></tr><tr><td><strong>OCI labels rất đầy đủ</strong></td><td>Ghi rõ <code>vendor</code>, <code>authors</code>, <code>source</code>, <code>version</code>, <code>revision</code>, <code>base.name</code>, <code>base.digest</code>, <code>com.hmcts.*</code>… giúp traceability cho tổ chức.</td><td></td></tr><tr><td><strong>Healthcheck dùng curl</strong></td><td>Healthcheck <code>/health</code> qua <code>curl -f</code>, retry có cấu hình hợp lý cho Spring Boot khởi động.</td><td></td></tr></tbody></table></div><p><strong>Dockerfile TOP (tham khảo – JAVA) – HMCTS Spring Boot Template</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>  1
+</span><span class=lnt>  2
+</span><span class=lnt>  3
+</span><span class=lnt>  4
+</span><span class=lnt>  5
+</span><span class=lnt>  6
+</span><span class=lnt>  7
+</span><span class=lnt>  8
+</span><span class=lnt>  9
+</span><span class=lnt> 10
+</span><span class=lnt> 11
+</span><span class=lnt> 12
+</span><span class=lnt> 13
+</span><span class=lnt> 14
+</span><span class=lnt> 15
+</span><span class=lnt> 16
+</span><span class=lnt> 17
+</span><span class=lnt> 18
+</span><span class=lnt> 19
+</span><span class=lnt> 20
+</span><span class=lnt> 21
+</span><span class=lnt> 22
+</span><span class=lnt> 23
+</span><span class=lnt> 24
+</span><span class=lnt> 25
+</span><span class=lnt> 26
+</span><span class=lnt> 27
+</span><span class=lnt> 28
+</span><span class=lnt> 29
+</span><span class=lnt> 30
+</span><span class=lnt> 31
+</span><span class=lnt> 32
+</span><span class=lnt> 33
+</span><span class=lnt> 34
+</span><span class=lnt> 35
+</span><span class=lnt> 36
+</span><span class=lnt> 37
+</span><span class=lnt> 38
+</span><span class=lnt> 39
+</span><span class=lnt> 40
+</span><span class=lnt> 41
+</span><span class=lnt> 42
+</span><span class=lnt> 43
+</span><span class=lnt> 44
+</span><span class=lnt> 45
+</span><span class=lnt> 46
+</span><span class=lnt> 47
+</span><span class=lnt> 48
+</span><span class=lnt> 49
+</span><span class=lnt> 50
+</span><span class=lnt> 51
+</span><span class=lnt> 52
+</span><span class=lnt> 53
+</span><span class=lnt> 54
+</span><span class=lnt> 55
+</span><span class=lnt> 56
+</span><span class=lnt> 57
+</span><span class=lnt> 58
+</span><span class=lnt> 59
+</span><span class=lnt> 60
+</span><span class=lnt> 61
+</span><span class=lnt> 62
+</span><span class=lnt> 63
+</span><span class=lnt> 64
+</span><span class=lnt> 65
+</span><span class=lnt> 66
+</span><span class=lnt> 67
+</span><span class=lnt> 68
+</span><span class=lnt> 69
+</span><span class=lnt> 70
+</span><span class=lnt> 71
+</span><span class=lnt> 72
+</span><span class=lnt> 73
+</span><span class=lnt> 74
+</span><span class=lnt> 75
+</span><span class=lnt> 76
+</span><span class=lnt> 77
+</span><span class=lnt> 78
+</span><span class=lnt> 79
+</span><span class=lnt> 80
+</span><span class=lnt> 81
+</span><span class=lnt> 82
+</span><span class=lnt> 83
+</span><span class=lnt> 84
+</span><span class=lnt> 85
+</span><span class=lnt> 86
+</span><span class=lnt> 87
+</span><span class=lnt> 88
+</span><span class=lnt> 89
+</span><span class=lnt> 90
+</span><span class=lnt> 91
+</span><span class=lnt> 92
+</span><span class=lnt> 93
+</span><span class=lnt> 94
+</span><span class=lnt> 95
+</span><span class=lnt> 96
+</span><span class=lnt> 97
+</span><span class=lnt> 98
+</span><span class=lnt> 99
+</span><span class=lnt>100
+</span><span class=lnt>101
+</span><span class=lnt>102
+</span><span class=lnt>103
+</span><span class=lnt>104
+</span><span class=lnt>105
+</span><span class=lnt>106
+</span><span class=lnt>107
+</span><span class=lnt>108
+</span><span class=lnt>109
+</span><span class=lnt>110
+</span><span class=lnt>111
+</span><span class=lnt>112
+</span><span class=lnt>113
+</span><span class=lnt>114
+</span><span class=lnt>115
+</span><span class=lnt>116
+</span><span class=lnt>117
+</span><span class=lnt>118
+</span><span class=lnt>119
+</span><span class=lnt>120
+</span><span class=lnt>121
+</span><span class=lnt>122
+</span><span class=lnt>123
+</span><span class=lnt>124
+</span><span class=lnt>125
+</span><span class=lnt>126
+</span><span class=lnt>127
+</span><span class=lnt>128
+</span><span class=lnt>129
+</span><span class=lnt>130
+</span><span class=lnt>131
+</span><span class=lnt>132
+</span><span class=lnt>133
+</span><span class=lnt>134
+</span><span class=lnt>135
+</span><span class=lnt>136
+</span><span class=lnt>137
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-gdscript3 data-lang=gdscript3><span class=line><span class=cl><span class=c1># syntax=docker/dockerfile:1.7</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># ============================================================================</span>
+</span></span><span class=line><span class=cl><span class=c1># STAGE 1: Application builder with optimized caching</span>
+</span></span><span class=line><span class=cl><span class=c1># ============================================================================</span>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=n>eclipse</span><span class=o>-</span><span class=n>temurin</span><span class=p>:</span><span class=mi>21</span><span class=o>-</span><span class=n>jdk</span><span class=o>-</span><span class=n>alpine</span><span class=err>@</span><span class=n>sha256</span><span class=p>:</span><span class=mi>89517925</span><span class=n>fa675c6c4b770bee7c44d38a7763212741b0d6fca5a5103caab21a97</span> <span class=n>AS</span> <span class=n>builder</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Install build dependencies (minimal)</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>apk</span> <span class=n>add</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>cache</span> <span class=n>binutils</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>rm</span> <span class=o>-</span><span class=n>rf</span> <span class=o>/</span><span class=k>var</span><span class=o>/</span><span class=n>cache</span><span class=o>/</span><span class=n>apk</span><span class=o>/*</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>build</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy Gradle wrapper and dependency definition files first</span>
+</span></span><span class=line><span class=cl><span class=c1># This layer will be cached until these files change</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>gradle</span><span class=o>/</span> <span class=n>gradle</span><span class=o>/</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>gradlew</span> <span class=n>build</span><span class=o>.</span><span class=n>gradle</span> <span class=o>./</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Download dependencies with BuildKit cache mount for faster subsequent builds</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>id</span><span class=o>=</span><span class=n>gradle</span><span class=o>-</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=n>root</span><span class=o>/.</span><span class=n>gradle</span><span class=p>,</span><span class=n>sharing</span><span class=o>=</span><span class=n>locked</span> \
+</span></span><span class=line><span class=cl>  <span class=n>chmod</span> <span class=o>+</span><span class=n>x</span> <span class=n>gradlew</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>  <span class=o>./</span><span class=n>gradlew</span> <span class=n>dependencies</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>daemon</span> <span class=o>--</span><span class=n>parallel</span> <span class=o>--</span><span class=n>console</span><span class=o>=</span><span class=n>plain</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy only production source code (exclude tests, docs, etc.)</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=n>src</span><span class=o>/</span><span class=n>main</span><span class=o>/</span> <span class=n>src</span><span class=o>/</span><span class=n>main</span><span class=o>/</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Build optimized JAR with cache mount</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>--</span><span class=n>mount</span><span class=o>=</span><span class=n>type</span><span class=o>=</span><span class=n>cache</span><span class=p>,</span><span class=n>id</span><span class=o>=</span><span class=n>gradle</span><span class=o>-</span><span class=n>cache</span><span class=p>,</span><span class=n>target</span><span class=o>=/</span><span class=n>root</span><span class=o>/.</span><span class=n>gradle</span><span class=p>,</span><span class=n>sharing</span><span class=o>=</span><span class=n>locked</span> \
+</span></span><span class=line><span class=cl>  <span class=o>./</span><span class=n>gradlew</span> <span class=n>bootJar</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>daemon</span> <span class=o>--</span><span class=n>parallel</span> <span class=o>--</span><span class=n>console</span><span class=o>=</span><span class=n>plain</span> <span class=o>-</span><span class=n>x</span> <span class=n>test</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>mkdir</span> <span class=o>-</span><span class=n>p</span> <span class=o>/</span><span class=n>app</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>mv</span> <span class=n>build</span><span class=o>/</span><span class=n>libs</span><span class=o>/</span><span class=n>spring</span><span class=o>-</span><span class=n>boot</span><span class=o>-</span><span class=n>template</span><span class=o>.</span><span class=n>jar</span> <span class=o>/</span><span class=n>app</span><span class=o>/</span><span class=n>app</span><span class=o>.</span><span class=n>jar</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Extract Spring Boot layers for optimal Docker layer caching</span>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>app</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>java</span> <span class=o>-</span><span class=n>Djarmode</span><span class=o>=</span><span class=n>layertools</span> <span class=o>-</span><span class=n>jar</span> <span class=n>app</span><span class=o>.</span><span class=n>jar</span> <span class=n>extract</span> <span class=o>--</span><span class=n>destination</span> <span class=o>/</span><span class=n>app</span><span class=o>/</span><span class=n>extracted</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Create minimal custom JRE with jlink (reduces size by &gt;100MB)</span>
+</span></span><span class=line><span class=cl><span class=c1># Only include Java modules actually needed by Spring Boot</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=o>$</span><span class=n>JAVA_HOME</span><span class=o>/</span><span class=n>bin</span><span class=o>/</span><span class=n>jlink</span> \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>add</span><span class=o>-</span><span class=n>modules</span> <span class=n>java</span><span class=o>.</span><span class=n>base</span><span class=p>,</span><span class=n>java</span><span class=o>.</span><span class=n>compiler</span><span class=p>,</span><span class=n>java</span><span class=o>.</span><span class=n>desktop</span><span class=p>,</span><span class=n>java</span><span class=o>.</span><span class=n>instrument</span><span class=p>,</span><span class=n>java</span><span class=o>.</span><span class=n>management</span><span class=p>,</span><span class=n>java</span><span class=o>.</span><span class=n>management</span><span class=o>.</span><span class=n>rmi</span><span class=p>,</span><span class=n>java</span><span class=o>.</span><span class=n>naming</span><span class=p>,</span><span class=n>java</span><span class=o>.</span><span class=n>net</span><span class=o>.</span><span class=n>http</span><span class=p>,</span><span class=n>java</span><span class=o>.</span><span class=n>prefs</span><span class=p>,</span><span class=n>java</span><span class=o>.</span><span class=n>rmi</span><span class=p>,</span><span class=n>java</span><span class=o>.</span><span class=n>scripting</span><span class=p>,</span><span class=n>java</span><span class=o>.</span><span class=n>security</span><span class=o>.</span><span class=n>jgss</span><span class=p>,</span><span class=n>java</span><span class=o>.</span><span class=n>security</span><span class=o>.</span><span class=n>sasl</span><span class=p>,</span><span class=n>java</span><span class=o>.</span><span class=n>sql</span><span class=p>,</span><span class=n>jdk</span><span class=o>.</span><span class=n>httpserver</span><span class=p>,</span><span class=n>jdk</span><span class=o>.</span><span class=n>jfr</span><span class=p>,</span><span class=n>jdk</span><span class=o>.</span><span class=n>unsupported</span> \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>strip</span><span class=o>-</span><span class=n>debug</span> \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>man</span><span class=o>-</span><span class=n>pages</span> \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>header</span><span class=o>-</span><span class=n>files</span> \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>compress</span><span class=o>=</span><span class=n>zip</span><span class=o>-</span><span class=mi>9</span> \
+</span></span><span class=line><span class=cl>  <span class=o>--</span><span class=n>output</span> <span class=o>/</span><span class=n>jre</span><span class=o>-</span><span class=n>minimal</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># ============================================================================</span>
+</span></span><span class=line><span class=cl><span class=c1># STAGE 3: Minimal runtime image</span>
+</span></span><span class=line><span class=cl><span class=c1># ============================================================================</span>
+</span></span><span class=line><span class=cl><span class=n>FROM</span> <span class=n>alpine</span><span class=p>:</span><span class=mf>3.21</span><span class=err>@</span><span class=n>sha256</span><span class=p>:</span><span class=mf>5405e8</span><span class=n>f36ce1878720f71217d664aa3dea32e5e5df11acbf07fc78ef5661465b</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Install only critical runtime dependencies</span>
+</span></span><span class=line><span class=cl><span class=c1># ca-certificates: for HTTPS connections</span>
+</span></span><span class=line><span class=cl><span class=c1># tini: proper init system for PID 1</span>
+</span></span><span class=line><span class=cl><span class=c1># tzdata: timezone support</span>
+</span></span><span class=line><span class=cl><span class=c1># curl: for healthcheck</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>apk</span> <span class=n>upgrade</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>cache</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>apk</span> <span class=n>add</span> <span class=o>--</span><span class=n>no</span><span class=o>-</span><span class=n>cache</span> \
+</span></span><span class=line><span class=cl>  <span class=n>ca</span><span class=o>-</span><span class=n>certificates</span> \
+</span></span><span class=line><span class=cl>  <span class=n>tzdata</span> \
+</span></span><span class=line><span class=cl>  <span class=n>tini</span> \
+</span></span><span class=line><span class=cl>  <span class=n>curl</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>rm</span> <span class=o>-</span><span class=n>rf</span> <span class=o>/</span><span class=k>var</span><span class=o>/</span><span class=n>cache</span><span class=o>/</span><span class=n>apk</span><span class=o>/*</span> <span class=o>/</span><span class=n>tmp</span><span class=o>/*</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Create non-root user for security (CIS Docker Benchmark compliance)</span>
+</span></span><span class=line><span class=cl><span class=n>RUN</span> <span class=n>addgroup</span> <span class=o>-</span><span class=n>g</span> <span class=mi>1654</span> <span class=o>-</span><span class=n>S</span> <span class=n>appgroup</span> <span class=o>&amp;&amp;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>adduser</span> <span class=o>-</span><span class=n>u</span> <span class=mi>1654</span> <span class=o>-</span><span class=n>S</span> <span class=n>appuser</span> <span class=o>-</span><span class=n>G</span> <span class=n>appgroup</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy minimal custom JRE from builder</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>--</span><span class=n>chown</span><span class=o>=</span><span class=mi>1654</span><span class=p>:</span><span class=mi>1654</span> <span class=o>/</span><span class=n>jre</span><span class=o>-</span><span class=n>minimal</span> <span class=o>/</span><span class=n>opt</span><span class=o>/</span><span class=n>java</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Set up application directory with proper ownership</span>
+</span></span><span class=line><span class=cl><span class=n>WORKDIR</span> <span class=o>/</span><span class=n>app</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Copy Spring Boot layers in optimal order (least to most frequently changed)</span>
+</span></span><span class=line><span class=cl><span class=c1># This maximizes Docker layer cache efficiency</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>--</span><span class=n>chown</span><span class=o>=</span><span class=mi>1654</span><span class=p>:</span><span class=mi>1654</span> <span class=o>/</span><span class=n>app</span><span class=o>/</span><span class=n>extracted</span><span class=o>/</span><span class=n>dependencies</span><span class=o>/</span> <span class=o>./</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>--</span><span class=n>chown</span><span class=o>=</span><span class=mi>1654</span><span class=p>:</span><span class=mi>1654</span> <span class=o>/</span><span class=n>app</span><span class=o>/</span><span class=n>extracted</span><span class=o>/</span><span class=n>spring</span><span class=o>-</span><span class=n>boot</span><span class=o>-</span><span class=n>loader</span><span class=o>/</span> <span class=o>./</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>--</span><span class=n>chown</span><span class=o>=</span><span class=mi>1654</span><span class=p>:</span><span class=mi>1654</span> <span class=o>/</span><span class=n>app</span><span class=o>/</span><span class=n>extracted</span><span class=o>/</span><span class=n>snapshot</span><span class=o>-</span><span class=n>dependencies</span><span class=o>/</span> <span class=o>./</span>
+</span></span><span class=line><span class=cl><span class=n>COPY</span> <span class=o>--</span><span class=n>from</span><span class=o>=</span><span class=n>builder</span> <span class=o>--</span><span class=n>chown</span><span class=o>=</span><span class=mi>1654</span><span class=p>:</span><span class=mi>1654</span> <span class=o>/</span><span class=n>app</span><span class=o>/</span><span class=n>extracted</span><span class=o>/</span><span class=n>application</span><span class=o>/</span> <span class=o>./</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Switch to non-root user (security best practice)</span>
+</span></span><span class=line><span class=cl><span class=n>USER</span> <span class=mi>1654</span><span class=p>:</span><span class=mi>1654</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Set JAVA_HOME and PATH</span>
+</span></span><span class=line><span class=cl><span class=n>ENV</span> <span class=n>JAVA_HOME</span><span class=o>=/</span><span class=n>opt</span><span class=o>/</span><span class=n>java</span> \
+</span></span><span class=line><span class=cl>  <span class=n>PATH</span><span class=o>=</span><span class=s2>&#34;/opt/java/bin:${PATH}&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Optimal JVM flags for containerized Spring Boot applications</span>
+</span></span><span class=line><span class=cl><span class=c1># - UseContainerSupport: respect container memory limits</span>
+</span></span><span class=line><span class=cl><span class=c1># - MaxRAMPercentage: use max 75% of container memory for heap</span>
+</span></span><span class=line><span class=cl><span class=c1># - UseG1GC: best GC for containers with predictable pause times</span>
+</span></span><span class=line><span class=cl><span class=c1># - UseStringDeduplication: reduce memory footprint</span>
+</span></span><span class=line><span class=cl><span class=c1># - ExitOnOutOfMemoryError: fail fast on OOM</span>
+</span></span><span class=line><span class=cl><span class=c1># - TieredCompilation with level 1: faster startup, good for short-lived containers</span>
+</span></span><span class=line><span class=cl><span class=n>ENV</span> <span class=n>JAVA_TOOL_OPTIONS</span><span class=o>=</span><span class=s2>&#34;-XX:+UseContainerSupport </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -XX:MaxRAMPercentage=75.0 </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -XX:InitialRAMPercentage=50.0 </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -XX:+UseG1GC </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -XX:MaxGCPauseMillis=100 </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -XX:+UseStringDeduplication </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -XX:+ParallelRefProcEnabled </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -XX:+DisableExplicitGC </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -XX:+ExitOnOutOfMemoryError </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -Djava.security.egd=file:/dev/./urandom </span><span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span><span class=s2>  -Djava.awt.headless=true&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Application server port</span>
+</span></span><span class=line><span class=cl><span class=n>EXPOSE</span> <span class=mi>8080</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Comprehensive OCI labels for traceability and compliance</span>
+</span></span><span class=line><span class=cl><span class=n>LABEL</span> <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>title</span><span class=o>=</span><span class=s2>&#34;Spring Boot Template&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>description</span><span class=o>=</span><span class=s2>&#34;HMCTS Spring Boot Template - Optimized for Contest 2025&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>vendor</span><span class=o>=</span><span class=s2>&#34;HMCTS Reform Programme&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>authors</span><span class=o>=</span><span class=s2>&#34;HMCTS &lt;hmcts@justice.gov.uk&gt;&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>source</span><span class=o>=</span><span class=s2>&#34;https://github.com/hmcts/spring-boot-template&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>version</span><span class=o>=</span><span class=s2>&#34;0.0.1&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>revision</span><span class=o>=</span><span class=s2>&#34;contest-2025&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>licenses</span><span class=o>=</span><span class=s2>&#34;MIT&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>base</span><span class=o>.</span><span class=n>name</span><span class=o>=</span><span class=s2>&#34;docker.io/library/alpine:3.21&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>org</span><span class=o>.</span><span class=n>opencontainers</span><span class=o>.</span><span class=n>image</span><span class=o>.</span><span class=n>base</span><span class=o>.</span><span class=n>digest</span><span class=o>=</span><span class=s2>&#34;sha256:5405e8f36ce1878720f71217d664aa3dea32e5e5df11acbf07fc78ef5661465b&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>maintainer</span><span class=o>=</span><span class=s2>&#34;HMCTS Reform Team&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>com</span><span class=o>.</span><span class=n>hmcts</span><span class=o>.</span><span class=n>app</span><span class=o>.</span><span class=n>name</span><span class=o>=</span><span class=s2>&#34;spring-boot-template&#34;</span> \
+</span></span><span class=line><span class=cl>  <span class=n>com</span><span class=o>.</span><span class=n>hmcts</span><span class=o>.</span><span class=n>build</span><span class=o>.</span><span class=n>date</span><span class=o>=</span><span class=s2>&#34;2025-10-27&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Health check using Spring Boot Actuator /health endpoint</span>
+</span></span><span class=line><span class=cl><span class=c1># Using curl for lightweight health checks</span>
+</span></span><span class=line><span class=cl><span class=n>HEALTHCHECK</span> <span class=o>--</span><span class=n>interval</span><span class=o>=</span><span class=mi>30</span><span class=n>s</span> <span class=o>--</span><span class=n>timeout</span><span class=o>=</span><span class=mi>5</span><span class=n>s</span> <span class=o>--</span><span class=n>start</span><span class=o>-</span><span class=n>period</span><span class=o>=</span><span class=mi>60</span><span class=n>s</span> <span class=o>--</span><span class=n>retries</span><span class=o>=</span><span class=mi>3</span> \
+</span></span><span class=line><span class=cl>  <span class=n>CMD</span> <span class=n>curl</span> <span class=o>-</span><span class=n>f</span> <span class=n>http</span><span class=p>:</span><span class=o>//</span><span class=n>localhost</span><span class=p>:</span><span class=mi>8080</span><span class=o>/</span><span class=n>health</span> <span class=o>||</span> <span class=n>exit</span> <span class=mi>1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Use tini as init system for proper signal handling</span>
+</span></span><span class=line><span class=cl><span class=c1># Ensures graceful shutdown and zombie process reaping</span>
+</span></span><span class=line><span class=cl><span class=n>ENTRYPOINT</span> <span class=p>[</span><span class=s2>&#34;/sbin/tini&#34;</span><span class=p>,</span> <span class=s2>&#34;--&#34;</span><span class=p>]</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Run Spring Boot application</span>
+</span></span><span class=line><span class=cl><span class=c1># Using exec form to ensure proper signal propagation</span>
+</span></span><span class=line><span class=cl><span class=n>CMD</span> <span class=p>[</span><span class=s2>&#34;java&#34;</span><span class=p>,</span> <span class=s2>&#34;org.springframework.boot.loader.launch.JarLauncher&#34;</span><span class=p>]</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=ghi-chú-triển-khai>Ghi chú triển khai</h2><ul><li><strong>Khi áp dụng cho dự án Java của bạn</strong>, hãy giữ nguyên các nguyên tắc chính mà các Dockerfile trên thể hiện:<ul><li>Multi-stage build rõ ràng (builder + runtime).</li><li>Tối ưu JRE (dùng <code>jdeps</code> + <code>jlink</code>, base image Java distroless hoặc JRE-only image).</li><li>Healthcheck rõ ràng (native Java hoặc wget/curl).</li><li>Tối ưu dependency (tự động hoặc thủ công) để giảm CVE.</li></ul></li><li>Khi copy template về dự án riêng, bạn nên:<ul><li>Cập nhật lại <code>LABEL org.opencontainers.image.source</code> cho đúng repository của bạn.</li><li>Điều chỉnh endpoint healthcheck (<code>/health</code>, <code>/actuator/health</code>&mldr;) cho trùng với app thực tế.</li><li>Thử build và scan image với các tool như Trivy để kiểm tra security sau khi tối ưu.</li></ul></li></ul></section><footer class=article-footer><section class=article-tags><a href=/tags/docker/>Docker</a>
+<a href=/tags/java/>Java</a>
+<a href=/tags/spring-boot/>Spring-Boot</a>
+<a href=/tags/performance/>Performance</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>DevOpsVN</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Bài viết liên quan</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/posts/docker-optimization/docker-opt-python/><div class=article-image><img src=/images/docker-optimization/docker-optimization-python.webp loading=lazy data-key data-hash=/images/docker-optimization/docker-optimization-python.webp></div><div class=article-details><h2 class=article-title>Tối ưu Docker cho Python</h2></div></a></article><article class=has-image><a href=/posts/docker-optimization/docker-opt-nodejs/><div class=article-image><img src=/images/docker-optimization/docker-optimization-react.webp loading=lazy data-key data-hash=/images/docker-optimization/docker-optimization-react.webp></div><div class=article-details><h2 class=article-title>Tối ưu Docker cho Node.js</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=hoangduonng/blog_comments issue-term=pathname label=comments theme=icy-dark crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2025 Hoàng Dương</section><section class=powerby>Built with <a href=https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/ target=_blank rel=noopener>Ngữ Uyển ❤️</a><br>Theme <no value>thiết kế bởi Jimmy</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

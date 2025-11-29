@@ -1,4 +1,1110 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hoàng Dương</title><link>https://tech.nguuyen.io.vn/</link><description>Recent content on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 23 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/index.xml" rel="self" type="application/rss+xml"/><item><title>Tối ưu Docker cho Python</title><link>https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-python/</link><pubDate>Sun, 23 Nov 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-python/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker-optimization/docker-optimization-python.webp" alt="Featured image of post Tối ưu Docker cho Python" />&lt;h2 id="dockerfile-contest-2025--python-tối-ưu-extreme">Dockerfile Contest 2025 – Python tối ưu extreme
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hoàng Dương</title><link>https://tech.nguuyen.io.vn/</link><description>Recent content on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sat, 29 Nov 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/index.xml" rel="self" type="application/rss+xml"/><item><title>Tối ưu Docker cho Java</title><link>https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-java/</link><pubDate>Sat, 29 Nov 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-java/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker-optimization/docker-optimization-java.webp" alt="Featured image of post Tối ưu Docker cho Java" />&lt;h2 id="dockerfile-contest-2025--java-tối-ưu-extreme">Dockerfile Contest 2025 – Java tối ưu extreme
+&lt;/h2>&lt;p>Dockerfile Contest 2025 thúc đẩy cộng đồng DevOps Việt Nam đánh giá lại cách viết Dockerfile để đạt &lt;strong>bảo mật, tối ưu, tường minh&lt;/strong>. Bài viết này tổng hợp riêng cho hạng mục &lt;strong>Java Spring Boot&lt;/strong>, nơi các tác giả tập trung tối ưu JRE, giảm kích thước image và chuẩn hóa quy trình build.&lt;/p>
+&lt;hr>
+&lt;h2 id="i-hạng-mục-java-spring-boot-service">I. Hạng mục JAVA (Spring Boot Service)
+&lt;/h2>&lt;p>Hạng mục Java tập trung vào các ý tưởng:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Tối ưu JRE&lt;/strong>: dùng &lt;code>jlink&lt;/code> và &lt;code>jdeps&lt;/code> để tạo custom JRE chỉ chứa module cần thiết.&lt;/li>
+&lt;li>&lt;strong>Tối ưu security &amp;amp; dependency&lt;/strong>: tự động cập nhật dependency an toàn, giảm CVE.&lt;/li>
+&lt;li>&lt;strong>Multi-stage build&lt;/strong>: tách rõ stage build và runtime, dùng distroless hoặc base image tối ưu.&lt;/li>
+&lt;li>&lt;strong>Healthcheck rõ ràng&lt;/strong>: dùng &lt;code>wget&lt;/code> hoặc Java native healthcheck để giám sát container.&lt;/li>
+&lt;/ul>
+&lt;h3 id="1-dockerfile-top-1-java--spring-boot-template--distroless">1. Dockerfile TOP 1 (Java) – Spring Boot Template + Distroless
+&lt;/h3>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Kỹ thuật&lt;/th>
+&lt;th>Giải thích theo tác giả&lt;/th>
+&lt;th>Nguồn tham khảo&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>Custom JRE bằng jlink&lt;/strong>&lt;/td>
+&lt;td>Dùng &lt;code>jdeps&lt;/code> phân tích fat JAR để lấy danh sách module, sau đó &lt;code>jlink&lt;/code> tạo JRE chỉ chứa module cần, giảm đáng kể kích thước runtime.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Multi-stage build rõ ràng&lt;/strong>&lt;/td>
+&lt;td>Stage &lt;code>build&lt;/code> dùng &lt;code>eclipse-temurin:21-jdk&lt;/code> để build Gradle; stage runtime dùng &lt;code>gcr.io/distroless/base-debian12&lt;/code> chỉ chạy JRE.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Phân tách Healthcheck Stage&lt;/strong>&lt;/td>
+&lt;td>Tạo stage &lt;code>healthcheck&lt;/code> dùng BusyBox, copy &lt;code>wget&lt;/code> vào runtime để healthcheck mà không phải cài thêm full curl/wget từ package manager.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Distroless Runtime&lt;/strong>&lt;/td>
+&lt;td>Dùng distroless base để giảm attack surface (không shell, không package manager), image gọn và an toàn hơn.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Pin nguồn &amp;amp; license&lt;/strong>&lt;/td>
+&lt;td>Thêm LABEL &lt;code>org.opencontainers.image.source&lt;/code>, &lt;code>version&lt;/code>, &lt;code>licenses&lt;/code> để dễ truy vết source code và tuân thủ license.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>&lt;strong>Dockerfile TOP 1 (JAVA)&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;span class="lnt">69
+&lt;/span>&lt;span class="lnt">70
+&lt;/span>&lt;span class="lnt">71
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Build stage&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">eclipse&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">temurin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">21&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">jdk&lt;/span> &lt;span class="n">AS&lt;/span> &lt;span class="n">build&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy gradle wrapper and properties first for better caching&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">gradlew&lt;/span> &lt;span class="n">gradlew&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">bat&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gradle&lt;/span> &lt;span class="o">./&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">gradle&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="n">gradle&lt;/span>&lt;span class="o">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Download Gradle distribution (cached)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">gradle&lt;/span> &lt;span class="o">./&lt;/span>&lt;span class="n">gradlew&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">version&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy source code&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Build the application&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">gradle&lt;/span> &lt;span class="o">./&lt;/span>&lt;span class="n">gradlew&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">daemon&lt;/span> &lt;span class="n">clean&lt;/span> &lt;span class="n">bootJar&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">-&lt;/span>&lt;span class="n">Dspring&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">framework&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">version&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">6.2&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">11&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">-&lt;/span>&lt;span class="n">Dtomcat&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">version&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">10.1&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">47&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Extract the application dependencies&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">jar&lt;/span> &lt;span class="n">xf&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">libs&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">spring&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">boot&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">template&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">jar&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Analyze the dependencies contained into the fat jar&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">jdeps&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">ignore&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">missing&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">deps&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">q&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">recursive&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">multi&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">release&lt;/span> &lt;span class="mi">21&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="nb">print&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">module&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">deps&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="k">class&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">path&lt;/span> &lt;span class="s1">&amp;#39;BOOT-INF/lib/*&amp;#39;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">build&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">libs&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">spring&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">boot&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">template&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">jar&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="n">deps&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Create the custom JRE&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">jlink&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">verbose&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">modules&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">cat&lt;/span> &lt;span class="n">deps&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">info&lt;/span>&lt;span class="p">)&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">compress&lt;/span> &lt;span class="n">zip&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">9&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">header&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">files&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">man&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">pages&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">output&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">custom_jre&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Healthcheck stage&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">busybox&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">1.36&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">musl&lt;/span> &lt;span class="n">AS&lt;/span> &lt;span class="n">healthcheck&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Runtime stage&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">gcr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">io&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">distroless&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">base&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">debian12&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENV&lt;/span> &lt;span class="n">JAVA_HOME&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">openjdk&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENV&lt;/span> &lt;span class="n">PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;$JAVA_HOME/bin:$PATH&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">build&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">custom_jre&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="n">JAVA_HOME&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy wget for healthcheck&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">healthcheck&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">wget&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">wget&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy application insights config&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">applicationinsights&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">json&lt;/span> &lt;span class="o">./&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy the built JAR&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">build&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">build&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">libs&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">spring&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">boot&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">template&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">jar&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">jar&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Add labels&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LABEL&lt;/span> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">source&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;https://github.com/hmcts/spring-boot-template&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">version&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;0.0.1&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">licenses&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;MIT&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">EXPOSE&lt;/span> &lt;span class="mi">8080&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">HEALTHCHECK&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">interval&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">30&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">timeout&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">start&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">period&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">retries&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">3&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CMD&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;/usr/bin/wget&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;--quiet&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;--output-document=/dev/null&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;http://localhost:8080/health&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">CMD&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;java&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;-jar&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;/app.jar&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h3 id="2-dockerfile-top-2-java--gradle-auto-dependency-update--custom-healthcheck">2. Dockerfile TOP 2 (Java) – Gradle Auto Dependency Update + Custom Healthcheck
+&lt;/h3>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Kỹ thuật&lt;/th>
+&lt;th>Giải thích theo tác giả&lt;/th>
+&lt;th>Nguồn tham khảo&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>Gradle Dependency Updates&lt;/strong>&lt;/td>
+&lt;td>Dùng plugin &lt;code>dependencyUpdates&lt;/code> để sinh report, sau đó script shell parse report và tự động update version plugin/ext/dependency trong &lt;code>build.gradle&lt;/code>.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Force Dependency Upgrade&lt;/strong>&lt;/td>
+&lt;td>Biến &lt;code>DEPENDENCIES_FORCE_UPDATE&lt;/code> cho phép chỉ định &lt;code>group:name:version&lt;/code> để ép cập nhật những dependency quan trọng, thường là những lib dính CVE.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Native Java Healthcheck&lt;/strong>&lt;/td>
+&lt;td>Viết class &lt;code>HealthCheck.java&lt;/code> dùng &lt;code>HttpURLConnection&lt;/code> gọi &lt;code>/health&lt;/code>, giúp healthcheck không phụ thuộc curl/wget.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Distroless Base Java&lt;/strong>&lt;/td>
+&lt;td>Runtime dùng &lt;code>hmctspublic.azurecr.io/base/java:21-distroless&lt;/code>, image Java 21 tối ưu sẵn cho production.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Cache Gradle&lt;/strong>&lt;/td>
+&lt;td>Mount cache &lt;code>/root/.gradle&lt;/code> để tăng tốc &lt;code>./gradlew&lt;/code> trong stage build.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>&lt;strong>Dockerfile TOP 2 (JAVA)&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;span class="lnt">102
+&lt;/span>&lt;span class="lnt">103
+&lt;/span>&lt;span class="lnt">104
+&lt;/span>&lt;span class="lnt">105
+&lt;/span>&lt;span class="lnt">106
+&lt;/span>&lt;span class="lnt">107
+&lt;/span>&lt;span class="lnt">108
+&lt;/span>&lt;span class="lnt">109
+&lt;/span>&lt;span class="lnt">110
+&lt;/span>&lt;span class="lnt">111
+&lt;/span>&lt;span class="lnt">112
+&lt;/span>&lt;span class="lnt">113
+&lt;/span>&lt;span class="lnt">114
+&lt;/span>&lt;span class="lnt">115
+&lt;/span>&lt;span class="lnt">116
+&lt;/span>&lt;span class="lnt">117
+&lt;/span>&lt;span class="lnt">118
+&lt;/span>&lt;span class="lnt">119
+&lt;/span>&lt;span class="lnt">120
+&lt;/span>&lt;span class="lnt">121
+&lt;/span>&lt;span class="lnt">122
+&lt;/span>&lt;span class="lnt">123
+&lt;/span>&lt;span class="lnt">124
+&lt;/span>&lt;span class="lnt">125
+&lt;/span>&lt;span class="lnt">126
+&lt;/span>&lt;span class="lnt">127
+&lt;/span>&lt;span class="lnt">128
+&lt;/span>&lt;span class="lnt">129
+&lt;/span>&lt;span class="lnt">130
+&lt;/span>&lt;span class="lnt">131
+&lt;/span>&lt;span class="lnt">132
+&lt;/span>&lt;span class="lnt">133
+&lt;/span>&lt;span class="lnt">134
+&lt;/span>&lt;span class="lnt">135
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Stage 1 — Build application using Gradle&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">gradle&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">8.14&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">jdk21&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">alpine&lt;/span> &lt;span class="n">AS&lt;/span> &lt;span class="n">builder&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Caching wrapper and build configuration before build &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">gradlew&lt;/span> &lt;span class="o">./&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">gradle&lt;/span> &lt;span class="n">gradle&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gradle&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gradle&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Caching gradle/download&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">./&lt;/span>&lt;span class="n">gradlew&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">daemon&lt;/span> &lt;span class="n">help&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy src code&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">main&lt;/span> &lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Check dependency need to update&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">./&lt;/span>&lt;span class="n">gradlew&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">daemon&lt;/span> &lt;span class="n">dependencyUpdates&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">Drevision&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">release&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Auto update for auto vulnerability fixing &lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">REPORT_FILE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;build/dependencyUpdates/report.txt&amp;#34;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s2">&amp;#34;=== Parsing $REPORT_FILE ===&amp;#34;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PLUGINS_TO_UPGRADE&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="n">PLUGINS_TO_UPGRADE&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="s2">&amp;#34;org.springframework.boot org.sonarqube com.github.ben-manes.versions uk.gov.hmcts.java&amp;#34;&lt;/span>&lt;span class="p">}&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">EXTS_TO_UPGRADE&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="n">EXTS_TO_UPGRADE&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="s2">&amp;#34;org.apache.logging.log4j ch.qos.logback&amp;#34;&lt;/span>&lt;span class="p">}&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">DEPENDENCIES_FORCE_UPDATE&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="n">DEPENDENCIES_FORCE_UPDATE&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="s2">&amp;#34;org.apache.commons:commons-lang3:3.19.0&amp;#34;&lt;/span>&lt;span class="p">}&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">escape_sed&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="n">printf&lt;/span> &lt;span class="s1">&amp;#39;&lt;/span>&lt;span class="si">%s&lt;/span>&lt;span class="se">\n&lt;/span>&lt;span class="s1">&amp;#39;&lt;/span> &lt;span class="s2">&amp;#34;$1&amp;#34;&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">sed&lt;/span> &lt;span class="s1">&amp;#39;s/[.[\*^$/&amp;amp;]/&lt;/span>&lt;span class="se">\\&lt;/span>&lt;span class="s1">&amp;amp;/g&amp;#39;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># --- Plugin updates ---&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">plugin&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="n">PLUGINS_TO_UPGRADE&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">LINE&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">grep&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">A1&lt;/span> &lt;span class="s2">&amp;#34;$plugin&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;$REPORT_FILE&amp;#34;&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">grep&lt;/span> &lt;span class="s1">&amp;#39;\[&amp;#39;&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">head&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="bp">true&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">OLD_VERSION&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">echo&lt;/span> &lt;span class="s2">&amp;#34;$LINE&amp;#34;&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">sed&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">E&lt;/span> &lt;span class="s1">&amp;#39;s/.*\[(.*) -&amp;gt; .*\].*/&lt;/span>&lt;span class="se">\1&lt;/span>&lt;span class="s1">/&amp;#39;&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="bp">true&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">NEW_VERSION&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">echo&lt;/span> &lt;span class="s2">&amp;#34;$LINE&amp;#34;&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">sed&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">E&lt;/span> &lt;span class="s1">&amp;#39;s/.*\[.* -&amp;gt; (.*)\].*/&lt;/span>&lt;span class="se">\1&lt;/span>&lt;span class="s1">/&amp;#39;&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="bp">true&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">[&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">n&lt;/span> &lt;span class="s2">&amp;#34;$NEW_VERSION&amp;#34;&lt;/span> &lt;span class="p">]&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="p">[&lt;/span> &lt;span class="s2">&amp;#34;$NEW_VERSION&amp;#34;&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="s2">&amp;#34;$OLD_VERSION&amp;#34;&lt;/span> &lt;span class="p">];&lt;/span> &lt;span class="n">then&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s2">&amp;#34;===== Upgrading plugin $plugin: $OLD_VERSION → $NEW_VERSION&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ESC_OLD&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">escape_sed&lt;/span> &lt;span class="s2">&amp;#34;$OLD_VERSION&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ESC_NEW&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">escape_sed&lt;/span> &lt;span class="s2">&amp;#34;$NEW_VERSION&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sed&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="s2">&amp;#34;s#id &amp;#39;$plugin&amp;#39; version &amp;#39;$ESC_OLD&amp;#39;#id &amp;#39;$plugin&amp;#39; version &amp;#39;$ESC_NEW&amp;#39;#g&amp;#34;&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gradle&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fi&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">done&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># --- ext{} version updates ---&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">prefix&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="n">EXTS_TO_UPGRADE&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">LINE&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">grep&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">A1&lt;/span> &lt;span class="s2">&amp;#34;$prefix&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;$REPORT_FILE&amp;#34;&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">grep&lt;/span> &lt;span class="s1">&amp;#39;\[&amp;#39;&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">head&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="mi">1&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="bp">true&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">OLD_VERSION&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">echo&lt;/span> &lt;span class="s2">&amp;#34;$LINE&amp;#34;&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">sed&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">E&lt;/span> &lt;span class="s1">&amp;#39;s/.*\[(.*) -&amp;gt; .*\].*/&lt;/span>&lt;span class="se">\1&lt;/span>&lt;span class="s1">/&amp;#39;&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="bp">true&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">NEW_VERSION&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">echo&lt;/span> &lt;span class="s2">&amp;#34;$LINE&amp;#34;&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">sed&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">E&lt;/span> &lt;span class="s1">&amp;#39;s/.*\[.* -&amp;gt; (.*)\].*/&lt;/span>&lt;span class="se">\1&lt;/span>&lt;span class="s1">/&amp;#39;&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="bp">true&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">[&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">n&lt;/span> &lt;span class="s2">&amp;#34;$NEW_VERSION&amp;#34;&lt;/span> &lt;span class="p">]&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="p">[&lt;/span> &lt;span class="s2">&amp;#34;$NEW_VERSION&amp;#34;&lt;/span> &lt;span class="o">!=&lt;/span> &lt;span class="s2">&amp;#34;$OLD_VERSION&amp;#34;&lt;/span> &lt;span class="p">];&lt;/span> &lt;span class="n">then&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s2">&amp;#34;===== Upgrading prefix $prefix: $OLD_VERSION → $NEW_VERSION&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ESC_OLD&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">escape_sed&lt;/span> &lt;span class="s2">&amp;#34;$OLD_VERSION&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ESC_NEW&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">escape_sed&lt;/span> &lt;span class="s2">&amp;#34;$NEW_VERSION&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sed&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="s2">&amp;#34;s/&lt;/span>&lt;span class="se">\&amp;#34;&lt;/span>&lt;span class="s2">$ESC_OLD&lt;/span>&lt;span class="se">\&amp;#34;&lt;/span>&lt;span class="s2">/&lt;/span>&lt;span class="se">\&amp;#34;&lt;/span>&lt;span class="s2">$ESC_NEW&lt;/span>&lt;span class="se">\&amp;#34;&lt;/span>&lt;span class="s2">/g&amp;#34;&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gradle&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fi&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">done&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># --- Force dependency updates with explicit GAV ---&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">for&lt;/span> &lt;span class="n">dep&lt;/span> &lt;span class="ow">in&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="n">DEPENDENCIES_FORCE_UPDATE&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">GROUP&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">echo&lt;/span> &lt;span class="s2">&amp;#34;$dep&amp;#34;&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">cut&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="s1">&amp;#39;:&amp;#39;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">f1&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">NAME&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">echo&lt;/span> &lt;span class="s2">&amp;#34;$dep&amp;#34;&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">cut&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="s1">&amp;#39;:&amp;#39;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">f2&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">NEW_VERSION&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">echo&lt;/span> &lt;span class="s2">&amp;#34;$dep&amp;#34;&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">cut&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">d&lt;/span>&lt;span class="s1">&amp;#39;:&amp;#39;&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">f3&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">[&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">z&lt;/span> &lt;span class="s2">&amp;#34;$GROUP&amp;#34;&lt;/span> &lt;span class="p">]&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="p">[&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">z&lt;/span> &lt;span class="s2">&amp;#34;$NAME&amp;#34;&lt;/span> &lt;span class="p">]&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="p">[&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">z&lt;/span> &lt;span class="s2">&amp;#34;$NEW_VERSION&amp;#34;&lt;/span> &lt;span class="p">];&lt;/span> &lt;span class="n">then&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s2">&amp;#34;====== Invalid DEPENDENCIES_FORCE_UPDATE format for $dep, expected group:name:version&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">continue&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fi&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s2">&amp;#34;====== Forcing dependency update: $GROUP:$NAME → $NEW_VERSION&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ESC_GROUP&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">escape_sed&lt;/span> &lt;span class="s2">&amp;#34;$GROUP&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ESC_NAME&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">escape_sed&lt;/span> &lt;span class="s2">&amp;#34;$NAME&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ESC_NEW&lt;/span>&lt;span class="o">=$&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">escape_sed&lt;/span> &lt;span class="s2">&amp;#34;$NEW_VERSION&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="n">grep&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">q&lt;/span> &lt;span class="s2">&amp;#34;$ESC_GROUP&amp;#34;&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gradle&lt;/span> &lt;span class="o">|&lt;/span> &lt;span class="n">grep&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">q&lt;/span> &lt;span class="s2">&amp;#34;$ESC_NAME&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">then&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Replace existing dependency version&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sed&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="s2">&amp;#34;s#group: &amp;#39;$ESC_GROUP&amp;#39;, name: &amp;#39;$ESC_NAME&amp;#39;, version: &amp;#39;[^&amp;#39;]*&amp;#39;#group: &amp;#39;$ESC_GROUP&amp;#39;, name: &amp;#39;$ESC_NAME&amp;#39;, version: &amp;#39;$ESC_NEW&amp;#39;#g&amp;#34;&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gradle&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Insert new dependency inside dependencies { }&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s2">&amp;#34;====== Adding new dependency $GROUP:$NAME:$NEW_VERSION&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sed&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">i&lt;/span> &lt;span class="s2">&amp;#34;/dependencies\s*{/a\ implementation group: &amp;#39;$GROUP&amp;#39;, name: &amp;#39;$NAME&amp;#39;, version: &amp;#39;$NEW_VERSION&amp;#39;&amp;#34;&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gradle&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">fi&lt;/span>&lt;span class="p">;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">done&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s2">&amp;#34;Version upgrade complete!&amp;#34;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">cat&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gradle&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Build the application JAR after dependency check&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">./&lt;/span>&lt;span class="n">gradlew&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">daemon&lt;/span> &lt;span class="n">bootJar&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Generate java healthcheck class&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">mkdir&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">p&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">health&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">cat&lt;/span> &lt;span class="o">&amp;gt;&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">HealthCheck&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">java&lt;/span> &lt;span class="o">&amp;lt;&amp;lt;&lt;/span>&lt;span class="s1">&amp;#39;EOF&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">import&lt;/span> &lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">net&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">HttpURLConnection&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">import&lt;/span> &lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">net&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">URL&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">import&lt;/span> &lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">time&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">Instant&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">public&lt;/span> &lt;span class="k">class&lt;/span> &lt;span class="n">HealthCheck&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">public&lt;/span> &lt;span class="k">static&lt;/span> &lt;span class="n">void&lt;/span> &lt;span class="n">main&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="ne">String&lt;/span>&lt;span class="p">[]&lt;/span> &lt;span class="n">args&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="ne">String&lt;/span> &lt;span class="n">healthUrl&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;http://localhost:8080/health&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">try&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">URL&lt;/span> &lt;span class="n">url&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">new&lt;/span> &lt;span class="n">URL&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">healthUrl&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">HttpURLConnection&lt;/span> &lt;span class="n">conn&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">HttpURLConnection&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="n">url&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">openConnection&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">conn&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">setConnectTimeout&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">2000&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">conn&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">setReadTimeout&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">2000&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">conn&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">setRequestMethod&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;GET&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="ne">int&lt;/span> &lt;span class="n">code&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">conn&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">getResponseCode&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">code&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="mi">200&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Instant&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">now&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s2">&amp;#34;Healthcheck OK (&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">code&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s2">&amp;#34;)&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">exit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="k">else&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">err&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Instant&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">now&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s2">&amp;#34;Healthcheck failed (&amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">code&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s2">&amp;#34;)&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">exit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span> &lt;span class="n">catch&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">Exception&lt;/span> &lt;span class="n">e&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">err&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">Instant&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">now&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="s2">&amp;#34; Healthcheck error: &amp;#34;&lt;/span> &lt;span class="o">+&lt;/span> &lt;span class="n">e&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">getMessage&lt;/span>&lt;span class="p">());&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">System&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">exit&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">1&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">EOF&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Compile HealthCheck.java file&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">javac&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">HealthCheck&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">java&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Stage 2 — Runtime image (auto-updated base)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">hmctspublic&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">azurecr&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">io&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">base&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">21&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">distroless&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy compiled app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">build&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">libs&lt;/span>&lt;span class="o">/*.&lt;/span>&lt;span class="n">jar&lt;/span> &lt;span class="n">app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">jar&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy complied healthcheck class&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">HealthCheck&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="k">class&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">HealthCheck&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="k">class&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">EXPOSE&lt;/span> &lt;span class="mi">8080&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENTRYPOINT&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;java&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;-jar&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;app.jar&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">HEALTHCHECK&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">interval&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">15&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">timeout&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">start&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">period&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">retries&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">3&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CMD&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;java&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;HealthCheck&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h3 id="3-dockerfile-top-java--dung-cao-alpine-jdkjre-tối-ưu">3. Dockerfile TOP (Java) – Dung Cao (Alpine JDK/JRE tối ưu)
+&lt;/h3>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Kỹ thuật&lt;/th>
+&lt;th>Giải thích theo tác giả&lt;/th>
+&lt;th>Nguồn tham khảo&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>Tách riêng JDK/JRE bằng ARG&lt;/strong>&lt;/td>
+&lt;td>Dùng &lt;code>ARG BUILD_JDK_IMAGE&lt;/code> và &lt;code>RUNTIME_IMAGE&lt;/code> để dễ đổi base image (JDK cho build, JRE cho runtime), vẫn giữ Dockerfile đơn giản.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Gradle cache với BuildKit&lt;/strong>&lt;/td>
+&lt;td>Dùng &lt;code>--mount=type=cache,target=/cache/.gradle&lt;/code> cho các lệnh &lt;code>./gradlew&lt;/code> để tối ưu thời gian build lặp lại.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Không chạy test trong build image&lt;/strong>&lt;/td>
+&lt;td>&lt;code>bootJar -x test&lt;/code> giúp build nhanh hơn cho môi trường CI/CD và Docker contest (ưu tiên ra artifact).&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Non-root user + chown&lt;/strong>&lt;/td>
+&lt;td>Tạo user/group &lt;code>app&lt;/code>, &lt;code>--chown=app:app&lt;/code> khi copy JAR đảm bảo runtime an toàn, tuân CIS Docker Benchmark.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Healthcheck với curl&lt;/strong>&lt;/td>
+&lt;td>Cài &lt;code>curl&lt;/code> (apk add &amp;ndash;no-cache) rồi dùng &lt;code>curl -fsS&lt;/code> tới &lt;code>/health&lt;/code> cho healthcheck rõ ràng, dễ debug.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>JVM tuning cho container&lt;/strong>&lt;/td>
+&lt;td>&lt;code>JAVA_OPTS&lt;/code> bật &lt;code>UseContainerSupport&lt;/code>, &lt;code>MaxRAMPercentage=75&lt;/code>, &lt;code>G1GC&lt;/code>, &lt;code>ExitOnOutOfMemoryError&lt;/code>, heap dump path… giúp JVM hiểu giới hạn container và fail-fast khi OOM.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>&lt;strong>Dockerfile TOP (JAVA) – Dung Cao&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Dockerfile.txt&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># === Alpine build optimized for Dockerfile Contest 2025 ===&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Focus: security, lightweight, clear, maintainable&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Build-time arguments&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">BUILD_JDK_IMAGE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">eclipse&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">temurin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">21&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">jdk&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">alpine&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mf">3.22&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">RUNTIME_IMAGE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">eclipse&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">temurin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">21&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">jre&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">alpine&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mf">3.22&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># ---------- Stage: builder ----------&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="n">BUILD_JDK_IMAGE&lt;/span>&lt;span class="p">}&lt;/span> &lt;span class="n">AS&lt;/span> &lt;span class="n">builder&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Set non-interactive environment &amp;amp; reproducible timezone&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENV&lt;/span> &lt;span class="n">TZ&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">UTC&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">LANG&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">C&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">UTF&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">8&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">LC_ALL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">C&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">UTF&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">8&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">GRADLE_USER_HOME&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">gradle&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">workspace&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy Gradle wrapper and descriptors&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">gradlew&lt;/span> &lt;span class="o">.&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">gradle&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="n">gradle&lt;/span>&lt;span class="o">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gradle&lt;/span> &lt;span class="o">./&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">chmod&lt;/span> &lt;span class="o">+&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="o">./&lt;/span>&lt;span class="n">gradlew&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Resolve dependencies using BuildKit cache mount&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">gradle&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">./&lt;/span>&lt;span class="n">gradlew&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">daemon&lt;/span> &lt;span class="n">dependencies&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="bp">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy application source&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">gradle&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">./&lt;/span>&lt;span class="n">gradlew&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">daemon&lt;/span> &lt;span class="n">clean&lt;/span> &lt;span class="n">bootJar&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="n">test&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">-&lt;/span>&lt;span class="n">Dspring&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">framework&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">version&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">6.2&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">11&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">-&lt;/span>&lt;span class="n">Dcommons&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">lang3&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">version&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">3.18&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">0&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">-&lt;/span>&lt;span class="n">Dtomcat&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">version&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mf">10.1&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mi">47&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># ---------- Stage: runtime ----------&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="p">{&lt;/span>&lt;span class="n">RUNTIME_IMAGE&lt;/span>&lt;span class="p">}&lt;/span> &lt;span class="n">AS&lt;/span> &lt;span class="n">runtime&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">VERSION&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">VCS_REF&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">BUILD_DATE&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">LICENSE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;MIT License&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ARG&lt;/span> &lt;span class="n">SOURCE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;contest-submission&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># OCI Labels (metadata)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LABEL&lt;/span> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">title&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;spring-boot-template&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">description&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Spring Boot Java application built for Dockerfile Contest 2025&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">url&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;${SOURCE}&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">source&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;${SOURCE}&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">version&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;${VERSION}&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">revision&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;${VCS_REF}&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">licenses&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;${LICENSE}&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">created&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;${BUILD_DATE}&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">authors&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Dung Cao&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Create non-root user&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">addgroup&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">S&lt;/span> &lt;span class="n">app&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">adduser&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">S&lt;/span> &lt;span class="n">app&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">G&lt;/span> &lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy application jar&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">applicationinsights&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">json&lt;/span> &lt;span class="n">applicationinsights&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">json&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">chown&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">app&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">workspace&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">build&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">libs&lt;/span>&lt;span class="o">/*.&lt;/span>&lt;span class="n">jar&lt;/span> &lt;span class="n">app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">jar&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Install curl for healthcheck&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">apk&lt;/span> &lt;span class="n">add&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">cache&lt;/span> &lt;span class="n">curl&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="n">rm&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">rf&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">apk&lt;/span>&lt;span class="o">/*&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Expose HTTP port&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">EXPOSE&lt;/span> &lt;span class="mi">8080&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Healthcheck&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">HEALTHCHECK&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">interval&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">timeout&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">3&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">start&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">period&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">10&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">retries&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">3&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CMD&lt;/span> &lt;span class="n">curl&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">fsS&lt;/span> &lt;span class="n">http&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">//&lt;/span>&lt;span class="mf">127.0&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="mf">0.1&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">8080&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">health&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="n">exit&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># JVM optimization&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENV&lt;/span> &lt;span class="n">JAVA_OPTS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -XX:+UseContainerSupport &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -XX:MaxRAMPercentage=75.0 &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -Djava.security.egd=file:/dev/./urandom &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -Dserver.shutdown=graceful &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -Dspring.lifecycle.timeout-per-shutdown-phase=10s &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -Dfile.encoding=UTF-8 &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -XX:+ExitOnOutOfMemoryError &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -XX:+UseG1GC &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -XX:+HeapDumpOnOutOfMemoryError &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -XX:HeapDumpPath=/tmp &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> &amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Graceful termination signal&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">STOPSIGNAL&lt;/span> &lt;span class="n">SIGTERM&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Switch to non-root user&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">USER&lt;/span> &lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># --- Entry point ---&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENTRYPOINT&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;sh&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;-c&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;exec java ${JAVA_OPTS} -jar /app/app.jar&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h3 id="4-dockerfile-top-tham-khảo--java--hmcts-spring-boot-template-layered--jlink">4. Dockerfile TOP (tham khảo – Java) – HMCTS Spring Boot Template (Layered + jlink)
+&lt;/h3>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Kỹ thuật&lt;/th>
+&lt;th>Giải thích theo tác giả&lt;/th>
+&lt;th>Nguồn tham khảo&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>Gradle cache + tách layer&lt;/strong>&lt;/td>
+&lt;td>Dùng BuildKit cache &lt;code>id=gradle-cache&lt;/code> cho Gradle, sau đó dùng &lt;code>jarmode=layertools&lt;/code> để extract các lớp &lt;code>dependencies&lt;/code>, &lt;code>spring-boot-loader&lt;/code>, &lt;code>snapshot-dependencies&lt;/code>, &lt;code>application&lt;/code> giúp cache Docker layer tối đa.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Custom JRE với jlink&lt;/strong>&lt;/td>
+&lt;td>Chạy &lt;code>jlink&lt;/code> với danh sách module Java chọn tay để tạo JRE tối thiểu (&lt;code>/jre-minimal&lt;/code>), giảm hơn 100MB so với JDK full.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Alpine runtime tối thiểu&lt;/strong>&lt;/td>
+&lt;td>Runtime base &lt;code>alpine:3.21&lt;/code> chỉ cài &lt;code>ca-certificates&lt;/code>, &lt;code>tzdata&lt;/code>, &lt;code>tini&lt;/code>, &lt;code>curl&lt;/code>, sau đó chạy với non-root &lt;code>appuser&lt;/code>.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>JAVA_TOOL_OPTIONS cho container&lt;/strong>&lt;/td>
+&lt;td>Tối ưu JVM: &lt;code>UseContainerSupport&lt;/code>, &lt;code>MaxRAMPercentage&lt;/code>, &lt;code>UseG1GC&lt;/code>, &lt;code>UseStringDeduplication&lt;/code>, &lt;code>ExitOnOutOfMemoryError&lt;/code>,… để tối ưu memory &amp;amp; GC trong container.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>OCI labels rất đầy đủ&lt;/strong>&lt;/td>
+&lt;td>Ghi rõ &lt;code>vendor&lt;/code>, &lt;code>authors&lt;/code>, &lt;code>source&lt;/code>, &lt;code>version&lt;/code>, &lt;code>revision&lt;/code>, &lt;code>base.name&lt;/code>, &lt;code>base.digest&lt;/code>, &lt;code>com.hmcts.*&lt;/code>… giúp traceability cho tổ chức.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Healthcheck dùng curl&lt;/strong>&lt;/td>
+&lt;td>Healthcheck &lt;code>/health&lt;/code> qua &lt;code>curl -f&lt;/code>, retry có cấu hình hợp lý cho Spring Boot khởi động.&lt;/td>
+&lt;td>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>&lt;strong>Dockerfile TOP (tham khảo – JAVA) – HMCTS Spring Boot Template&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt"> 10
+&lt;/span>&lt;span class="lnt"> 11
+&lt;/span>&lt;span class="lnt"> 12
+&lt;/span>&lt;span class="lnt"> 13
+&lt;/span>&lt;span class="lnt"> 14
+&lt;/span>&lt;span class="lnt"> 15
+&lt;/span>&lt;span class="lnt"> 16
+&lt;/span>&lt;span class="lnt"> 17
+&lt;/span>&lt;span class="lnt"> 18
+&lt;/span>&lt;span class="lnt"> 19
+&lt;/span>&lt;span class="lnt"> 20
+&lt;/span>&lt;span class="lnt"> 21
+&lt;/span>&lt;span class="lnt"> 22
+&lt;/span>&lt;span class="lnt"> 23
+&lt;/span>&lt;span class="lnt"> 24
+&lt;/span>&lt;span class="lnt"> 25
+&lt;/span>&lt;span class="lnt"> 26
+&lt;/span>&lt;span class="lnt"> 27
+&lt;/span>&lt;span class="lnt"> 28
+&lt;/span>&lt;span class="lnt"> 29
+&lt;/span>&lt;span class="lnt"> 30
+&lt;/span>&lt;span class="lnt"> 31
+&lt;/span>&lt;span class="lnt"> 32
+&lt;/span>&lt;span class="lnt"> 33
+&lt;/span>&lt;span class="lnt"> 34
+&lt;/span>&lt;span class="lnt"> 35
+&lt;/span>&lt;span class="lnt"> 36
+&lt;/span>&lt;span class="lnt"> 37
+&lt;/span>&lt;span class="lnt"> 38
+&lt;/span>&lt;span class="lnt"> 39
+&lt;/span>&lt;span class="lnt"> 40
+&lt;/span>&lt;span class="lnt"> 41
+&lt;/span>&lt;span class="lnt"> 42
+&lt;/span>&lt;span class="lnt"> 43
+&lt;/span>&lt;span class="lnt"> 44
+&lt;/span>&lt;span class="lnt"> 45
+&lt;/span>&lt;span class="lnt"> 46
+&lt;/span>&lt;span class="lnt"> 47
+&lt;/span>&lt;span class="lnt"> 48
+&lt;/span>&lt;span class="lnt"> 49
+&lt;/span>&lt;span class="lnt"> 50
+&lt;/span>&lt;span class="lnt"> 51
+&lt;/span>&lt;span class="lnt"> 52
+&lt;/span>&lt;span class="lnt"> 53
+&lt;/span>&lt;span class="lnt"> 54
+&lt;/span>&lt;span class="lnt"> 55
+&lt;/span>&lt;span class="lnt"> 56
+&lt;/span>&lt;span class="lnt"> 57
+&lt;/span>&lt;span class="lnt"> 58
+&lt;/span>&lt;span class="lnt"> 59
+&lt;/span>&lt;span class="lnt"> 60
+&lt;/span>&lt;span class="lnt"> 61
+&lt;/span>&lt;span class="lnt"> 62
+&lt;/span>&lt;span class="lnt"> 63
+&lt;/span>&lt;span class="lnt"> 64
+&lt;/span>&lt;span class="lnt"> 65
+&lt;/span>&lt;span class="lnt"> 66
+&lt;/span>&lt;span class="lnt"> 67
+&lt;/span>&lt;span class="lnt"> 68
+&lt;/span>&lt;span class="lnt"> 69
+&lt;/span>&lt;span class="lnt"> 70
+&lt;/span>&lt;span class="lnt"> 71
+&lt;/span>&lt;span class="lnt"> 72
+&lt;/span>&lt;span class="lnt"> 73
+&lt;/span>&lt;span class="lnt"> 74
+&lt;/span>&lt;span class="lnt"> 75
+&lt;/span>&lt;span class="lnt"> 76
+&lt;/span>&lt;span class="lnt"> 77
+&lt;/span>&lt;span class="lnt"> 78
+&lt;/span>&lt;span class="lnt"> 79
+&lt;/span>&lt;span class="lnt"> 80
+&lt;/span>&lt;span class="lnt"> 81
+&lt;/span>&lt;span class="lnt"> 82
+&lt;/span>&lt;span class="lnt"> 83
+&lt;/span>&lt;span class="lnt"> 84
+&lt;/span>&lt;span class="lnt"> 85
+&lt;/span>&lt;span class="lnt"> 86
+&lt;/span>&lt;span class="lnt"> 87
+&lt;/span>&lt;span class="lnt"> 88
+&lt;/span>&lt;span class="lnt"> 89
+&lt;/span>&lt;span class="lnt"> 90
+&lt;/span>&lt;span class="lnt"> 91
+&lt;/span>&lt;span class="lnt"> 92
+&lt;/span>&lt;span class="lnt"> 93
+&lt;/span>&lt;span class="lnt"> 94
+&lt;/span>&lt;span class="lnt"> 95
+&lt;/span>&lt;span class="lnt"> 96
+&lt;/span>&lt;span class="lnt"> 97
+&lt;/span>&lt;span class="lnt"> 98
+&lt;/span>&lt;span class="lnt"> 99
+&lt;/span>&lt;span class="lnt">100
+&lt;/span>&lt;span class="lnt">101
+&lt;/span>&lt;span class="lnt">102
+&lt;/span>&lt;span class="lnt">103
+&lt;/span>&lt;span class="lnt">104
+&lt;/span>&lt;span class="lnt">105
+&lt;/span>&lt;span class="lnt">106
+&lt;/span>&lt;span class="lnt">107
+&lt;/span>&lt;span class="lnt">108
+&lt;/span>&lt;span class="lnt">109
+&lt;/span>&lt;span class="lnt">110
+&lt;/span>&lt;span class="lnt">111
+&lt;/span>&lt;span class="lnt">112
+&lt;/span>&lt;span class="lnt">113
+&lt;/span>&lt;span class="lnt">114
+&lt;/span>&lt;span class="lnt">115
+&lt;/span>&lt;span class="lnt">116
+&lt;/span>&lt;span class="lnt">117
+&lt;/span>&lt;span class="lnt">118
+&lt;/span>&lt;span class="lnt">119
+&lt;/span>&lt;span class="lnt">120
+&lt;/span>&lt;span class="lnt">121
+&lt;/span>&lt;span class="lnt">122
+&lt;/span>&lt;span class="lnt">123
+&lt;/span>&lt;span class="lnt">124
+&lt;/span>&lt;span class="lnt">125
+&lt;/span>&lt;span class="lnt">126
+&lt;/span>&lt;span class="lnt">127
+&lt;/span>&lt;span class="lnt">128
+&lt;/span>&lt;span class="lnt">129
+&lt;/span>&lt;span class="lnt">130
+&lt;/span>&lt;span class="lnt">131
+&lt;/span>&lt;span class="lnt">132
+&lt;/span>&lt;span class="lnt">133
+&lt;/span>&lt;span class="lnt">134
+&lt;/span>&lt;span class="lnt">135
+&lt;/span>&lt;span class="lnt">136
+&lt;/span>&lt;span class="lnt">137
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># syntax=docker/dockerfile:1.7&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># ============================================================================&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># STAGE 1: Application builder with optimized caching&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># ============================================================================&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">eclipse&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">temurin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">21&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">jdk&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">alpine&lt;/span>&lt;span class="err">@&lt;/span>&lt;span class="n">sha256&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">89517925&lt;/span>&lt;span class="n">fa675c6c4b770bee7c44d38a7763212741b0d6fca5a5103caab21a97&lt;/span> &lt;span class="n">AS&lt;/span> &lt;span class="n">builder&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Install build dependencies (minimal)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">apk&lt;/span> &lt;span class="n">add&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">cache&lt;/span> &lt;span class="n">binutils&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">rm&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">rf&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">apk&lt;/span>&lt;span class="o">/*&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">build&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy Gradle wrapper and dependency definition files first&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># This layer will be cached until these files change&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">gradle&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="n">gradle&lt;/span>&lt;span class="o">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">gradlew&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">gradle&lt;/span> &lt;span class="o">./&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Download dependencies with BuildKit cache mount for faster subsequent builds&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">gradle&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">gradle&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">sharing&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">locked&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">chmod&lt;/span> &lt;span class="o">+&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="n">gradlew&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">./&lt;/span>&lt;span class="n">gradlew&lt;/span> &lt;span class="n">dependencies&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">daemon&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">parallel&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">console&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">plain&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy only production source code (exclude tests, docs, etc.)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">main&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="n">src&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">main&lt;/span>&lt;span class="o">/&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Build optimized JAR with cache mount&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">mount&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">type&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">id&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">gradle&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">target&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">root&lt;/span>&lt;span class="o">/.&lt;/span>&lt;span class="n">gradle&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">sharing&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">locked&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">./&lt;/span>&lt;span class="n">gradlew&lt;/span> &lt;span class="n">bootJar&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">daemon&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">parallel&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">console&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">plain&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">x&lt;/span> &lt;span class="n">test&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">mkdir&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">p&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">mv&lt;/span> &lt;span class="n">build&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">libs&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">spring&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">boot&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">template&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">jar&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">jar&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Extract Spring Boot layers for optimal Docker layer caching&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">java&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">Djarmode&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">layertools&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">jar&lt;/span> &lt;span class="n">app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">jar&lt;/span> &lt;span class="n">extract&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">destination&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">extracted&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Create minimal custom JRE with jlink (reduces size by &amp;gt;100MB)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Only include Java modules actually needed by Spring Boot&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="o">$&lt;/span>&lt;span class="n">JAVA_HOME&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">jlink&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">add&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">modules&lt;/span> &lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">base&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">compiler&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">desktop&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">instrument&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">management&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">management&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">rmi&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">naming&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">net&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">http&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">prefs&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">rmi&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">scripting&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">security&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">jgss&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">security&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sasl&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">java&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sql&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">jdk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">httpserver&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">jdk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">jfr&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="n">jdk&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">unsupported&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">strip&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">debug&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">man&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">pages&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">header&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">files&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">compress&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">zip&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">9&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">--&lt;/span>&lt;span class="n">output&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">jre&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">minimal&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># ============================================================================&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># STAGE 3: Minimal runtime image&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># ============================================================================&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">FROM&lt;/span> &lt;span class="n">alpine&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">3.21&lt;/span>&lt;span class="err">@&lt;/span>&lt;span class="n">sha256&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mf">5405e8&lt;/span>&lt;span class="n">f36ce1878720f71217d664aa3dea32e5e5df11acbf07fc78ef5661465b&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Install only critical runtime dependencies&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># ca-certificates: for HTTPS connections&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># tini: proper init system for PID 1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># tzdata: timezone support&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># curl: for healthcheck&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">apk&lt;/span> &lt;span class="n">upgrade&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">cache&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">apk&lt;/span> &lt;span class="n">add&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">no&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">cache&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">ca&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">certificates&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">tzdata&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">tini&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">curl&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">rm&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">rf&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">cache&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">apk&lt;/span>&lt;span class="o">/*&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">tmp&lt;/span>&lt;span class="o">/*&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Create non-root user for security (CIS Docker Benchmark compliance)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">RUN&lt;/span> &lt;span class="n">addgroup&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">g&lt;/span> &lt;span class="mi">1654&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">S&lt;/span> &lt;span class="n">appgroup&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">adduser&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">u&lt;/span> &lt;span class="mi">1654&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">S&lt;/span> &lt;span class="n">appuser&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">G&lt;/span> &lt;span class="n">appgroup&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy minimal custom JRE from builder&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">chown&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1654&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">1654&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">jre&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">minimal&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">java&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Set up application directory with proper ownership&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">WORKDIR&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Copy Spring Boot layers in optimal order (least to most frequently changed)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># This maximizes Docker layer cache efficiency&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">chown&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1654&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">1654&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">extracted&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">dependencies&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="o">./&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">chown&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1654&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">1654&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">extracted&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">spring&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">boot&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">loader&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="o">./&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">chown&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1654&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">1654&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">extracted&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">snapshot&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">dependencies&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="o">./&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">COPY&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">from&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">builder&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">chown&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">1654&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">1654&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">extracted&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">application&lt;/span>&lt;span class="o">/&lt;/span> &lt;span class="o">./&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Switch to non-root user (security best practice)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">USER&lt;/span> &lt;span class="mi">1654&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">1654&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Set JAVA_HOME and PATH&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENV&lt;/span> &lt;span class="n">JAVA_HOME&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">java&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/opt/java/bin:${PATH}&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Optimal JVM flags for containerized Spring Boot applications&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - UseContainerSupport: respect container memory limits&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - MaxRAMPercentage: use max 75% of container memory for heap&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - UseG1GC: best GC for containers with predictable pause times&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - UseStringDeduplication: reduce memory footprint&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - ExitOnOutOfMemoryError: fail fast on OOM&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># - TieredCompilation with level 1: faster startup, good for short-lived containers&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENV&lt;/span> &lt;span class="n">JAVA_TOOL_OPTIONS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;-XX:+UseContainerSupport &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -XX:MaxRAMPercentage=75.0 &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -XX:InitialRAMPercentage=50.0 &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -XX:+UseG1GC &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -XX:MaxGCPauseMillis=100 &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -XX:+UseStringDeduplication &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -XX:+ParallelRefProcEnabled &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -XX:+DisableExplicitGC &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -XX:+ExitOnOutOfMemoryError &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -Djava.security.egd=file:/dev/./urandom &lt;/span>&lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span>&lt;span class="s2"> -Djava.awt.headless=true&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Application server port&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">EXPOSE&lt;/span> &lt;span class="mi">8080&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Comprehensive OCI labels for traceability and compliance&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">LABEL&lt;/span> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">title&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;Spring Boot Template&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">description&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;HMCTS Spring Boot Template - Optimized for Contest 2025&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">vendor&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;HMCTS Reform Programme&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">authors&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;HMCTS &amp;lt;hmcts@justice.gov.uk&amp;gt;&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">source&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;https://github.com/hmcts/spring-boot-template&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">version&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;0.0.1&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">revision&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;contest-2025&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">licenses&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;MIT&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">base&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;docker.io/library/alpine:3.21&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">org&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">opencontainers&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">image&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">base&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">digest&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;sha256:5405e8f36ce1878720f71217d664aa3dea32e5e5df11acbf07fc78ef5661465b&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">maintainer&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;HMCTS Reform Team&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">com&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">hmcts&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">app&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">name&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;spring-boot-template&amp;#34;&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">com&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">hmcts&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">build&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">date&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;2025-10-27&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Health check using Spring Boot Actuator /health endpoint&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Using curl for lightweight health checks&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">HEALTHCHECK&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">interval&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">30&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">timeout&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">5&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">start&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">period&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">60&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="o">--&lt;/span>&lt;span class="n">retries&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">3&lt;/span> \
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CMD&lt;/span> &lt;span class="n">curl&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">f&lt;/span> &lt;span class="n">http&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">//&lt;/span>&lt;span class="n">localhost&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">8080&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">health&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="n">exit&lt;/span> &lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Use tini as init system for proper signal handling&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Ensures graceful shutdown and zombie process reaping&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">ENTRYPOINT&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;/sbin/tini&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;--&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Run Spring Boot application&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Using exec form to ensure proper signal propagation&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">CMD&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;java&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;org.springframework.boot.loader.launch.JarLauncher&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="ghi-chú-triển-khai">Ghi chú triển khai
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>Khi áp dụng cho dự án Java của bạn&lt;/strong>, hãy giữ nguyên các nguyên tắc chính mà các Dockerfile trên thể hiện:
+&lt;ul>
+&lt;li>Multi-stage build rõ ràng (builder + runtime).&lt;/li>
+&lt;li>Tối ưu JRE (dùng &lt;code>jdeps&lt;/code> + &lt;code>jlink&lt;/code>, base image Java distroless hoặc JRE-only image).&lt;/li>
+&lt;li>Healthcheck rõ ràng (native Java hoặc wget/curl).&lt;/li>
+&lt;li>Tối ưu dependency (tự động hoặc thủ công) để giảm CVE.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Khi copy template về dự án riêng, bạn nên:
+&lt;ul>
+&lt;li>Cập nhật lại &lt;code>LABEL org.opencontainers.image.source&lt;/code> cho đúng repository của bạn.&lt;/li>
+&lt;li>Điều chỉnh endpoint healthcheck (&lt;code>/health&lt;/code>, &lt;code>/actuator/health&lt;/code>&amp;hellip;) cho trùng với app thực tế.&lt;/li>
+&lt;li>Thử build và scan image với các tool như Trivy để kiểm tra security sau khi tối ưu.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul></description></item><item><title>Tối ưu Docker cho Python</title><link>https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-python/</link><pubDate>Sun, 23 Nov 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/docker-optimization/docker-opt-python/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker-optimization/docker-optimization-python.webp" alt="Featured image of post Tối ưu Docker cho Python" />&lt;h2 id="dockerfile-contest-2025--python-tối-ưu-extreme">Dockerfile Contest 2025 – Python tối ưu extreme
 &lt;/h2>&lt;p>Dockerfile Contest 2025 thúc đẩy cộng đồng DevOps Việt Nam đánh giá lại cách viết Dockerfile để đạt &lt;strong>bảo mật, tối ưu, tường minh&lt;/strong>. Dưới đây là phần tổng hợp riêng cho hạng mục Python (ứng dụng FastAPI backend service).&lt;/p>
 &lt;hr>
 &lt;h2 id="i-hạng-mục-python-tối-ưu-cho-backend-service">I. Hạng mục PYTHON (Tối ưu cho Backend Service)
