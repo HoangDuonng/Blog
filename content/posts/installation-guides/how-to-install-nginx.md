@@ -2,9 +2,10 @@
 title: "Hướng dẫn cài đặt Nginx trên Ubuntu 24.04 ⚙️"
 author: "Hoàng Dương"
 date: "2025-03-10"
+lastmod: 2025-11-30T23:55:00+07:00
 draft: false
 description: "Hướng dẫn chi tiết cách cài đặt và cấu hình Nginx Web Server, giúp bạn nhanh chóng triển khai và tối ưu hiệu suất cho website của mình."
-categories: ["Website"]
+categories: ["Website", "Installation Guides"]
 tags: ["website", "Nginx"]
 image: "images/website/how-to-install-nginx.webp"
 ---
