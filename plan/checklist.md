@@ -58,7 +58,7 @@ Gợi ý sắp xếp theo lịch hàng tuần, bắt đầu 2026-01-13. Các fil
 
 ### Tháng 01 (Khởi động series beginner)
 
-- [ ] `docker-basics-image-vs-container.md` - Docker cơ bản: Image vs Container
+- [x] `docker-basics-image-vs-container.md` - Docker cơ bản: Image vs Container
 - [ ] `docker-compose-v2-best-practices.md` - Docker Compose cho người mới (v2) — Thực hành
 - [ ] `github-actions-ci-cd-docker.md` - CI/CD với GitHub Actions cho ứng dụng Docker
 - [ ] `docker-build-cache-layering.md` - Docker Build Cache & Layering (dễ hiểu)
