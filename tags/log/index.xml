@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Log on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/log/</link><description>Recent content in Log on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Mon, 24 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/log/index.xml" rel="self" type="application/rss+xml"/><item><title>Quản lý logs (Logs Management) 📜</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-sixteen/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-sixteen/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-sixteen.webp" alt="Featured image of post Quản lý logs (Logs Management) 📜" />&lt;h2 id="-quản-lý-logs-là-gì">🔍 Quản lý logs là gì?
+&lt;/h2>&lt;p>Quản lý logs là quá trình thu thập, tổng hợp, phân tích, lưu trữ và truy xuất logs từ các ứng dụng và hệ thống hạ tầng. Logs chứa thông tin quan trọng về hoạt động của hệ thống, giúp phát hiện sự cố, tối ưu hóa hiệu suất và đảm bảo tuân thủ bảo mật.&lt;/p>
+&lt;hr>
+&lt;h2 id="-các-công-cụ-quản-lý-logs-phổ-biến">🚀 Các công cụ quản lý logs phổ biến
+&lt;/h2>&lt;h3 id="elastic-stack-elk-stack">Elastic Stack (ELK Stack)
+&lt;/h3>&lt;p>&lt;strong>📝 Giới thiệu:&lt;/strong>
+Elastic Stack, trước đây gọi là ELK Stack, bao gồm Elasticsearch (công cụ tìm kiếm và phân tích), Logstash (xử lý dữ liệu), Kibana (trực quan hóa) và Beats (thu thập dữ liệu). Đây là giải pháp phổ biến để quản lý logs với khả năng mở rộng cao.&lt;/p>
+&lt;p>&lt;strong>🔹 Tính năng nổi bật:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Tìm kiếm và phân tích logs theo thời gian thực.&lt;/li>
+&lt;li>Hỗ trợ nhiều định dạng dữ liệu khác nhau.&lt;/li>
+&lt;li>Khả năng mở rộng tốt với môi trường doanh nghiệp.&lt;/li>
+&lt;li>Cung cấp giao diện trực quan với Kibana.&lt;/li>
+&lt;/ul>
+&lt;p>Sử dụng Elastic Stack để thu thập logs từ các máy chủ web, phân tích lỗi và tạo dashboard giám sát lưu lượng truy cập.&lt;/p>
+&lt;p>&lt;strong>📚 Tài nguyên hữu ích:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>🔗&lt;a class="link" href="https://www.elastic.co/elastic-stack/" target="_blank" rel="noopener"
+>Trang chủ Elastic Stack&lt;/a>&lt;/li>
+&lt;li>🎥&lt;a class="link" href="https://www.youtube.com/watch?v=CfCTWVAwFbQ" target="_blank" rel="noopener"
+>Tổng quan về Elastic Stack&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h3 id="loki">Loki
+&lt;/h3>&lt;p>&lt;strong>📝 Giới thiệu:&lt;/strong>
+Loki là hệ thống thu thập logs do Grafana Labs phát triển, tối ưu cho Kubernetes và container. Loki không lưu trữ toàn bộ logs mà chỉ lập chỉ mục metadata, giúp tiết kiệm tài nguyên.&lt;/p>
+&lt;p>&lt;strong>🔹 Tính năng nổi bật:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Tích hợp chặt chẽ với Grafana.&lt;/li>
+&lt;li>Sử dụng LogQL, ngôn ngữ truy vấn tương tự PromQL.&lt;/li>
+&lt;li>Tối ưu cho môi trường Kubernetes và container.&lt;/li>
+&lt;li>Tiết kiệm tài nguyên so với các giải pháp khác.&lt;/li>
+&lt;/ul>
+&lt;p>Sử dụng Loki để theo dõi logs từ các container trong Kubernetes, giúp phát hiện lỗi ứng dụng nhanh chóng.&lt;/p>
+&lt;p>&lt;strong>📚 Tài nguyên hữu ích:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>🔗&lt;a class="link" href="https://grafana.com/oss/loki/" target="_blank" rel="noopener"
+>Trang chủ Loki&lt;/a>&lt;/li>
+&lt;li>📖&lt;a class="link" href="https://grafana.com/docs/loki/latest/?pg=oss-loki&amp;amp;plcmt=quick-links" target="_blank" rel="noopener"
+>Tài liệu Loki&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h3 id="graylog">Graylog
+&lt;/h3>&lt;p>&lt;strong>📝 Giới thiệu:&lt;/strong>
+Graylog là nền tảng quản lý logs mã nguồn mở, hỗ trợ thu thập, lưu trữ và phân tích logs theo thời gian thực. Hệ thống này cung cấp giao diện web thân thiện và hỗ trợ nhiều loại dữ liệu logs khác nhau.&lt;/p>
+&lt;p>&lt;strong>🔹 Tính năng nổi bật:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Hỗ trợ nhiều giao thức thu thập logs như Syslog, GELF.&lt;/li>
+&lt;li>Giao diện tìm kiếm mạnh mẽ.&lt;/li>
+&lt;li>Tích hợp tính năng cảnh báo khi phát hiện sự cố.&lt;/li>
+&lt;li>Hỗ trợ truy vấn logs theo thời gian thực.&lt;/li>
+&lt;/ul>
+&lt;p>Sử dụng Graylog để theo dõi logs từ các hệ thống bảo mật, giúp phát hiện hành vi xâm nhập trái phép.&lt;/p>
+&lt;p>&lt;strong>📚 Tài nguyên hữu ích:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>🔗&lt;a class="link" href="https://www.graylog.org/" target="_blank" rel="noopener"
+>Trang chủ Graylog&lt;/a>&lt;/li>
+&lt;li>🎥&lt;a class="link" href="https://www.graylog.org/resources-videos" target="_blank" rel="noopener"
+>Hướng dẫn sử dụng Graylog&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-ví-dụ-về-mã-nguồn">🔥 Ví dụ về mã nguồn
+&lt;/h2>&lt;p>Dưới đây là cách gửi logs đến một hệ thống thu thập logs bằng JavaScript:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="kr">const&lt;/span> &lt;span class="nx">winston&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;winston&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">const&lt;/span> &lt;span class="nx">logger&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">winston&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">createLogger&lt;/span>&lt;span class="p">({&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">level&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;info&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">format&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="nx">winston&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">format&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">json&lt;/span>&lt;span class="p">(),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">transports&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="p">[&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">new&lt;/span> &lt;span class="nx">winston&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">transports&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">Console&lt;/span>&lt;span class="p">(),&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">new&lt;/span> &lt;span class="nx">winston&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">transports&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">File&lt;/span>&lt;span class="p">({&lt;/span> &lt;span class="nx">filename&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s1">&amp;#39;app.log&amp;#39;&lt;/span> &lt;span class="p">})&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">]&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">// Ghi log
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span>&lt;span class="nx">logger&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">info&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Ứng dụng đã khởi động thành công&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">logger&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">warn&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Cảnh báo: Dữ liệu đầu vào không hợp lệ&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">logger&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">error&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Lỗi: Không thể kết nối cơ sở dữ liệu&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-kết-luận">✅ Kết luận
+&lt;/h2>&lt;p>Quản lý logs đóng vai trò quan trọng trong việc giám sát hệ thống và xử lý sự cố nhanh chóng. Các công cụ như &lt;strong>Elastic Stack, Loki,&lt;/strong> và &lt;strong>Graylog&lt;/strong> cung cấp giải pháp mạnh mẽ để thu thập, phân tích và trực quan hóa logs. Việc lựa chọn công cụ phù hợp sẽ giúp nâng cao hiệu quả vận hành hệ thống của bạn. 🚀&lt;/p>
+&lt;p>👉 &lt;strong>Bước tiếp theo:&lt;/strong> Tìm hiểu về &lt;em>&lt;strong>Container Orchestration&lt;/strong>&lt;/em> quá trình tự động quản lý, triển khai, mở rộng và điều phối các container trong môi trường hạ tầng, giúp đảm bảo tính sẵn sàng, khả năng mở rộng và tối ưu tài nguyên hệ thống. Các công cụ phổ biến cho Container Orchestration bao gồm Kubernetes, Docker Swarm và Apache Mesos.&lt;/p></description></item></channel></rss>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Code on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/code/</link><description>Recent content in Code on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Fri, 21 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/code/index.xml" rel="self" type="application/rss+xml"/><item><title>Chọn ngôn ngữ lập trình 🤗</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-one/</link><pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-one/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-one.webp" alt="Featured image of post Chọn ngôn ngữ lập trình 🤗" />&lt;h2 id="-tại-sao-cần-chọn-ngôn-ngữ-lập-trình">📌 Tại sao cần chọn ngôn ngữ lập trình?
+&lt;/h2>&lt;p>Trong DevOps, bạn sẽ cần sử dụng ngôn ngữ lập trình để:&lt;/p>
+&lt;ul>
+&lt;li>✅ Viết script tự động hóa.&lt;/li>
+&lt;li>✅ Quản lý server và cloud.&lt;/li>
+&lt;li>✅ Tạo tool hỗ trợ CI/CD.&lt;/li>
+&lt;li>✅ Xây dựng và triển khai hạ tầng dưới dạng code (Infrastructure as Code - IaC).&lt;/li>
+&lt;/ul>
+&lt;p>Việc chọn ngôn ngữ phù hợp giúp bạn làm việc hiệu quả hơn với hệ thống, tự động hóa nhiều quy trình và cải thiện tốc độ phát triển phần mềm.&lt;/p>
+&lt;h2 id="-ngôn-ngữ-phù-hợp-cho-devops">🔥 Ngôn ngữ phù hợp cho DevOps
+&lt;/h2>&lt;h3 id="-python-khuyến-nghị-chính">🐍 Python (Khuyến nghị chính)
+&lt;/h3>&lt;h4 id="-lý-do-chọn-python">&lt;strong>🔹 Lý do chọn Python:&lt;/strong>
+&lt;/h4>&lt;ul>
+&lt;li>Cú pháp dễ đọc, dễ học.&lt;/li>
+&lt;li>Thư viện phong phú hỗ trợ tự động hóa như &lt;code>fabric&lt;/code>, &lt;code>paramiko&lt;/code>, &lt;code>boto3&lt;/code> (AWS SDK), &lt;code>pyinfra&lt;/code>.&lt;/li>
+&lt;li>Hỗ trợ mạnh mẽ trong quản lý Cloud (AWS, GCP, Azure).&lt;/li>
+&lt;/ul>
+&lt;h4 id="-ứng-dụng-thực-tế">&lt;strong>🔹 Ứng dụng thực tế:&lt;/strong>
+&lt;/h4>&lt;ul>
+&lt;li>Viết script deploy code tự động.&lt;/li>
+&lt;li>Tạo bot quản lý server.&lt;/li>
+&lt;li>Xây dựng API quản lý hệ thống.&lt;/li>
+&lt;/ul>
+&lt;h4 id="-ví-dụ-script-ssh-tự-động-deploy-với-paramiko">&lt;strong>📝 Ví dụ: Script SSH tự động deploy với Paramiko&lt;/strong>
+&lt;/h4>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">paramiko&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">deploy_code&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">host&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">user&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">password&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">command&lt;/span>&lt;span class="p">):&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">client&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">paramiko&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">SSHClient&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">client&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">set_missing_host_key_policy&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">paramiko&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">AutoAddPolicy&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">client&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">connect&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">hostname&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">host&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">username&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">user&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">password&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">password&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stdin&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">stdout&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">stderr&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">client&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">exec_command&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">command&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">stdout&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">read&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">decode&lt;/span>&lt;span class="p">())&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">client&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">close&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">deploy_code&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;192.168.1.100&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;ubuntu&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;yourpassword&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;git pull origin main &amp;amp;&amp;amp; systemctl restart app&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h3 id="-bash-cần-biết-cơ-bản">🖥️ Bash (Cần biết cơ bản)
+&lt;/h3>&lt;h4 id="-lý-do-chọn-bash">&lt;strong>🔹 Lý do chọn Bash:&lt;/strong>
+&lt;/h4>&lt;ul>
+&lt;li>Là shell script phổ biến nhất trên Linux.&lt;/li>
+&lt;li>Giúp bạn thao tác nhanh với hệ thống.&lt;/li>
+&lt;li>Tối ưu cho quản lý server và tự động hóa task nhỏ.&lt;/li>
+&lt;/ul>
+&lt;h4 id="-ứng-dụng-thực-tế-1">&lt;strong>🔹 Ứng dụng thực tế:&lt;/strong>
+&lt;/h4>&lt;ul>
+&lt;li>Viết script tự động update server.&lt;/li>
+&lt;li>Tạo cron job chạy định kỳ.&lt;/li>
+&lt;li>Quản lý user và permission trên Linux.&lt;/li>
+&lt;/ul>
+&lt;h4 id="-ví-dụ-script-tự-động-update-server">&lt;strong>📝 Ví dụ: Script tự động update server&lt;/strong>
+&lt;/h4>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>sudo apt update &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> sudo apt upgrade -y
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h3 id="-go-golang-nếu-làm-với-kubernetes">🚀 Go (Golang) (Nếu làm với Kubernetes)
+&lt;/h3>&lt;h4 id="-lý-do-chọn-go">&lt;strong>🔹 Lý do chọn Go:&lt;/strong>
+&lt;/h4>&lt;ul>
+&lt;li>Hiệu suất cao, dễ dàng biên dịch thành binary nhỏ gọn.&lt;/li>
+&lt;li>Kubernetes và nhiều công cụ DevOps như Terraform được viết bằng Go.&lt;/li>
+&lt;/ul>
+&lt;h4 id="-ứng-dụng-thực-tế-2">&lt;strong>🔹 Ứng dụng thực tế:&lt;/strong>
+&lt;/h4>&lt;ul>
+&lt;li>Viết tool quản lý container.&lt;/li>
+&lt;li>Tạo plugin cho Kubernetes.&lt;/li>
+&lt;li>Xây dựng các công cụ DevOps riêng.&lt;/li>
+&lt;/ul>
+&lt;h4 id="-ví-dụ-in-ra-thông-tin-hệ-thống-bằng-go">&lt;strong>📝 Ví dụ: In ra thông tin hệ thống bằng Go&lt;/strong>
+&lt;/h4>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="p">(&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s">&amp;#34;fmt&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s">&amp;#34;os&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">hostname&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">_&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">os&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Hostname&lt;/span>&lt;span class="p">()&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;Hostname:&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">hostname&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h3 id="-groovy-nếu-làm-việc-với-jenkins">⚙️ Groovy (Nếu làm việc với Jenkins)
+&lt;/h3>&lt;h4 id="-lý-do-chọn-groovy">&lt;strong>🔹 Lý do chọn Groovy:&lt;/strong>
+&lt;/h4>&lt;ul>
+&lt;li>Là ngôn ngữ chính để viết pipeline trong Jenkins.&lt;/li>
+&lt;li>Cú pháp linh hoạt, dễ dàng mở rộng và tích hợp với Java.&lt;/li>
+&lt;/ul>
+&lt;h4 id="-ứng-dụng-thực-tế-3">&lt;strong>🔹 Ứng dụng thực tế:&lt;/strong>
+&lt;/h4>&lt;ul>
+&lt;li>Viết pipeline CI/CD cho Jenkins.&lt;/li>
+&lt;li>Tạo script quản lý hệ thống.&lt;/li>
+&lt;li>Tự động hóa các bước build, test, deploy.&lt;/li>
+&lt;/ul>
+&lt;h4 id="-ví-dụ-pipeline-cơ-bản-trong-jenkinsfile">&lt;strong>📝 Ví dụ: Pipeline cơ bản trong Jenkinsfile&lt;/strong>
+&lt;/h4>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-groovy" data-lang="groovy">&lt;span class="line">&lt;span class="cl">&lt;span class="n">pipeline&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">agent&lt;/span> &lt;span class="n">any&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stages&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;Build&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">steps&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s1">&amp;#39;Building the project...&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sh&lt;/span> &lt;span class="s1">&amp;#39;mvn clean package&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;Test&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">steps&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s1">&amp;#39;Running tests...&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sh&lt;/span> &lt;span class="s1">&amp;#39;mvn test&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;Deploy&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">steps&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s1">&amp;#39;Deploying application...&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sh&lt;/span> &lt;span class="s1">&amp;#39;./deploy.sh&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-kết-luận">🎯 Kết luận
+&lt;/h2>&lt;ul>
+&lt;li>✅ &lt;strong>Python + Bash&lt;/strong> là lựa chọn tốt nhất để bắt đầu DevOps.&lt;/li>
+&lt;li>✅ Nếu làm việc với &lt;strong>Kubernetes&lt;/strong>, học thêm &lt;strong>Go&lt;/strong>.&lt;/li>
+&lt;li>✅ Nếu làm việc với &lt;strong>Jenkins&lt;/strong>, học &lt;strong>Groovy&lt;/strong> để viết pipeline.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>👉 Bước tiếp theo:&lt;/strong> Học cơ bản về &lt;em>&lt;strong>Linux &amp;amp; hệ điều hành&lt;/strong>&lt;/em>.&lt;/p></description></item></channel></rss>
