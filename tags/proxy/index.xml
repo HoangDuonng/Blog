@@ -1,243 +1,243 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Proxy on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/proxy/</link><description>Recent content in Proxy on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 23 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/proxy/index.xml" rel="self" type="application/rss+xml"/><item><title>Application Gateway 🌐</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-seven/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-seven/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-seven.webp" alt="Featured image of post Application Gateway 🌐" />&lt;h2 id="thiết-lập-các-thành-phần-mạng-quan-trọng">Thiết lập các thành phần mạng quan trọng
-&lt;/h2>&lt;p>Bài viết này sẽ giúp bạn biết các thành phần mạng quan trọng:&lt;/p>
-&lt;p>🔹 &lt;strong>Forward Proxy&lt;/strong>&lt;br>
-🔹 &lt;strong>Reverse Proxy&lt;/strong>&lt;br>
-🔹 &lt;strong>Load Balancer&lt;/strong>&lt;br>
-🔹 &lt;strong>Firewall&lt;/strong>&lt;br>
-🔹 &lt;strong>Caching Server&lt;/strong>&lt;br>
-🔹 &lt;strong>Web Server&lt;/strong>&lt;/p>
-&lt;hr>
-&lt;h2 id="-load-balancer">⚖️ Load Balancer
-&lt;/h2>&lt;p>&lt;strong>Load Balancer&lt;/strong> hoạt động như một &amp;ldquo;cảnh sát giao thông&amp;rdquo; đứng trước các máy chủ và điều hướng yêu cầu từ khách hàng đến các máy chủ phù hợp. Điều này giúp tối ưu hóa tốc độ, tận dụng tài nguyên hiệu quả và tránh tình trạng quá tải.&lt;/p>
-&lt;p>🔹 Nếu một máy chủ bị lỗi, Load Balancer sẽ chuyển hướng lưu lượng sang các máy chủ còn lại.&lt;/p>
-&lt;p>🔹 Có thể triển khai với các thuật toán như Round Robin, Least Connections, IP Hash&amp;hellip;&lt;/p>
-&lt;h3 id="-ví-dụ-cấu-hình-load-balancer-với-nginx">🔍 Ví dụ cấu hình Load Balancer với Nginx:
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-nginx" data-lang="nginx">&lt;span class="line">&lt;span class="cl">&lt;span class="k">upstream&lt;/span> &lt;span class="s">backend_servers&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">server&lt;/span> &lt;span class="s">backend1.example.com&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">server&lt;/span> &lt;span class="s">backend2.example.com&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">server&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">listen&lt;/span> &lt;span class="mi">80&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">location&lt;/span> &lt;span class="s">/&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">proxy_pass&lt;/span> &lt;span class="s">http://backend_servers&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📚 &lt;strong>Tham khảo thêm:&lt;/strong>&lt;br>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Proxy on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/proxy/</link><description>Recent content in Proxy on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 23 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/proxy/index.xml" rel="self" type="application/rss+xml"/><item><title>Application Gateway 🌐</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-seven/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-seven/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-seven.webp" alt="Featured image of post Application Gateway 🌐" /&gt;&lt;h2 id="thiết-lập-các-thành-phần-mạng-quan-trọng"&gt;Thiết lập các thành phần mạng quan trọng
+&lt;/h2&gt;&lt;p&gt;Bài viết này sẽ giúp bạn biết các thành phần mạng quan trọng:&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Forward Proxy&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Reverse Proxy&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Load Balancer&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Firewall&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Caching Server&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Web Server&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-load-balancer"&gt;⚖️ Load Balancer
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Load Balancer&lt;/strong&gt; hoạt động như một &amp;ldquo;cảnh sát giao thông&amp;rdquo; đứng trước các máy chủ và điều hướng yêu cầu từ khách hàng đến các máy chủ phù hợp. Điều này giúp tối ưu hóa tốc độ, tận dụng tài nguyên hiệu quả và tránh tình trạng quá tải.&lt;/p&gt;
+&lt;p&gt;🔹 Nếu một máy chủ bị lỗi, Load Balancer sẽ chuyển hướng lưu lượng sang các máy chủ còn lại.&lt;/p&gt;
+&lt;p&gt;🔹 Có thể triển khai với các thuật toán như Round Robin, Least Connections, IP Hash&amp;hellip;&lt;/p&gt;
+&lt;h3 id="-ví-dụ-cấu-hình-load-balancer-với-nginx"&gt;🔍 Ví dụ cấu hình Load Balancer với Nginx:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nginx" data-lang="nginx"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;upstream&lt;/span&gt; &lt;span class="s"&gt;backend_servers&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server&lt;/span&gt; &lt;span class="s"&gt;backend1.example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server&lt;/span&gt; &lt;span class="s"&gt;backend2.example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://backend_servers&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Tham khảo thêm:&lt;/strong&gt;&lt;br&gt;
 📄 &lt;a class="link" href="https://www.nginx.com/resources/glossary/load-balancing/" target="_blank" rel="noopener"
->Load Balancing là gì?&lt;/a>&lt;br>
+&gt;Load Balancing là gì?&lt;/a&gt;&lt;br&gt;
 📄 &lt;a class="link" href="https://www.cloudflare.com/en-gb/learning/performance/what-is-load-balancing/#" target="_blank" rel="noopener"
->Các thuật toán Load Balancing&lt;/a>&lt;br>
+&gt;Các thuật toán Load Balancing&lt;/a&gt;&lt;br&gt;
 📄 &lt;a class="link" href="https://dzone.com/articles/nginx-reverse-proxy-and-load-balancing" target="_blank" rel="noopener"
->Nginx Reverse Proxy &amp;amp; Load Balancing&lt;/a>&lt;br>
+&gt;Nginx Reverse Proxy &amp;amp; Load Balancing&lt;/a&gt;&lt;br&gt;
 🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=sCR3SAVdyCc" target="_blank" rel="noopener"
->Video: Load Balancer hoạt động như thế nào?&lt;/a>&lt;/p>
-&lt;hr>
-&lt;h2 id="-forward-proxy">🔁 Forward Proxy
-&lt;/h2>&lt;p>&lt;strong>Forward Proxy&lt;/strong> là một máy chủ trung gian đứng giữa client và internet, chuyển tiếp yêu cầu từ client đến server đích. Nó giúp ẩn danh, bảo mật, kiểm soát truy cập và caching nội dung.&lt;/p>
-&lt;p>🔹 Được sử dụng phổ biến trong các mạng doanh nghiệp để giám sát và kiểm soát truy cập.&lt;/p>
-&lt;p>🔹 Hỗ trợ vượt qua kiểm duyệt và hạn chế địa lý.&lt;/p>
-&lt;h3 id="-ví-dụ-cấu-hình-forward-proxy-với-squid">🔍 Ví dụ cấu hình Forward Proxy với Squid:
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">apt update &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> apt install squid -y
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Chỉnh sửa file cấu hình&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nano /etc/squid/squid.conf
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Thêm cấu hình đơn giản&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">http_access allow all
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">http_port &lt;span class="m">3128&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Khởi động lại dịch vụ&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">systemctl restart squid
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📚 &lt;strong>Tham khảo thêm:&lt;/strong>&lt;br>
+&gt;Video: Load Balancer hoạt động như thế nào?&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-forward-proxy"&gt;🔁 Forward Proxy
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Forward Proxy&lt;/strong&gt; là một máy chủ trung gian đứng giữa client và internet, chuyển tiếp yêu cầu từ client đến server đích. Nó giúp ẩn danh, bảo mật, kiểm soát truy cập và caching nội dung.&lt;/p&gt;
+&lt;p&gt;🔹 Được sử dụng phổ biến trong các mạng doanh nghiệp để giám sát và kiểm soát truy cập.&lt;/p&gt;
+&lt;p&gt;🔹 Hỗ trợ vượt qua kiểm duyệt và hạn chế địa lý.&lt;/p&gt;
+&lt;h3 id="-ví-dụ-cấu-hình-forward-proxy-với-squid"&gt;🔍 Ví dụ cấu hình Forward Proxy với Squid:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;apt update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt install squid -y
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Chỉnh sửa file cấu hình&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nano /etc/squid/squid.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Thêm cấu hình đơn giản&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http_access allow all
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http_port &lt;span class="m"&gt;3128&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Khởi động lại dịch vụ&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;systemctl restart squid
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Tham khảo thêm:&lt;/strong&gt;&lt;br&gt;
 📄 &lt;a class="link" href="https://www.fortinet.com/resources/cyberglossary/proxy-server" target="_blank" rel="noopener"
->Forward Proxy là gì?&lt;/a>&lt;br>
+&gt;Forward Proxy là gì?&lt;/a&gt;&lt;br&gt;
 📄 &lt;a class="link" href="https://oxylabs.io/blog/reverse-proxy-vs-forward-proxy" target="_blank" rel="noopener"
->So sánh Forward Proxy và Reverse Proxy&lt;/a>&lt;br>
+&gt;So sánh Forward Proxy và Reverse Proxy&lt;/a&gt;&lt;br&gt;
 🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=HrG0MHkSsCA" target="_blank" rel="noopener"
->Video: Proxy hoạt động như thế nào?&lt;/a>&lt;/p>
-&lt;hr>
-&lt;h2 id="-reverse-proxy">🔄 Reverse Proxy
-&lt;/h2>&lt;p>&lt;strong>Reverse Proxy&lt;/strong> là một máy chủ trung gian nhận yêu cầu từ client và chuyển tiếp đến máy chủ backend thích hợp. Nó giúp cân bằng tải, caching, bảo mật và SSL termination.&lt;/p>
-&lt;p>🔹 Giúp che giấu thông tin của máy chủ backend để tăng cường bảo mật.&lt;/p>
-&lt;p>🔹 Hỗ trợ phân phối lưu lượng và tối ưu hiệu suất ứng dụng.&lt;/p>
-&lt;h3 id="-ví-dụ-cấu-hình-reverse-proxy-với-nginx">🔍 Ví dụ cấu hình Reverse Proxy với Nginx:
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-nginx" data-lang="nginx">&lt;span class="line">&lt;span class="cl">&lt;span class="k">server&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">listen&lt;/span> &lt;span class="mi">80&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">server_name&lt;/span> &lt;span class="s">example.com&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">location&lt;/span> &lt;span class="s">/&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">proxy_pass&lt;/span> &lt;span class="s">http://backend_server&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">proxy_set_header&lt;/span> &lt;span class="s">Host&lt;/span> &lt;span class="nv">$host&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">proxy_set_header&lt;/span> &lt;span class="s">X-Real-IP&lt;/span> &lt;span class="nv">$remote_addr&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📚 &lt;strong>Tham khảo thêm:&lt;/strong>&lt;br>
+&gt;Video: Proxy hoạt động như thế nào?&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-reverse-proxy"&gt;🔄 Reverse Proxy
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Reverse Proxy&lt;/strong&gt; là một máy chủ trung gian nhận yêu cầu từ client và chuyển tiếp đến máy chủ backend thích hợp. Nó giúp cân bằng tải, caching, bảo mật và SSL termination.&lt;/p&gt;
+&lt;p&gt;🔹 Giúp che giấu thông tin của máy chủ backend để tăng cường bảo mật.&lt;/p&gt;
+&lt;p&gt;🔹 Hỗ trợ phân phối lưu lượng và tối ưu hiệu suất ứng dụng.&lt;/p&gt;
+&lt;h3 id="-ví-dụ-cấu-hình-reverse-proxy-với-nginx"&gt;🔍 Ví dụ cấu hình Reverse Proxy với Nginx:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nginx" data-lang="nginx"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://backend_server&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;Host&lt;/span&gt; &lt;span class="nv"&gt;$host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;X-Real-IP&lt;/span&gt; &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Tham khảo thêm:&lt;/strong&gt;&lt;br&gt;
 📄 &lt;a class="link" href="https://www.cloudflare.com/en-gb/learning/cdn/glossary/reverse-proxy/" target="_blank" rel="noopener"
->Reverse Proxy là gì?&lt;/a>&lt;br>
+&gt;Reverse Proxy là gì?&lt;/a&gt;&lt;br&gt;
 📄 &lt;a class="link" href="https://www.nginx.com/resources/glossary/reverse-proxy-server/" target="_blank" rel="noopener"
->Hướng dẫn Nginx Reverse Proxy&lt;/a>&lt;br>
+&gt;Hướng dẫn Nginx Reverse Proxy&lt;/a&gt;&lt;br&gt;
 🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=4NB0NDtOwIQ" target="_blank" rel="noopener"
->Video: Reverse Proxy và ứng dụng thực tế&lt;/a>&lt;/p>
-&lt;hr>
-&lt;h2 id="-firewall">🔥 Firewall
-&lt;/h2>&lt;p>&lt;strong>Firewall&lt;/strong> là một thiết bị bảo mật mạng giám sát và lọc lưu lượng vào/ra dựa trên chính sách bảo mật của tổ chức.&lt;/p>
-&lt;p>🔹 Ngăn chặn truy cập trái phép vào hệ thống nội bộ.&lt;/p>
-&lt;p>🔹 Hỗ trợ các quy tắc kiểm soát lưu lượng dữ liệu.&lt;/p>
-&lt;h3 id="-ví-dụ-cấu-hình-firewall-với-ufw-uncomplicated-firewall">🔍 Ví dụ cấu hình Firewall với UFW (Uncomplicated Firewall):
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Cài đặt UFW&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apt install ufw -y
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Mở cổng SSH&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ufw allow 22/tcp
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Chặn tất cả kết nối khác&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ufw default deny incoming
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Kích hoạt UFW&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ufw &lt;span class="nb">enable&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📚 &lt;strong>Tham khảo thêm:&lt;/strong>&lt;br>
+&gt;Video: Reverse Proxy và ứng dụng thực tế&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-firewall"&gt;🔥 Firewall
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Firewall&lt;/strong&gt; là một thiết bị bảo mật mạng giám sát và lọc lưu lượng vào/ra dựa trên chính sách bảo mật của tổ chức.&lt;/p&gt;
+&lt;p&gt;🔹 Ngăn chặn truy cập trái phép vào hệ thống nội bộ.&lt;/p&gt;
+&lt;p&gt;🔹 Hỗ trợ các quy tắc kiểm soát lưu lượng dữ liệu.&lt;/p&gt;
+&lt;h3 id="-ví-dụ-cấu-hình-firewall-với-ufw-uncomplicated-firewall"&gt;🔍 Ví dụ cấu hình Firewall với UFW (Uncomplicated Firewall):
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Cài đặt UFW&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;apt install ufw -y
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Mở cổng SSH&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ufw allow 22/tcp
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Chặn tất cả kết nối khác&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ufw default deny incoming
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Kích hoạt UFW&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ufw &lt;span class="nb"&gt;enable&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Tham khảo thêm:&lt;/strong&gt;&lt;br&gt;
 📄 &lt;a class="link" href="https://www.checkpoint.com/cyber-hub/network-security/what-is-firewall/" target="_blank" rel="noopener"
->Firewall là gì?&lt;/a>&lt;br>
+&gt;Firewall là gì?&lt;/a&gt;&lt;br&gt;
 📄 &lt;a class="link" href="https://www.cisco.com/c/en_in/products/security/firewalls/what-is-a-firewall.html" target="_blank" rel="noopener"
->Các loại Firewall phổ biến&lt;/a>&lt;br>
+&gt;Các loại Firewall phổ biến&lt;/a&gt;&lt;br&gt;
 🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=9GZlVOafYTg" target="_blank" rel="noopener"
->Video: Giới thiệu về Firewall&lt;/a>&lt;/p>
-&lt;hr>
-&lt;h2 id="-nginx">🌐 Nginx
-&lt;/h2>&lt;p>&lt;strong>Nginx&lt;/strong> là một máy chủ web mã nguồn mở, được sử dụng rộng rãi nhờ khả năng xử lý nhiều kết nối đồng thời với hiệu suất cao.&lt;/p>
-&lt;p>🔹 Hỗ trợ web server, reverse proxy, load balancing, caching.&lt;/p>
-&lt;p>🔹 Thích hợp cho hệ thống microservices và container.&lt;/p>
-&lt;h3 id="-ví-dụ-cấu-hình-nginx-đơn-giản">🔍 Ví dụ cấu hình Nginx đơn giản:
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-nginx" data-lang="nginx">&lt;span class="line">&lt;span class="cl">&lt;span class="k">server&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">listen&lt;/span> &lt;span class="mi">80&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">server_name&lt;/span> &lt;span class="s">example.com&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">root&lt;/span> &lt;span class="s">/var/www/html&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">index&lt;/span> &lt;span class="s">index.html&lt;/span>&lt;span class="p">;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📚 &lt;strong>Tham khảo thêm:&lt;/strong>&lt;br>
+&gt;Video: Giới thiệu về Firewall&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-nginx"&gt;🌐 Nginx
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Nginx&lt;/strong&gt; là một máy chủ web mã nguồn mở, được sử dụng rộng rãi nhờ khả năng xử lý nhiều kết nối đồng thời với hiệu suất cao.&lt;/p&gt;
+&lt;p&gt;🔹 Hỗ trợ web server, reverse proxy, load balancing, caching.&lt;/p&gt;
+&lt;p&gt;🔹 Thích hợp cho hệ thống microservices và container.&lt;/p&gt;
+&lt;h3 id="-ví-dụ-cấu-hình-nginx-đơn-giản"&gt;🔍 Ví dụ cấu hình Nginx đơn giản:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nginx" data-lang="nginx"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;root&lt;/span&gt; &lt;span class="s"&gt;/var/www/html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;index&lt;/span&gt; &lt;span class="s"&gt;index.html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Tham khảo thêm:&lt;/strong&gt;&lt;br&gt;
 📄 &lt;a class="link" href="https://swissmade.host/en/blog/basic-nginx-setup-ubuntu-guide-to-a-functional-and-secure-website-serving" target="_blank" rel="noopener"
->Hướng dẫn cài đặt Nginx trên Ubuntu&lt;/a>&lt;br>
+&gt;Hướng dẫn cài đặt Nginx trên Ubuntu&lt;/a&gt;&lt;br&gt;
 🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=JKxlsvZXG7c" target="_blank" rel="noopener"
->Video: Nginx trong 100 giây&lt;/a>&lt;/p>
-&lt;hr>
-&lt;h2 id="-apache">🏛️ Apache
-&lt;/h2>&lt;p>&lt;strong>Apache&lt;/strong> là một trong những máy chủ web phổ biến nhất, hỗ trợ nhiều module mở rộng và tương thích với nhiều hệ điều hành.&lt;/p>
-&lt;p>🔹 Dễ dàng cấu hình với file &lt;code>.conf&lt;/code>.&lt;/p>
-&lt;p>🔹 Hỗ trợ SSL/TLS, xác thực người dùng, URL rewriting&amp;hellip;&lt;/p>
-&lt;h3 id="-ví-dụ-cấu-hình-apache-đơn-giản">🔍 Ví dụ cấu hình Apache đơn giản:
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;span class="lnt">8
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-apache" data-lang="apache">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;VirtualHost&lt;/span> &lt;span class="s">*:80&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">ServerName&lt;/span> example.com
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">DocumentRoot&lt;/span> &lt;span class="sx">/var/www/html&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;Directory&lt;/span> &lt;span class="s">/var/www/html&lt;/span>&lt;span class="nt">&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">AllowOverride&lt;/span> &lt;span class="k">All&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">Require&lt;/span> &lt;span class="k">all&lt;/span> granted
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;lt;/Directory&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nt">&amp;lt;/VirtualHost&amp;gt;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📚 &lt;strong>Tham khảo thêm:&lt;/strong>&lt;br>
+&gt;Video: Nginx trong 100 giây&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-apache"&gt;🏛️ Apache
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Apache&lt;/strong&gt; là một trong những máy chủ web phổ biến nhất, hỗ trợ nhiều module mở rộng và tương thích với nhiều hệ điều hành.&lt;/p&gt;
+&lt;p&gt;🔹 Dễ dàng cấu hình với file &lt;code&gt;.conf&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;🔹 Hỗ trợ SSL/TLS, xác thực người dùng, URL rewriting&amp;hellip;&lt;/p&gt;
+&lt;h3 id="-ví-dụ-cấu-hình-apache-đơn-giản"&gt;🔍 Ví dụ cấu hình Apache đơn giản:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-apache" data-lang="apache"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;VirtualHost&lt;/span&gt; &lt;span class="s"&gt;*:80&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;ServerName&lt;/span&gt; example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;DocumentRoot&lt;/span&gt; &lt;span class="sx"&gt;/var/www/html&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;lt;Directory&lt;/span&gt; &lt;span class="s"&gt;/var/www/html&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;AllowOverride&lt;/span&gt; &lt;span class="k"&gt;All&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;Require&lt;/span&gt; &lt;span class="k"&gt;all&lt;/span&gt; granted
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;lt;/Directory&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;/VirtualHost&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Tham khảo thêm:&lt;/strong&gt;&lt;br&gt;
 📄 &lt;a class="link" href="https://httpd.apache.org/" target="_blank" rel="noopener"
->Trang chủ Apache&lt;/a>&lt;br>
+&gt;Trang chủ Apache&lt;/a&gt;&lt;br&gt;
 🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=VXSgEvZKp-8" target="_blank" rel="noopener"
->Video: Cài đặt Apache trên Ubuntu&lt;/a>&lt;/p>
-&lt;hr>
-&lt;h2 id="-kết-luận">✅ Kết luận
-&lt;/h2>&lt;p>🔹 &lt;strong>Load Balancer&lt;/strong> giúp phân phối lưu lượng hiệu quả, giảm tải cho máy chủ.&lt;br>
-🔹 &lt;strong>Forward Proxy&lt;/strong> hỗ trợ ẩn danh, caching và kiểm soát truy cập từ client.&lt;br>
-🔹 &lt;strong>Reverse Proxy&lt;/strong> giúp tăng cường bảo mật, caching và tối ưu hệ thống backend.&lt;br>
-🔹 &lt;strong>Firewall&lt;/strong> bảo vệ hệ thống khỏi truy cập trái phép.&lt;br>
-🔹 &lt;strong>Nginx &amp;amp; Apache&lt;/strong> là hai web server phổ biến, phục vụ nội dung web và ứng dụng.&lt;/p>
-&lt;p>Bằng cách triển khai các thành phần này, bạn có thể xây dựng một hệ thống mạng mạnh mẽ, bảo mật và hiệu quả. 🚀&lt;/p>
-&lt;p>👉 &lt;strong>Bước tiếp theo:&lt;/strong> Tìm hiểu về &lt;em>&lt;strong>Networking Protocols&lt;/strong>&lt;/em> tập hợp các quy tắc và tiêu chuẩn xác định cách các thiết bị trong mạng giao tiếp với nhau. Chúng đảm bảo dữ liệu được truyền tải chính xác, an toàn và hiệu quả giữa các hệ thống khác nhau.&lt;/p></description></item></channel></rss>
+&gt;Video: Cài đặt Apache trên Ubuntu&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-kết-luận"&gt;✅ Kết luận
+&lt;/h2&gt;&lt;p&gt;🔹 &lt;strong&gt;Load Balancer&lt;/strong&gt; giúp phân phối lưu lượng hiệu quả, giảm tải cho máy chủ.&lt;br&gt;
+🔹 &lt;strong&gt;Forward Proxy&lt;/strong&gt; hỗ trợ ẩn danh, caching và kiểm soát truy cập từ client.&lt;br&gt;
+🔹 &lt;strong&gt;Reverse Proxy&lt;/strong&gt; giúp tăng cường bảo mật, caching và tối ưu hệ thống backend.&lt;br&gt;
+🔹 &lt;strong&gt;Firewall&lt;/strong&gt; bảo vệ hệ thống khỏi truy cập trái phép.&lt;br&gt;
+🔹 &lt;strong&gt;Nginx &amp;amp; Apache&lt;/strong&gt; là hai web server phổ biến, phục vụ nội dung web và ứng dụng.&lt;/p&gt;
+&lt;p&gt;Bằng cách triển khai các thành phần này, bạn có thể xây dựng một hệ thống mạng mạnh mẽ, bảo mật và hiệu quả. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Networking Protocols&lt;/strong&gt;&lt;/em&gt; tập hợp các quy tắc và tiêu chuẩn xác định cách các thiết bị trong mạng giao tiếp với nhau. Chúng đảm bảo dữ liệu được truyền tải chính xác, an toàn và hiệu quả giữa các hệ thống khác nhau.&lt;/p&gt;</description></item></channel></rss>

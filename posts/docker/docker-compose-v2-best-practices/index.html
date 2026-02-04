@@ -1,0 +1,498 @@
+<!doctype html><html lang=vi dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Hướng dẫn Docker Compose v2 từ cơ bản với các best practices và ví dụ thực tế cho người mới bắt đầu."><title>Docker Compose cho người mới (v2) — Thực hành</title><link rel=canonical href=https://tech.nguuyen.io.vn/posts/docker/docker-compose-v2-best-practices/><link rel=stylesheet href=/scss/style.min.008e990398a8bda07a1c08244e5228e1367c0d5878a70860ee0645df1783fec0.css><meta property='og:title' content="Docker Compose cho người mới (v2) — Thực hành"><meta property='og:description' content="Hướng dẫn Docker Compose v2 từ cơ bản với các best practices và ví dụ thực tế cho người mới bắt đầu."><meta property='og:url' content='https://tech.nguuyen.io.vn/posts/docker/docker-compose-v2-best-practices/'><meta property='og:site_name' content='Hoàng Dương'><meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:tag' content='docker'><meta property='article:tag' content='docker-compose'><meta property='article:tag' content='containerization'><meta property='article:tag' content='devops'><meta property='article:tag' content='beginner'><meta property='article:published_time' content='2026-02-04T00:00:00+00:00'><meta property='article:modified_time' content='2026-02-04T00:00:00+00:00'><meta property='og:image' content='https://tech.nguuyen.io.vn/images/docker/docker-compose-v2.webp'><meta name=twitter:title content="Docker Compose cho người mới (v2) — Thực hành"><meta name=twitter:description content="Hướng dẫn Docker Compose v2 từ cơ bản với các best practices và ví dụ thực tế cho người mới bắt đầu."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://tech.nguuyen.io.vn/images/docker/docker-compose-v2.webp'><link rel=icon type=image/x-icon href=/favicon.ico><style>:root{--article-font-family:"Roboto", var(--base-font-family)}</style><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Hiển thị Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/hoang_hu_9c3522a14c2c01cd.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Hoàng Dương</a></h1><h2 class=site-description>And, when you want something, all the universe conspires in helping you to achieve it.</h2></div></header><ol class=menu-social><li><a href=https://github.com/HoangDuonng target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.instagram.com/ngu_uuen/ target=_blank title=Instagram rel=me><svg class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="4"/><path d="M16.5 7.5h.01"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Trang chủ</span></a></li><li><a href=/gi%E1%BB%9Bi-thi%E1%BB%87u/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>Về tôi</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Lưu trữ</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Tìm kiếm</span></a></li><li><a href=/li%C3%AAn-k%E1%BA%BFt/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Liên kết</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://tech.nguuyen.io.vn/ selected>Tiếng Việt</option><option value=https://tech.nguuyen.io.vn/en/>English</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Chế độ tối</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><h2 class="widget-title section-title">Mục lục</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#docker-compose-v2---công-cụ-quản-lý-multi-container>Docker Compose v2 - Công cụ quản lý multi-container</a></li><li><a href=#i-cài-đặt-và-chuẩn-bị>I. Cài đặt và chuẩn bị</a><ol><li><a href=#1-kiểm-tra-phiên-bản-docker-compose>1. Kiểm tra phiên bản Docker Compose</a></li><li><a href=#2-cấu-trúc-project-cơ-bản>2. Cấu trúc project cơ bản</a></li></ol></li><li><a href=#ii-cú-pháp-docker-compose-v2>II. Cú pháp Docker Compose v2</a><ol><li><a href=#1-file-docker-composeyml-cơ-bản>1. File docker-compose.yml cơ bản</a></li><li><a href=#2-sử-dụng-file-env>2. Sử dụng file .env</a></li></ol></li><li><a href=#iii-best-practices-cho-docker-compose-v2>III. Best Practices cho Docker Compose v2</a><ol><li><a href=#1-quản-lý-networks>1. Quản lý Networks</a></li><li><a href=#2-health-checks>2. Health Checks</a></li><li><a href=#3-resource-limits>3. Resource Limits</a></li></ol></li><li><a href=#iv-các-lệnh-docker-compose-v2-thường-dùng>IV. Các lệnh Docker Compose v2 thường dùng</a><ol><li><a href=#1-lệnh-cơ-bản>1. Lệnh cơ bản</a></li><li><a href=#2-lệnh-nâng-cao>2. Lệnh nâng cao</a></li></ol></li><li><a href=#v-ví-dụ-thực-tế-web-app-với-database>V. Ví dụ thực tế: Web App với Database</a><ol><li><a href=#1-nodejs--postgresql--redis>1. Node.js + PostgreSQL + Redis</a></li><li><a href=#2-file-nginxconf>2. File nginx.conf</a></li></ol></li><li><a href=#vi-override-và-multiple-environments>VI. Override và Multiple Environments</a><ol><li><a href=#1-docker-composeoverrideyml>1. docker-compose.override.yml</a></li><li><a href=#2-environment-specific-files>2. Environment-specific files</a></li></ol></li><li><a href=#ghi-chú-triển-khai>Ghi chú triển khai</a></li><li><a href=#-lời-kết>🎯 Lời kết</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/posts/docker/docker-compose-v2-best-practices/><img src=/images/docker/docker-compose-v2.webp loading=lazy alt="Featured image of post Docker Compose cho người mới (v2) — Thực hành"></a></div><div class=article-details><header class=article-category><a href=/categories/docker/ style=background-color:#2a9d8f;color:#fff>Docker</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/docker/docker-compose-v2-best-practices/>Docker Compose cho người mới (v2) — Thực hành</a></h2><h3 class=article-subtitle>Hướng dẫn Docker Compose v2 từ cơ bản với các best practices và ví dụ thực tế cho người mới bắt đầu.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>04/02/2026</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>5 phút đọc</time></div><div><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span class=article-author--name>Hoàng Dương</span></div></footer></div></header><section class=article-content><h2 id=docker-compose-v2---công-cụ-quản-lý-multi-container>Docker Compose v2 - Công cụ quản lý multi-container</h2><p>Docker Compose là công cụ giúp bạn <strong>định nghĩa và chạy nhiều container</strong> cùng lúc thông qua file YAML. Phiên bản v2 mang đến nhiều cải tiến về hiệu suất và tính năng mới.</p><hr><h2 id=i-cài-đặt-và-chuẩn-bị>I. Cài đặt và chuẩn bị</h2><h3 id=1-kiểm-tra-phiên-bản-docker-compose>1. Kiểm tra phiên bản Docker Compose</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Kiểm tra phiên bản hiện tại</span>
+</span></span><span class=line><span class=cl>docker compose version
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Output mong muốn (v2.x.x)</span>
+</span></span><span class=line><span class=cl>Docker Compose version v2.24.5
+</span></span></code></pre></td></tr></table></div></div><h3 id=2-cấu-trúc-project-cơ-bản>2. Cấu trúc project cơ bản</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>my-app/
+</span></span><span class=line><span class=cl>├── docker-compose.yml
+</span></span><span class=line><span class=cl>├── .env
+</span></span><span class=line><span class=cl>├── app/
+</span></span><span class=line><span class=cl>│   ├── Dockerfile
+</span></span><span class=line><span class=cl>│   └── src/
+</span></span><span class=line><span class=cl>└── nginx/
+</span></span><span class=line><span class=cl>    └── nginx.conf
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=ii-cú-pháp-docker-compose-v2>II. Cú pháp Docker Compose v2</h2><h3 id=1-file-docker-composeyml-cơ-bản>1. File docker-compose.yml cơ bản</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>version</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;3.8&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>web</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>build</span><span class=p>:</span><span class=w> </span><span class=l>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=s2>&#34;3000:3000&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>NODE_ENV=development</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>.:/app</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>/app/node_modules</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>depends_on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>db</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>db</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>postgres:15</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>POSTGRES_DB</span><span class=p>:</span><span class=w> </span><span class=l>myapp</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>POSTGRES_USER</span><span class=p>:</span><span class=w> </span><span class=l>user</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>POSTGRES_PASSWORD</span><span class=p>:</span><span class=w> </span><span class=l>password</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>postgres_data:/var/lib/postgresql/data</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=s2>&#34;5432:5432&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>postgres_data</span><span class=p>:</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=2-sử-dụng-file-env>2. Sử dụng file .env</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># .env file</span>
+</span></span><span class=line><span class=cl><span class=nv>NODE_ENV</span><span class=o>=</span>development
+</span></span><span class=line><span class=cl><span class=nv>DB_HOST</span><span class=o>=</span>db
+</span></span><span class=line><span class=cl><span class=nv>DB_PORT</span><span class=o>=</span><span class=m>5432</span>
+</span></span><span class=line><span class=cl><span class=nv>DB_NAME</span><span class=o>=</span>myapp
+</span></span><span class=line><span class=cl><span class=nv>DB_USER</span><span class=o>=</span>user
+</span></span><span class=line><span class=cl><span class=nv>DB_PASSWORD</span><span class=o>=</span>password
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># docker-compose.yml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>web</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>NODE_ENV=${NODE_ENV}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>DB_HOST=${DB_HOST}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>DB_PORT=${DB_PORT}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><hr><h2 id=iii-best-practices-cho-docker-compose-v2>III. Best Practices cho Docker Compose v2</h2><h3 id=1-quản-lý-networks>1. Quản lý Networks</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>version</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;3.8&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>frontend</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>build</span><span class=p>:</span><span class=w> </span><span class=l>./frontend</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>networks</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>frontend-network</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>backend</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>build</span><span class=p>:</span><span class=w> </span><span class=l>./backend</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>networks</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>frontend-network</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>backend-network</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>database</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>postgres:15</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>networks</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>backend-network</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>networks</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>frontend-network</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>driver</span><span class=p>:</span><span class=w> </span><span class=l>bridge</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>backend-network</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>driver</span><span class=p>:</span><span class=w> </span><span class=l>bridge</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=2-health-checks>2. Health Checks</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>web</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>build</span><span class=p>:</span><span class=w> </span><span class=l>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>healthcheck</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>test</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;CMD&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;curl&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;-f&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;http://localhost:3000/health&#34;</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>interval</span><span class=p>:</span><span class=w> </span><span class=l>30s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>timeout</span><span class=p>:</span><span class=w> </span><span class=l>10s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>retries</span><span class=p>:</span><span class=w> </span><span class=m>3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>start_period</span><span class=p>:</span><span class=w> </span><span class=l>40s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>db</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>postgres:15</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>healthcheck</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>test</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;CMD-SHELL&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;pg_isready -U ${POSTGRES_USER}&#34;</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>interval</span><span class=p>:</span><span class=w> </span><span class=l>10s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>timeout</span><span class=p>:</span><span class=w> </span><span class=l>5s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>retries</span><span class=p>:</span><span class=w> </span><span class=m>5</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=3-resource-limits>3. Resource Limits</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>web</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>build</span><span class=p>:</span><span class=w> </span><span class=l>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>deploy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>resources</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>limits</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>cpus</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;0.5&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>memory</span><span class=p>:</span><span class=w> </span><span class=l>512M</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>reservations</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>cpus</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;0.25&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>memory</span><span class=p>:</span><span class=w> </span><span class=l>256M</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><hr><h2 id=iv-các-lệnh-docker-compose-v2-thường-dùng>IV. Các lệnh Docker Compose v2 thường dùng</h2><h3 id=1-lệnh-cơ-bản>1. Lệnh cơ bản</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Khởi chạy services (detached mode)</span>
+</span></span><span class=line><span class=cl>docker compose up -d
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Xem logs</span>
+</span></span><span class=line><span class=cl>docker compose logs -f
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Dừng services</span>
+</span></span><span class=line><span class=cl>docker compose down
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Rebuild và restart</span>
+</span></span><span class=line><span class=cl>docker compose up --build -d
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Xem trạng thái services</span>
+</span></span><span class=line><span class=cl>docker compose ps
+</span></span></code></pre></td></tr></table></div></div><h3 id=2-lệnh-nâng-cao>2. Lệnh nâng cao</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Chạy lệnh trong container</span>
+</span></span><span class=line><span class=cl>docker compose <span class=nb>exec</span> web bash
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Scale service</span>
+</span></span><span class=line><span class=cl>docker compose up --scale <span class=nv>web</span><span class=o>=</span><span class=m>3</span> -d
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Xem resource usage</span>
+</span></span><span class=line><span class=cl>docker compose top
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Validate compose file</span>
+</span></span><span class=line><span class=cl>docker compose config
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=v-ví-dụ-thực-tế-web-app-với-database>V. Ví dụ thực tế: Web App với Database</h2><h3 id=1-nodejs--postgresql--redis>1. Node.js + PostgreSQL + Redis</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span><span class=lnt>59
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>version</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;3.8&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>app</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>build</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>context</span><span class=p>:</span><span class=w> </span><span class=l>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>dockerfile</span><span class=p>:</span><span class=w> </span><span class=l>Dockerfile</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=s2>&#34;3000:3000&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>NODE_ENV=development</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>DATABASE_URL=postgresql://user:password@db:5432/myapp</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>REDIS_URL=redis://redis:6379</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>.:/app</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>/app/node_modules</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>depends_on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>db</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>condition</span><span class=p>:</span><span class=w> </span><span class=l>service_healthy</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>redis</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>condition</span><span class=p>:</span><span class=w> </span><span class=l>service_started</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>restart</span><span class=p>:</span><span class=w> </span><span class=l>unless-stopped</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>db</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>postgres:15-alpine</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>POSTGRES_DB</span><span class=p>:</span><span class=w> </span><span class=l>myapp</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>POSTGRES_USER</span><span class=p>:</span><span class=w> </span><span class=l>user</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>POSTGRES_PASSWORD</span><span class=p>:</span><span class=w> </span><span class=l>password</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>postgres_data:/var/lib/postgresql/data</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>./init.sql:/docker-entrypoint-initdb.d/init.sql</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>healthcheck</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>test</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;CMD-SHELL&#34;</span><span class=p>,</span><span class=w> </span><span class=s2>&#34;pg_isready -U user&#34;</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>interval</span><span class=p>:</span><span class=w> </span><span class=l>10s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>timeout</span><span class=p>:</span><span class=w> </span><span class=l>5s</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>retries</span><span class=p>:</span><span class=w> </span><span class=m>5</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>restart</span><span class=p>:</span><span class=w> </span><span class=l>unless-stopped</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>redis</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>redis:7-alpine</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>command</span><span class=p>:</span><span class=w> </span><span class=l>redis-server --appendonly yes</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>redis_data:/data</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>restart</span><span class=p>:</span><span class=w> </span><span class=l>unless-stopped</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>nginx</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>image</span><span class=p>:</span><span class=w> </span><span class=l>nginx:alpine</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>ports</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=s2>&#34;80:80&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>./nginx.conf:/etc/nginx/nginx.conf</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>depends_on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>app</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>restart</span><span class=p>:</span><span class=w> </span><span class=l>unless-stopped</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>postgres_data</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>redis_data</span><span class=p>:</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=2-file-nginxconf>2. File nginx.conf</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-nginx data-lang=nginx><span class=line><span class=cl><span class=k>events</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kn>worker_connections</span> <span class=mi>1024</span><span class=p>;</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>http</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>    <span class=kn>upstream</span> <span class=s>app</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kn>server</span> <span class=n>app</span><span class=p>:</span><span class=mi>3000</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=kn>server</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>        <span class=kn>listen</span> <span class=mi>80</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>        <span class=kn>location</span> <span class=s>/</span> <span class=p>{</span>
+</span></span><span class=line><span class=cl>            <span class=kn>proxy_pass</span> <span class=s>http://app</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=kn>proxy_set_header</span> <span class=s>Host</span> <span class=nv>$host</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>            <span class=kn>proxy_set_header</span> <span class=s>X-Real-IP</span> <span class=nv>$remote_addr</span><span class=p>;</span>
+</span></span><span class=line><span class=cl>        <span class=p>}</span>
+</span></span><span class=line><span class=cl>    <span class=p>}</span>
+</span></span><span class=line><span class=cl><span class=p>}</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=vi-override-và-multiple-environments>VI. Override và Multiple Environments</h2><h3 id=1-docker-composeoverrideyml>1. docker-compose.override.yml</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># docker-compose.override.yml (tự động load)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>version</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;3.8&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>app</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>volumes</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>.:/app</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>DEBUG=true</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=2-environment-specific-files>2. Environment-specific files</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Development</span>
+</span></span><span class=line><span class=cl>docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Production</span>
+</span></span><span class=line><span class=cl>docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+</span></span></code></pre></td></tr></table></div></div><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># docker-compose.prod.yml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>version</span><span class=p>:</span><span class=w> </span><span class=s2>&#34;3.8&#34;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=nt>services</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>app</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>restart</span><span class=p>:</span><span class=w> </span><span class=l>always</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>deploy</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span><span class=nt>resources</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>limits</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>memory</span><span class=p>:</span><span class=w> </span><span class=l>1G</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>environment</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=l>NODE_ENV=production</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><hr><h2 id=ghi-chú-triển-khai>Ghi chú triển khai</h2><ul><li><strong>Khi áp dụng vào dự án của bạn</strong>, hãy lưu ý các điểm quan trọng:<ul><li>Luôn sử dụng <code>.env</code> file cho sensitive data</li><li>Implement health checks cho critical services</li><li>Sử dụng named volumes cho persistent data</li><li>Cấu hình restart policies phù hợp</li></ul></li><li><strong>Best practices</strong>:<ul><li>Tách biệt networks cho security</li><li>Sử dụng specific image tags thay vì <code>latest</code></li><li>Implement proper logging strategy</li></ul></li><li><strong>Troubleshooting</strong>:<ul><li>Sử dụng <code>docker compose logs</code> để debug</li><li>Kiểm tra <code>docker compose config</code> trước khi deploy</li><li>Monitor resource usage với <code>docker compose top</code></li></ul></li></ul><hr><h2 id=-lời-kết>🎯 Lời kết</h2><p>Docker Compose v2 là công cụ mạnh mẽ giúp bạn quản lý multi-container applications một cách dễ dàng. Với các best practices trên, bạn có thể xây dựng và triển khai ứng dụng một cách chuyên nghiệp và hiệu quả! 🚀</p><p>Hãy thử nghiệm với các ví dụ trên và dần dần áp dụng vào dự án thực tế của bạn. 😊</p></section><footer class=article-footer><section class=article-tags><a href=/tags/docker/>Docker</a>
+<a href=/tags/docker-compose/>Docker-Compose</a>
+<a href=/tags/containerization/>Containerization</a>
+<a href=/tags/devops/>Devops</a>
+<a href=/tags/beginner/>Beginner</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Bài viết liên quan</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/posts/docker/docker-basics-image-vs-container/><div class=article-image><img src=/images/docker/docker-basics-image-vs-container.webp loading=lazy data-key data-hash=/images/docker/docker-basics-image-vs-container.webp></div><div class=article-details><h2 class=article-title>Docker cơ bản: Image vs Container</h2></div></a></article><article class=has-image><a href=/posts/installation-guides/setup-docker-on-ubuntu/><div class=article-image><img src=/images/installation-guides/docker-installation-ubuntu.webp loading=lazy data-key data-hash=/images/installation-guides/docker-installation-ubuntu.webp></div><div class=article-details><h2 class=article-title>Cách cài đặt Docker trên Ubuntu 🐳</h2></div></a></article><article class=has-image><a href=/posts/devops/devops-step-six/><div class=article-image><img src=/images/devops/devops-step-six.webp loading=lazy data-key data-hash=/images/devops/devops-step-six.webp></div><div class=article-details><h2 class=article-title>Containers, Docker và LXC 🏗️</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=hoangduonng/blog_comments issue-term=pathname label=comments theme=icy-dark crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2025 -
+2026 Hoàng Dương</section><section class=powerby>Built with <a href=https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/ target=_blank rel=noopener>Ngữ Uyển ❤️</a><br>Theme <no value>thiết kế bởi Jimmy</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
