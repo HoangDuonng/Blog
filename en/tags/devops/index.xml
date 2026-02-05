@@ -1,4 +1,756 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Devops on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/devops/</link><description>Recent content in Devops on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 04 Feb 2026 16:27:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>DevOps Engineer Roadmap 😎</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-roadmap/</link><pubDate>Thu, 20 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-roadmap/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-roadmap.webp" alt="Featured image of post DevOps Engineer Roadmap 😎" /&gt;&lt;h2 id="understanding-devops"&gt;Understanding DevOps
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Devops on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/devops/</link><description>Recent content in Devops on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 05 Feb 2026 10:29:10 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Source Code Hosting Services 🐱</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-five/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-five/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-five.webp" alt="Featured image of post Source Code Hosting Services 🐱" /&gt;&lt;h2 id="-source-code-hosting-services-repo-hosting-services"&gt;🌍 Source Code Hosting Services (Repo Hosting Services)
+&lt;/h2&gt;&lt;p&gt;When working in teams, you need a remote place to store source code so everyone can access it, create their own branches, and create or review pull requests. These services typically include issue tracking, code review, and continuous integration (CI/CD). Popular options include GitHub, GitLab, Bitbucket, and AWS CodeCommit.&lt;/p&gt;
+&lt;p&gt;📚 &lt;strong&gt;Free resources to learn more:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://github.com" target="_blank" rel="noopener"
+&gt;GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://gitlab.com" target="_blank" rel="noopener"
+&gt;GitLab&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://bitbucket.org" target="_blank" rel="noopener"
+&gt;BitBucket&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=FQGXIIqziQg" target="_blank" rel="noopener"
+&gt;GitHub vs GitLab vs Bitbucket - Which one to choose?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-github"&gt;🐙 GitHub
+&lt;/h2&gt;&lt;p&gt;GitHub is a Git-based source code management platform that provides cloud-based code repository hosting services. It supports features like bug tracking, task management, and project wikis. GitHub enables code review through pull requests, issue tracking, and supports collaborative programming with features like fork and star.&lt;/p&gt;
+&lt;p&gt;GitHub supports both public and private repositories, making it a popular choice for both open-source projects and personal development. The GitHub ecosystem includes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🚀 &lt;strong&gt;GitHub Actions&lt;/strong&gt;: Workflow automation.&lt;/li&gt;
+&lt;li&gt;📦 &lt;strong&gt;GitHub Packages&lt;/strong&gt;: Software package management.&lt;/li&gt;
+&lt;li&gt;🌐 &lt;strong&gt;GitHub Pages&lt;/strong&gt;: Free static website hosting.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📚 &lt;strong&gt;Free resources to learn more:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🗺️ &lt;a class="link" href="https://roadmap.sh/github" target="_blank" rel="noopener"
+&gt;Git &amp;amp; GitHub Roadmap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://github.com" target="_blank" rel="noopener"
+&gt;GitHub Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://ooloo.io/project/github-flow" target="_blank" rel="noopener"
+&gt;How to use Git in professional development teams&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=pBy1zgt0XPc" target="_blank" rel="noopener"
+&gt;What is GitHub?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📰 &lt;a class="link" href="https://app.daily.dev/tags/github?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-gitlab"&gt;🦊 GitLab
+&lt;/h2&gt;&lt;p&gt;GitLab is a comprehensive DevOps tool that provides Git repository management along with wikis, issue tracking, and built-in CI/CD features. It&amp;rsquo;s a complete DevOps platform covering all stages from planning, development, testing to deployment and monitoring.&lt;/p&gt;
+&lt;p&gt;GitLab supports both cloud and self-hosted versions, suitable for organizations with high security requirements. Some notable GitLab features include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔄 &lt;strong&gt;Built-in CI/CD&lt;/strong&gt;: Supports automated testing and deployment.&lt;/li&gt;
+&lt;li&gt;📦 &lt;strong&gt;Container &amp;amp; Package Registry&lt;/strong&gt;: Package management and storage.&lt;/li&gt;
+&lt;li&gt;🔎 &lt;strong&gt;Source code security scanning&lt;/strong&gt;: Detects vulnerabilities in code.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📚 &lt;strong&gt;Free resources to learn more:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://gitlab.com" target="_blank" rel="noopener"
+&gt;GitLab Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://docs.gitlab.com" target="_blank" rel="noopener"
+&gt;Official GitLab Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=bnF7f1zGpo4" target="_blank" rel="noopener"
+&gt;What is GitLab and why use it?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📰 &lt;a class="link" href="https://app.daily.dev/tags/gitlab?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about GitLab&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-bitbucket"&gt;🏗️ Bitbucket
+&lt;/h2&gt;&lt;p&gt;Bitbucket is Atlassian&amp;rsquo;s source code repository hosting service that supports both Git and Mercurial. It integrates tightly with other Atlassian tools like Jira and Trello, making project management easier. Bitbucket offers both cloud and self-hosted versions.&lt;/p&gt;
+&lt;p&gt;Some notable Bitbucket features:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔍 &lt;strong&gt;Code Review &amp;amp; Pull Requests&lt;/strong&gt;: Supports code review.&lt;/li&gt;
+&lt;li&gt;🔄 &lt;strong&gt;Bitbucket Pipelines&lt;/strong&gt;: Built-in CI/CD.&lt;/li&gt;
+&lt;li&gt;📖 &lt;strong&gt;Wiki &amp;amp; Issue Tracking&lt;/strong&gt;: Documentation management and issue tracking.&lt;/li&gt;
+&lt;li&gt;🔐 &lt;strong&gt;Free private repository support&lt;/strong&gt;: Suitable for small teams.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📚 &lt;strong&gt;Free resources to learn more:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://bitbucket.org" target="_blank" rel="noopener"
+&gt;Bitbucket Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://bitbucket.org/product/guides/getting-started/overview" target="_blank" rel="noopener"
+&gt;Bitbucket Overview&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📚 &lt;a class="link" href="https://www.w3schools.com/git/git_intro.asp?remote=bitbucket" target="_blank" rel="noopener"
+&gt;Introduction to Git and Bitbucket&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=M44nEyd_5To" target="_blank" rel="noopener"
+&gt;Bitbucket Cloud Tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📰 &lt;a class="link" href="https://app.daily.dev/tags/bitbucket?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about Bitbucket&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;📌 Conclusion
+&lt;/h2&gt;&lt;p&gt;Choosing a source code repository hosting service depends on your development team&amp;rsquo;s needs. If you need a popular platform with a vast ecosystem, &lt;em&gt;&lt;strong&gt;GitHub&lt;/strong&gt;&lt;/em&gt; is a strong choice. If you want a fully integrated DevOps solution, &lt;em&gt;&lt;strong&gt;GitLab&lt;/strong&gt;&lt;/em&gt; would be more suitable. If you&amp;rsquo;re already using the Atlassian ecosystem, &lt;em&gt;&lt;strong&gt;Bitbucket&lt;/strong&gt;&lt;/em&gt; would be the best choice.&lt;/p&gt;
+&lt;p&gt;Consider your project needs and desired level of integration to make the right decision! 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Containers&lt;/strong&gt;&lt;/em&gt; that help package applications along with all libraries, configurations, and dependencies to run consistently across different environments.&lt;/p&gt;</description></item><item><title>Terminal Knowledge 📟</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-three/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-three/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-three.webp" alt="Featured image of post Terminal Knowledge 📟" /&gt;&lt;h2 id="-terminal-knowledge"&gt;🖥️ Terminal Knowledge
+&lt;/h2&gt;&lt;p&gt;Terminal is a text interface that allows users to interact with computer systems through CLI (Command Line Interface). It is an essential tool for system management, command execution, and task automation.&lt;/p&gt;
+&lt;h3 id="-free-resources"&gt;📚 Free Resources
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://en.wikipedia.org/wiki/Command-line_interface" target="_blank" rel="noopener"
+&gt;📄 Article: What is CLI?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.google.com/search?q=terminal%20knowledge%20guide%20for%20devops" target="_blank" rel="noopener"
+&gt;🔍 Google Search&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/results?search_query=terminal%20knowledge%20for%20devops" target="_blank" rel="noopener"
+&gt;▶️ YouTube Search&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ls -l &lt;span class="c1"&gt;# List files in current directory&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt; &lt;span class="c1"&gt;# Display current directory path&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-process-monitoring"&gt;📊 Process Monitoring
+&lt;/h2&gt;&lt;p&gt;Process monitoring is the continuous observation and analysis of processes in IT systems to ensure performance, efficiency, and compliance. It helps track important metrics such as resource usage and behavior of individual processes or applications running in the system.&lt;/p&gt;
+&lt;h3 id="-recommended-tools"&gt;🏆 Recommended Tools
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🟣 lsof&lt;/strong&gt; - Lists information about files opened by processes.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-free-resources-1"&gt;📚 Free Resources
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://neverendingsecurity.wordpress.com/2015/04/13/lsof-commands-cheatsheet/" target="_blank" rel="noopener"
+&gt;📄 Lsof Cheat Sheet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://man7.org/linux/man-pages/man8/lsof.8.html" target="_blank" rel="noopener"
+&gt;📖 lsof Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=n9nZ1ellaV0" target="_blank" rel="noopener"
+&gt;▶️ Video: Linux Crash Course - lsof Command&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://app.daily.dev/tags/monitoring?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;📝 Great Articles on Monitoring&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lsof -i :80 &lt;span class="c1"&gt;# List processes using port 80&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ps aux &lt;span class="c1"&gt;# Display all running processes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-performance-monitoring"&gt;🚀 Performance Monitoring
+&lt;/h2&gt;&lt;p&gt;Performance monitoring helps collect, analyze, and report key performance metrics from applications, networks, servers, and databases.&lt;/p&gt;
+&lt;h3 id="-recommended-tools-1"&gt;🏆 Recommended Tools
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🟣 vmstat&lt;/strong&gt; - Virtual memory and system performance monitoring tool.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-free-resources-2"&gt;📚 Free Resources
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.redhat.com/sysadmin/linux-commands-vmstat" target="_blank" rel="noopener"
+&gt;📖 Linux Commands: Exploring Virtual Memory with vmstat&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://man7.org/linux/man-pages/man8/vmstat.8.html" target="_blank" rel="noopener"
+&gt;📄 vmstat Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://phoenixnap.com/kb/vmstat-command" target="_blank" rel="noopener"
+&gt;▶️ vmstat Tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://app.daily.dev/tags/monitoring?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;📝 Great Articles on Monitoring&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vmstat &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="m"&gt;10&lt;/span&gt; &lt;span class="c1"&gt;# Update system status every 5 seconds for 10 times&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-networking-tools"&gt;🌐 Networking Tools
+&lt;/h2&gt;&lt;p&gt;Networking tools support monitoring, analyzing, troubleshooting, and managing network systems.&lt;/p&gt;
+&lt;h3 id="-recommended-tools-2"&gt;🏆 Recommended Tools
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🟣 Wireshark&lt;/strong&gt; - Deep packet analysis.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🟣 Nmap&lt;/strong&gt; - Network scanning and security testing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ping&lt;/strong&gt; - Basic connectivity testing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Traceroute&lt;/strong&gt; - Determine packet path through network.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Netstat&lt;/strong&gt; - Display network connections.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tcpdump&lt;/strong&gt; - Command-line packet capture and analysis.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Iperf&lt;/strong&gt; - Network performance testing.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Netcat&lt;/strong&gt; - Perform various network tasks.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Nslookup/Dig&lt;/strong&gt; - DNS queries.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PuTTY&lt;/strong&gt; - Remote connection via SSH or Telnet.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ping google.com &lt;span class="c1"&gt;# Test connection to Google&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nmap -sS 192.168.1.1 &lt;span class="c1"&gt;# Scan internal server ports&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-text-manipulation"&gt;✂️ Text Manipulation
+&lt;/h2&gt;&lt;p&gt;Tools that support editing, processing, and converting text data.&lt;/p&gt;
+&lt;h3 id="-recommended-tools-3"&gt;🏆 Recommended Tools
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🟣 sed&lt;/strong&gt; - Stream editor for data manipulation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🟣 awk&lt;/strong&gt; - Pattern scanning and data extraction.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🟣 grep&lt;/strong&gt; - Text search using regular expressions.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;cut, sort, tr, uniq&lt;/strong&gt; - Supporting commands for text data processing.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;grep &lt;span class="s2"&gt;&amp;#34;error&amp;#34;&lt;/span&gt; logfile.txt &lt;span class="c1"&gt;# Find &amp;#34;error&amp;#34; in logfile.txt&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;awk &lt;span class="s1"&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt; data.txt &lt;span class="c1"&gt;# Get first column from data.txt&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-bash-scripts"&gt;⚡ Bash Scripts
+&lt;/h2&gt;&lt;p&gt;Bash is a powerful shell on Unix/Linux that helps execute commands and automate tasks.&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Hello, World!&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-editors"&gt;✍️ Editors
+&lt;/h2&gt;&lt;p&gt;Text editors are essential tools for editing and managing text files.&lt;/p&gt;
+&lt;h3 id="-recommended-tools-4"&gt;🏆 Recommended Tools
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🟣 Vim&lt;/strong&gt; - Powerful, highly customizable, suitable for programmers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🟣 Emacs&lt;/strong&gt; - Flexible with many supporting plugins.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sublime Text&lt;/strong&gt; - High speed, user-friendly interface.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Visual Studio Code&lt;/strong&gt; - Open source, supports debugging, extensions, integrated development tools.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vim myfile.txt &lt;span class="c1"&gt;# Open file with Vim&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nano myfile.txt &lt;span class="c1"&gt;# Open file with Nano&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🔚 Conclusion
+&lt;/h2&gt;&lt;p&gt;Understanding and mastering these tools helps you work more efficiently in Linux and DevOps environments. Tools &lt;em&gt;&lt;strong&gt;🟣 marked&lt;/strong&gt;&lt;/em&gt; are the most popular and powerful ones, recommended by many experts. You can learn more through the accompanying free resources. If there&amp;rsquo;s anything that needs clarification or addition, please provide feedback so I can update accordingly!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;👉 Next step:&lt;/strong&gt; Advance your knowledge of &lt;em&gt;&lt;strong&gt;Version Control Systems&lt;/strong&gt;&lt;/em&gt; to effectively track, manage, and collaborate on source code.&lt;/p&gt;</description></item><item><title>Version Control Systems 🛠️</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-four/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-four/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-four.webp" alt="Featured image of post Version Control Systems 🛠️" /&gt;&lt;h2 id="-version-control-systems"&gt;🔄 Version Control Systems
+&lt;/h2&gt;&lt;p&gt;Version control systems (VCS) are tools that help track changes to source code and files over time. They support team collaboration, manage change history, and maintain multiple versions of source code. There are two main types of VCS:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Centralized VCS (CVCS)&lt;/strong&gt;: Uses a central repository, examples include &lt;strong&gt;Subversion (SVN)&lt;/strong&gt;, &lt;strong&gt;CVS&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Distributed VCS (DVCS)&lt;/strong&gt;: Each user has a complete copy of the repository, including the entire history. The most popular example is &lt;strong&gt;Git&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Git is a powerful distributed version control system that allows offline work, supports fast branching and merging operations, enhancing collaboration capabilities.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-git---the-most-popular-version-control-tool"&gt;🛠️ Git - The Most Popular Version Control Tool
+&lt;/h2&gt;&lt;h3 id="-installing-git"&gt;🔹 Installing Git
+&lt;/h3&gt;&lt;p&gt;If you haven&amp;rsquo;t installed Git yet, you can download it from &lt;a class="link" href="https://git-scm.com/" target="_blank" rel="noopener"
+&gt;git-scm.com&lt;/a&gt; or use the following commands:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt install git &lt;span class="c1"&gt;# Ubuntu/Debian&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;yum install git &lt;span class="c1"&gt;# CentOS/RHEL&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install git &lt;span class="c1"&gt;# macOS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Verify Git installation:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git --version
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# output: &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# git version 2.47.1.windows.1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-basic-git-commands"&gt;🚀 Basic Git Commands
+&lt;/h2&gt;&lt;p&gt;Below are common Git commands, organized from basic to advanced:&lt;/p&gt;
+&lt;h3 id="initialization--configuration"&gt;&lt;strong&gt;Initialization &amp;amp; Configuration&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git init &lt;span class="c1"&gt;# Initialize Git repository&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git config --global user.name &lt;span class="s2"&gt;&amp;#34;Your Name&amp;#34;&lt;/span&gt; &lt;span class="c1"&gt;# Configure name&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git config --global user.email &lt;span class="s2"&gt;&amp;#34;email@example.com&amp;#34;&lt;/span&gt; &lt;span class="c1"&gt;# Configure email&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="working-with-repository"&gt;&lt;strong&gt;Working With Repository&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone &amp;lt;repo_url&amp;gt; &lt;span class="c1"&gt;# Clone a remote repository to local machine&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git status &lt;span class="c1"&gt;# Check file status&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="adding--saving-changes"&gt;&lt;strong&gt;Adding &amp;amp; Saving Changes&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git add &amp;lt;file&amp;gt; &lt;span class="c1"&gt;# Add file to staging area&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git commit -m &lt;span class="s2"&gt;&amp;#34;Change description&amp;#34;&lt;/span&gt; &lt;span class="c1"&gt;# Save changes to history&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="working-with-remote-repository"&gt;&lt;strong&gt;Working With Remote Repository&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git remote add origin &amp;lt;repo_url&amp;gt; &lt;span class="c1"&gt;# Link remote repository&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git push -u origin main &lt;span class="c1"&gt;# Push changes to main branch&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git pull origin main &lt;span class="c1"&gt;# Update latest changes from remote repository&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="working-with-branches"&gt;&lt;strong&gt;Working With Branches&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git branch new-feature &lt;span class="c1"&gt;# Create new branch&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git checkout new-feature &lt;span class="c1"&gt;# Switch to new branch&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git merge new-feature &lt;span class="c1"&gt;# Merge branch into current branch&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="tracking-history"&gt;&lt;strong&gt;Tracking History&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git log &lt;span class="c1"&gt;# View commit history&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git diff &lt;span class="c1"&gt;# Compare changes between versions&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-free-git-learning-resources"&gt;📚 Free Git Learning Resources
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://git-scm.com/doc" target="_blank" rel="noopener"
+&gt;📖 Official Git Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://cs.fyi/guide/git-cheatsheet" target="_blank" rel="noopener"
+&gt;📄 Git Cheat Sheet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=SWYqp7iY_Tc" target="_blank" rel="noopener"
+&gt;▶️ Git Tutorial Video for Beginners&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://app.daily.dev/tags/git?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;📝 Article: What is Version Control System?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🔚 Conclusion
+&lt;/h2&gt;&lt;p&gt;Using Git makes source code management easier, supports effective team collaboration, and protects important project data. Understanding and mastering Git is an essential skill for every programmer.&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;GitHub &amp;amp; GitLab&lt;/strong&gt;&lt;/em&gt; to manage Git repositories on cloud platforms.&lt;/p&gt;</description></item><item><title>Learning Linux &amp; Operating Systems 🖥️</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-two/</link><pubDate>Sat, 22 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-two/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-two.webp" alt="Featured image of post Learning Linux &amp; Operating Systems 🖥️" /&gt;&lt;h2 id="-why-is-linux-important-in-devops"&gt;📌 Why is Linux important in DevOps?
+&lt;/h2&gt;&lt;p&gt;Linux is the foundation of most server systems, containers (Docker, Kubernetes), and cloud platforms. DevOps professionals need to master Linux to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅ Manage servers effectively.&lt;/li&gt;
+&lt;li&gt;✅ Write automation scripts.&lt;/li&gt;
+&lt;li&gt;✅ Handle files, users, and processes.&lt;/li&gt;
+&lt;li&gt;✅ Optimize systems and security.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-what-is-an-operating-system"&gt;⚙️ What is an Operating System?
+&lt;/h2&gt;&lt;p&gt;An operating system (OS) is software that manages computer hardware and software resources, providing common services for programs. It acts as an intermediary between applications and hardware, handling tasks such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔹 Memory management.&lt;/li&gt;
+&lt;li&gt;🔹 Process scheduling.&lt;/li&gt;
+&lt;li&gt;🔹 File system management.&lt;/li&gt;
+&lt;li&gt;🔹 Device control.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-popular-operating-systems"&gt;🌍 Popular operating systems:
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;💻 &lt;strong&gt;Personal computers&lt;/strong&gt;: Windows, macOS, Linux (Ubuntu, Fedora,&amp;hellip;)&lt;/li&gt;
+&lt;li&gt;📱 &lt;strong&gt;Mobile devices&lt;/strong&gt;: iOS, Android&lt;/li&gt;
+&lt;li&gt;🖥️ &lt;strong&gt;Servers&lt;/strong&gt;: Ubuntu Server, Red Hat Enterprise Linux, Windows Server&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Each operating system has different characteristics, interfaces, and compatibility capabilities. They play crucial roles in system security, performance optimization, and providing consistent user experiences.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-basic-linux-commands"&gt;🛠️ Basic Linux Commands
+&lt;/h2&gt;&lt;p&gt;Here are some important Linux commands:&lt;/p&gt;
+&lt;h3 id="--system-information"&gt;🔍 System Information
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uname -a &lt;span class="c1"&gt;# Display operating system information&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uptime &lt;span class="c1"&gt;# System uptime&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;free -m &lt;span class="c1"&gt;# Check RAM memory&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="--file--directory-management"&gt;📂 File &amp;amp; Directory Management
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ls -l &lt;span class="c1"&gt;# List files with detailed information&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mkdir mydir &lt;span class="c1"&gt;# Create new directory&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rm -rf mydir &lt;span class="c1"&gt;# Delete directory and its contents&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="--process-management"&gt;🚀 Process Management
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;top &lt;span class="c1"&gt;# Display running processes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ps aux &lt;span class="c1"&gt;# List all processes&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;kill&lt;/span&gt; -9 PID &lt;span class="c1"&gt;# Stop process by PID&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="--user-management"&gt;👤 User Management
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;whoami &lt;span class="c1"&gt;# View current user&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo useradd devops &lt;span class="c1"&gt;# Create new user&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo passwd devops &lt;span class="c1"&gt;# Set password for user&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-bash-script-for-system-resource-monitoring"&gt;📜 Bash Script for System Resource Monitoring
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;==== System Information ====&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uname -a
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;==== System Uptime ====&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uptime
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;==== RAM Memory ====&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;free -m
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-how-to-run-the-script"&gt;▶️ &lt;strong&gt;How to run the script:&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod +x system_check.sh &lt;span class="c1"&gt;# Grant execute permission to script&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./system_check.sh &lt;span class="c1"&gt;# Run script in terminal&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-learning-resources"&gt;📚 Learning Resources
+&lt;/h2&gt;&lt;p&gt;Here are some free resources to learn more about operating systems:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://en.wikipedia.org/wiki/Operating_system" target="_blank" rel="noopener"
+&gt;Operating Systems - Wiki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://www.tpointtech.com/operating-system" target="_blank" rel="noopener"
+&gt;All you need to know about OS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://www.tutorialspoint.com/operating_system/os_overview.htm" target="_blank" rel="noopener"
+&gt;Learn Operating Systems&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=pVzRTmdd9j0" target="_blank" rel="noopener"
+&gt;What are Operating Systems?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=vBURTt97EkA&amp;amp;list=PLBlnK6fEyqRiVhbXDGLXDk_OQAeuVcp2O" target="_blank" rel="noopener"
+&gt;Operating Systems&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🎯 Conclusion
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;✅ Linux is a mandatory skill in DevOps.&lt;/li&gt;
+&lt;li&gt;✅ Learn to use terminal &amp;amp; Bash scripting.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;👉 Next step:&lt;/strong&gt; Learn more about &lt;em&gt;&lt;strong&gt;terminal and CLI usage&lt;/strong&gt;&lt;/em&gt; to work effectively with systems.&lt;/p&gt;</description></item><item><title>Choosing a Programming Language 🤗</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-one/</link><pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-one/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-one.webp" alt="Featured image of post Choosing a Programming Language 🤗" /&gt;&lt;h2 id="-why-do-you-need-to-choose-a-programming-language"&gt;📌 Why do you need to choose a programming language?
+&lt;/h2&gt;&lt;p&gt;In DevOps, you will need to use programming languages to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅ Write automation scripts.&lt;/li&gt;
+&lt;li&gt;✅ Manage servers and cloud.&lt;/li&gt;
+&lt;li&gt;✅ Create tools to support CI/CD.&lt;/li&gt;
+&lt;li&gt;✅ Build and deploy Infrastructure as Code (IaC).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Choosing the right language helps you work more efficiently with systems, automate many processes, and improve software development speed.&lt;/p&gt;
+&lt;h2 id="-suitable-languages-for-devops"&gt;🔥 Suitable languages for DevOps
+&lt;/h2&gt;&lt;h3 id="-python-main-recommendation"&gt;🐍 Python (Main recommendation)
+&lt;/h3&gt;&lt;h4 id="-reasons-to-choose-python"&gt;&lt;strong&gt;🔹 Reasons to choose Python:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;Easy-to-read syntax, easy to learn.&lt;/li&gt;
+&lt;li&gt;Rich libraries supporting automation like &lt;code&gt;fabric&lt;/code&gt;, &lt;code&gt;paramiko&lt;/code&gt;, &lt;code&gt;boto3&lt;/code&gt; (AWS SDK), &lt;code&gt;pyinfra&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Strong support in Cloud management (AWS, GCP, Azure).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-practical-applications"&gt;&lt;strong&gt;🔹 Practical applications:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;Write automated code deployment scripts.&lt;/li&gt;
+&lt;li&gt;Create server management bots.&lt;/li&gt;
+&lt;li&gt;Build system management APIs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-example-automated-ssh-deployment-script-with-paramiko"&gt;&lt;strong&gt;📝 Example: Automated SSH deployment script with Paramiko&lt;/strong&gt;
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;paramiko&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;deploy_code&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;client&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;paramiko&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SSHClient&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_missing_host_key_policy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;paramiko&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AutoAddPolicy&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;stdin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stderr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exec_command&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;decode&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;deploy_code&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;192.168.1.100&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;ubuntu&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;yourpassword&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;git pull origin main &amp;amp;&amp;amp; systemctl restart app&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id="-bash-need-to-know-basics"&gt;🖥️ Bash (Need to know basics)
+&lt;/h3&gt;&lt;h4 id="-reasons-to-choose-bash"&gt;&lt;strong&gt;🔹 Reasons to choose Bash:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;The most popular shell script on Linux.&lt;/li&gt;
+&lt;li&gt;Helps you work quickly with the system.&lt;/li&gt;
+&lt;li&gt;Optimized for server management and small task automation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-practical-applications-1"&gt;&lt;strong&gt;🔹 Practical applications:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;Write automated server update scripts.&lt;/li&gt;
+&lt;li&gt;Create periodic cron jobs.&lt;/li&gt;
+&lt;li&gt;Manage users and permissions on Linux.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-example-automated-server-update-script"&gt;&lt;strong&gt;📝 Example: Automated server update script&lt;/strong&gt;
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo apt upgrade -y
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id="-go-golang-if-working-with-kubernetes"&gt;🚀 Go (Golang) (If working with Kubernetes)
+&lt;/h3&gt;&lt;h4 id="-reasons-to-choose-go"&gt;&lt;strong&gt;🔹 Reasons to choose Go:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;High performance, easy to compile into compact binaries.&lt;/li&gt;
+&lt;li&gt;Kubernetes and many DevOps tools like Terraform are written in Go.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-practical-applications-2"&gt;&lt;strong&gt;🔹 Practical applications:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;Write container management tools.&lt;/li&gt;
+&lt;li&gt;Create plugins for Kubernetes.&lt;/li&gt;
+&lt;li&gt;Build custom DevOps tools.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-example-display-system-information-with-go"&gt;&lt;strong&gt;📝 Example: Display system information with Go&lt;/strong&gt;
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;package&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;main&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;fmt&amp;#34;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;os&amp;#34;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;func&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;os&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Hostname&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;fmt&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;Hostname:&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id="-groovy-if-working-with-jenkins"&gt;⚙️ Groovy (If working with Jenkins)
+&lt;/h3&gt;&lt;h4 id="-reasons-to-choose-groovy"&gt;&lt;strong&gt;🔹 Reasons to choose Groovy:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;The main language for writing pipelines in Jenkins.&lt;/li&gt;
+&lt;li&gt;Flexible syntax, easy to extend and integrate with Java.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-practical-applications-3"&gt;&lt;strong&gt;🔹 Practical applications:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;Write CI/CD pipelines for Jenkins.&lt;/li&gt;
+&lt;li&gt;Create system management scripts.&lt;/li&gt;
+&lt;li&gt;Automate build, test, deploy steps.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-example-basic-pipeline-in-jenkinsfile"&gt;&lt;strong&gt;📝 Example: Basic pipeline in Jenkinsfile&lt;/strong&gt;
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;span class="lnt"&gt;20
+&lt;/span&gt;&lt;span class="lnt"&gt;21
+&lt;/span&gt;&lt;span class="lnt"&gt;22
+&lt;/span&gt;&lt;span class="lnt"&gt;23
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;pipeline&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;agent&lt;/span&gt; &lt;span class="n"&gt;any&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;stages&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;stage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Build&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;steps&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Building the project...&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sh&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;mvn clean package&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;stage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Test&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;steps&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Running tests...&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sh&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;mvn test&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;stage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Deploy&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;steps&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Deploying application...&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sh&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;./deploy.sh&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🎯 Conclusion
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;✅ &lt;strong&gt;Python + Bash&lt;/strong&gt; is the best choice to start with DevOps.&lt;/li&gt;
+&lt;li&gt;✅ If working with &lt;strong&gt;Kubernetes&lt;/strong&gt;, learn &lt;strong&gt;Go&lt;/strong&gt; as well.&lt;/li&gt;
+&lt;li&gt;✅ If working with &lt;strong&gt;Jenkins&lt;/strong&gt;, learn &lt;strong&gt;Groovy&lt;/strong&gt; to write pipelines.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;👉 Next step:&lt;/strong&gt; Learn the basics of &lt;em&gt;&lt;strong&gt;Linux &amp;amp; operating systems&lt;/strong&gt;&lt;/em&gt;.&lt;/p&gt;</description></item><item><title>DevOps Engineer Roadmap 😎</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-roadmap/</link><pubDate>Thu, 20 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-roadmap/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-roadmap.webp" alt="Featured image of post DevOps Engineer Roadmap 😎" /&gt;&lt;h2 id="understanding-devops"&gt;Understanding DevOps
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;DevOps&lt;/strong&gt; is the combination of software development and system operations, aimed at enhancing collaboration and automation in the software development and deployment process.&lt;/p&gt;
 &lt;/blockquote&gt;
