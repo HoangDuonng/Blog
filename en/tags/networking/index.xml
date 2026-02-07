@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Networking on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/networking/</link><description>Recent content in Networking on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 07 Feb 2026 17:09:53 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/networking/index.xml" rel="self" type="application/rss+xml"/><item><title>Networking Protocols 🖧</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-eight/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-eight/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-eight.webp" alt="Featured image of post Networking Protocols 🖧" /&gt;&lt;h2 id="-networking-protocols"&gt;🖧 Networking Protocols
+&lt;/h2&gt;&lt;p&gt;Networking protocols are a set of standardized rules that help data be transmitted, received, and understood correctly across computer networks. They define the format, timing, sequence, and error control during data transmission. Some important protocols include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;TCP/IP&lt;/strong&gt;: The foundational protocol suite for Internet communication.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HTTP/HTTPS&lt;/strong&gt;: Hypertext transfer protocol used for the web.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FTP/SFTP&lt;/strong&gt;: File transfer protocols.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SMTP/POP3/IMAP&lt;/strong&gt;: Email transmission protocols.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DNS&lt;/strong&gt;: Domain name resolution protocol.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DHCP&lt;/strong&gt;: Automatic IP address allocation protocol.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SSL/TLS&lt;/strong&gt;: Data security protocols.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;UDP&lt;/strong&gt;: Connectionless, fast transmission protocol.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-domain-name-system-dns"&gt;🌍 Domain Name System (DNS)
+&lt;/h2&gt;&lt;p&gt;DNS (&lt;strong&gt;Domain Name System&lt;/strong&gt;) is a domain name resolution system that helps convert memorable domain names (e.g., &lt;code&gt;www.example.com&lt;/code&gt;) into IP addresses (&lt;code&gt;192.168.1.1&lt;/code&gt;) that computers can understand.&lt;/p&gt;
+&lt;h3 id="-example-dns-configuration-in-linux"&gt;🔹 Example DNS configuration in Linux:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Check DNS for a domain name&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nslookup example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;dig example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Edit hosts file to map domain names&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo nano /etc/hosts
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Add the following line:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;192.168.1.100 mycustomdomain.com
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Reference resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://howdns.works/" target="_blank" rel="noopener"
+&gt;📄 How DNS works&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=Wj0od2ag5sk" target="_blank" rel="noopener"
+&gt;🎥 DNS explanation video&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-http-protocol"&gt;🌐 HTTP Protocol
+&lt;/h2&gt;&lt;p&gt;HTTP (&lt;strong&gt;Hypertext Transfer Protocol&lt;/strong&gt;) is a data transmission protocol on the web following a &lt;strong&gt;request-response&lt;/strong&gt; model.&lt;/p&gt;
+&lt;h3 id="-example-sending-http-requests-with-curl"&gt;🔹 Example sending HTTP requests with cURL:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Send GET request&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -X GET https://jsonplaceholder.typicode.com/posts/1
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Send POST request&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -X POST https://jsonplaceholder.typicode.com/posts &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; -H &lt;span class="s2"&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; -d &lt;span class="s1"&gt;&amp;#39;{&amp;#34;title&amp;#34;: &amp;#34;Hello&amp;#34;, &amp;#34;body&amp;#34;: &amp;#34;World&amp;#34;}&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Reference resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.cloudflare.com/en-gb/learning/ddos/glossary/hypertext-transfer-protocol-http/" target="_blank" rel="noopener"
+&gt;📄 Learn about HTTP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=iYM2zFP3Zn0" target="_blank" rel="noopener"
+&gt;🎥 HTTP tutorial video&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-https-and-security-ssltls"&gt;🔒 HTTPS and Security (SSL/TLS)
+&lt;/h2&gt;&lt;p&gt;HTTPS is the secure version of HTTP, using &lt;em&gt;&lt;strong&gt;SSL/TLS&lt;/strong&gt;&lt;/em&gt; to encrypt data, ensuring safety during transmission over the Internet.&lt;/p&gt;
+&lt;h3 id="-example-setting-up-https-with-nginx"&gt;🔹 Example setting up HTTPS with Nginx:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nginx" data-lang="nginx"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;443&lt;/span&gt; &lt;span class="s"&gt;ssl&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;ssl_certificate&lt;/span&gt; &lt;span class="s"&gt;/etc/letsencrypt/live/example.com/fullchain.pem&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;ssl_certificate_key&lt;/span&gt; &lt;span class="s"&gt;/etc/letsencrypt/live/example.com/privkey.pem&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Reference resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.cloudflare.com/en-gb/learning/ssl/what-is-https/" target="_blank" rel="noopener"
+&gt;📄 What is HTTPS?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=25mXesOV9-8" target="_blank" rel="noopener"
+&gt;🎥 How HTTPS works video&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-ssh---secure-connection"&gt;🔑 SSH - Secure Connection
+&lt;/h2&gt;&lt;p&gt;SSH (&lt;em&gt;&lt;strong&gt;Secure Shell&lt;/strong&gt;&lt;/em&gt;) is a protocol that enables secure connection to remote servers.&lt;/p&gt;
+&lt;h3 id="-example-using-ssh-for-remote-connection"&gt;🔹 Example using SSH for remote connection:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Connect to remote server&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ssh user@example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Copy files from server to local machine&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;scp user@example.com:/path/to/file ./localfile
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Reference resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.baeldung.com/cs/ssh-intro" target="_blank" rel="noopener"
+&gt;📄 SSH tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=5JvLV2-ngCI" target="_blank" rel="noopener"
+&gt;🎥 How SSH works video&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🎯 Conclusion
+&lt;/h2&gt;&lt;p&gt;Networking protocols are the foundation of all online systems, from web browsing to sending emails. Understanding and knowing how to use them helps improve system security and performance. Try applying the commands above to check and configure your system! 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Cloud Providers&lt;/strong&gt;&lt;/em&gt; - companies that provide cloud computing services, allowing individuals and businesses to access resources like servers, storage, databases, AI, and other services over the internet without investing in hardware infrastructure.&lt;/p&gt;</description></item></channel></rss>

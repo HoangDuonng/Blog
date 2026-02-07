@@ -1,4 +1,638 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/categories/devops/</link><description>Recent content in DevOps on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 05 Feb 2026 10:29:10 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/categories/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Source Code Hosting Services 🐱</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-five/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-five/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-five.webp" alt="Featured image of post Source Code Hosting Services 🐱" /&gt;&lt;h2 id="-source-code-hosting-services-repo-hosting-services"&gt;🌍 Source Code Hosting Services (Repo Hosting Services)
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/categories/devops/</link><description>Recent content in DevOps on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 07 Feb 2026 17:09:53 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/categories/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Serverless and Related Platforms ☁️</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-ten/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-ten/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-ten.webp" alt="Featured image of post Serverless and Related Platforms ☁️" /&gt;&lt;h2 id="-what-is-serverless"&gt;🚀 What is Serverless?
+&lt;/h2&gt;&lt;p&gt;Serverless is a cloud computing model where service providers fully manage the infrastructure, allowing developers to focus solely on writing code. The system &lt;strong&gt;automatically allocates resources&lt;/strong&gt; based on demand and charges only for actual resource usage. Serverless architecture is commonly applied for &lt;strong&gt;microservices applications, event processing&lt;/strong&gt; and helps minimize operational costs.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📄 &lt;a class="link" href="https://www.redhat.com/en/topics/cloud-native-apps/what-is-serverless" target="_blank" rel="noopener"
+&gt;What is Serverless?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=vxJobGtqKVM" target="_blank" rel="noopener"
+&gt;Introduction to Serverless&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/serverless?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about Serverless&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-aws-lambda"&gt;⚡ AWS Lambda
+&lt;/h2&gt;&lt;p&gt;AWS Lambda is a serverless service from AWS that allows running code without managing servers. Lambda &lt;strong&gt;automatically scales&lt;/strong&gt; based on demand, supports multiple programming languages, and easily integrates with other AWS services. It&amp;rsquo;s suitable for &lt;strong&gt;data processing, task automation, building microservices&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Example:&lt;/strong&gt; Deploying a function on AWS Lambda&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;lambda_handler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s1"&gt;&amp;#39;statusCode&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s1"&gt;&amp;#39;body&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Hello from AWS Lambda!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://docs.aws.amazon.com/lambda/latest/operatorguide/intro.html" target="_blank" rel="noopener"
+&gt;Introduction to AWS Lambda&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=RtiWU1DrMaM" target="_blank" rel="noopener"
+&gt;AWS Lambda Tutorial from A-Z&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/aws?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about AWS Lambda&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-cloudflare"&gt;🌍 Cloudflare
+&lt;/h2&gt;&lt;p&gt;Cloudflare is a company that provides &lt;strong&gt;CDN, security, performance optimization&lt;/strong&gt; services for websites. Cloudflare acts as a &lt;strong&gt;reverse proxy&lt;/strong&gt;, helping to speed up page loading and protect websites from attacks. The company was founded in 2009 and went public in 2019.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://cloudflare.com/" target="_blank" rel="noopener"
+&gt;Cloudflare Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=24cml1rKGBs" target="_blank" rel="noopener"
+&gt;Introduction to Cloudflare&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/cloudflare?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about Cloudflare&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-vercel"&gt;🌐 Vercel
+&lt;/h2&gt;&lt;p&gt;Vercel is a &lt;strong&gt;frontend deployment&lt;/strong&gt; platform that helps deploy web applications to the cloud quickly. It supports &lt;strong&gt;React, Next.js, Vue, Angular&lt;/strong&gt;, integrates with GitHub, and allows deployment with just a push command.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://vercel.com/" target="_blank" rel="noopener"
+&gt;Vercel Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://vercel.com/docs" target="_blank" rel="noopener"
+&gt;Official Vercel Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=sPmat30SE4k" target="_blank" rel="noopener"
+&gt;Vercel Usage Guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/vercel?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about Vercel&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;📌 Conclusion
+&lt;/h2&gt;&lt;p&gt;Serverless helps &lt;strong&gt;automate deployment, reduce costs, and easily scale&lt;/strong&gt;. Popular platforms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AWS Lambda&lt;/strong&gt;: Event processing without servers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cloudflare&lt;/strong&gt;: CDN and website security.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vercel&lt;/strong&gt;: Fast frontend deployment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Platform selection depends on your &lt;strong&gt;needs, technology, and budget&lt;/strong&gt;. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Provisioning&lt;/strong&gt;&lt;/em&gt; - the process of providing and configuring resources (servers, networks, storage, accounts) so that systems or applications can operate effectively.&lt;/p&gt;</description></item><item><title>Application Gateway 🌐</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-seven/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-seven/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-seven.webp" alt="Featured image of post Application Gateway 🌐" /&gt;&lt;h2 id="setting-up-important-network-components"&gt;Setting up important network components
+&lt;/h2&gt;&lt;p&gt;This article will help you understand important network components:&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Forward Proxy&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Reverse Proxy&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Load Balancer&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Firewall&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Caching Server&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Web Server&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-load-balancer"&gt;⚖️ Load Balancer
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Load Balancer&lt;/strong&gt; works like a &amp;ldquo;traffic cop&amp;rdquo; standing in front of servers and directing client requests to appropriate servers. This helps optimize speed, efficiently utilize resources, and avoid overload situations.&lt;/p&gt;
+&lt;p&gt;🔹 If a server fails, the Load Balancer will redirect traffic to the remaining servers.&lt;/p&gt;
+&lt;p&gt;🔹 Can be deployed with algorithms like Round Robin, Least Connections, IP Hash&amp;hellip;&lt;/p&gt;
+&lt;h3 id="-example-load-balancer-configuration-with-nginx"&gt;🔍 Example Load Balancer configuration with Nginx:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nginx" data-lang="nginx"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;upstream&lt;/span&gt; &lt;span class="s"&gt;backend_servers&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server&lt;/span&gt; &lt;span class="s"&gt;backend1.example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server&lt;/span&gt; &lt;span class="s"&gt;backend2.example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://backend_servers&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Further reading:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://www.nginx.com/resources/glossary/load-balancing/" target="_blank" rel="noopener"
+&gt;What is Load Balancing?&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://www.cloudflare.com/en-gb/learning/performance/what-is-load-balancing/#" target="_blank" rel="noopener"
+&gt;Load Balancing Algorithms&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://dzone.com/articles/nginx-reverse-proxy-and-load-balancing" target="_blank" rel="noopener"
+&gt;Nginx Reverse Proxy &amp;amp; Load Balancing&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=sCR3SAVdyCc" target="_blank" rel="noopener"
+&gt;Video: How does Load Balancer work?&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-forward-proxy"&gt;🔁 Forward Proxy
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Forward Proxy&lt;/strong&gt; is an intermediary server standing between client and internet, forwarding requests from client to destination server. It helps with anonymity, security, access control, and content caching.&lt;/p&gt;
+&lt;p&gt;🔹 Commonly used in enterprise networks to monitor and control access.&lt;/p&gt;
+&lt;p&gt;🔹 Supports bypassing censorship and geographical restrictions.&lt;/p&gt;
+&lt;h3 id="-example-forward-proxy-configuration-with-squid"&gt;🔍 Example Forward Proxy configuration with Squid:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;apt update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt install squid -y
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Edit configuration file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nano /etc/squid/squid.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Add simple configuration&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http_access allow all
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http_port &lt;span class="m"&gt;3128&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Restart service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;systemctl restart squid
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Further reading:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://www.fortinet.com/resources/cyberglossary/proxy-server" target="_blank" rel="noopener"
+&gt;What is Forward Proxy?&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://oxylabs.io/blog/reverse-proxy-vs-forward-proxy" target="_blank" rel="noopener"
+&gt;Forward Proxy vs Reverse Proxy comparison&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=HrG0MHkSsCA" target="_blank" rel="noopener"
+&gt;Video: How does Proxy work?&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-reverse-proxy"&gt;🔄 Reverse Proxy
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Reverse Proxy&lt;/strong&gt; is an intermediary server that receives requests from clients and forwards them to appropriate backend servers. It helps with load balancing, caching, security, and SSL termination.&lt;/p&gt;
+&lt;p&gt;🔹 Helps hide backend server information to enhance security.&lt;/p&gt;
+&lt;p&gt;🔹 Supports traffic distribution and application performance optimization.&lt;/p&gt;
+&lt;h3 id="-example-reverse-proxy-configuration-with-nginx"&gt;🔍 Example Reverse Proxy configuration with Nginx:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nginx" data-lang="nginx"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://backend_server&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;Host&lt;/span&gt; &lt;span class="nv"&gt;$host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;X-Real-IP&lt;/span&gt; &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Further reading:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://www.cloudflare.com/en-gb/learning/cdn/glossary/reverse-proxy/" target="_blank" rel="noopener"
+&gt;What is Reverse Proxy?&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://www.nginx.com/resources/glossary/reverse-proxy-server/" target="_blank" rel="noopener"
+&gt;Nginx Reverse Proxy Guide&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=4NB0NDtOwIQ" target="_blank" rel="noopener"
+&gt;Video: Reverse Proxy and practical applications&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-firewall"&gt;🔥 Firewall
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Firewall&lt;/strong&gt; is a network security device that monitors and filters incoming/outgoing traffic based on organization&amp;rsquo;s security policies.&lt;/p&gt;
+&lt;p&gt;🔹 Prevents unauthorized access to internal systems.&lt;/p&gt;
+&lt;p&gt;🔹 Supports data traffic control rules.&lt;/p&gt;
+&lt;h3 id="-example-firewall-configuration-with-ufw-uncomplicated-firewall"&gt;🔍 Example Firewall configuration with UFW (Uncomplicated Firewall):
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Install UFW&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;apt install ufw -y
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Open SSH port&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ufw allow 22/tcp
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Block all other connections&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ufw default deny incoming
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Enable UFW&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ufw &lt;span class="nb"&gt;enable&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Further reading:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://www.checkpoint.com/cyber-hub/network-security/what-is-firewall/" target="_blank" rel="noopener"
+&gt;What is Firewall?&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://www.cisco.com/c/en_in/products/security/firewalls/what-is-a-firewall.html" target="_blank" rel="noopener"
+&gt;Common Firewall types&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=9GZlVOafYTg" target="_blank" rel="noopener"
+&gt;Video: Introduction to Firewall&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-nginx"&gt;🌐 Nginx
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Nginx&lt;/strong&gt; is an open-source web server, widely used for its ability to handle many concurrent connections with high performance.&lt;/p&gt;
+&lt;p&gt;🔹 Supports web server, reverse proxy, load balancing, caching.&lt;/p&gt;
+&lt;p&gt;🔹 Suitable for microservices systems and containers.&lt;/p&gt;
+&lt;h3 id="-example-simple-nginx-configuration"&gt;🔍 Example simple Nginx configuration:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nginx" data-lang="nginx"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;root&lt;/span&gt; &lt;span class="s"&gt;/var/www/html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;index&lt;/span&gt; &lt;span class="s"&gt;index.html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Further reading:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://swissmade.host/en/blog/basic-nginx-setup-ubuntu-guide-to-a-functional-and-secure-website-serving" target="_blank" rel="noopener"
+&gt;Nginx installation guide on Ubuntu&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=JKxlsvZXG7c" target="_blank" rel="noopener"
+&gt;Video: Nginx in 100 seconds&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-apache"&gt;🏛️ Apache
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Apache&lt;/strong&gt; is one of the most popular web servers, supporting many extension modules and compatible with many operating systems.&lt;/p&gt;
+&lt;p&gt;🔹 Easy to configure with &lt;code&gt;.conf&lt;/code&gt; files.&lt;/p&gt;
+&lt;p&gt;🔹 Supports SSL/TLS, user authentication, URL rewriting&amp;hellip;&lt;/p&gt;
+&lt;h3 id="-example-simple-apache-configuration"&gt;🔍 Example simple Apache configuration:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-apache" data-lang="apache"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;VirtualHost&lt;/span&gt; &lt;span class="s"&gt;*:80&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;ServerName&lt;/span&gt; example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;DocumentRoot&lt;/span&gt; &lt;span class="sx"&gt;/var/www/html&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;lt;Directory&lt;/span&gt; &lt;span class="s"&gt;/var/www/html&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;AllowOverride&lt;/span&gt; &lt;span class="k"&gt;All&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;Require&lt;/span&gt; &lt;span class="k"&gt;all&lt;/span&gt; granted
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;lt;/Directory&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;/VirtualHost&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Further reading:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://httpd.apache.org/" target="_blank" rel="noopener"
+&gt;Apache homepage&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=VXSgEvZKp-8" target="_blank" rel="noopener"
+&gt;Video: Installing Apache on Ubuntu&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;✅ Conclusion
+&lt;/h2&gt;&lt;p&gt;🔹 &lt;strong&gt;Load Balancer&lt;/strong&gt; helps distribute traffic efficiently, reducing server load.&lt;br&gt;
+🔹 &lt;strong&gt;Forward Proxy&lt;/strong&gt; supports anonymity, caching, and access control from client.&lt;br&gt;
+🔹 &lt;strong&gt;Reverse Proxy&lt;/strong&gt; helps enhance security, caching, and optimize backend systems.&lt;br&gt;
+🔹 &lt;strong&gt;Firewall&lt;/strong&gt; protects systems from unauthorized access.&lt;br&gt;
+🔹 &lt;strong&gt;Nginx &amp;amp; Apache&lt;/strong&gt; are two popular web servers, serving web content and applications.&lt;/p&gt;
+&lt;p&gt;By implementing these components, you can build a powerful, secure, and efficient network system. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Networking Protocols&lt;/strong&gt;&lt;/em&gt; - a set of rules and standards that define how devices in a network communicate with each other. They ensure data is transmitted accurately, securely, and efficiently between different systems.&lt;/p&gt;</description></item><item><title>Cloud Services 🌩️</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-nine/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-nine/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-nine.webp" alt="Featured image of post Cloud Services 🌩️" /&gt;&lt;h2 id="-cloud-providers"&gt;🌐 Cloud Providers
+&lt;/h2&gt;&lt;p&gt;Cloud service providers offer an API layer to abstract infrastructure, enabling resource deployment based on security standards and billing models. While cloud services actually run on servers in data centers, abstraction layers create the feeling of interacting with a single platform. The ability to quickly deploy, configure, and secure resources has made cloud a critical factor in the success and complexity of modern DevOps.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📄 &lt;a class="link" href="https://www.techtarget.com/searchitchannel/definition/cloud-service-provider-cloud-provider" target="_blank" rel="noopener"
+&gt;Cloud Service Provider&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class="link" href="https://www.redhat.com/en/topics/cloud-computing/what-are-cloud-providers" target="_blank" rel="noopener"
+&gt;What are Cloud Providers?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/cloud?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about Cloud&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-aws-amazon-web-services"&gt;☁️ AWS (Amazon Web Services)
+&lt;/h2&gt;&lt;p&gt;AWS has been the leading cloud computing platform since 2011, far ahead of Azure and Google Cloud. AWS provides over &lt;strong&gt;200 services&lt;/strong&gt;, operating on a global scale. AWS delivers flexible and cost-effective computing solutions, including: &lt;strong&gt;computing power, data storage, content distribution&lt;/strong&gt;, etc.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Example:&lt;/strong&gt; Create an EC2 instance using AWS CLI&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;aws ec2 run-instances --image-id ami-12345678 --count &lt;span class="m"&gt;1&lt;/span&gt; --instance-type t2.micro --key-name MyKeyPair --security-groups MySecurityGroup
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=zA8guDqfv40" target="_blank" rel="noopener"
+&gt;100 hours AWS course - 2024&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://aws.amazon.com/" target="_blank" rel="noopener"
+&gt;AWS Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class="link" href="https://grapplingdev.com/tutorials/how-to-create-aws-account" target="_blank" rel="noopener"
+&gt;Guide to creating AWS account&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/aws?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about AWS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-microsoft-azure"&gt;💠 Microsoft Azure
+&lt;/h2&gt;&lt;p&gt;Azure is Microsoft&amp;rsquo;s cloud computing platform, providing &lt;strong&gt;IaaS, PaaS, SaaS&lt;/strong&gt; along with many services like &lt;strong&gt;analytics, AI, machine learning, security&lt;/strong&gt;. Azure supports multiple tools and programming languages, helping businesses develop rapidly.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Example:&lt;/strong&gt; Deploy application on Azure App Service&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;az webapp create --resource-group MyResourceGroup --plan MyAppServicePlan --name MyUniqueApp --runtime &lt;span class="s2"&gt;&amp;#34;PYTHON:3.8&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://azure.microsoft.com/en-us/" target="_blank" rel="noopener"
+&gt;Azure Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://github.com/mikeroyal/Azure-Guide" target="_blank" rel="noopener"
+&gt;Microsoft Azure Guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=5abffC-K40c" target="_blank" rel="noopener"
+&gt;Azure Fundamentals Certification (AZ-900)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/azure?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about Azure&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-google-cloud-platform-gcp"&gt;☁️ Google Cloud Platform (GCP)
+&lt;/h2&gt;&lt;p&gt;Google Cloud provides over &lt;strong&gt;150 services&lt;/strong&gt;, running on the same infrastructure as Google products like &lt;strong&gt;Search, Gmail, YouTube&lt;/strong&gt;. Services include: &lt;strong&gt;VMs, databases, AI/ML, Kubernetes&lt;/strong&gt;, etc.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Example:&lt;/strong&gt; Create a VM on Google Cloud&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;gcloud compute instances create my-instance --machine-type&lt;span class="o"&gt;=&lt;/span&gt;e2-medium --image-project&lt;span class="o"&gt;=&lt;/span&gt;debian-cloud --image-family&lt;span class="o"&gt;=&lt;/span&gt;debian-11
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://cloud.google.com/" target="_blank" rel="noopener"
+&gt;Google Cloud Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://thenewstack.io/5-tips-to-become-a-google-cloud-certified-professional-architect/" target="_blank" rel="noopener"
+&gt;5 tips to become Google Cloud Certified&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=fZOz13joN0o" target="_blank" rel="noopener"
+&gt;Google Cloud Platform Course - 2023&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/cloud?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about Google Cloud&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-digitalocean"&gt;🌊 DigitalOcean
+&lt;/h2&gt;&lt;p&gt;DigitalOcean is a cloud infrastructure provider focused on &lt;strong&gt;simplicity, low cost, ease of use&lt;/strong&gt;. DigitalOcean provides services like &lt;strong&gt;virtual machines (Droplets), databases, Kubernetes, object storage&lt;/strong&gt;, suitable for &lt;strong&gt;startups and developers&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Example:&lt;/strong&gt; Create a Droplet on DigitalOcean using API&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -X POST -H &lt;span class="s2"&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -H &lt;span class="s2"&gt;&amp;#34;Authorization: Bearer YOUR_TOKEN&amp;#34;&lt;/span&gt; -d &lt;span class="s1"&gt;&amp;#39;{&amp;#34;name&amp;#34;:&amp;#34;example-droplet&amp;#34;,&amp;#34;region&amp;#34;:&amp;#34;nyc3&amp;#34;,&amp;#34;size&amp;#34;:&amp;#34;s-1vcpu-1gb&amp;#34;,&amp;#34;image&amp;#34;:&amp;#34;ubuntu-20-04-x64&amp;#34;}&amp;#39;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;https://api.digitalocean.com/v2/droplets&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://www.digitalocean.com/" target="_blank" rel="noopener"
+&gt;DigitalOcean Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class="link" href="https://hacktoberfest.com/" target="_blank" rel="noopener"
+&gt;DigitalOcean&amp;rsquo;s Hacktoberfest&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=cJKdo-glRD0" target="_blank" rel="noopener"
+&gt;Kubernetes on DigitalOcean Tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/digitalocean?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about DigitalOcean&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;📌 Conclusion
+&lt;/h2&gt;&lt;p&gt;Cloud service providers like &lt;strong&gt;AWS, Azure, GCP, DigitalOcean&lt;/strong&gt; provide flexible solutions for all &lt;strong&gt;server, storage, AI, DevOps&lt;/strong&gt; needs. Each platform has its own advantages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AWS&lt;/strong&gt;: Comprehensive, most services available.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Azure&lt;/strong&gt;: Good integration with Microsoft ecosystem.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GCP&lt;/strong&gt;: Optimized for AI, big data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DigitalOcean&lt;/strong&gt;: Simple, suitable for startups.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Choosing the right platform depends on your &lt;strong&gt;goals, budget, technical requirements&lt;/strong&gt;. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Serverless&lt;/strong&gt;&lt;/em&gt; - a cloud computing model that allows running applications without managing servers. Cloud providers automatically allocate resources, scale, and charge based on actual resource usage, helping optimize costs and simplify deployment.&lt;/p&gt;</description></item><item><title>Containers, Docker and LXC 🏗️</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-six/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-six/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-six.webp" alt="Featured image of post Containers, Docker and LXC 🏗️" /&gt;&lt;h2 id="-containers-docker-and-lxc"&gt;📦 Containers, Docker and LXC
+&lt;/h2&gt;&lt;p&gt;Containers are lightweight, portable, and isolated environments that help package applications along with all their dependencies, ensuring consistent deployment across different environments. Container technology simplifies application deployment processes, supports microservices architecture models, and optimizes system resources.&lt;/p&gt;
+&lt;h2 id="-what-are-containers"&gt;🏗️ What are Containers?
+&lt;/h2&gt;&lt;p&gt;Containers are an operating system-level virtualization method that allows running multiple isolated applications on the same kernel. Unlike virtual machines (VMs) that require separate operating systems for each environment, containers only use the host operating system&amp;rsquo;s kernel, helping reduce resource costs and increase performance.&lt;/p&gt;
+&lt;h3 id="-key-characteristics-of-containers"&gt;🎯 Key Characteristics of Containers
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;🏋️ &lt;strong&gt;Lightweight&lt;/strong&gt;: Share kernel with host operating system, reducing resource consumption.&lt;/li&gt;
+&lt;li&gt;🚀 &lt;strong&gt;Portable&lt;/strong&gt;: Run consistently across multiple platforms from personal computers to cloud.&lt;/li&gt;
+&lt;li&gt;🔒 &lt;strong&gt;Isolated&lt;/strong&gt;: Applications and libraries are packaged separately.&lt;/li&gt;
+&lt;li&gt;📈 &lt;strong&gt;High Performance&lt;/strong&gt;: No need to boot separate operating systems like virtual machines.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-docker---the-most-popular-container-platform"&gt;🐳 Docker - The Most Popular Container Platform
+&lt;/h2&gt;&lt;p&gt;&lt;a class="link" href="https://www.docker.com/" target="_blank" rel="noopener"
+&gt;Docker&lt;/a&gt; is an open-source platform that helps automate application deployment using container technology. Docker helps package applications with all necessary libraries and configurations to run across different environments.&lt;/p&gt;
+&lt;h3 id="-notable-features-of-docker"&gt;✨ Notable Features of Docker
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;📦 &lt;strong&gt;Docker Engine&lt;/strong&gt;: Tool for creating and running containers.&lt;/li&gt;
+&lt;li&gt;🔄 &lt;strong&gt;Docker Compose&lt;/strong&gt;: Manage multiple containers in one application.&lt;/li&gt;
+&lt;li&gt;🏗️ &lt;strong&gt;Docker Hub&lt;/strong&gt;: Repository for storing and sharing container images.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-docker-usage-example"&gt;🔍 Docker Usage Example:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker run -d -p 80:80 nginx
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The above command will run an Nginx container on port 80.&lt;/p&gt;
+&lt;p&gt;📚 &lt;strong&gt;Useful Resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://docs.docker.com/" target="_blank" rel="noopener"
+&gt;Docker Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=RqTEHSBrYFw" target="_blank" rel="noopener"
+&gt;Docker in 5 Minutes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-lxc---linux-containers"&gt;🖥️ LXC - Linux Containers
+&lt;/h2&gt;&lt;p&gt;LXC (Linux Containers) is an operating system-level virtualization method that allows running multiple isolated Linux systems on the same kernel.&lt;/p&gt;
+&lt;h3 id="-lxc-characteristics"&gt;🛠️ LXC Characteristics:
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;🏗️ Creates environments similar to virtual machines but with higher performance.&lt;/li&gt;
+&lt;li&gt;⚡ Faster startup compared to traditional VMs.&lt;/li&gt;
+&lt;li&gt;🔍 Uses Linux technologies like cgroups and namespaces.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-example-of-creating-an-lxc-container"&gt;📌 Example of Creating an LXC Container:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lxc-create -n my-container -t ubuntu
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lxc-start -n my-container -d
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Useful Resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://linuxcontainers.org/" target="_blank" rel="noopener"
+&gt;LXC Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=CWmkSj_B-wo" target="_blank" rel="noopener"
+&gt;LXC Usage Guide&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-conclusion"&gt;🎯 Conclusion
+&lt;/h2&gt;&lt;p&gt;Containers help deploy applications quickly, efficiently, and save resources. &lt;strong&gt;Docker&lt;/strong&gt; is a popular choice for application development, while &lt;strong&gt;LXC&lt;/strong&gt; is more suitable for full operating system simulation. Choose the tool that fits your needs! 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next Step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Application Gateway&lt;/strong&gt;&lt;/em&gt; - an application-layer traffic management service that helps optimize, secure, and control access flow between clients and backends. It can act as a reverse proxy, protecting the system and ensuring requests are processed correctly.&lt;/p&gt;</description></item><item><title>Networking Protocols 🖧</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-eight/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-eight/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-eight.webp" alt="Featured image of post Networking Protocols 🖧" /&gt;&lt;h2 id="-networking-protocols"&gt;🖧 Networking Protocols
+&lt;/h2&gt;&lt;p&gt;Networking protocols are a set of standardized rules that help data be transmitted, received, and understood correctly across computer networks. They define the format, timing, sequence, and error control during data transmission. Some important protocols include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;TCP/IP&lt;/strong&gt;: The foundational protocol suite for Internet communication.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;HTTP/HTTPS&lt;/strong&gt;: Hypertext transfer protocol used for the web.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FTP/SFTP&lt;/strong&gt;: File transfer protocols.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SMTP/POP3/IMAP&lt;/strong&gt;: Email transmission protocols.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DNS&lt;/strong&gt;: Domain name resolution protocol.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DHCP&lt;/strong&gt;: Automatic IP address allocation protocol.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;SSL/TLS&lt;/strong&gt;: Data security protocols.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;UDP&lt;/strong&gt;: Connectionless, fast transmission protocol.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-domain-name-system-dns"&gt;🌍 Domain Name System (DNS)
+&lt;/h2&gt;&lt;p&gt;DNS (&lt;strong&gt;Domain Name System&lt;/strong&gt;) is a domain name resolution system that helps convert memorable domain names (e.g., &lt;code&gt;www.example.com&lt;/code&gt;) into IP addresses (&lt;code&gt;192.168.1.1&lt;/code&gt;) that computers can understand.&lt;/p&gt;
+&lt;h3 id="-example-dns-configuration-in-linux"&gt;🔹 Example DNS configuration in Linux:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Check DNS for a domain name&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nslookup example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;dig example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Edit hosts file to map domain names&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo nano /etc/hosts
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Add the following line:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;192.168.1.100 mycustomdomain.com
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Reference resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://howdns.works/" target="_blank" rel="noopener"
+&gt;📄 How DNS works&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=Wj0od2ag5sk" target="_blank" rel="noopener"
+&gt;🎥 DNS explanation video&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-http-protocol"&gt;🌐 HTTP Protocol
+&lt;/h2&gt;&lt;p&gt;HTTP (&lt;strong&gt;Hypertext Transfer Protocol&lt;/strong&gt;) is a data transmission protocol on the web following a &lt;strong&gt;request-response&lt;/strong&gt; model.&lt;/p&gt;
+&lt;h3 id="-example-sending-http-requests-with-curl"&gt;🔹 Example sending HTTP requests with cURL:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Send GET request&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -X GET https://jsonplaceholder.typicode.com/posts/1
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Send POST request&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -X POST https://jsonplaceholder.typicode.com/posts &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; -H &lt;span class="s2"&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; -d &lt;span class="s1"&gt;&amp;#39;{&amp;#34;title&amp;#34;: &amp;#34;Hello&amp;#34;, &amp;#34;body&amp;#34;: &amp;#34;World&amp;#34;}&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Reference resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.cloudflare.com/en-gb/learning/ddos/glossary/hypertext-transfer-protocol-http/" target="_blank" rel="noopener"
+&gt;📄 Learn about HTTP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=iYM2zFP3Zn0" target="_blank" rel="noopener"
+&gt;🎥 HTTP tutorial video&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-https-and-security-ssltls"&gt;🔒 HTTPS and Security (SSL/TLS)
+&lt;/h2&gt;&lt;p&gt;HTTPS is the secure version of HTTP, using &lt;em&gt;&lt;strong&gt;SSL/TLS&lt;/strong&gt;&lt;/em&gt; to encrypt data, ensuring safety during transmission over the Internet.&lt;/p&gt;
+&lt;h3 id="-example-setting-up-https-with-nginx"&gt;🔹 Example setting up HTTPS with Nginx:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nginx" data-lang="nginx"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;443&lt;/span&gt; &lt;span class="s"&gt;ssl&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;ssl_certificate&lt;/span&gt; &lt;span class="s"&gt;/etc/letsencrypt/live/example.com/fullchain.pem&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;ssl_certificate_key&lt;/span&gt; &lt;span class="s"&gt;/etc/letsencrypt/live/example.com/privkey.pem&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Reference resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.cloudflare.com/en-gb/learning/ssl/what-is-https/" target="_blank" rel="noopener"
+&gt;📄 What is HTTPS?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=25mXesOV9-8" target="_blank" rel="noopener"
+&gt;🎥 How HTTPS works video&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-ssh---secure-connection"&gt;🔑 SSH - Secure Connection
+&lt;/h2&gt;&lt;p&gt;SSH (&lt;em&gt;&lt;strong&gt;Secure Shell&lt;/strong&gt;&lt;/em&gt;) is a protocol that enables secure connection to remote servers.&lt;/p&gt;
+&lt;h3 id="-example-using-ssh-for-remote-connection"&gt;🔹 Example using SSH for remote connection:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Connect to remote server&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ssh user@example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Copy files from server to local machine&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;scp user@example.com:/path/to/file ./localfile
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;🔗 &lt;strong&gt;Reference resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.baeldung.com/cs/ssh-intro" target="_blank" rel="noopener"
+&gt;📄 SSH tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=5JvLV2-ngCI" target="_blank" rel="noopener"
+&gt;🎥 How SSH works video&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🎯 Conclusion
+&lt;/h2&gt;&lt;p&gt;Networking protocols are the foundation of all online systems, from web browsing to sending emails. Understanding and knowing how to use them helps improve system security and performance. Try applying the commands above to check and configure your system! 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Cloud Providers&lt;/strong&gt;&lt;/em&gt; - companies that provide cloud computing services, allowing individuals and businesses to access resources like servers, storage, databases, AI, and other services over the internet without investing in hardware infrastructure.&lt;/p&gt;</description></item><item><title>Source Code Hosting Services 🐱</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-five/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-five/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-five.webp" alt="Featured image of post Source Code Hosting Services 🐱" /&gt;&lt;h2 id="-source-code-hosting-services-repo-hosting-services"&gt;🌍 Source Code Hosting Services (Repo Hosting Services)
 &lt;/h2&gt;&lt;p&gt;When working in teams, you need a remote place to store source code so everyone can access it, create their own branches, and create or review pull requests. These services typically include issue tracking, code review, and continuous integration (CI/CD). Popular options include GitHub, GitLab, Bitbucket, and AWS CodeCommit.&lt;/p&gt;
 &lt;p&gt;📚 &lt;strong&gt;Free resources to learn more:&lt;/strong&gt;&lt;/p&gt;
 &lt;ul&gt;

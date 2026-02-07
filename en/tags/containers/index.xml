@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Containers on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/containers/</link><description>Recent content in Containers on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 07 Feb 2026 17:09:53 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/containers/index.xml" rel="self" type="application/rss+xml"/><item><title>Containers, Docker and LXC 🏗️</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-six/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-six/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-six.webp" alt="Featured image of post Containers, Docker and LXC 🏗️" /&gt;&lt;h2 id="-containers-docker-and-lxc"&gt;📦 Containers, Docker and LXC
+&lt;/h2&gt;&lt;p&gt;Containers are lightweight, portable, and isolated environments that help package applications along with all their dependencies, ensuring consistent deployment across different environments. Container technology simplifies application deployment processes, supports microservices architecture models, and optimizes system resources.&lt;/p&gt;
+&lt;h2 id="-what-are-containers"&gt;🏗️ What are Containers?
+&lt;/h2&gt;&lt;p&gt;Containers are an operating system-level virtualization method that allows running multiple isolated applications on the same kernel. Unlike virtual machines (VMs) that require separate operating systems for each environment, containers only use the host operating system&amp;rsquo;s kernel, helping reduce resource costs and increase performance.&lt;/p&gt;
+&lt;h3 id="-key-characteristics-of-containers"&gt;🎯 Key Characteristics of Containers
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;🏋️ &lt;strong&gt;Lightweight&lt;/strong&gt;: Share kernel with host operating system, reducing resource consumption.&lt;/li&gt;
+&lt;li&gt;🚀 &lt;strong&gt;Portable&lt;/strong&gt;: Run consistently across multiple platforms from personal computers to cloud.&lt;/li&gt;
+&lt;li&gt;🔒 &lt;strong&gt;Isolated&lt;/strong&gt;: Applications and libraries are packaged separately.&lt;/li&gt;
+&lt;li&gt;📈 &lt;strong&gt;High Performance&lt;/strong&gt;: No need to boot separate operating systems like virtual machines.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-docker---the-most-popular-container-platform"&gt;🐳 Docker - The Most Popular Container Platform
+&lt;/h2&gt;&lt;p&gt;&lt;a class="link" href="https://www.docker.com/" target="_blank" rel="noopener"
+&gt;Docker&lt;/a&gt; is an open-source platform that helps automate application deployment using container technology. Docker helps package applications with all necessary libraries and configurations to run across different environments.&lt;/p&gt;
+&lt;h3 id="-notable-features-of-docker"&gt;✨ Notable Features of Docker
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;📦 &lt;strong&gt;Docker Engine&lt;/strong&gt;: Tool for creating and running containers.&lt;/li&gt;
+&lt;li&gt;🔄 &lt;strong&gt;Docker Compose&lt;/strong&gt;: Manage multiple containers in one application.&lt;/li&gt;
+&lt;li&gt;🏗️ &lt;strong&gt;Docker Hub&lt;/strong&gt;: Repository for storing and sharing container images.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-docker-usage-example"&gt;🔍 Docker Usage Example:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker run -d -p 80:80 nginx
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;The above command will run an Nginx container on port 80.&lt;/p&gt;
+&lt;p&gt;📚 &lt;strong&gt;Useful Resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://docs.docker.com/" target="_blank" rel="noopener"
+&gt;Docker Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=RqTEHSBrYFw" target="_blank" rel="noopener"
+&gt;Docker in 5 Minutes&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-lxc---linux-containers"&gt;🖥️ LXC - Linux Containers
+&lt;/h2&gt;&lt;p&gt;LXC (Linux Containers) is an operating system-level virtualization method that allows running multiple isolated Linux systems on the same kernel.&lt;/p&gt;
+&lt;h3 id="-lxc-characteristics"&gt;🛠️ LXC Characteristics:
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;🏗️ Creates environments similar to virtual machines but with higher performance.&lt;/li&gt;
+&lt;li&gt;⚡ Faster startup compared to traditional VMs.&lt;/li&gt;
+&lt;li&gt;🔍 Uses Linux technologies like cgroups and namespaces.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-example-of-creating-an-lxc-container"&gt;📌 Example of Creating an LXC Container:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lxc-create -n my-container -t ubuntu
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lxc-start -n my-container -d
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Useful Resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://linuxcontainers.org/" target="_blank" rel="noopener"
+&gt;LXC Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=CWmkSj_B-wo" target="_blank" rel="noopener"
+&gt;LXC Usage Guide&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-conclusion"&gt;🎯 Conclusion
+&lt;/h2&gt;&lt;p&gt;Containers help deploy applications quickly, efficiently, and save resources. &lt;strong&gt;Docker&lt;/strong&gt; is a popular choice for application development, while &lt;strong&gt;LXC&lt;/strong&gt; is more suitable for full operating system simulation. Choose the tool that fits your needs! 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next Step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Application Gateway&lt;/strong&gt;&lt;/em&gt; - an application-layer traffic management service that helps optimize, secure, and control access flow between clients and backends. It can act as a reverse proxy, protecting the system and ensuring requests are processed correctly.&lt;/p&gt;</description></item></channel></rss>

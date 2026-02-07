@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Proxy on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/proxy/</link><description>Recent content in Proxy on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 07 Feb 2026 17:09:53 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/proxy/index.xml" rel="self" type="application/rss+xml"/><item><title>Application Gateway 🌐</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-seven/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-seven/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-seven.webp" alt="Featured image of post Application Gateway 🌐" /&gt;&lt;h2 id="setting-up-important-network-components"&gt;Setting up important network components
+&lt;/h2&gt;&lt;p&gt;This article will help you understand important network components:&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Forward Proxy&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Reverse Proxy&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Load Balancer&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Firewall&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Caching Server&lt;/strong&gt;&lt;br&gt;
+🔹 &lt;strong&gt;Web Server&lt;/strong&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-load-balancer"&gt;⚖️ Load Balancer
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Load Balancer&lt;/strong&gt; works like a &amp;ldquo;traffic cop&amp;rdquo; standing in front of servers and directing client requests to appropriate servers. This helps optimize speed, efficiently utilize resources, and avoid overload situations.&lt;/p&gt;
+&lt;p&gt;🔹 If a server fails, the Load Balancer will redirect traffic to the remaining servers.&lt;/p&gt;
+&lt;p&gt;🔹 Can be deployed with algorithms like Round Robin, Least Connections, IP Hash&amp;hellip;&lt;/p&gt;
+&lt;h3 id="-example-load-balancer-configuration-with-nginx"&gt;🔍 Example Load Balancer configuration with Nginx:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nginx" data-lang="nginx"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;upstream&lt;/span&gt; &lt;span class="s"&gt;backend_servers&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server&lt;/span&gt; &lt;span class="s"&gt;backend1.example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server&lt;/span&gt; &lt;span class="s"&gt;backend2.example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://backend_servers&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Further reading:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://www.nginx.com/resources/glossary/load-balancing/" target="_blank" rel="noopener"
+&gt;What is Load Balancing?&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://www.cloudflare.com/en-gb/learning/performance/what-is-load-balancing/#" target="_blank" rel="noopener"
+&gt;Load Balancing Algorithms&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://dzone.com/articles/nginx-reverse-proxy-and-load-balancing" target="_blank" rel="noopener"
+&gt;Nginx Reverse Proxy &amp;amp; Load Balancing&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=sCR3SAVdyCc" target="_blank" rel="noopener"
+&gt;Video: How does Load Balancer work?&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-forward-proxy"&gt;🔁 Forward Proxy
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Forward Proxy&lt;/strong&gt; is an intermediary server standing between client and internet, forwarding requests from client to destination server. It helps with anonymity, security, access control, and content caching.&lt;/p&gt;
+&lt;p&gt;🔹 Commonly used in enterprise networks to monitor and control access.&lt;/p&gt;
+&lt;p&gt;🔹 Supports bypassing censorship and geographical restrictions.&lt;/p&gt;
+&lt;h3 id="-example-forward-proxy-configuration-with-squid"&gt;🔍 Example Forward Proxy configuration with Squid:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;apt update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; apt install squid -y
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Edit configuration file&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nano /etc/squid/squid.conf
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Add simple configuration&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http_access allow all
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;http_port &lt;span class="m"&gt;3128&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Restart service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;systemctl restart squid
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Further reading:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://www.fortinet.com/resources/cyberglossary/proxy-server" target="_blank" rel="noopener"
+&gt;What is Forward Proxy?&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://oxylabs.io/blog/reverse-proxy-vs-forward-proxy" target="_blank" rel="noopener"
+&gt;Forward Proxy vs Reverse Proxy comparison&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=HrG0MHkSsCA" target="_blank" rel="noopener"
+&gt;Video: How does Proxy work?&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-reverse-proxy"&gt;🔄 Reverse Proxy
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Reverse Proxy&lt;/strong&gt; is an intermediary server that receives requests from clients and forwards them to appropriate backend servers. It helps with load balancing, caching, security, and SSL termination.&lt;/p&gt;
+&lt;p&gt;🔹 Helps hide backend server information to enhance security.&lt;/p&gt;
+&lt;p&gt;🔹 Supports traffic distribution and application performance optimization.&lt;/p&gt;
+&lt;h3 id="-example-reverse-proxy-configuration-with-nginx"&gt;🔍 Example Reverse Proxy configuration with Nginx:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nginx" data-lang="nginx"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;proxy_pass&lt;/span&gt; &lt;span class="s"&gt;http://backend_server&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;Host&lt;/span&gt; &lt;span class="nv"&gt;$host&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;proxy_set_header&lt;/span&gt; &lt;span class="s"&gt;X-Real-IP&lt;/span&gt; &lt;span class="nv"&gt;$remote_addr&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Further reading:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://www.cloudflare.com/en-gb/learning/cdn/glossary/reverse-proxy/" target="_blank" rel="noopener"
+&gt;What is Reverse Proxy?&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://www.nginx.com/resources/glossary/reverse-proxy-server/" target="_blank" rel="noopener"
+&gt;Nginx Reverse Proxy Guide&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=4NB0NDtOwIQ" target="_blank" rel="noopener"
+&gt;Video: Reverse Proxy and practical applications&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-firewall"&gt;🔥 Firewall
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Firewall&lt;/strong&gt; is a network security device that monitors and filters incoming/outgoing traffic based on organization&amp;rsquo;s security policies.&lt;/p&gt;
+&lt;p&gt;🔹 Prevents unauthorized access to internal systems.&lt;/p&gt;
+&lt;p&gt;🔹 Supports data traffic control rules.&lt;/p&gt;
+&lt;h3 id="-example-firewall-configuration-with-ufw-uncomplicated-firewall"&gt;🔍 Example Firewall configuration with UFW (Uncomplicated Firewall):
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Install UFW&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;apt install ufw -y
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Open SSH port&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ufw allow 22/tcp
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Block all other connections&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ufw default deny incoming
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Enable UFW&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ufw &lt;span class="nb"&gt;enable&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Further reading:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://www.checkpoint.com/cyber-hub/network-security/what-is-firewall/" target="_blank" rel="noopener"
+&gt;What is Firewall?&lt;/a&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://www.cisco.com/c/en_in/products/security/firewalls/what-is-a-firewall.html" target="_blank" rel="noopener"
+&gt;Common Firewall types&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=9GZlVOafYTg" target="_blank" rel="noopener"
+&gt;Video: Introduction to Firewall&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-nginx"&gt;🌐 Nginx
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Nginx&lt;/strong&gt; is an open-source web server, widely used for its ability to handle many concurrent connections with high performance.&lt;/p&gt;
+&lt;p&gt;🔹 Supports web server, reverse proxy, load balancing, caching.&lt;/p&gt;
+&lt;p&gt;🔹 Suitable for microservices systems and containers.&lt;/p&gt;
+&lt;h3 id="-example-simple-nginx-configuration"&gt;🔍 Example simple Nginx configuration:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nginx" data-lang="nginx"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;root&lt;/span&gt; &lt;span class="s"&gt;/var/www/html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;index&lt;/span&gt; &lt;span class="s"&gt;index.html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Further reading:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://swissmade.host/en/blog/basic-nginx-setup-ubuntu-guide-to-a-functional-and-secure-website-serving" target="_blank" rel="noopener"
+&gt;Nginx installation guide on Ubuntu&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=JKxlsvZXG7c" target="_blank" rel="noopener"
+&gt;Video: Nginx in 100 seconds&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-apache"&gt;🏛️ Apache
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Apache&lt;/strong&gt; is one of the most popular web servers, supporting many extension modules and compatible with many operating systems.&lt;/p&gt;
+&lt;p&gt;🔹 Easy to configure with &lt;code&gt;.conf&lt;/code&gt; files.&lt;/p&gt;
+&lt;p&gt;🔹 Supports SSL/TLS, user authentication, URL rewriting&amp;hellip;&lt;/p&gt;
+&lt;h3 id="-example-simple-apache-configuration"&gt;🔍 Example simple Apache configuration:
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-apache" data-lang="apache"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;VirtualHost&lt;/span&gt; &lt;span class="s"&gt;*:80&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;ServerName&lt;/span&gt; example.com
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;DocumentRoot&lt;/span&gt; &lt;span class="sx"&gt;/var/www/html&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;lt;Directory&lt;/span&gt; &lt;span class="s"&gt;/var/www/html&lt;/span&gt;&lt;span class="nt"&gt;&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;AllowOverride&lt;/span&gt; &lt;span class="k"&gt;All&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;Require&lt;/span&gt; &lt;span class="k"&gt;all&lt;/span&gt; granted
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;lt;/Directory&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;&amp;lt;/VirtualHost&amp;gt;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Further reading:&lt;/strong&gt;&lt;br&gt;
+📄 &lt;a class="link" href="https://httpd.apache.org/" target="_blank" rel="noopener"
+&gt;Apache homepage&lt;/a&gt;&lt;br&gt;
+🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=VXSgEvZKp-8" target="_blank" rel="noopener"
+&gt;Video: Installing Apache on Ubuntu&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;✅ Conclusion
+&lt;/h2&gt;&lt;p&gt;🔹 &lt;strong&gt;Load Balancer&lt;/strong&gt; helps distribute traffic efficiently, reducing server load.&lt;br&gt;
+🔹 &lt;strong&gt;Forward Proxy&lt;/strong&gt; supports anonymity, caching, and access control from client.&lt;br&gt;
+🔹 &lt;strong&gt;Reverse Proxy&lt;/strong&gt; helps enhance security, caching, and optimize backend systems.&lt;br&gt;
+🔹 &lt;strong&gt;Firewall&lt;/strong&gt; protects systems from unauthorized access.&lt;br&gt;
+🔹 &lt;strong&gt;Nginx &amp;amp; Apache&lt;/strong&gt; are two popular web servers, serving web content and applications.&lt;/p&gt;
+&lt;p&gt;By implementing these components, you can build a powerful, secure, and efficient network system. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Networking Protocols&lt;/strong&gt;&lt;/em&gt; - a set of rules and standards that define how devices in a network communicate with each other. They ensure data is transmitted accurately, securely, and efficiently between different systems.&lt;/p&gt;</description></item></channel></rss>
