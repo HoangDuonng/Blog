@@ -1,4 +1,210 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/categories/devops/</link><description>Recent content in DevOps on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 14 Feb 2026 16:35:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/categories/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Configuration Management 🔧</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twelve/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twelve/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-twelve.webp" alt="Featured image of post Configuration Management 🔧" />&lt;h2 id="-configuration-management">🔧 Configuration Management
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/categories/devops/</link><description>Recent content in DevOps on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 14 Feb 2026 17:05:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/categories/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>CI/CD - Continuous Integration and Continuous Deployment 🚀</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-thirteen/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-thirteen/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-thirteen.webp" alt="Featured image of post CI/CD - Continuous Integration and Continuous Deployment 🚀" />&lt;h2 id="-what-is-cicd">🔍 What is CI/CD?
+&lt;/h2>&lt;p>CI/CD (Continuous Integration/Continuous Deployment) is a methodology that helps automate the software development process, reducing errors, speeding up deployment, and improving product quality.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Continuous Integration (CI):&lt;/strong> Continuous integration, helps detect errors early by automatically testing whenever there are changes in the source code.&lt;/li>
+&lt;li>&lt;strong>Continuous Deployment (CD):&lt;/strong> Continuous deployment, ensures software is released automatically and quickly.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-popular-cicd-tools">🌟 Popular CI/CD Tools
+&lt;/h2>&lt;h3 id="-jenkins">🔧 Jenkins
+&lt;/h3>&lt;p>Jenkins is a popular open-source automation server that helps build, test, and deploy software automatically.&lt;/p>
+&lt;p>📌 &lt;strong>Key Features:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Supports many plugins, easy integration with DevOps tools.&lt;/li>
+&lt;li>Intuitive web interface, easy to configure.&lt;/li>
+&lt;li>Supports both Windows and Linux environments.&lt;/li>
+&lt;/ul>
+&lt;p>💡 &lt;strong>Example:&lt;/strong> Configuring a simple pipeline in Jenkinsfile&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-groovy" data-lang="groovy">&lt;span class="line">&lt;span class="cl">&lt;span class="n">pipeline&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">agent&lt;/span> &lt;span class="n">any&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stages&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;Build&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">steps&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s1">&amp;#39;Building the application...&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;Test&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">steps&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s1">&amp;#39;Running tests...&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;Deploy&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">steps&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s1">&amp;#39;Deploying the application...&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>📖 &lt;strong>Useful Resources:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.jenkins.io/" target="_blank" rel="noopener"
+>🔗 Jenkins Homepage&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=6YZvp2GwT0A" target="_blank" rel="noopener"
+>🎥 Jenkins Tutorial from A-Z&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h3 id="-circleci">🔄 CircleCI
+&lt;/h3>&lt;p>CircleCI is a powerful CI/CD platform that supports many programming languages and integrates well with GitHub and Bitbucket.&lt;/p>
+&lt;p>📌 &lt;strong>Key Features:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Supports parallel builds to increase processing speed.&lt;/li>
+&lt;li>Good integration with Docker and Kubernetes.&lt;/li>
+&lt;li>Available in cloud and self-hosted versions.&lt;/li>
+&lt;/ul>
+&lt;p>💡 &lt;strong>Example:&lt;/strong> Configuring a CircleCI pipeline in &lt;code>.circleci/config.yml&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;span class="lnt">9
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">2.1&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">jobs&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">build&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">docker&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">circleci/node:14&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">steps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">checkout&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">npm install&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">npm test&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>📖 &lt;strong>Useful Resources:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://circleci.com/" target="_blank" rel="noopener"
+>🔗 CircleCI Homepage&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=_XaYv9zvHUk" target="_blank" rel="noopener"
+>🎥 CircleCI Tutorial Video&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h3 id="-gitlab-cicd">🛠️ GitLab CI/CD
+&lt;/h3>&lt;p>GitLab CI/CD is a built-in system in GitLab that allows automating testing and deployment processes right within the Git repository.&lt;/p>
+&lt;p>📌 &lt;strong>Key Features:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Supports full pipeline automation from build, test to deploy.&lt;/li>
+&lt;li>Built into GitLab, no external tools needed.&lt;/li>
+&lt;li>Supports running pipelines on Docker containers.&lt;/li>
+&lt;/ul>
+&lt;p>💡 &lt;strong>Example:&lt;/strong> Configuring GitLab CI/CD pipeline in &lt;code>.gitlab-ci.yml&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">stages&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">build&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">test&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">deploy&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">test&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">stage&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">test&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">npm install&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">npm test&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>📖 &lt;strong>Useful Resources:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://gitlab.com/" target="_blank" rel="noopener"
+>🔗 GitLab Homepage&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=z7nLsJvEyMY" target="_blank" rel="noopener"
+>🎥 GitLab CI/CD Tutorial&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h3 id="-github-actions">⚡ GitHub Actions
+&lt;/h3>&lt;p>GitHub Actions is a CI/CD tool integrated directly into GitHub, helping automate testing and deployment processes whenever there are changes in the repository.&lt;/p>
+&lt;p>📌 &lt;strong>Key Features:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Tightly integrated with GitHub, easy workflow setup.&lt;/li>
+&lt;li>Supports many operating systems and programming languages.&lt;/li>
+&lt;li>Can use marketplace with thousands of available actions.&lt;/li>
+&lt;/ul>
+&lt;p>💡 &lt;strong>Example:&lt;/strong> GitHub Actions workflow in &lt;code>.github/workflows/main.yml&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Node.js CI&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="l">push, pull_request]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">jobs&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">build&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">runs-on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">ubuntu-latest&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">steps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">actions/checkout@v3&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Setup Node.js&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">actions/setup-node@v3&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">node-version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">14&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">npm install&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">npm test&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>📖 &lt;strong>Useful Resources:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://docs.github.com/en/actions" target="_blank" rel="noopener"
+>🔗 GitHub Actions Homepage&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=nyKZTKQS_EQ" target="_blank" rel="noopener"
+>🎥 GitHub Actions Tutorial Video&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-conclusion">🎯 Conclusion
+&lt;/h2>&lt;p>CI/CD helps accelerate the software development process, minimize errors, and improve product quality. Depending on your needs and working environment, you can choose &lt;strong>Jenkins, CircleCI, GitLab CI/CD, or GitHub Actions&lt;/strong> to deploy your CI/CD system. 🚀&lt;/p>
+&lt;p>👉 &lt;strong>Next step:&lt;/strong> Learn about &lt;em>&lt;strong>Secret Management&lt;/strong>&lt;/em> - the process of storing, managing, and protecting sensitive information such as passwords, API keys, certificates, and access tokens to prevent data leakage and ensure system security. 💡&lt;/p></description></item><item><title>Configuration Management 🔧</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twelve/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twelve/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-twelve.webp" alt="Featured image of post Configuration Management 🔧" />&lt;h2 id="-configuration-management">🔧 Configuration Management
 &lt;/h2>&lt;p>Configuration management is the process of managing and maintaining consistency of components within an information technology system. In the software field, it includes monitoring, tracking, and managing system configuration changes throughout the product lifecycle. Applying configuration management helps increase synchronization, reduce error risks, and ensure compliance with standards in CI/CD (Continuous Integration and Continuous Deployment) processes.&lt;/p>
 &lt;hr>
 &lt;h2 id="-popular-configuration-management-tools">🌐 Popular Configuration Management Tools
@@ -213,7 +419,158 @@
 &lt;h2 id="-conclusion">📌 Conclusion
 &lt;/h2>&lt;p>Terraform is the leading tool for &lt;strong>Infrastructure-as-Code&lt;/strong>, providing flexibility and powerful automation capabilities across multiple cloud platforms. If you work extensively with AWS and want to deploy using programming languages, &lt;strong>AWS CDK&lt;/strong> is also a viable option to consider.&lt;/p>
 &lt;p>Depending on project requirements, you can choose the appropriate tool to manage infrastructure more effectively. 🚀&lt;/p>
-&lt;p>👉 &lt;strong>Next step:&lt;/strong> Learn about &lt;em>&lt;strong>Configuration Management&lt;/strong>&lt;/em> - the process of managing, monitoring, and automating system, software, and infrastructure configurations to ensure consistency, stability, and easy control throughout their lifecycle. It helps track and control changes, reduce errors from manual configuration, and support rapid deployment. Popular tools include &lt;strong>Ansible, Puppet, Chef, and SaltStack&lt;/strong>.&lt;/p></description></item><item><title>Serverless and Related Platforms ☁️</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-ten/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-ten/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-ten.webp" alt="Featured image of post Serverless and Related Platforms ☁️" />&lt;h2 id="-what-is-serverless">🚀 What is Serverless?
+&lt;p>👉 &lt;strong>Next step:&lt;/strong> Learn about &lt;em>&lt;strong>Configuration Management&lt;/strong>&lt;/em> - the process of managing, monitoring, and automating system, software, and infrastructure configurations to ensure consistency, stability, and easy control throughout their lifecycle. It helps track and control changes, reduce errors from manual configuration, and support rapid deployment. Popular tools include &lt;strong>Ansible, Puppet, Chef, and SaltStack&lt;/strong>.&lt;/p></description></item><item><title>Secret Management 🔒</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-fourteen/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-fourteen/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-fourteen.webp" alt="Featured image of post Secret Management 🔒" />&lt;h2 id="-what-is-secret-management">🔍 What is Secret Management?
+&lt;/h2>&lt;p>Secret Management is the process of protecting, storing, and securely distributing sensitive information such as passwords, API keys, and certificates in an organization&amp;rsquo;s information technology system. It helps prevent unauthorized access while ensuring authorized systems and users can use the information when needed.&lt;/p>
+&lt;p>Secret Management typically includes features:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Data encryption&lt;/strong> during storage and transmission.&lt;/li>
+&lt;li>&lt;strong>Access control&lt;/strong>, only allowing authorized people or systems to access.&lt;/li>
+&lt;li>&lt;strong>Key rotation mechanism&lt;/strong> to change passwords periodically.&lt;/li>
+&lt;li>&lt;strong>Integration with DevOps systems&lt;/strong> to automate security processes.&lt;/li>
+&lt;/ul>
+&lt;p>🔗 &lt;strong>Additional References:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>📄 &lt;a class="link" href="https://cs.fyi/guide/secret-management-best-practices" target="_blank" rel="noopener"
+>How to manage secrets in web applications&lt;/a>&lt;/li>
+&lt;li>📄 &lt;a class="link" href="https://www.keepersecurity.com/blog/2023/01/26/why-devsecops-teams-need-secrets-management/" target="_blank" rel="noopener"
+>Why DevSecOps needs secret management&lt;/a>&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=u_L-f7Th_7o" target="_blank" rel="noopener"
+>DevOps tips for managing secrets in production environments&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-hashicorp-vault">🏛️ HashiCorp Vault
+&lt;/h2>&lt;p>HashiCorp Vault is a secret management tool that helps protect sensitive data such as passwords, API keys, and encryption keys.&lt;/p>
+&lt;h3 id="-key-features">🔑 Key Features:
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>Centralized management&lt;/strong> helps easily control secrets.&lt;/li>
+&lt;li>&lt;strong>Supports multiple authentication methods&lt;/strong> such as LDAP, Kubernetes.&lt;/li>
+&lt;li>&lt;strong>Provides dynamic secrets&lt;/strong> helps create temporary secrets when needed.&lt;/li>
+&lt;li>&lt;strong>Strong data encryption&lt;/strong> during storage and transmission.&lt;/li>
+&lt;/ul>
+&lt;p>🔗 &lt;strong>Examples:&lt;/strong>&lt;/p>
+&lt;p>Store and manage TLS certificates for a microservices architecture.&lt;/p>
+&lt;p>Integrate with Kubernetes to provide dynamic secrets for Pods each time they start.&lt;/p>
+&lt;p>Create temporary passwords for databases to reduce the risk of information leakage.&lt;/p>
+&lt;h3 id="-practical-examples">🛠 Practical Examples:
+&lt;/h3>&lt;p>1️⃣ Provision dynamic passwords for PostgreSQL using Vault&lt;/p>
+&lt;p>Suppose you have a PostgreSQL database and want to provision a temporary account:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">vault write database/creds/postgres-role
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>This command will create a new account with limited lifetime.&lt;/p>
+&lt;p>2️⃣ Use Vault to manage API keys in Node.js applications&lt;/p>
+&lt;p>You can retrieve API keys from Vault in your source code:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="kr">const&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="nx">execSync&lt;/span> &lt;span class="p">}&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;child_process&amp;#39;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">const&lt;/span> &lt;span class="nx">secret&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">execSync&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;vault kv get -field=value secret/my-api-key&amp;#39;&lt;/span>&lt;span class="p">).&lt;/span>&lt;span class="nx">toString&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sb">`API Key: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nx">secret&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="sb">`&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>🔗 &lt;strong>Useful Resources:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>🌍 &lt;a class="link" href="https://www.vaultproject.io/" target="_blank" rel="noopener"
+>HashiCorp Vault Homepage&lt;/a>&lt;/li>
+&lt;li>🛠️ &lt;a class="link" href="https://github.com/hashicorp/vault" target="_blank" rel="noopener"
+>HashiCorp Vault Source Code on GitHub&lt;/a>&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=nG8fCdWkLzc" target="_blank" rel="noopener"
+>HashiCorp Vault Introduction in 180 seconds&lt;/a>&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=nG8fCdWkLzc" target="_blank" rel="noopener"
+>HashiCorp Vault Tutorial for Beginners&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-cloud-secret-management-tools">☁️ Cloud Secret Management Tools
+&lt;/h2>&lt;h3 id="-aws-secrets-manager">🔥 AWS Secrets Manager
+&lt;/h3>&lt;p>Provides secure secret storage and management service on AWS with automatic password rotation capability and integration with other AWS services.&lt;/p>
+&lt;h3 id="-google-cloud-secret-manager">🌍 Google Cloud Secret Manager
+&lt;/h3>&lt;p>Secret management solution on Google Cloud, allowing automatic password rotation and easy access control.&lt;/p>
+&lt;h3 id="-azure-key-vault">🔷 Azure Key Vault
+&lt;/h3>&lt;p>Microsoft Azure service that helps securely store and manage keys, passwords, and digital certificates.&lt;/p>
+&lt;p>🔗 &lt;strong>Examples:&lt;/strong>&lt;/p>
+&lt;p>AWS Secrets Manager: Store API keys of a web application, ensuring API keys are not exposed in source code.&lt;/p>
+&lt;p>HashiCorp Vault: Manage database access passwords for PostgreSQL.&lt;/p>
+&lt;p>Azure Key Vault: Store and secure application encryption keys.&lt;/p>
+&lt;h3 id="-practical-examples-1">🛠 Practical Examples:
+&lt;/h3>&lt;p>1️⃣ Use AWS Secrets Manager to manage API keys&lt;/p>
+&lt;p>Suppose you have a web application that needs to access a third-party service through an API key. Instead of storing the API key in source code, you can store it in AWS Secrets Manager and call it when needed:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">aws secretsmanager get-secret-value --secret-id my-api-key
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>2️⃣ Create dynamic secrets with HashiCorp Vault&lt;/p>
+&lt;p>HashiCorp Vault can create temporary passwords for databases to enhance security. For example, you can create a temporary account for PostgreSQL:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">vault write database/creds/my-role
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>🔗 &lt;strong>Useful Resources:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>📄 &lt;a class="link" href="https://aws.amazon.com/secrets-manager/" target="_blank" rel="noopener"
+>AWS Secrets Manager&lt;/a> – AWS Secret Management Service&lt;/li>
+&lt;li>📄 &lt;a class="link" href="https://cloud.google.com/secret-manager" target="_blank" rel="noopener"
+>Google Cloud Secret Manager&lt;/a> – Google Cloud Secret Management Service&lt;/li>
+&lt;li>📄 &lt;a class="link" href="https://azure.microsoft.com/en-us/services/key-vault/" target="_blank" rel="noopener"
+>Azure Key Vault&lt;/a> – Azure Key and Secret Management Service&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=GwVWWn2ZKj0" target="_blank" rel="noopener"
+>AWS Secrets Manager Demo&lt;/a> – AWS Secrets Manager Tutorial&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=nsrADMrp4BI" target="_blank" rel="noopener"
+>Google Cloud Secret Manager&lt;/a> – Google Cloud Secret Manager Introduction&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=pnOFP_oijxw" target="_blank" rel="noopener"
+>Azure Key Vault and How to Use&lt;/a> – Azure Key Vault Tutorial&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-sealed-secrets">🔐 Sealed Secrets
+&lt;/h2>&lt;p>Sealed Secrets is a tool for Kubernetes that helps encrypt sensitive data into &lt;strong>SealedSecrets&lt;/strong>, which can be safely stored even in public environments like GitHub.&lt;/p>
+&lt;h3 id="-how-it-works">🛠️ How it works:
+&lt;/h3>&lt;ol>
+&lt;li>&lt;strong>Encryption&lt;/strong>: User creates a SealedSecret from a Kubernetes Secret.&lt;/li>
+&lt;li>&lt;strong>Storage&lt;/strong>: SealedSecret can be committed to Git.&lt;/li>
+&lt;li>&lt;strong>Decryption&lt;/strong>: Only the Kubernetes Controller in the cluster can decrypt and restore it to a regular Kubernetes Secret.&lt;/li>
+&lt;/ol>
+&lt;p>💡 &lt;strong>Highlights:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Uses asymmetric encryption&lt;/strong> ensuring only the controller can decrypt data.&lt;/li>
+&lt;li>&lt;strong>Supports GitOps&lt;/strong> helps manage secrets safely in Git repository.&lt;/li>
+&lt;li>&lt;strong>Easy integration with Kubernetes&lt;/strong> to protect sensitive data.&lt;/li>
+&lt;/ul>
+&lt;p>🔗 &lt;strong>Useful Resources:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>🛠️ &lt;a class="link" href="https://github.com/bitnami-labs/sealed-secrets" target="_blank" rel="noopener"
+>Sealed Secrets on GitHub&lt;/a>&lt;/li>
+&lt;li>📄 &lt;a class="link" href="https://fluxcd.io/flux/guides/sealed-secrets/" target="_blank" rel="noopener"
+>Sealed Secrets Documentation&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-integrating-secret-management-into-cicd">🔄 Integrating Secret Management into CI/CD
+&lt;/h2>&lt;p>CI/CD tools like Azure DevOps, Travis CI, and AWS CodePipeline support secret management by integrating with Secret Management systems to protect sensitive information during deployment.&lt;/p>
+&lt;h3 id="-azure-devops">🏗️ Azure DevOps
+&lt;/h3>&lt;p>Azure DevOps provides &lt;strong>Azure Key Vault&lt;/strong> to securely store and manage secrets. Pipelines in Azure DevOps can retrieve secrets from Key Vault for use during deployment.&lt;/p>
+&lt;h3 id="-travis-ci">🚀 Travis CI
+&lt;/h3>&lt;p>Travis CI supports environment variable encryption, helping protect API keys and sensitive information during builds.&lt;/p>
+&lt;h3 id="-aws-codepipeline">🌩️ AWS CodePipeline
+&lt;/h3>&lt;p>AWS CodePipeline can integrate with &lt;strong>AWS Secrets Manager&lt;/strong> to retrieve secrets during application deployment.&lt;/p>
+&lt;hr>
+&lt;h2 id="-conclusion">🎯 Conclusion
+&lt;/h2>&lt;p>Secret management plays an important role in modern system security. Using tools such as &lt;strong>HashiCorp Vault, AWS Secrets Manager, Google Cloud Secret Manager, Azure Key Vault, Sealed Secrets, Azure DevOps, Travis CI, and AWS CodePipeline&lt;/strong> helps ensure the safety of sensitive information, supports secure DevOps deployment, and complies with security standards.&lt;/p>
+&lt;p>👉 &lt;strong>Next step:&lt;/strong> Monitor infrastructure &lt;em>&lt;strong>Infrastructure Monitoring&lt;/strong>&lt;/em> - the process of tracking and analyzing the performance, availability, and status of information technology infrastructure components such as servers, networks, storage, databases, and cloud computing services, helping to detect incidents early, optimize resources, and ensure stable system operation. 🚀&lt;/p></description></item><item><title>Serverless and Related Platforms ☁️</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-ten/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-ten/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-ten.webp" alt="Featured image of post Serverless and Related Platforms ☁️" />&lt;h2 id="-what-is-serverless">🚀 What is Serverless?
 &lt;/h2>&lt;p>Serverless is a cloud computing model where service providers fully manage the infrastructure, allowing developers to focus solely on writing code. The system &lt;strong>automatically allocates resources&lt;/strong> based on demand and charges only for actual resource usage. Serverless architecture is commonly applied for &lt;strong>microservices applications, event processing&lt;/strong> and helps minimize operational costs.&lt;/p>
 &lt;p>📖 &lt;strong>Free resources to learn:&lt;/strong>&lt;/p>
 &lt;ul>
