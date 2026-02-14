@@ -1,570 +1,561 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hosting on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/hosting/</link><description>Recent content in Hosting on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Thu, 27 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/hosting/index.xml" rel="self" type="application/rss+xml"/><item><title>Trỏ tên miền về hosting 🌐</title><link>https://tech.nguuyen.io.vn/posts/website/domain-to-hosting-setup/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/website/domain-to-hosting-setup/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/domain-to-hosting-setup.webp" alt="Featured image of post Trỏ tên miền về hosting 🌐" /&gt;&lt;h2 id="-tại-sao-cần-phải-trỏ-tên-miền-về-hosting"&gt;🌐 Tại sao cần phải trỏ tên miền về hosting?
-&lt;/h2&gt;&lt;p&gt;Tên miền và hosting là hai yếu tố quan trọng giúp website hoạt động.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Tên miền&lt;/strong&gt; là địa chỉ website.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Hosting&lt;/strong&gt; là nơi lưu trữ dữ liệu website.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="lý-do-cần-trỏ-tên-miền"&gt;Lý do cần trỏ tên miền
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Kết nối tên miền với hosting để website hiển thị trên internet.&lt;/li&gt;
-&lt;li&gt;Giúp mọi người truy cập website bằng địa chỉ dễ nhớ.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="cách-thực-hiện-"&gt;Cách thực hiện 🔧
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Lấy thông tin &lt;strong&gt;nameserver&lt;/strong&gt; hoặc &lt;strong&gt;IP&lt;/strong&gt; từ nhà cung cấp.&lt;/li&gt;
-&lt;li&gt;Cấu hình trong trang quản lý domain.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id="ba-cách-trỏ-tên-miền-về-hosting-đơn-giản-nhất-"&gt;Ba cách trỏ tên miền về hosting đơn giản nhất 🚀
-&lt;/h2&gt;&lt;h3 id="trỏ-tên-miền-bằng-nameserver"&gt;Trỏ tên miền bằng nameserver
-&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Các bước thực hiện:&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Đăng nhập trình quản trị tên miền.&lt;/li&gt;
-&lt;li&gt;Chọn tên miền cần trỏ.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/chon-ten-mien-muon-tro-ve-hosting-2.webp"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hosting on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/hosting/</link><description>Recent content in Hosting on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Thu, 27 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/hosting/index.xml" rel="self" type="application/rss+xml"/><item><title>Trỏ tên miền về hosting 🌐</title><link>https://tech.nguuyen.io.vn/posts/website/domain-to-hosting-setup/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/website/domain-to-hosting-setup/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/domain-to-hosting-setup.webp" alt="Featured image of post Trỏ tên miền về hosting 🌐" />&lt;h2 id="-tại-sao-cần-phải-trỏ-tên-miền-về-hosting">🌐 Tại sao cần phải trỏ tên miền về hosting?
+&lt;/h2>&lt;p>Tên miền và hosting là hai yếu tố quan trọng giúp website hoạt động.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Tên miền&lt;/strong> là địa chỉ website.&lt;/li>
+&lt;li>&lt;strong>Hosting&lt;/strong> là nơi lưu trữ dữ liệu website.&lt;/li>
+&lt;/ul>
+&lt;h3 id="lý-do-cần-trỏ-tên-miền">Lý do cần trỏ tên miền
+&lt;/h3>&lt;ul>
+&lt;li>Kết nối tên miền với hosting để website hiển thị trên internet.&lt;/li>
+&lt;li>Giúp mọi người truy cập website bằng địa chỉ dễ nhớ.&lt;/li>
+&lt;/ul>
+&lt;h3 id="cách-thực-hiện-">Cách thực hiện 🔧
+&lt;/h3>&lt;ul>
+&lt;li>Lấy thông tin &lt;strong>nameserver&lt;/strong> hoặc &lt;strong>IP&lt;/strong> từ nhà cung cấp.&lt;/li>
+&lt;li>Cấu hình trong trang quản lý domain.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="ba-cách-trỏ-tên-miền-về-hosting-đơn-giản-nhất-">Ba cách trỏ tên miền về hosting đơn giản nhất 🚀
+&lt;/h2>&lt;h3 id="trỏ-tên-miền-bằng-nameserver">Trỏ tên miền bằng nameserver
+&lt;/h3>&lt;p>&lt;strong>Các bước thực hiện:&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>Đăng nhập trình quản trị tên miền.&lt;/li>
+&lt;li>Chọn tên miền cần trỏ.&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/chon-ten-mien-muon-tro-ve-hosting-2.webp"
 loading="lazy"
 alt="Chọn tên miền muốn trỏ về hosting"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Chọn tên miền muốn trỏ về hosting&lt;/em&gt;&lt;/p&gt;
-&lt;ol start="3"&gt;
-&lt;li&gt;Thay đổi nameserver mặc định thành nameserver của hosting (thông tin này có trong &lt;em&gt;&lt;strong&gt;email&lt;/strong&gt;&lt;/em&gt; từ nhà cung cấp hosting).&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/thay-doi-nameserver-1.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Chọn tên miền muốn trỏ về hosting&lt;/em>&lt;/p>
+&lt;ol start="3">
+&lt;li>Thay đổi nameserver mặc định thành nameserver của hosting (thông tin này có trong &lt;em>&lt;strong>email&lt;/strong>&lt;/em> từ nhà cung cấp hosting).&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/thay-doi-nameserver-1.webp"
 loading="lazy"
 alt="Thay đổi Nameserver mặc định thành Nameserver của hosting đã đăng ký"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Thay đổi Nameserver mặc định thành Nameserver của hosting đã đăng ký&lt;/em&gt;&lt;/p&gt;
-&lt;ol start="4"&gt;
-&lt;li&gt;Chờ cập nhật (vài phút đến vài giờ, tuỳ vào server có thể cao nhất tới &lt;em&gt;&lt;strong&gt;24h&lt;/strong&gt;&lt;/em&gt;).&lt;/li&gt;
-&lt;li&gt;Kiểm tra bằng cách truy cập tên miền.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id="trỏ-tên-miền-bằng-ip-a-record"&gt;Trỏ tên miền bằng IP (A record)
-&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Các bước thực hiện:&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Đăng nhập trình quản trị tên miền.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/chon-muc-cau-hinh-dns-1.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Thay đổi Nameserver mặc định thành Nameserver của hosting đã đăng ký&lt;/em>&lt;/p>
+&lt;ol start="4">
+&lt;li>Chờ cập nhật (vài phút đến vài giờ, tuỳ vào server có thể cao nhất tới &lt;em>&lt;strong>24h&lt;/strong>&lt;/em>).&lt;/li>
+&lt;li>Kiểm tra bằng cách truy cập tên miền.&lt;/li>
+&lt;/ol>
+&lt;h3 id="trỏ-tên-miền-bằng-ip-a-record">Trỏ tên miền bằng IP (A record)
+&lt;/h3>&lt;p>&lt;strong>Các bước thực hiện:&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>Đăng nhập trình quản trị tên miền.&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/chon-muc-cau-hinh-dns-1.webp"
 loading="lazy"
 alt="Chọn tên miền muốn trỏ về hosting, sau đó chọn mục cấu hình DNS"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Chọn tên miền muốn trỏ về hosting, sau đó chọn mục cấu hình DNS&lt;/em&gt;&lt;/p&gt;
-&lt;ol start="2"&gt;
-&lt;li&gt;Chọn mục cấu hình DNS.&lt;/li&gt;
-&lt;li&gt;Thêm 2 bản ghi A record:
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;@&lt;/code&gt; → IP của hosting (Địa chỉ IP của hosting từ email nhà cung cấp gửi).&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;www&lt;/code&gt; → IP của hosting.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/them-2-ban-a-record.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Chọn tên miền muốn trỏ về hosting, sau đó chọn mục cấu hình DNS&lt;/em>&lt;/p>
+&lt;ol start="2">
+&lt;li>Chọn mục cấu hình DNS.&lt;/li>
+&lt;li>Thêm 2 bản ghi A record:
+&lt;ul>
+&lt;li>&lt;code>@&lt;/code> → IP của hosting (Địa chỉ IP của hosting từ email nhà cung cấp gửi).&lt;/li>
+&lt;li>&lt;code>www&lt;/code> → IP của hosting.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/them-2-ban-a-record.webp"
 loading="lazy"
 alt="Thêm hai bản A record"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Thêm hai bản A record&lt;/em&gt;&lt;/p&gt;
-&lt;ol start="4"&gt;
-&lt;li&gt;Lưu thay đổi và chờ cập nhật (Quá trình này có thể nhanh hoặc lâu tùy thuộc vào hệ thống DNS. Có thể từ vài phút đến vài giờ).&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id="trỏ-tên-miền-bằng-nameserver-trung-gian"&gt;Trỏ tên miền bằng nameserver trung gian
-&lt;/h3&gt;&lt;p&gt;Để trỏ tên miền về hosting bằng Nameserver trung gian như CloudFlare, Namecheap FreeDNS, Incapsula, bạn có thể thực hiện theo các bước sau:&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Các bước thực hiện:&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Đăng ký tài khoản tại Nameserver trung gian &amp;gt; Xác nhận các bản ghi cần thiết để thêm website vào Nameserver trung gian.&lt;/li&gt;
-&lt;li&gt;Truy cập vào khu vực quản lý tên miền của nhà cung cấp và thực hiện thay đổi Nameserver để trỏ tên miền về hosting qua Nameserver trung gian.&lt;/li&gt;
-&lt;li&gt;Chờ cập nhật để hoàn tất.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id="một-số-lỗi-thường-gặp-khi-trỏ-tên-miền-về-hosting-"&gt;Một số lỗi thường gặp khi trỏ tên miền về hosting ⚠️
-&lt;/h2&gt;&lt;p&gt;Khi trỏ tên miền về hosting, bạn có thể gặp một số lỗi phổ biến khiến website không hoạt động đúng cách. Hiểu và khắc phục các lỗi này sẽ giúp đảm bảo quá trình cấu hình diễn ra suôn sẻ.&lt;/p&gt;
-&lt;h3 id="-sai-tên-miền-của-hosting"&gt;🚫 Sai tên miền của hosting
-&lt;/h3&gt;&lt;p&gt;Khi đăng ký hosting, nhà cung cấp yêu cầu khai báo tên miền. Nếu nhập sai hoặc trỏ về một tên miền không khớp, website sẽ không hoạt động.&lt;/p&gt;
-&lt;h3 id="-sử-dụng-cả-hai-cách-trỏ-tên-miền"&gt;🚫 Sử dụng cả hai cách trỏ tên miền
-&lt;/h3&gt;&lt;p&gt;Nếu bạn đã trỏ tên miền bằng &lt;strong&gt;nameserver&lt;/strong&gt;, không nên thay đổi sang &lt;strong&gt;IP (A record)&lt;/strong&gt; và ngược lại, vì điều này có thể gây lỗi xung đột DNS.&lt;/p&gt;
-&lt;h3 id="-nhập-sai-loại-bản-ghi-dns"&gt;🚫 Nhập sai loại bản ghi DNS
-&lt;/h3&gt;&lt;p&gt;Có nhiều loại bản ghi DNS như:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;A record&lt;/strong&gt;: Trỏ tên miền về IP của hosting.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;CNAME&lt;/strong&gt;: Chuyển hướng một tên miền sang tên miền khác.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;MX record&lt;/strong&gt;: Cấu hình email.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Nhập sai loại bản ghi có thể làm gián đoạn kết nối đến hosting.&lt;/p&gt;
-&lt;h3 id="-nhập-sai-địa-chỉ-ip-của-hosting"&gt;🚫 Nhập sai địa chỉ IP của hosting
-&lt;/h3&gt;&lt;p&gt;IP hosting thường dài và dễ nhập sai. Bạn nên &lt;strong&gt;sao chép trực tiếp&lt;/strong&gt; từ email của nhà cung cấp để tránh nhầm lẫn với IP của máy tính cá nhân hoặc thiết bị khác.&lt;/p&gt;
-&lt;p&gt;Nếu gặp lỗi, hãy kiểm tra lại thông tin và chờ một thời gian để DNS cập nhật hoàn tất.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="video-hướng-dẫn-chi-tiết-"&gt;Video hướng dẫn chi tiết 🎥
-&lt;/h2&gt;&lt;p&gt;Nếu bạn muốn xem hướng dẫn trực quan hơn, có thể tham khảo video dưới đây. Video này sẽ giúp bạn hiểu rõ từng bước trong việc trỏ tên miền về hosting, từ cách lấy thông tin nameserver đến việc cập nhật trong trình quản lý tên miền.&lt;/p&gt;
-&lt;p&gt;&lt;div class="video-wrapper"&gt;
+>&lt;/p>
+&lt;p align="center">&lt;em>Thêm hai bản A record&lt;/em>&lt;/p>
+&lt;ol start="4">
+&lt;li>Lưu thay đổi và chờ cập nhật (Quá trình này có thể nhanh hoặc lâu tùy thuộc vào hệ thống DNS. Có thể từ vài phút đến vài giờ).&lt;/li>
+&lt;/ol>
+&lt;h3 id="trỏ-tên-miền-bằng-nameserver-trung-gian">Trỏ tên miền bằng nameserver trung gian
+&lt;/h3>&lt;p>Để trỏ tên miền về hosting bằng Nameserver trung gian như CloudFlare, Namecheap FreeDNS, Incapsula, bạn có thể thực hiện theo các bước sau:&lt;/p>
+&lt;p>&lt;strong>Các bước thực hiện:&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>Đăng ký tài khoản tại Nameserver trung gian &amp;gt; Xác nhận các bản ghi cần thiết để thêm website vào Nameserver trung gian.&lt;/li>
+&lt;li>Truy cập vào khu vực quản lý tên miền của nhà cung cấp và thực hiện thay đổi Nameserver để trỏ tên miền về hosting qua Nameserver trung gian.&lt;/li>
+&lt;li>Chờ cập nhật để hoàn tất.&lt;/li>
+&lt;/ol>
+&lt;h2 id="một-số-lỗi-thường-gặp-khi-trỏ-tên-miền-về-hosting-">Một số lỗi thường gặp khi trỏ tên miền về hosting ⚠️
+&lt;/h2>&lt;p>Khi trỏ tên miền về hosting, bạn có thể gặp một số lỗi phổ biến khiến website không hoạt động đúng cách. Hiểu và khắc phục các lỗi này sẽ giúp đảm bảo quá trình cấu hình diễn ra suôn sẻ.&lt;/p>
+&lt;h3 id="-sai-tên-miền-của-hosting">🚫 Sai tên miền của hosting
+&lt;/h3>&lt;p>Khi đăng ký hosting, nhà cung cấp yêu cầu khai báo tên miền. Nếu nhập sai hoặc trỏ về một tên miền không khớp, website sẽ không hoạt động.&lt;/p>
+&lt;h3 id="-sử-dụng-cả-hai-cách-trỏ-tên-miền">🚫 Sử dụng cả hai cách trỏ tên miền
+&lt;/h3>&lt;p>Nếu bạn đã trỏ tên miền bằng &lt;strong>nameserver&lt;/strong>, không nên thay đổi sang &lt;strong>IP (A record)&lt;/strong> và ngược lại, vì điều này có thể gây lỗi xung đột DNS.&lt;/p>
+&lt;h3 id="-nhập-sai-loại-bản-ghi-dns">🚫 Nhập sai loại bản ghi DNS
+&lt;/h3>&lt;p>Có nhiều loại bản ghi DNS như:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>A record&lt;/strong>: Trỏ tên miền về IP của hosting.&lt;/li>
+&lt;li>&lt;strong>CNAME&lt;/strong>: Chuyển hướng một tên miền sang tên miền khác.&lt;/li>
+&lt;li>&lt;strong>MX record&lt;/strong>: Cấu hình email.&lt;/li>
+&lt;/ul>
+&lt;p>Nhập sai loại bản ghi có thể làm gián đoạn kết nối đến hosting.&lt;/p>
+&lt;h3 id="-nhập-sai-địa-chỉ-ip-của-hosting">🚫 Nhập sai địa chỉ IP của hosting
+&lt;/h3>&lt;p>IP hosting thường dài và dễ nhập sai. Bạn nên &lt;strong>sao chép trực tiếp&lt;/strong> từ email của nhà cung cấp để tránh nhầm lẫn với IP của máy tính cá nhân hoặc thiết bị khác.&lt;/p>
+&lt;p>Nếu gặp lỗi, hãy kiểm tra lại thông tin và chờ một thời gian để DNS cập nhật hoàn tất.&lt;/p>
+&lt;hr>
+&lt;h2 id="video-hướng-dẫn-chi-tiết-">Video hướng dẫn chi tiết 🎥
+&lt;/h2>&lt;p>Nếu bạn muốn xem hướng dẫn trực quan hơn, có thể tham khảo video dưới đây. Video này sẽ giúp bạn hiểu rõ từng bước trong việc trỏ tên miền về hosting, từ cách lấy thông tin nameserver đến việc cập nhật trong trình quản lý tên miền.&lt;/p>
+&lt;p>&lt;div class="video-wrapper">
 &lt;iframe loading="lazy"
 src="https://www.youtube-nocookie.com/embed/7RjjF8Ee7Ws"
 allowfullscreen
 title="YouTube Video"
-&gt;
-&lt;/iframe&gt;
-&lt;/div&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;/p&gt;&lt;span class="cite"&gt;&lt;span&gt;― &lt;/span&gt;&lt;span&gt;Nguồn, &lt;/span&gt;&lt;a href="https://www.youtube.com/@F8VNOfficial"&gt;&lt;cite&gt;F8 Official ✔️&lt;/cite&gt;&lt;/a&gt;&lt;/span&gt;&lt;/blockquote&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="lời-kết-"&gt;Lời kết 🌟
-&lt;/h2&gt;&lt;p&gt;Việc trỏ tên miền về hosting là một bước quan trọng để website của bạn có thể hoạt động chính xác trên Internet. Dù thực hiện theo cách nào—sử dụng nameserver, A record, hay nameserver trung gian—bạn cũng cần kiểm tra kỹ thông tin và kiên nhẫn chờ DNS cập nhật. Nếu gặp lỗi, hãy xem lại cài đặt và thử lại 🔄. Chúc bạn thực hiện thành công và website hoạt động ổn định! 🚀 Nếu có vấn đề, cứ để lại comment, tôi sẽ xem thử nhé! 💬😊&lt;/p&gt;</description></item><item><title>Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥</title><link>https://tech.nguuyen.io.vn/posts/website/how-to-deploy-a-website/</link><pubDate>Wed, 26 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/website/how-to-deploy-a-website/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/upload-website-on-hosting.webp" alt="Featured image of post Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥" /&gt;&lt;h2 id="cách-up-website-lên-hosting-thông-qua-file-manager-và-cpanel-nhanh-nhất-từ-a-z"&gt;Cách up website lên Hosting thông qua File Manager và cPanel nhanh nhất từ A-Z
-&lt;/h2&gt;&lt;hr&gt;
-&lt;p&gt;Việc upload website lên hosting là bước thiết yếu để đưa website của bạn hoạt động trên internet. Quá trình này không chỉ đơn giản là chuyển dữ liệu, mà còn liên quan đến việc đảm bảo mọi thứ hoạt động mượt mà và an toàn. Bài viết này sẽ giúp bạn hiểu rõ các bước cần thiết, từ chuẩn bị file và database, đến các công cụ hỗ trợ upload hiệu quả.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="điểm-chính-cần-nắm"&gt;Điểm chính cần nắm
-&lt;/h2&gt;&lt;p&gt;Trước khi bắt tay vào việc upload website lên hosting, bạn cần lưu ý một số yếu tố quan trọng. Mình sẽ giúp bạn dễ dàng hiểu và nắm bắt các bước thực hiện:&lt;/p&gt;
-&lt;p&gt;✅ &lt;strong&gt;Bạn cần chuẩn bị gì khi upload website lên hosting&lt;/strong&gt;: Chuẩn bị file website, database, quyền truy cập control panel và phần mềm FTP như FileZilla.&lt;/p&gt;
-&lt;p&gt;✅ &lt;strong&gt;Các cách upload website lên hosting&lt;/strong&gt;: Chọn hosting uy tín, sau đó sử dụng File Manager, FTP, plugin WordPress, SSH hoặc nhờ hỗ trợ từ nhà cung cấp.&lt;/p&gt;
-&lt;p&gt;✅ &lt;strong&gt;Lý do cần upload website lên hosting&lt;/strong&gt;: Giúp công khai website, tăng bảo mật, cải thiện tốc độ và dễ quản lý.&lt;/p&gt;
-&lt;p&gt;✅ &lt;strong&gt;Bốn bước để upload web lên hosting&lt;/strong&gt;:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Upload file website vào thư mục &lt;code&gt;public_html&lt;/code&gt; qua File Manager hoặc FTP.&lt;/li&gt;
-&lt;li&gt;Kiểm tra xem các file đã đúng vị trí chưa.&lt;/li&gt;
-&lt;li&gt;Tạo database trên cPanel, import dữ liệu qua phpMyAdmin và cấu hình kết nối.&lt;/li&gt;
-&lt;li&gt;Truy cập website để kiểm tra xem mọi thứ đã hoạt động ổn định chưa.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id="cần-chuẩn-bị-gì-khi-upload-website-lên-hosting"&gt;Cần chuẩn bị gì khi upload website lên hosting?
-&lt;/h2&gt;&lt;p&gt;Để upload website lên hosting, trước tiên bạn cần phải chuẩn bị một số vấn đề sau đây:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;File website&lt;/strong&gt;: Những file này có thể là toàn bộ dữ liệu bên trong phần &lt;code&gt;public_html&lt;/code&gt; cũ hoặc file source code hay bản backup (sao lưu) dữ liệu mới nhất thay cho source code.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;📌 Lưu ý khi triển khai website React/Vue.js&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Khi build một ứng dụng &lt;strong&gt;React&lt;/strong&gt; hoặc &lt;strong&gt;Vue.js&lt;/strong&gt;, ta không tải toàn bộ mã nguồn lên máy chủ,&lt;br&gt;
-mà chỉ cần upload &lt;strong&gt;thư mục chứa các file tĩnh đã được build&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;🔹 Các bước build và nén tệp:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Chạy lệnh build:
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;React:&lt;/strong&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm run build
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Vue.js:&lt;/strong&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm run build
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;Sau khi build xong, thư mục output thường là &lt;code&gt;build/&lt;/code&gt; (&lt;strong&gt;React&lt;/strong&gt;) hoặc &lt;code&gt;dist/&lt;/code&gt; (&lt;strong&gt;Vue.js&lt;/strong&gt;).&lt;/li&gt;
-&lt;li&gt;Nén thư mục &lt;code&gt;build&lt;/code&gt; hoặc &lt;code&gt;dist&lt;/code&gt; thành file ZIP trước khi tải lên máy chủ.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;📤 Khi tải lên máy chủ:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Nếu dùng &lt;strong&gt;cPanel&lt;/strong&gt;, có thể giải nén trực tiếp trong thư mục &lt;code&gt;public_html&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;Nếu dùng &lt;strong&gt;SSH/SFTP&lt;/strong&gt;, tải lên và giải nén bằng lệnh:
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;unzip build.zip -d /var/www/html/
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;Đảm bảo &lt;strong&gt;cấu hình máy chủ (Apache/Nginx)&lt;/strong&gt; để trỏ vào thư mục chứa file &lt;code&gt;index.html&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;File database&lt;/strong&gt; (nếu có).&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Truy cập control panel&lt;/strong&gt; của tài khoản hosting mới.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Phần mềm FTP client&lt;/strong&gt; như FileZilla.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Để tải trang web lên hosting, bạn cần truy cập control panel của tài khoản hosting bằng phần mềm FTP như FileZilla. Nếu trang web đã có, bạn có thể dễ dàng sao lưu và tải lên bằng tính năng sao lưu của CMS hoặc cPanel.&lt;/p&gt;
-&lt;h3 id="chọn-nhà-cung-cấp-hosting-uy-tín-tin-cậy"&gt;Chọn nhà cung cấp hosting uy tín, tin cậy
-&lt;/h3&gt;&lt;p&gt;Web Hosting chất lượng không chỉ đảm bảo tốc độ mà còn quyết định hiệu suất vận hành lâu dài của website. Vì vậy, việc lựa chọn nhà cung cấp hosting cần được thực hiện cẩn thận, dựa trên các tiêu chí sau:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Hỗ trợ trực tuyến&lt;/strong&gt;: Đảm bảo nhà cung cấp có dịch vụ hỗ trợ khách hàng 24/7, giúp bạn nhanh chóng giải quyết sự cố.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Quyền kiểm soát tài khoản hosting&lt;/strong&gt;: Bạn cần được cung cấp toàn quyền quản lý tài khoản hosting, bao gồm quyền truy cập vào cPanel hoặc các công cụ tương đương.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Khả năng mở rộng&lt;/strong&gt;: Hosting nên có khả năng nâng cấp tài nguyên khi nhu cầu của bạn tăng cao, như dung lượng lưu trữ, băng thông hoặc số lượng tên miền.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Chính sách hoàn tiền minh bạch&lt;/strong&gt;: Các chính sách hoàn tiền linh hoạt sẽ giúp bạn an tâm hơn khi thử nghiệm dịch vụ.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Dịch vụ cộng thêm miễn phí&lt;/strong&gt;: Ưu tiên nhà cung cấp hỗ trợ thêm các tiện ích như SSL miễn phí, sao lưu định kỳ hoặc dịch vụ di chuyển website.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Đăng ký tên miền được công nhận bởi ICANN&lt;/strong&gt;: Để bảo vệ thương hiệu của bạn, hãy chọn nhà cung cấp tên miền uy tín và được chứng nhận bởi ICANN.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Lưu ý&lt;/strong&gt;: Hãy tìm hiểu kỹ về đánh giá của người dùng và uy tín của nhà cung cấp thông qua các diễn đàn hoặc trang đánh giá trước khi đưa ra quyết định. Điều này sẽ giúp bạn chọn được dịch vụ phù hợp nhất với nhu cầu phát triển website.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id="lựa-chọn-phương-pháp-upload-website-lên-hosting"&gt;Lựa chọn phương pháp upload website lên hosting
-&lt;/h3&gt;&lt;p&gt;Có 5 phương pháp chính để upload website lên hosting, tùy thuộc vào nhu cầu và công cụ bạn sử dụng:&lt;/p&gt;
-&lt;h4 id="sử-dụng-công-cụ-quản-lý-file-file-manager"&gt;Sử dụng công cụ quản lý file (File Manager)
-&lt;/h4&gt;&lt;p&gt;Là công cụ quản lý file trực tiếp trên nền tảng web của hosting, thường được tích hợp sẵn trong cPanel hoặc các trình quản lý hosting khác.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Ưu điểm:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Miễn phí.&lt;/li&gt;
-&lt;li&gt;Dễ dàng sử dụng.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Nhược điểm:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Hạn chế dung lượng file tải lên (thường tối đa 256 MB).&lt;/li&gt;
-&lt;li&gt;Chỉ giải nén được các file nhỏ hơn dung lượng này.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Lưu ý&lt;/strong&gt;: Khi dùng File Manager, bạn chỉ có thể tải hoặc giải nén file có dung lượng tối đa 256MB. Nếu muốn tải file lớn hơn, sử dụng FTP và giải nén qua SSH sẽ là lựa chọn tối ưu.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-16.webp"
+>
+&lt;/iframe>
+&lt;/div>
+&lt;blockquote>
+&lt;p>&lt;/p>&lt;span class="cite">&lt;span>― &lt;/span>&lt;span>Nguồn, &lt;/span>&lt;a href="https://www.youtube.com/@F8VNOfficial">&lt;cite>F8 Official ✔️&lt;/cite>&lt;/a>&lt;/span>&lt;/blockquote>&lt;/p>
+&lt;hr>
+&lt;h2 id="lời-kết-">Lời kết 🌟
+&lt;/h2>&lt;p>Việc trỏ tên miền về hosting là một bước quan trọng để website của bạn có thể hoạt động chính xác trên Internet. Dù thực hiện theo cách nào—sử dụng nameserver, A record, hay nameserver trung gian—bạn cũng cần kiểm tra kỹ thông tin và kiên nhẫn chờ DNS cập nhật. Nếu gặp lỗi, hãy xem lại cài đặt và thử lại 🔄. Chúc bạn thực hiện thành công và website hoạt động ổn định! 🚀 Nếu có vấn đề, cứ để lại comment, tôi sẽ xem thử nhé! 💬😊&lt;/p></description></item><item><title>Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥</title><link>https://tech.nguuyen.io.vn/posts/website/how-to-deploy-a-website/</link><pubDate>Wed, 26 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/website/how-to-deploy-a-website/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/upload-website-on-hosting.webp" alt="Featured image of post Deploy Website lên hosting đơn giản nhất (HTML/CSS hoặc React/Vue.js) 🔥" />&lt;h2 id="cách-up-website-lên-hosting-thông-qua-file-manager-và-cpanel-nhanh-nhất-từ-a-z">Cách up website lên Hosting thông qua File Manager và cPanel nhanh nhất từ A-Z
+&lt;/h2>&lt;hr>
+&lt;p>Việc upload website lên hosting là bước thiết yếu để đưa website của bạn hoạt động trên internet. Quá trình này không chỉ đơn giản là chuyển dữ liệu, mà còn liên quan đến việc đảm bảo mọi thứ hoạt động mượt mà và an toàn. Bài viết này sẽ giúp bạn hiểu rõ các bước cần thiết, từ chuẩn bị file và database, đến các công cụ hỗ trợ upload hiệu quả.&lt;/p>
+&lt;hr>
+&lt;h2 id="điểm-chính-cần-nắm">Điểm chính cần nắm
+&lt;/h2>&lt;p>Trước khi bắt tay vào việc upload website lên hosting, bạn cần lưu ý một số yếu tố quan trọng. Mình sẽ giúp bạn dễ dàng hiểu và nắm bắt các bước thực hiện:&lt;/p>
+&lt;p>✅ &lt;strong>Bạn cần chuẩn bị gì khi upload website lên hosting&lt;/strong>: Chuẩn bị file website, database, quyền truy cập control panel và phần mềm FTP như FileZilla.&lt;/p>
+&lt;p>✅ &lt;strong>Các cách upload website lên hosting&lt;/strong>: Chọn hosting uy tín, sau đó sử dụng File Manager, FTP, plugin WordPress, SSH hoặc nhờ hỗ trợ từ nhà cung cấp.&lt;/p>
+&lt;p>✅ &lt;strong>Lý do cần upload website lên hosting&lt;/strong>: Giúp công khai website, tăng bảo mật, cải thiện tốc độ và dễ quản lý.&lt;/p>
+&lt;p>✅ &lt;strong>Bốn bước để upload web lên hosting&lt;/strong>:&lt;/p>
+&lt;ol>
+&lt;li>Upload file website vào thư mục &lt;code>public_html&lt;/code> qua File Manager hoặc FTP.&lt;/li>
+&lt;li>Kiểm tra xem các file đã đúng vị trí chưa.&lt;/li>
+&lt;li>Tạo database trên cPanel, import dữ liệu qua phpMyAdmin và cấu hình kết nối.&lt;/li>
+&lt;li>Truy cập website để kiểm tra xem mọi thứ đã hoạt động ổn định chưa.&lt;/li>
+&lt;/ol>
+&lt;h2 id="cần-chuẩn-bị-gì-khi-upload-website-lên-hosting">Cần chuẩn bị gì khi upload website lên hosting?
+&lt;/h2>&lt;p>Để upload website lên hosting, trước tiên bạn cần phải chuẩn bị một số vấn đề sau đây:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>File website&lt;/strong>: Những file này có thể là toàn bộ dữ liệu bên trong phần &lt;code>public_html&lt;/code> cũ hoặc file source code hay bản backup (sao lưu) dữ liệu mới nhất thay cho source code.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>📌 Lưu ý khi triển khai website React/Vue.js&lt;/strong>&lt;/p>
+&lt;p>Khi build một ứng dụng &lt;strong>React&lt;/strong> hoặc &lt;strong>Vue.js&lt;/strong>, ta không tải toàn bộ mã nguồn lên máy chủ,&lt;br>
+mà chỉ cần upload &lt;strong>thư mục chứa các file tĩnh đã được build&lt;/strong>.&lt;/p>
+&lt;p>&lt;strong>🔹 Các bước build và nén tệp:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Chạy lệnh build:
+&lt;ul>
+&lt;li>&lt;strong>React:&lt;/strong>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">npm run build
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>&lt;strong>Vue.js:&lt;/strong>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">npm run build
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>Sau khi build xong, thư mục output thường là &lt;code>build/&lt;/code> (&lt;strong>React&lt;/strong>) hoặc &lt;code>dist/&lt;/code> (&lt;strong>Vue.js&lt;/strong>).&lt;/li>
+&lt;li>Nén thư mục &lt;code>build&lt;/code> hoặc &lt;code>dist&lt;/code> thành file ZIP trước khi tải lên máy chủ.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>📤 Khi tải lên máy chủ:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Nếu dùng &lt;strong>cPanel&lt;/strong>, có thể giải nén trực tiếp trong thư mục &lt;code>public_html&lt;/code>.&lt;/li>
+&lt;li>Nếu dùng &lt;strong>SSH/SFTP&lt;/strong>, tải lên và giải nén bằng lệnh:
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">unzip build.zip -d /var/www/html/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>Đảm bảo &lt;strong>cấu hình máy chủ (Apache/Nginx)&lt;/strong> để trỏ vào thư mục chứa file &lt;code>index.html&lt;/code>.&lt;/li>
+&lt;/ul>&lt;/blockquote>
+&lt;ul>
+&lt;li>&lt;strong>File database&lt;/strong> (nếu có).&lt;/li>
+&lt;li>&lt;strong>Truy cập control panel&lt;/strong> của tài khoản hosting mới.&lt;/li>
+&lt;li>&lt;strong>Phần mềm FTP client&lt;/strong> như FileZilla.&lt;/li>
+&lt;/ul>
+&lt;p>Để tải trang web lên hosting, bạn cần truy cập control panel của tài khoản hosting bằng phần mềm FTP như FileZilla. Nếu trang web đã có, bạn có thể dễ dàng sao lưu và tải lên bằng tính năng sao lưu của CMS hoặc cPanel.&lt;/p>
+&lt;h3 id="chọn-nhà-cung-cấp-hosting-uy-tín-tin-cậy">Chọn nhà cung cấp hosting uy tín, tin cậy
+&lt;/h3>&lt;p>Web Hosting chất lượng không chỉ đảm bảo tốc độ mà còn quyết định hiệu suất vận hành lâu dài của website. Vì vậy, việc lựa chọn nhà cung cấp hosting cần được thực hiện cẩn thận, dựa trên các tiêu chí sau:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Hỗ trợ trực tuyến&lt;/strong>: Đảm bảo nhà cung cấp có dịch vụ hỗ trợ khách hàng 24/7, giúp bạn nhanh chóng giải quyết sự cố.&lt;/li>
+&lt;li>&lt;strong>Quyền kiểm soát tài khoản hosting&lt;/strong>: Bạn cần được cung cấp toàn quyền quản lý tài khoản hosting, bao gồm quyền truy cập vào cPanel hoặc các công cụ tương đương.&lt;/li>
+&lt;li>&lt;strong>Khả năng mở rộng&lt;/strong>: Hosting nên có khả năng nâng cấp tài nguyên khi nhu cầu của bạn tăng cao, như dung lượng lưu trữ, băng thông hoặc số lượng tên miền.&lt;/li>
+&lt;li>&lt;strong>Chính sách hoàn tiền minh bạch&lt;/strong>: Các chính sách hoàn tiền linh hoạt sẽ giúp bạn an tâm hơn khi thử nghiệm dịch vụ.&lt;/li>
+&lt;li>&lt;strong>Dịch vụ cộng thêm miễn phí&lt;/strong>: Ưu tiên nhà cung cấp hỗ trợ thêm các tiện ích như SSL miễn phí, sao lưu định kỳ hoặc dịch vụ di chuyển website.&lt;/li>
+&lt;li>&lt;strong>Đăng ký tên miền được công nhận bởi ICANN&lt;/strong>: Để bảo vệ thương hiệu của bạn, hãy chọn nhà cung cấp tên miền uy tín và được chứng nhận bởi ICANN.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Lưu ý&lt;/strong>: Hãy tìm hiểu kỹ về đánh giá của người dùng và uy tín của nhà cung cấp thông qua các diễn đàn hoặc trang đánh giá trước khi đưa ra quyết định. Điều này sẽ giúp bạn chọn được dịch vụ phù hợp nhất với nhu cầu phát triển website.&lt;/p>&lt;/blockquote>
+&lt;h3 id="lựa-chọn-phương-pháp-upload-website-lên-hosting">Lựa chọn phương pháp upload website lên hosting
+&lt;/h3>&lt;p>Có 5 phương pháp chính để upload website lên hosting, tùy thuộc vào nhu cầu và công cụ bạn sử dụng:&lt;/p>
+&lt;h4 id="sử-dụng-công-cụ-quản-lý-file-file-manager">Sử dụng công cụ quản lý file (File Manager)
+&lt;/h4>&lt;p>Là công cụ quản lý file trực tiếp trên nền tảng web của hosting, thường được tích hợp sẵn trong cPanel hoặc các trình quản lý hosting khác.&lt;/p>
+&lt;p>&lt;strong>Ưu điểm:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Miễn phí.&lt;/li>
+&lt;li>Dễ dàng sử dụng.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Nhược điểm:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Hạn chế dung lượng file tải lên (thường tối đa 256 MB).&lt;/li>
+&lt;li>Chỉ giải nén được các file nhỏ hơn dung lượng này.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Lưu ý&lt;/strong>: Khi dùng File Manager, bạn chỉ có thể tải hoặc giải nén file có dung lượng tối đa 256MB. Nếu muốn tải file lớn hơn, sử dụng FTP và giải nén qua SSH sẽ là lựa chọn tối ưu.&lt;/p>&lt;/blockquote>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-16.webp"
 loading="lazy"
 alt="Truy cập File Manager"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Hình 1: Truy cập vào File Manager&lt;/em&gt;&lt;/p&gt;
-&lt;h4 id="sử-dụng-giao-thức-truyền-tải-file-ftp"&gt;Sử dụng giao thức truyền tải file (FTP)
-&lt;/h4&gt;&lt;p&gt;Giao thức FTP (File Transfer Protocol) cho phép bạn tải file lên hosting thông qua phần mềm FTP client như FileZilla. Đây là phương pháp hiệu quả và không giới hạn dung lượng file tải lên.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Ưu điểm:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Không giới hạn dung lượng tải lên.&lt;/li&gt;
-&lt;li&gt;Tải file lớn nhanh chóng và tiện lợi.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Nhược điểm:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Cần cài đặt phần mềm FTP client.&lt;/li&gt;
-&lt;li&gt;Cần thông tin đăng nhập FTP từ hosting.&lt;/li&gt;
-&lt;li&gt;Bảo mật không cao, có thể sử dụng SFTP để an toàn hơn.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/locating-ftp-details-4.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Hình 1: Truy cập vào File Manager&lt;/em>&lt;/p>
+&lt;h4 id="sử-dụng-giao-thức-truyền-tải-file-ftp">Sử dụng giao thức truyền tải file (FTP)
+&lt;/h4>&lt;p>Giao thức FTP (File Transfer Protocol) cho phép bạn tải file lên hosting thông qua phần mềm FTP client như FileZilla. Đây là phương pháp hiệu quả và không giới hạn dung lượng file tải lên.&lt;/p>
+&lt;p>&lt;strong>Ưu điểm:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Không giới hạn dung lượng tải lên.&lt;/li>
+&lt;li>Tải file lớn nhanh chóng và tiện lợi.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Nhược điểm:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Cần cài đặt phần mềm FTP client.&lt;/li>
+&lt;li>Cần thông tin đăng nhập FTP từ hosting.&lt;/li>
+&lt;li>Bảo mật không cao, có thể sử dụng SFTP để an toàn hơn.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/locating-ftp-details-4.webp"
 loading="lazy"
 alt="Thông tin FPT"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Hình 2: Thông tin FPT&lt;/em&gt;&lt;/p&gt;
-&lt;h4 id="sử-dụng-plugin-di-chuyển-wordpress"&gt;Sử dụng Plugin Di Chuyển WordPress
-&lt;/h4&gt;&lt;p&gt;Nếu bạn sử dụng WordPress, các plugin như All in One WP Migration có thể giúp bạn di chuyển toàn bộ website một cách tự động.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Ưu điểm:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Dễ sử dụng, không cần kiến thức kỹ thuật cao.&lt;/li&gt;
-&lt;li&gt;Kéo thả file đơn giản.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Nhược điểm:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Giới hạn dung lượng file tải lên (thường là 256 MB).&lt;/li&gt;
-&lt;li&gt;Với file lớn hơn, cần chuyển sang FTP và SSH.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Lưu ý&lt;/strong&gt;: Plugin này có giới hạn dung lượng, nếu muốn tải file lớn, bạn cần chuyển sang FTP và giải nén qua SSH. Sau khi upload, nhớ chuyển dữ liệu trong thư mục con ra ngoài &lt;code&gt;public_html&lt;/code&gt; để website hoạt động chính xác.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/img_20230304150023-8.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Hình 2: Thông tin FPT&lt;/em>&lt;/p>
+&lt;h4 id="sử-dụng-plugin-di-chuyển-wordpress">Sử dụng Plugin Di Chuyển WordPress
+&lt;/h4>&lt;p>Nếu bạn sử dụng WordPress, các plugin như All in One WP Migration có thể giúp bạn di chuyển toàn bộ website một cách tự động.&lt;/p>
+&lt;p>&lt;strong>Ưu điểm:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Dễ sử dụng, không cần kiến thức kỹ thuật cao.&lt;/li>
+&lt;li>Kéo thả file đơn giản.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Nhược điểm:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Giới hạn dung lượng file tải lên (thường là 256 MB).&lt;/li>
+&lt;li>Với file lớn hơn, cần chuyển sang FTP và SSH.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Lưu ý&lt;/strong>: Plugin này có giới hạn dung lượng, nếu muốn tải file lớn, bạn cần chuyển sang FTP và giải nén qua SSH. Sau khi upload, nhớ chuyển dữ liệu trong thư mục con ra ngoài &lt;code>public_html&lt;/code> để website hoạt động chính xác.&lt;/p>&lt;/blockquote>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/img_20230304150023-8.webp"
 loading="lazy"
 alt="Sử dụng WordPress Migration Plugin"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Hình 3: Sử dụng WordPress Migration Plugin&lt;/em&gt;&lt;/p&gt;
-&lt;h4 id="sử-dụng-ssh-secure-shell"&gt;Sử dụng SSH (Secure Shell)
-&lt;/h4&gt;&lt;p&gt;SSH là cách tải và quản lý file qua dòng lệnh, phù hợp với những file lớn hoặc yêu cầu tốc độ cao.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Ưu điểm:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Nhanh chóng, không giới hạn dung lượng.&lt;/li&gt;
-&lt;li&gt;Có thể giải nén file trực tiếp trên server.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Nhược điểm:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Yêu cầu kỹ năng sử dụng lệnh cơ bản và quyền truy cập SSH từ nhà cung cấp hosting.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Su-dung-SSH-upload-website.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Hình 3: Sử dụng WordPress Migration Plugin&lt;/em>&lt;/p>
+&lt;h4 id="sử-dụng-ssh-secure-shell">Sử dụng SSH (Secure Shell)
+&lt;/h4>&lt;p>SSH là cách tải và quản lý file qua dòng lệnh, phù hợp với những file lớn hoặc yêu cầu tốc độ cao.&lt;/p>
+&lt;p>&lt;strong>Ưu điểm:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Nhanh chóng, không giới hạn dung lượng.&lt;/li>
+&lt;li>Có thể giải nén file trực tiếp trên server.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Nhược điểm:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Yêu cầu kỹ năng sử dụng lệnh cơ bản và quyền truy cập SSH từ nhà cung cấp hosting.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Su-dung-SSH-upload-website.webp"
 loading="lazy"
 alt="Sử dụng SSH upload website"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Hình 4: Sử dụng SSH upload website&lt;/em&gt;&lt;/p&gt;
-&lt;h4 id="import-site--trình-nhập-website-tự-động"&gt;Import Site – Trình nhập website tự động
-&lt;/h4&gt;&lt;p&gt;Một số nhà cung cấp dịch vụ hosting cung cấp công cụ &lt;strong&gt;Import Site&lt;/strong&gt; giúp tải và giải nén website vào thư mục &lt;code&gt;public_html&lt;/code&gt; một cách nhanh chóng.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Ưu điểm:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Quá trình tải lên nhanh chóng và dễ dàng.&lt;/li&gt;
-&lt;li&gt;Không cần nhiều kiến thức kỹ thuật.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Nhược điểm:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Phụ thuộc vào nhà cung cấp hosting có hỗ trợ công cụ này.&lt;/li&gt;
-&lt;li&gt;Không phải nhà cung cấp hosting nào cũng cung cấp công cụ này.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Gợi ý&lt;/strong&gt;: Kiểm tra với nhà cung cấp hosting xem họ có hỗ trợ công cụ nhập trang web hay không.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/import-website-tool-2.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Hình 4: Sử dụng SSH upload website&lt;/em>&lt;/p>
+&lt;h4 id="import-site--trình-nhập-website-tự-động">Import Site – Trình nhập website tự động
+&lt;/h4>&lt;p>Một số nhà cung cấp dịch vụ hosting cung cấp công cụ &lt;strong>Import Site&lt;/strong> giúp tải và giải nén website vào thư mục &lt;code>public_html&lt;/code> một cách nhanh chóng.&lt;/p>
+&lt;p>&lt;strong>Ưu điểm:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Quá trình tải lên nhanh chóng và dễ dàng.&lt;/li>
+&lt;li>Không cần nhiều kiến thức kỹ thuật.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Nhược điểm:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Phụ thuộc vào nhà cung cấp hosting có hỗ trợ công cụ này.&lt;/li>
+&lt;li>Không phải nhà cung cấp hosting nào cũng cung cấp công cụ này.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Gợi ý&lt;/strong>: Kiểm tra với nhà cung cấp hosting xem họ có hỗ trợ công cụ nhập trang web hay không.&lt;/p>&lt;/blockquote>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/import-website-tool-2.webp"
 loading="lazy"
 alt="Tool nhập website"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Hình 5: Tool nhập website&lt;/em&gt;&lt;/p&gt;
-&lt;h4 id="nhờ-sự-hỗ-trợ-từ-nhà-cung-cấp-hosting"&gt;Nhờ sự hỗ trợ từ nhà cung cấp hosting
-&lt;/h4&gt;&lt;p&gt;Hầu hết các nhà cung cấp hosting đều có dịch vụ hỗ trợ di chuyển website, đặc biệt khi bạn chuyển từ dịch vụ hosting cũ sang nhà cung cấp mới.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Ưu điểm:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Tiết kiệm thời gian và tránh sai sót kỹ thuật.&lt;/li&gt;
-&lt;li&gt;Được thực hiện bởi đội ngũ chuyên gia.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Nhược điểm:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Có thể mất phí nếu nhà cung cấp không hỗ trợ miễn phí.&lt;/li&gt;
-&lt;li&gt;Thời gian xử lý phụ thuộc vào đội ngũ hỗ trợ.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Gợi ý&lt;/strong&gt;: Hãy kiểm tra chính sách hỗ trợ di chuyển website của nhà cung cấp hosting trước khi yêu cầu dịch vụ.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Nho-su-ho-tro-tu-nha-cung-cap-hosting.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Hình 5: Tool nhập website&lt;/em>&lt;/p>
+&lt;h4 id="nhờ-sự-hỗ-trợ-từ-nhà-cung-cấp-hosting">Nhờ sự hỗ trợ từ nhà cung cấp hosting
+&lt;/h4>&lt;p>Hầu hết các nhà cung cấp hosting đều có dịch vụ hỗ trợ di chuyển website, đặc biệt khi bạn chuyển từ dịch vụ hosting cũ sang nhà cung cấp mới.&lt;/p>
+&lt;p>&lt;strong>Ưu điểm:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Tiết kiệm thời gian và tránh sai sót kỹ thuật.&lt;/li>
+&lt;li>Được thực hiện bởi đội ngũ chuyên gia.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Nhược điểm:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Có thể mất phí nếu nhà cung cấp không hỗ trợ miễn phí.&lt;/li>
+&lt;li>Thời gian xử lý phụ thuộc vào đội ngũ hỗ trợ.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Gợi ý&lt;/strong>: Hãy kiểm tra chính sách hỗ trợ di chuyển website của nhà cung cấp hosting trước khi yêu cầu dịch vụ.&lt;/p>&lt;/blockquote>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Nho-su-ho-tro-tu-nha-cung-cap-hosting.webp"
 loading="lazy"
 alt="Nhờ sự hỗ trợ từ nhà cung cấp hosting"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Hình 6: Nhờ sự hỗ trợ từ nhà cung cấp hosting&lt;/em&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;📌 &lt;strong&gt;Lưu ý sau khi upload website lên hosting&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Di chuyển toàn bộ dữ liệu từ thư mục con (nếu có) ra ngoài &lt;code&gt;public_html&lt;/code&gt;&lt;/strong&gt; để website hoạt động chính xác.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Kiểm tra lại cấu trúc file và kết nối database (nếu có)&lt;/strong&gt; để tránh lỗi khi vận hành.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Chọn phương pháp phù hợp nhất&lt;/strong&gt; dựa trên kích thước file, nền tảng website và khả năng kỹ thuật của bạn.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;hr&gt;
-&lt;h2 id="lý-do-cần-upload-website-lên-hosting"&gt;Lý do cần upload website lên Hosting
-&lt;/h2&gt;&lt;p&gt;Việc upload website lên hosting không chỉ là bước cần thiết để đưa website của bạn ra công chúng, mà còn mang lại nhiều lợi ích quan trọng giúp website hoạt động ổn định, bảo mật và hiệu quả. Dưới đây là những lý do bạn nên thực hiện việc này:&lt;/p&gt;
-&lt;h3 id="xuất-bản-website-và-tiếp-cận-toàn-cầu"&gt;Xuất bản website và tiếp cận toàn cầu
-&lt;/h3&gt;&lt;p&gt;Khi bạn upload website lên hosting, website sẽ trở nên công khai và có thể truy cập từ bất kỳ đâu trên thế giới qua tên miền (domain) của bạn. Nếu không làm điều này, chỉ riêng bạn mới có thể truy cập website từ máy tính cá nhân.&lt;/p&gt;
-&lt;h3 id="bảo-mật-và-an-toàn-dữ-liệu"&gt;Bảo mật và an toàn dữ liệu
-&lt;/h3&gt;&lt;p&gt;Hosting chuyên nghiệp mang lại những biện pháp bảo mật mạnh mẽ, chẳng hạn như chứng chỉ SSL, tường lửa và các công cụ bảo vệ dữ liệu khác. Điều này giúp đảm bảo an toàn cho website và cả dữ liệu thương hiệu khỏi các nguy cơ tấn công, mất mát hoặc xâm nhập dữ liệu, một vấn đề mà việc lưu trữ website trên máy tính cá nhân sẽ khó đảm bảo được.&lt;/p&gt;
-&lt;h3 id="tăng-tốc-độ-và-hiệu-suất-website"&gt;Tăng tốc độ và hiệu suất Website
-&lt;/h3&gt;&lt;p&gt;Các máy chủ hosting được tối ưu để xử lý lưu lượng truy cập lớn và cung cấp tốc độ internet nhanh chóng, giúp tăng cường hiệu suất tải trang của website. Điều này có nghĩa là người dùng sẽ có trải nghiệm mượt mà hơn, đồng thời giảm thiểu tình trạng website bị &amp;ldquo;lag&amp;rdquo; hoặc tải chậm, một yếu tố quan trọng trong việc giữ chân người truy cập.&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Tang-toc-do-va-hieu-suat-Website.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Hình 6: Nhờ sự hỗ trợ từ nhà cung cấp hosting&lt;/em>&lt;/p>
+&lt;blockquote>
+&lt;p>📌 &lt;strong>Lưu ý sau khi upload website lên hosting&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Di chuyển toàn bộ dữ liệu từ thư mục con (nếu có) ra ngoài &lt;code>public_html&lt;/code>&lt;/strong> để website hoạt động chính xác.&lt;/li>
+&lt;li>&lt;strong>Kiểm tra lại cấu trúc file và kết nối database (nếu có)&lt;/strong> để tránh lỗi khi vận hành.&lt;/li>
+&lt;li>&lt;strong>Chọn phương pháp phù hợp nhất&lt;/strong> dựa trên kích thước file, nền tảng website và khả năng kỹ thuật của bạn.&lt;/li>
+&lt;/ul>&lt;/blockquote>
+&lt;hr>
+&lt;h2 id="lý-do-cần-upload-website-lên-hosting">Lý do cần upload website lên Hosting
+&lt;/h2>&lt;p>Việc upload website lên hosting không chỉ là bước cần thiết để đưa website của bạn ra công chúng, mà còn mang lại nhiều lợi ích quan trọng giúp website hoạt động ổn định, bảo mật và hiệu quả. Dưới đây là những lý do bạn nên thực hiện việc này:&lt;/p>
+&lt;h3 id="xuất-bản-website-và-tiếp-cận-toàn-cầu">Xuất bản website và tiếp cận toàn cầu
+&lt;/h3>&lt;p>Khi bạn upload website lên hosting, website sẽ trở nên công khai và có thể truy cập từ bất kỳ đâu trên thế giới qua tên miền (domain) của bạn. Nếu không làm điều này, chỉ riêng bạn mới có thể truy cập website từ máy tính cá nhân.&lt;/p>
+&lt;h3 id="bảo-mật-và-an-toàn-dữ-liệu">Bảo mật và an toàn dữ liệu
+&lt;/h3>&lt;p>Hosting chuyên nghiệp mang lại những biện pháp bảo mật mạnh mẽ, chẳng hạn như chứng chỉ SSL, tường lửa và các công cụ bảo vệ dữ liệu khác. Điều này giúp đảm bảo an toàn cho website và cả dữ liệu thương hiệu khỏi các nguy cơ tấn công, mất mát hoặc xâm nhập dữ liệu, một vấn đề mà việc lưu trữ website trên máy tính cá nhân sẽ khó đảm bảo được.&lt;/p>
+&lt;h3 id="tăng-tốc-độ-và-hiệu-suất-website">Tăng tốc độ và hiệu suất Website
+&lt;/h3>&lt;p>Các máy chủ hosting được tối ưu để xử lý lưu lượng truy cập lớn và cung cấp tốc độ internet nhanh chóng, giúp tăng cường hiệu suất tải trang của website. Điều này có nghĩa là người dùng sẽ có trải nghiệm mượt mà hơn, đồng thời giảm thiểu tình trạng website bị &amp;ldquo;lag&amp;rdquo; hoặc tải chậm, một yếu tố quan trọng trong việc giữ chân người truy cập.&lt;/p>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Tang-toc-do-va-hieu-suat-Website.webp"
 loading="lazy"
 alt="Tăng tốc độ và hiệu suất Website"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Hình 7: Tăng tốc độ và hiệu suất Website&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="tính-ổn-định-và-tin-cậy"&gt;Tính ổn định và tin cậy
-&lt;/h3&gt;&lt;p&gt;Khi website được lưu trữ trên hosting, bạn không phải lo lắng về việc duy trì phần cứng hay kết nối mạng. Các nhà cung cấp hosting sẽ đảm bảo server luôn hoạt động ổn định với thời gian uptime cao, giúp website của bạn luôn sẵn sàng phục vụ người dùng mà không gặp phải sự cố downtime kéo dài.&lt;/p&gt;
-&lt;h3 id="quản-lý-website-dễ-dàng-và-tiện-lợi"&gt;Quản lý website dễ dàng và tiện lợi
-&lt;/h3&gt;&lt;p&gt;Các nhà cung cấp hosting cung cấp giao diện quản lý thân thiện và dễ sử dụng, giúp bạn dễ dàng theo dõi, tối ưu và bảo trì website. Từ việc sao lưu dữ liệu, nâng cấp phần mềm cho đến việc tối ưu hóa hiệu suất, tất cả đều trở nên đơn giản hơn khi bạn sử dụng dịch vụ hosting chuyên nghiệp.&lt;/p&gt;
-&lt;h3 id="tính-mở-rộng-và-phát-triển-lâu-dài"&gt;Tính mở rộng và phát triển lâu dài
-&lt;/h3&gt;&lt;p&gt;Hosting không chỉ phục vụ website trong giai đoạn đầu, mà còn hỗ trợ khả năng mở rộng khi website của bạn phát triển. Nếu lưu trữ trên máy tính cá nhân, bạn sẽ gặp khó khăn khi website tăng trưởng về lưu lượng truy cập hay yêu cầu về tài nguyên. Hosting chuyên nghiệp sẽ giúp bạn dễ dàng nâng cấp tài nguyên mà không phải lo lắng về việc mất dữ liệu hay gián đoạn dịch vụ.&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Tinh-mo-rong-va-phat-trien-lau-dai.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Hình 7: Tăng tốc độ và hiệu suất Website&lt;/em>&lt;/p>
+&lt;h3 id="tính-ổn-định-và-tin-cậy">Tính ổn định và tin cậy
+&lt;/h3>&lt;p>Khi website được lưu trữ trên hosting, bạn không phải lo lắng về việc duy trì phần cứng hay kết nối mạng. Các nhà cung cấp hosting sẽ đảm bảo server luôn hoạt động ổn định với thời gian uptime cao, giúp website của bạn luôn sẵn sàng phục vụ người dùng mà không gặp phải sự cố downtime kéo dài.&lt;/p>
+&lt;h3 id="quản-lý-website-dễ-dàng-và-tiện-lợi">Quản lý website dễ dàng và tiện lợi
+&lt;/h3>&lt;p>Các nhà cung cấp hosting cung cấp giao diện quản lý thân thiện và dễ sử dụng, giúp bạn dễ dàng theo dõi, tối ưu và bảo trì website. Từ việc sao lưu dữ liệu, nâng cấp phần mềm cho đến việc tối ưu hóa hiệu suất, tất cả đều trở nên đơn giản hơn khi bạn sử dụng dịch vụ hosting chuyên nghiệp.&lt;/p>
+&lt;h3 id="tính-mở-rộng-và-phát-triển-lâu-dài">Tính mở rộng và phát triển lâu dài
+&lt;/h3>&lt;p>Hosting không chỉ phục vụ website trong giai đoạn đầu, mà còn hỗ trợ khả năng mở rộng khi website của bạn phát triển. Nếu lưu trữ trên máy tính cá nhân, bạn sẽ gặp khó khăn khi website tăng trưởng về lưu lượng truy cập hay yêu cầu về tài nguyên. Hosting chuyên nghiệp sẽ giúp bạn dễ dàng nâng cấp tài nguyên mà không phải lo lắng về việc mất dữ liệu hay gián đoạn dịch vụ.&lt;/p>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Tinh-mo-rong-va-phat-trien-lau-dai.webp"
 loading="lazy"
 alt="Tính mở rộng và phát triển lâu dài"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Hình 8: Tính mở rộng và phát triển lâu dài&lt;/em&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;Tóm lại, việc upload website lên hosting mang lại những lợi ích vượt trội về bảo mật, hiệu suất, tính ổn định và khả năng quản lý, giúp website của bạn hoạt động hiệu quả và bền vững. Đây là bước quan trọng để không chỉ bảo vệ dữ liệu mà còn tạo ra một nền tảng vững chắc để phát triển website trong tương lai. Vì vậy, nếu bạn muốn website của mình hoạt động trơn tru và dễ dàng truy cập từ mọi nơi, việc upload lên hosting là điều không thể thiếu.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="bước-1-chọn-cách-upload-file-website-lên-host"&gt;Bước 1: Chọn cách upload file website lên host
-&lt;/h2&gt;&lt;h3 id="cách-1-upload-website-lên-hosting-bằng-file-manager-qua-cpanel"&gt;Cách 1: Upload website lên hosting bằng File Manager qua cPanel
-&lt;/h3&gt;&lt;h3 id="cách-2-upload-website-lên-hosting-bằng-ftp-client"&gt;Cách 2: Upload website lên hosting bằng FTP client
-&lt;/h3&gt;&lt;p&gt;Sau khi bạn đã lựa chọn xong cách để upload, dưới đây là hướng dẫn cách upload website lên hosting đơn giản, bạn có thể tham khảo.&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;&amp;mdash;Cách 1: Upload website lên hosting bằng File Manager qua cPanel&amp;mdash; (Dễ nhất)&lt;/p&gt;
-&lt;p&gt;Truy cập cPanel của tài khoản hosting và làm theo hướng dẫn dưới đây:&lt;/p&gt;
-&lt;p&gt;Bước 1: Click vào icon &lt;strong&gt;File Manager&lt;/strong&gt;, đặt bên dưới mục &lt;strong&gt;Files&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Chọn File Manager&lt;/strong&gt;&lt;br&gt;
-&lt;em&gt;Hình ảnh minh họa: Chọn File Manager&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-1.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Hình 8: Tính mở rộng và phát triển lâu dài&lt;/em>&lt;/p>
+&lt;hr>
+&lt;p>Tóm lại, việc upload website lên hosting mang lại những lợi ích vượt trội về bảo mật, hiệu suất, tính ổn định và khả năng quản lý, giúp website của bạn hoạt động hiệu quả và bền vững. Đây là bước quan trọng để không chỉ bảo vệ dữ liệu mà còn tạo ra một nền tảng vững chắc để phát triển website trong tương lai. Vì vậy, nếu bạn muốn website của mình hoạt động trơn tru và dễ dàng truy cập từ mọi nơi, việc upload lên hosting là điều không thể thiếu.&lt;/p>
+&lt;hr>
+&lt;h2 id="bước-1-chọn-cách-upload-file-website-lên-host">Bước 1: Chọn cách upload file website lên host
+&lt;/h2>&lt;h3 id="cách-1-upload-website-lên-hosting-bằng-file-manager-qua-cpanel">Cách 1: Upload website lên hosting bằng File Manager qua cPanel
+&lt;/h3>&lt;h3 id="cách-2-upload-website-lên-hosting-bằng-ftp-client">Cách 2: Upload website lên hosting bằng FTP client
+&lt;/h3>&lt;p>Sau khi bạn đã lựa chọn xong cách để upload, dưới đây là hướng dẫn cách upload website lên hosting đơn giản, bạn có thể tham khảo.&lt;/p>
+&lt;hr>
+&lt;p>&amp;mdash;Cách 1: Upload website lên hosting bằng File Manager qua cPanel&amp;mdash; (Dễ nhất)&lt;/p>
+&lt;p>Truy cập cPanel của tài khoản hosting và làm theo hướng dẫn dưới đây:&lt;/p>
+&lt;p>Bước 1: Click vào icon &lt;strong>File Manager&lt;/strong>, đặt bên dưới mục &lt;strong>Files&lt;/strong>.&lt;/p>
+&lt;p>&lt;strong>Chọn File Manager&lt;/strong>&lt;br>
+&lt;em>Hình ảnh minh họa: Chọn File Manager&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-1.webp"
 loading="lazy"
 alt="Chọn File Manager"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Chọn File Manager&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Bước 2: Trong &lt;strong&gt;File Manager&lt;/strong&gt;, mở thư mục &lt;code&gt;public_html&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Mở thư mục public_html&lt;/strong&gt;&lt;br&gt;
-&lt;em&gt;Hình ảnh minh họa: Mở thư mục public_html&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-2.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Chọn File Manager&lt;/em>&lt;/p>
+&lt;p>Bước 2: Trong &lt;strong>File Manager&lt;/strong>, mở thư mục &lt;code>public_html&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Mở thư mục public_html&lt;/strong>&lt;br>
+&lt;em>Hình ảnh minh họa: Mở thư mục public_html&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-2.webp"
 loading="lazy"
 alt="Mở thư mục public_html"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Mở thư mục public_html&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Bước 3: Chọn &lt;strong&gt;Upload&lt;/strong&gt; sau khi truy cập vào thư mục &lt;code&gt;public_html&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Chọn Upload&lt;/strong&gt;&lt;br&gt;
-&lt;em&gt;Hình ảnh minh họa: Chọn Upload&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-3.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Mở thư mục public_html&lt;/em>&lt;/p>
+&lt;p>Bước 3: Chọn &lt;strong>Upload&lt;/strong> sau khi truy cập vào thư mục &lt;code>public_html&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Chọn Upload&lt;/strong>&lt;br>
+&lt;em>Hình ảnh minh họa: Chọn Upload&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-3.webp"
 loading="lazy"
 alt="Chọn Upload"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Chọn Upload&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Bước 4: Chọn &lt;strong&gt;Select File&lt;/strong&gt; để chọn từng file hoặc kéo thả vào vùng nhận file.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Chọn file&lt;/strong&gt;&lt;br&gt;
-&lt;em&gt;Hình ảnh minh họa: Chọn file&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-4.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Chọn Upload&lt;/em>&lt;/p>
+&lt;p>Bước 4: Chọn &lt;strong>Select File&lt;/strong> để chọn từng file hoặc kéo thả vào vùng nhận file.&lt;/p>
+&lt;p>&lt;strong>Chọn file&lt;/strong>&lt;br>
+&lt;em>Hình ảnh minh họa: Chọn file&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-4.webp"
 loading="lazy"
 alt="Chọn file"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Chọn file&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Bước 5: Trong ví dụ này, mình kéo thả file &lt;code&gt;wordpress.zip&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Chọn file zip wordpress&lt;/strong&gt;&lt;br&gt;
-&lt;em&gt;Hình ảnh minh họa: Chọn file zip wordpress (hoặc file dist.zip/build.zip)&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-5.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Chọn file&lt;/em>&lt;/p>
+&lt;p>Bước 5: Trong ví dụ này, mình kéo thả file &lt;code>wordpress.zip&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Chọn file zip wordpress&lt;/strong>&lt;br>
+&lt;em>Hình ảnh minh họa: Chọn file zip wordpress (hoặc file dist.zip/build.zip)&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-5.webp"
 loading="lazy"
 alt="Chọn file zip wordpress"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Chọn file zip wordpress&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Bước 6: Khi upload xong, quay lại &lt;strong&gt;File Manager&lt;/strong&gt; để thấy file archive đã xuất hiện trong thư mục &lt;code&gt;public_html&lt;/code&gt;. Click chuột phải và nhấn &lt;strong&gt;Extract&lt;/strong&gt; để giải nén file archive.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Extract file&lt;/strong&gt;&lt;br&gt;
-&lt;em&gt;Hình ảnh minh họa: Extract file&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-6.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Chọn file zip wordpress&lt;/em>&lt;/p>
+&lt;p>Bước 6: Khi upload xong, quay lại &lt;strong>File Manager&lt;/strong> để thấy file archive đã xuất hiện trong thư mục &lt;code>public_html&lt;/code>. Click chuột phải và nhấn &lt;strong>Extract&lt;/strong> để giải nén file archive.&lt;/p>
+&lt;p>&lt;strong>Extract file&lt;/strong>&lt;br>
+&lt;em>Hình ảnh minh họa: Extract file&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-6.webp"
 loading="lazy"
 alt="Extract file"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Extract file&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Bước 7: Chọn vị trí file archive cần extract, ở ví dụ này sẽ lưu vào &lt;code&gt;/public_html&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Chọn vị trí file cần extract&lt;/strong&gt;&lt;br&gt;
-&lt;em&gt;Hình ảnh minh họa: Chọn vị trí file cần extract&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-7.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Extract file&lt;/em>&lt;/p>
+&lt;p>Bước 7: Chọn vị trí file archive cần extract, ở ví dụ này sẽ lưu vào &lt;code>/public_html&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Chọn vị trí file cần extract&lt;/strong>&lt;br>
+&lt;em>Hình ảnh minh họa: Chọn vị trí file cần extract&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-7.webp"
 loading="lazy"
 alt="Chọn vị trí file cần extract"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Chọn vị trí file cần extract&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Bước 8: Sau khi giải nén file, bạn có thể xem các file đã được giải nén trong thư mục &lt;code&gt;public_html&lt;/code&gt;. Đây là thư mục gốc của website.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Quay lại thư mục ban đầu để xem&lt;/strong&gt;&lt;br&gt;
-&lt;em&gt;Hình ảnh minh họa: Quay lại thư mục ban đầu để xem&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-8.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Chọn vị trí file cần extract&lt;/em>&lt;/p>
+&lt;p>Bước 8: Sau khi giải nén file, bạn có thể xem các file đã được giải nén trong thư mục &lt;code>public_html&lt;/code>. Đây là thư mục gốc của website.&lt;/p>
+&lt;p>&lt;strong>Quay lại thư mục ban đầu để xem&lt;/strong>&lt;br>
+&lt;em>Hình ảnh minh họa: Quay lại thư mục ban đầu để xem&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-8.webp"
 loading="lazy"
 alt="Quay lại thư mục ban đầu để xem"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Quay lại thư mục ban đầu để xem&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Bước 9: Trang web đã tải xong. Bạn có thể truy cập vào trang web bằng cách nhập URL vào trình duyệt.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Màn hình chọn ngôn ngữ trong quá trình cài đặt WordPress&lt;/strong&gt; &lt;em&gt;&lt;strong&gt;(Nếu có)&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;&amp;mdash;Cách 2: Upload website lên hosting bằng FTP client&amp;mdash;&lt;/p&gt;
-&lt;p&gt;Một số người dùng thích tải trang web của họ lên dịch vụ hosting qua &lt;strong&gt;FTP&lt;/strong&gt;, ví dụ: &lt;strong&gt;FileZilla, SmartFTP, CoreFTP&lt;/strong&gt; hoặc bất kỳ phần mềm nào khác. Trong các hướng dẫn sau, mình sẽ sử dụng &lt;strong&gt;FileZilla&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Những lưu ý trước khi upload website lên hosting:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Kiến thức và kỹ năng của bạn:&lt;/strong&gt; Nếu bạn không có nhiều kiến thức về hosting, &lt;strong&gt;File Manager&lt;/strong&gt; sẽ dễ sử dụng hơn. Nếu bạn thành thạo, &lt;strong&gt;FTP client&lt;/strong&gt; sẽ giúp tải lên nhanh hơn.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Kích thước của website:&lt;/strong&gt; Nếu website có dung lượng lớn, &lt;strong&gt;FTP client&lt;/strong&gt; sẽ thuận tiện hơn vì không giới hạn dung lượng tải lên.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Yêu cầu đặc thù của website:&lt;/strong&gt; Nếu website yêu cầu cấu hình server đặc biệt, bạn nên hỏi nhà cung cấp hosting để chọn cách upload phù hợp.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Bước 1: Trước tiên, bạn cần lấy thông tin FTP thông qua &lt;strong&gt;FTP Access&lt;/strong&gt;. Nếu quên mật khẩu, bạn có thể đặt mật khẩu mới qua phần &lt;strong&gt;Change account password&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Lấy thông tin qua FTP Access&lt;/strong&gt;&lt;br&gt;
-&lt;em&gt;Hình ảnh minh họa: Lấy thông tin qua FTP Access&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-9.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Quay lại thư mục ban đầu để xem&lt;/em>&lt;/p>
+&lt;p>Bước 9: Trang web đã tải xong. Bạn có thể truy cập vào trang web bằng cách nhập URL vào trình duyệt.&lt;/p>
+&lt;p>&lt;strong>Màn hình chọn ngôn ngữ trong quá trình cài đặt WordPress&lt;/strong> &lt;em>&lt;strong>(Nếu có)&lt;/strong>&lt;/em>&lt;/p>
+&lt;hr>
+&lt;p>&amp;mdash;Cách 2: Upload website lên hosting bằng FTP client&amp;mdash;&lt;/p>
+&lt;p>Một số người dùng thích tải trang web của họ lên dịch vụ hosting qua &lt;strong>FTP&lt;/strong>, ví dụ: &lt;strong>FileZilla, SmartFTP, CoreFTP&lt;/strong> hoặc bất kỳ phần mềm nào khác. Trong các hướng dẫn sau, mình sẽ sử dụng &lt;strong>FileZilla&lt;/strong>.&lt;/p>
+&lt;p>Những lưu ý trước khi upload website lên hosting:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Kiến thức và kỹ năng của bạn:&lt;/strong> Nếu bạn không có nhiều kiến thức về hosting, &lt;strong>File Manager&lt;/strong> sẽ dễ sử dụng hơn. Nếu bạn thành thạo, &lt;strong>FTP client&lt;/strong> sẽ giúp tải lên nhanh hơn.&lt;/li>
+&lt;li>&lt;strong>Kích thước của website:&lt;/strong> Nếu website có dung lượng lớn, &lt;strong>FTP client&lt;/strong> sẽ thuận tiện hơn vì không giới hạn dung lượng tải lên.&lt;/li>
+&lt;li>&lt;strong>Yêu cầu đặc thù của website:&lt;/strong> Nếu website yêu cầu cấu hình server đặc biệt, bạn nên hỏi nhà cung cấp hosting để chọn cách upload phù hợp.&lt;/li>
+&lt;/ul>
+&lt;p>Bước 1: Trước tiên, bạn cần lấy thông tin FTP thông qua &lt;strong>FTP Access&lt;/strong>. Nếu quên mật khẩu, bạn có thể đặt mật khẩu mới qua phần &lt;strong>Change account password&lt;/strong>.&lt;/p>
+&lt;p>&lt;strong>Lấy thông tin qua FTP Access&lt;/strong>&lt;br>
+&lt;em>Hình ảnh minh họa: Lấy thông tin qua FTP Access&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-9.webp"
 loading="lazy"
 alt="Lấy thông tin qua FTP Access"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Lấy thông tin qua FTP Access&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Bước 2: Mở &lt;strong&gt;FileZilla&lt;/strong&gt;, điền thông tin FTP để truy cập và nhấn &lt;strong&gt;Quickconnect&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Chọn Quickconnect&lt;/strong&gt;&lt;br&gt;
-&lt;em&gt;Hình ảnh minh họa: Chọn Quickconnect&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-10.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Lấy thông tin qua FTP Access&lt;/em>&lt;/p>
+&lt;p>Bước 2: Mở &lt;strong>FileZilla&lt;/strong>, điền thông tin FTP để truy cập và nhấn &lt;strong>Quickconnect&lt;/strong>.&lt;/p>
+&lt;p>&lt;strong>Chọn Quickconnect&lt;/strong>&lt;br>
+&lt;em>Hình ảnh minh họa: Chọn Quickconnect&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-10.webp"
 loading="lazy"
 alt="Chọn Quickconnect"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Chọn Quickconnect&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Bước 3: Sau khi kết nối với FileZilla, tìm dữ liệu trang web và kéo chúng từ bên trái của phần mềm sang bên phải, thư mục đích là &lt;code&gt;public_html&lt;/code&gt;. Bạn cần giải nén file archive trước, vì FTP không có chức năng giải nén.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải&lt;/strong&gt;&lt;br&gt;
-&lt;em&gt;Hình ảnh minh họa: Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-11.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Chọn Quickconnect&lt;/em>&lt;/p>
+&lt;p>Bước 3: Sau khi kết nối với FileZilla, tìm dữ liệu trang web và kéo chúng từ bên trái của phần mềm sang bên phải, thư mục đích là &lt;code>public_html&lt;/code>. Bạn cần giải nén file archive trước, vì FTP không có chức năng giải nén.&lt;/p>
+&lt;p>&lt;strong>Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải&lt;/strong>&lt;br>
+&lt;em>Hình ảnh minh họa: Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-11.webp"
 loading="lazy"
 alt="Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Bước 4: Tương tự, bạn có thể upload file nén qua &lt;strong&gt;FTP&lt;/strong&gt; bằng cách kéo thả từ trái sang phải. Sau đó, giải nén chúng thông qua &lt;strong&gt;File Manager&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Upload file nén qua FTP&lt;/strong&gt;&lt;br&gt;
-&lt;em&gt;Hình ảnh minh họa: Upload file nén qua FTP&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-12.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Kéo thả dữ liệu từ bên trái của phần mềm sang bên phải&lt;/em>&lt;/p>
+&lt;p>Bước 4: Tương tự, bạn có thể upload file nén qua &lt;strong>FTP&lt;/strong> bằng cách kéo thả từ trái sang phải. Sau đó, giải nén chúng thông qua &lt;strong>File Manager&lt;/strong>.&lt;/p>
+&lt;p>&lt;strong>Upload file nén qua FTP&lt;/strong>&lt;br>
+&lt;em>Hình ảnh minh họa: Upload file nén qua FTP&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-12.webp"
 loading="lazy"
 alt="Upload file nén qua FTP"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Upload file nén qua FTP&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Bước 5: Sau khi tải trang web lên hosting, bạn có thể truy cập trang web bằng cách nhập URL vào trình duyệt. Bạn sẽ thấy trang cài đặt mặc định của website và có thể tùy chỉnh trang này để phù hợp với nhu cầu của mình.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="bước-2-kiểm-tra-xem-file-đã-ở-trong-thư-mục-public_html-hay-chưa"&gt;Bước 2: Kiểm tra xem file đã ở trong thư mục public_html hay chưa
-&lt;/h2&gt;&lt;p&gt;Sau khi upload website lên hosting, bước đầu tiên bạn cần làm là kiểm tra xem các file đã được tải đầy đủ vào thư mục &lt;code&gt;public_html&lt;/code&gt; chưa. Bạn có thể mở thư mục &lt;code&gt;public_html&lt;/code&gt; và kiểm tra xem tất cả các file đã nằm trong đó chưa. Nếu bạn tạo ra thư mục mới sau khi upload và giải nén website backup, người dùng sẽ phải truy cập theo đường dẫn dạng &lt;code&gt;example.com/something&lt;/code&gt; thay vì &lt;code&gt;example.com&lt;/code&gt;. Để khắc phục điều này, bạn có thể sử dụng &lt;strong&gt;File Manager&lt;/strong&gt; hoặc &lt;strong&gt;FTP&lt;/strong&gt; theo các bước sau:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Truy cập vào thư mục chứa các file của website.&lt;/li&gt;
-&lt;li&gt;Chọn toàn bộ các file và nhấn chuột phải, sau đó chọn nút &lt;strong&gt;Move&lt;/strong&gt;.&lt;/li&gt;
-&lt;li&gt;Lựa chọn thư mục đích là &lt;code&gt;public_html&lt;/code&gt; và nhấn &lt;strong&gt;Proceed&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;Nếu website của bạn đã được vận hành một thời gian, bạn cũng cần phải upload &lt;strong&gt;database&lt;/strong&gt; lên hosting nếu chưa thực hiện.&lt;/p&gt;
-&lt;p&gt;Sau khi đã đảm bảo các file đã được di chuyển đúng vào thư mục &lt;code&gt;public_html&lt;/code&gt;, bạn có thể kiểm tra website bằng cách mở trình duyệt và truy cập vào tên miền của mình. Nếu tên miền chưa được trỏ đúng, bạn có thể sử dụng các phương pháp sau để kiểm tra và sửa lỗi DNS:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Sửa &lt;strong&gt;file hosts&lt;/strong&gt; trên máy tính để giả lập thay đổi DNS.&lt;/li&gt;
-&lt;li&gt;Sử dụng các &lt;strong&gt;công cụ online&lt;/strong&gt; để kiểm tra tên miền.&lt;/li&gt;
-&lt;li&gt;Cài đặt &lt;strong&gt;plugin trình duyệt&lt;/strong&gt; để tạo file host ảo.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Ngoài ra, nếu bạn cần di chuyển website từ thư mục con lên thư mục gốc (&lt;code&gt;public_html&lt;/code&gt;), bạn có thể sử dụng &lt;strong&gt;File Manager&lt;/strong&gt; hoặc &lt;strong&gt;FTP&lt;/strong&gt; để thực hiện. Và bạn đừng quên tải lại &lt;strong&gt;cơ sở dữ liệu&lt;/strong&gt; lên hosting nếu cần thiết.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="bước-3-tiến-hành-upload-database-lên-website-hosting"&gt;Bước 3: Tiến hành upload database lên website hosting
-&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;Thực hiện bước này khi website của người dùng đã có sẵn &lt;em&gt;&lt;strong&gt;database&lt;/strong&gt;&lt;/em&gt;. Nếu không, bạn có thể bỏ qua bước này.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id="tạo-database-trên-cpanel"&gt;Tạo database trên cPanel
-&lt;/h3&gt;&lt;p&gt;Tạo một database mới tại section &lt;strong&gt;MySQL Databases&lt;/strong&gt;. Khi tạo database bạn cần điền và ghi chú lại những thông số database như sau:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;MySQL Database&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;MySQL User&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;MySQL Host&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;MySQL Password&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-13.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Upload file nén qua FTP&lt;/em>&lt;/p>
+&lt;p>Bước 5: Sau khi tải trang web lên hosting, bạn có thể truy cập trang web bằng cách nhập URL vào trình duyệt. Bạn sẽ thấy trang cài đặt mặc định của website và có thể tùy chỉnh trang này để phù hợp với nhu cầu của mình.&lt;/p>
+&lt;hr>
+&lt;h2 id="bước-2-kiểm-tra-xem-file-đã-ở-trong-thư-mục-public_html-hay-chưa">Bước 2: Kiểm tra xem file đã ở trong thư mục public_html hay chưa
+&lt;/h2>&lt;p>Sau khi upload website lên hosting, bước đầu tiên bạn cần làm là kiểm tra xem các file đã được tải đầy đủ vào thư mục &lt;code>public_html&lt;/code> chưa. Bạn có thể mở thư mục &lt;code>public_html&lt;/code> và kiểm tra xem tất cả các file đã nằm trong đó chưa. Nếu bạn tạo ra thư mục mới sau khi upload và giải nén website backup, người dùng sẽ phải truy cập theo đường dẫn dạng &lt;code>example.com/something&lt;/code> thay vì &lt;code>example.com&lt;/code>. Để khắc phục điều này, bạn có thể sử dụng &lt;strong>File Manager&lt;/strong> hoặc &lt;strong>FTP&lt;/strong> theo các bước sau:&lt;/p>
+&lt;ol>
+&lt;li>Truy cập vào thư mục chứa các file của website.&lt;/li>
+&lt;li>Chọn toàn bộ các file và nhấn chuột phải, sau đó chọn nút &lt;strong>Move&lt;/strong>.&lt;/li>
+&lt;li>Lựa chọn thư mục đích là &lt;code>public_html&lt;/code> và nhấn &lt;strong>Proceed&lt;/strong>.&lt;/li>
+&lt;/ol>
+&lt;p>Nếu website của bạn đã được vận hành một thời gian, bạn cũng cần phải upload &lt;strong>database&lt;/strong> lên hosting nếu chưa thực hiện.&lt;/p>
+&lt;p>Sau khi đã đảm bảo các file đã được di chuyển đúng vào thư mục &lt;code>public_html&lt;/code>, bạn có thể kiểm tra website bằng cách mở trình duyệt và truy cập vào tên miền của mình. Nếu tên miền chưa được trỏ đúng, bạn có thể sử dụng các phương pháp sau để kiểm tra và sửa lỗi DNS:&lt;/p>
+&lt;ul>
+&lt;li>Sửa &lt;strong>file hosts&lt;/strong> trên máy tính để giả lập thay đổi DNS.&lt;/li>
+&lt;li>Sử dụng các &lt;strong>công cụ online&lt;/strong> để kiểm tra tên miền.&lt;/li>
+&lt;li>Cài đặt &lt;strong>plugin trình duyệt&lt;/strong> để tạo file host ảo.&lt;/li>
+&lt;/ul>
+&lt;p>Ngoài ra, nếu bạn cần di chuyển website từ thư mục con lên thư mục gốc (&lt;code>public_html&lt;/code>), bạn có thể sử dụng &lt;strong>File Manager&lt;/strong> hoặc &lt;strong>FTP&lt;/strong> để thực hiện. Và bạn đừng quên tải lại &lt;strong>cơ sở dữ liệu&lt;/strong> lên hosting nếu cần thiết.&lt;/p>
+&lt;hr>
+&lt;h2 id="bước-3-tiến-hành-upload-database-lên-website-hosting">Bước 3: Tiến hành upload database lên website hosting
+&lt;/h2>&lt;blockquote>
+&lt;p>Thực hiện bước này khi website của người dùng đã có sẵn &lt;em>&lt;strong>database&lt;/strong>&lt;/em>. Nếu không, bạn có thể bỏ qua bước này.&lt;/p>&lt;/blockquote>
+&lt;h3 id="tạo-database-trên-cpanel">Tạo database trên cPanel
+&lt;/h3>&lt;p>Tạo một database mới tại section &lt;strong>MySQL Databases&lt;/strong>. Khi tạo database bạn cần điền và ghi chú lại những thông số database như sau:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>MySQL Database&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>MySQL User&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>MySQL Host&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>MySQL Password&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-13.webp"
 loading="lazy"
 alt="Tạo database mới"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Tạo database mới&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="di-chuyển-vào-phpmyadmin-của-database"&gt;Di chuyển vào phpMyAdmin của database
-&lt;/h3&gt;&lt;p&gt;Khi sử dụng &lt;strong&gt;phpMyAdmin&lt;/strong&gt; để quản lý database, hãy &lt;strong&gt;import database MySQL&lt;/strong&gt;. Nếu bạn muốn upload vào một database có sẵn, hãy xóa dữ liệu trước để tránh lỗi khi tải lên từ máy tính.&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-14.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Tạo database mới&lt;/em>&lt;/p>
+&lt;h3 id="di-chuyển-vào-phpmyadmin-của-database">Di chuyển vào phpMyAdmin của database
+&lt;/h3>&lt;p>Khi sử dụng &lt;strong>phpMyAdmin&lt;/strong> để quản lý database, hãy &lt;strong>import database MySQL&lt;/strong>. Nếu bạn muốn upload vào một database có sẵn, hãy xóa dữ liệu trước để tránh lỗi khi tải lên từ máy tính.&lt;/p>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-14.webp"
 loading="lazy"
 alt="Di chuyển vào phpMyAdmin"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Di chuyển vào phpMyAdmin&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="di-chuyển-vào-tab-import-và-upload-dữ-liệu-vào-database"&gt;Di chuyển vào tab Import và upload dữ liệu vào database
-&lt;/h3&gt;&lt;p&gt;Nếu là lần đầu tạo database, chỉ cần vào tab &lt;strong&gt;Import&lt;/strong&gt; để upload dữ liệu vào database trống. Bạn đã có một file SQL từ bản sao lưu của trang web, có thể là file dạng text với đuôi &lt;code&gt;.sql&lt;/code&gt; hoặc dạng nén như &lt;code&gt;.sql.zip&lt;/code&gt; hay &lt;code&gt;.sql.gz&lt;/code&gt;. Hãy nhấn nút &lt;strong&gt;Choose File&lt;/strong&gt; để chọn file cơ sở dữ liệu và sau đó bấm nút &lt;strong&gt;Go&lt;/strong&gt; để bắt đầu quá trình tải lên. Khi &lt;strong&gt;phpMyAdmin&lt;/strong&gt; hoàn tất và hiển thị thông báo &lt;em&gt;Import has been successfully finished, 302 queries executed&lt;/em&gt;, có nghĩa là quá trình tải lên cơ sở dữ liệu đã hoàn tất.&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-15.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Di chuyển vào phpMyAdmin&lt;/em>&lt;/p>
+&lt;h3 id="di-chuyển-vào-tab-import-và-upload-dữ-liệu-vào-database">Di chuyển vào tab Import và upload dữ liệu vào database
+&lt;/h3>&lt;p>Nếu là lần đầu tạo database, chỉ cần vào tab &lt;strong>Import&lt;/strong> để upload dữ liệu vào database trống. Bạn đã có một file SQL từ bản sao lưu của trang web, có thể là file dạng text với đuôi &lt;code>.sql&lt;/code> hoặc dạng nén như &lt;code>.sql.zip&lt;/code> hay &lt;code>.sql.gz&lt;/code>. Hãy nhấn nút &lt;strong>Choose File&lt;/strong> để chọn file cơ sở dữ liệu và sau đó bấm nút &lt;strong>Go&lt;/strong> để bắt đầu quá trình tải lên. Khi &lt;strong>phpMyAdmin&lt;/strong> hoàn tất và hiển thị thông báo &lt;em>Import has been successfully finished, 302 queries executed&lt;/em>, có nghĩa là quá trình tải lên cơ sở dữ liệu đã hoàn tất.&lt;/p>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-15.webp"
 loading="lazy"
 alt="Import dữ liệu vào database"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Import dữ liệu vào database&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="cập-nhật-file-cấu-hình-để-kết-nối-website-và-database"&gt;Cập nhật file cấu hình để kết nối website và database
-&lt;/h3&gt;&lt;p&gt;Sau khi tải database lên server, bạn cần mở &lt;strong&gt;file cấu hình PHP&lt;/strong&gt; script để điền thông tin như host, tên database, tên người dùng và mật khẩu. File cấu hình có thể có tên và vị trí khác nhau tùy thuộc vào phần mềm bạn sử dụng. Ví dụ, với &lt;strong&gt;WordPress&lt;/strong&gt;, file cấu hình là &lt;code&gt;wp-config.php&lt;/code&gt; và nằm trong thư mục chứa &lt;strong&gt;WordPress&lt;/strong&gt; (thường là &lt;code&gt;public_html&lt;/code&gt;).&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;⚠ &lt;strong&gt;Lưu ý:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Nếu cơ sở dữ liệu của bạn có kích thước lớn, hãy cân nhắc chia nhỏ database thành nhiều file để quá trình tải lên diễn ra nhanh chóng hơn.&lt;/li&gt;
-&lt;li&gt;Nếu database chứa các ký tự đặc biệt, nhớ chuyển đổi chúng sang định dạng &lt;strong&gt;ASCII&lt;/strong&gt; trước khi thực hiện upload.&lt;/li&gt;
-&lt;li&gt;Trong trường hợp gặp lỗi khi import, bạn cần kiểm tra xem database có bị hỏng hay không. Nếu bị lỗi, hãy tạo lại một cơ sở dữ liệu mới và thử lại.&lt;/li&gt;
-&lt;li&gt;Cuối cùng, sau khi upload xong, đừng quên kiểm tra website của bạn để đảm bảo mọi thứ hoạt động bình thường.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;h3 id="cập-nhật-file-cấu-hình-để-kết-nối-website-và-database-1"&gt;Cập nhật file cấu hình để kết nối website và database
-&lt;/h3&gt;&lt;p&gt;Sau khi tải database lên server, bạn cần mở file cấu hình PHP script để điền thông tin như &lt;strong&gt;host&lt;/strong&gt;, &lt;strong&gt;tên database&lt;/strong&gt;, &lt;strong&gt;tên người dùng&lt;/strong&gt; và &lt;strong&gt;mật khẩu&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;File cấu hình có thể có tên và vị trí khác nhau tùy thuộc vào phần mềm bạn sử dụng. Ví dụ, với &lt;strong&gt;WordPress&lt;/strong&gt;, file cấu hình là &lt;code&gt;wp-config.php&lt;/code&gt; và nằm trong thư mục chứa WordPress (thường là &lt;code&gt;public_html&lt;/code&gt;).&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="bước-4-kiểm-tra-website-đã-hoạt-động-ổn-định-hay-chưa"&gt;Bước 4: Kiểm tra website đã hoạt động ổn định hay chưa
-&lt;/h2&gt;&lt;p&gt;Để đảm bảo website của bạn hoạt động ổn định sau khi tải lên và trỏ tên miền, bạn cần thực hiện một số bước kiểm tra quan trọng:&lt;/p&gt;
-&lt;h3 id="-kiểm-tra-truy-cập-website"&gt;🔍 Kiểm tra truy cập website
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Truy cập bằng tên miền hoặc địa chỉ IP:&lt;/strong&gt; Nếu bạn có thể truy cập thành công, website đã hoạt động ổn định.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Chờ DNS cập nhật:&lt;/strong&gt; Nếu tên miền vừa được cập nhật, bạn có thể cần đợi khoảng &lt;strong&gt;24 giờ&lt;/strong&gt; để DNS được quảng bá rộng rãi.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Kiểm tra ngay lập tức bằng:&lt;/strong&gt;
-&lt;ul&gt;
-&lt;li&gt;🖥️ &lt;strong&gt;Sử dụng file host:&lt;/strong&gt; Chỉnh sửa file host trên máy tính để mô phỏng thay đổi DNS.&lt;/li&gt;
-&lt;li&gt;🌐 &lt;strong&gt;Công cụ online:&lt;/strong&gt; Kiểm tra website bằng các dịch vụ kiểm tra DNS trực tuyến.&lt;/li&gt;
-&lt;li&gt;🔌 &lt;strong&gt;Plugin browser:&lt;/strong&gt; Cài đặt plugin giúp tạo file host ảo để kiểm tra các thay đổi DNS.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-kiểm-tra-các-chức-năng-của-website"&gt;🛠️ Kiểm tra các chức năng của website
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Thử truy cập các trang khác nhau, kiểm tra liên kết.&lt;/li&gt;
-&lt;li&gt;Kiểm tra xem các tính năng của website có hoạt động đúng không.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-kiểm-tra-tốc-độ-tải-trang"&gt;⚡ Kiểm tra tốc độ tải trang
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Sử dụng các công cụ như &lt;strong&gt;Google PageSpeed Insights, GTmetrix&lt;/strong&gt; để kiểm tra hiệu suất.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-kiểm-tra-các-lỗi-trên-website"&gt;🚨 Kiểm tra các lỗi trên website
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Lỗi 404:&lt;/strong&gt; Trang không tìm thấy.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Lỗi 500:&lt;/strong&gt; Lỗi máy chủ hosting.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Lỗi 503:&lt;/strong&gt; Máy chủ đang bảo trì.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-kiểm-tra-trên-nhiều-trình-duyệt--thiết-bị"&gt;🌍 Kiểm tra trên nhiều trình duyệt &amp;amp; thiết bị
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Dùng &lt;strong&gt;Chrome, Firefox, Safari, Edge&lt;/strong&gt; trên &lt;strong&gt;máy tính, điện thoại, máy tính bảng&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-kiểm-tra-vào-các-thời-điểm-khác-nhau-trong-ngày"&gt;⏳ Kiểm tra vào các thời điểm khác nhau trong ngày
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Website có thể hoạt động khác nhau vào những thời điểm khác nhau.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;👉 &lt;strong&gt;Nếu phát hiện lỗi nhưng không biết cách xử lý, hãy liên hệ với nhà cung cấp hosting để được hỗ trợ.&lt;/strong&gt; 🚀&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="-lời-kết"&gt;📌 Lời kết
-&lt;/h2&gt;&lt;p&gt;Upload website lên hosting là một bước quan trọng để website của bạn có thể hoạt động ổn định trên môi trường trực tuyến. Bằng cách chuẩn bị đúng đắn và thực hiện theo các bước hướng dẫn, bạn sẽ đảm bảo rằng website của mình luôn sẵn sàng phục vụ người dùng một cách hiệu quả.&lt;/p&gt;
-&lt;p&gt;💡 Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ thêm, hãy để lại câu hỏi trong phần bình luận dưới đây. Mình sẽ sớm giúp bạn tìm ra lời giải đáp.&lt;/p&gt;
-&lt;p&gt;Cảm ơn bạn đã theo dõi bài viết 🚀&lt;/p&gt;</description></item></channel></rss>
+>&lt;/p>
+&lt;p align="center">&lt;em>Import dữ liệu vào database&lt;/em>&lt;/p>
+&lt;h3 id="cập-nhật-file-cấu-hình-để-kết-nối-website-và-database">Cập nhật file cấu hình để kết nối website và database
+&lt;/h3>&lt;p>Sau khi tải database lên server, bạn cần mở &lt;strong>file cấu hình PHP&lt;/strong> script để điền thông tin như host, tên database, tên người dùng và mật khẩu. File cấu hình có thể có tên và vị trí khác nhau tùy thuộc vào phần mềm bạn sử dụng. Ví dụ, với &lt;strong>WordPress&lt;/strong>, file cấu hình là &lt;code>wp-config.php&lt;/code> và nằm trong thư mục chứa &lt;strong>WordPress&lt;/strong> (thường là &lt;code>public_html&lt;/code>).&lt;/p>
+&lt;blockquote>
+&lt;p>⚠ &lt;strong>Lưu ý:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Nếu cơ sở dữ liệu của bạn có kích thước lớn, hãy cân nhắc chia nhỏ database thành nhiều file để quá trình tải lên diễn ra nhanh chóng hơn.&lt;/li>
+&lt;li>Nếu database chứa các ký tự đặc biệt, nhớ chuyển đổi chúng sang định dạng &lt;strong>ASCII&lt;/strong> trước khi thực hiện upload.&lt;/li>
+&lt;li>Trong trường hợp gặp lỗi khi import, bạn cần kiểm tra xem database có bị hỏng hay không. Nếu bị lỗi, hãy tạo lại một cơ sở dữ liệu mới và thử lại.&lt;/li>
+&lt;li>Cuối cùng, sau khi upload xong, đừng quên kiểm tra website của bạn để đảm bảo mọi thứ hoạt động bình thường.&lt;/li>
+&lt;/ul>&lt;/blockquote>
+&lt;h3 id="cập-nhật-file-cấu-hình-để-kết-nối-website-và-database-1">Cập nhật file cấu hình để kết nối website và database
+&lt;/h3>&lt;p>Sau khi tải database lên server, bạn cần mở file cấu hình PHP script để điền thông tin như &lt;strong>host&lt;/strong>, &lt;strong>tên database&lt;/strong>, &lt;strong>tên người dùng&lt;/strong> và &lt;strong>mật khẩu&lt;/strong>.&lt;/p>
+&lt;p>File cấu hình có thể có tên và vị trí khác nhau tùy thuộc vào phần mềm bạn sử dụng. Ví dụ, với &lt;strong>WordPress&lt;/strong>, file cấu hình là &lt;code>wp-config.php&lt;/code> và nằm trong thư mục chứa WordPress (thường là &lt;code>public_html&lt;/code>).&lt;/p>
+&lt;hr>
+&lt;h2 id="bước-4-kiểm-tra-website-đã-hoạt-động-ổn-định-hay-chưa">Bước 4: Kiểm tra website đã hoạt động ổn định hay chưa
+&lt;/h2>&lt;p>Để đảm bảo website của bạn hoạt động ổn định sau khi tải lên và trỏ tên miền, bạn cần thực hiện một số bước kiểm tra quan trọng:&lt;/p>
+&lt;h3 id="-kiểm-tra-truy-cập-website">🔍 Kiểm tra truy cập website
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>Truy cập bằng tên miền hoặc địa chỉ IP:&lt;/strong> Nếu bạn có thể truy cập thành công, website đã hoạt động ổn định.&lt;/li>
+&lt;li>&lt;strong>Chờ DNS cập nhật:&lt;/strong> Nếu tên miền vừa được cập nhật, bạn có thể cần đợi khoảng &lt;strong>24 giờ&lt;/strong> để DNS được quảng bá rộng rãi.&lt;/li>
+&lt;li>&lt;strong>Kiểm tra ngay lập tức bằng:&lt;/strong>
+&lt;ul>
+&lt;li>🖥️ &lt;strong>Sử dụng file host:&lt;/strong> Chỉnh sửa file host trên máy tính để mô phỏng thay đổi DNS.&lt;/li>
+&lt;li>🌐 &lt;strong>Công cụ online:&lt;/strong> Kiểm tra website bằng các dịch vụ kiểm tra DNS trực tuyến.&lt;/li>
+&lt;li>🔌 &lt;strong>Plugin browser:&lt;/strong> Cài đặt plugin giúp tạo file host ảo để kiểm tra các thay đổi DNS.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="-kiểm-tra-các-chức-năng-của-website">🛠️ Kiểm tra các chức năng của website
+&lt;/h3>&lt;ul>
+&lt;li>Thử truy cập các trang khác nhau, kiểm tra liên kết.&lt;/li>
+&lt;li>Kiểm tra xem các tính năng của website có hoạt động đúng không.&lt;/li>
+&lt;/ul>
+&lt;h3 id="-kiểm-tra-tốc-độ-tải-trang">⚡ Kiểm tra tốc độ tải trang
+&lt;/h3>&lt;ul>
+&lt;li>Sử dụng các công cụ như &lt;strong>Google PageSpeed Insights, GTmetrix&lt;/strong> để kiểm tra hiệu suất.&lt;/li>
+&lt;/ul>
+&lt;h3 id="-kiểm-tra-các-lỗi-trên-website">🚨 Kiểm tra các lỗi trên website
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>Lỗi 404:&lt;/strong> Trang không tìm thấy.&lt;/li>
+&lt;li>&lt;strong>Lỗi 500:&lt;/strong> Lỗi máy chủ hosting.&lt;/li>
+&lt;li>&lt;strong>Lỗi 503:&lt;/strong> Máy chủ đang bảo trì.&lt;/li>
+&lt;/ul>
+&lt;h3 id="-kiểm-tra-trên-nhiều-trình-duyệt--thiết-bị">🌍 Kiểm tra trên nhiều trình duyệt &amp;amp; thiết bị
+&lt;/h3>&lt;ul>
+&lt;li>Dùng &lt;strong>Chrome, Firefox, Safari, Edge&lt;/strong> trên &lt;strong>máy tính, điện thoại, máy tính bảng&lt;/strong>.&lt;/li>
+&lt;/ul>
+&lt;h3 id="-kiểm-tra-vào-các-thời-điểm-khác-nhau-trong-ngày">⏳ Kiểm tra vào các thời điểm khác nhau trong ngày
+&lt;/h3>&lt;ul>
+&lt;li>Website có thể hoạt động khác nhau vào những thời điểm khác nhau.&lt;/li>
+&lt;/ul>
+&lt;p>👉 &lt;strong>Nếu phát hiện lỗi nhưng không biết cách xử lý, hãy liên hệ với nhà cung cấp hosting để được hỗ trợ.&lt;/strong> 🚀&lt;/p>
+&lt;hr>
+&lt;h2 id="-lời-kết">📌 Lời kết
+&lt;/h2>&lt;p>Upload website lên hosting là một bước quan trọng để website của bạn có thể hoạt động ổn định trên môi trường trực tuyến. Bằng cách chuẩn bị đúng đắn và thực hiện theo các bước hướng dẫn, bạn sẽ đảm bảo rằng website của mình luôn sẵn sàng phục vụ người dùng một cách hiệu quả.&lt;/p>
+&lt;p>💡 Nếu bạn có bất kỳ câu hỏi nào hoặc cần hỗ trợ thêm, hãy để lại câu hỏi trong phần bình luận dưới đây. Mình sẽ sớm giúp bạn tìm ra lời giải đáp.&lt;/p>
+&lt;p>Cảm ơn bạn đã theo dõi bài viết 🚀&lt;/p></description></item></channel></rss>
