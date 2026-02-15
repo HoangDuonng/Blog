@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Log on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/log/</link><description>Recent content in Log on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 15 Feb 2026 12:59:56 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/log/index.xml" rel="self" type="application/rss+xml"/><item><title>Logs Management 📜</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-sixteen/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-sixteen/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-sixteen.webp" alt="Featured image of post Logs Management 📜" /&gt;&lt;h2 id="-what-is-logs-management"&gt;🔍 What is Logs Management?
+&lt;/h2&gt;&lt;p&gt;Logs management is the process of collecting, aggregating, analyzing, storing, and retrieving logs from applications and infrastructure systems. Logs contain critical information about system activity, helping detect incidents, optimize performance, and ensure security compliance.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-popular-logs-management-tools"&gt;🚀 Popular Logs Management Tools
+&lt;/h2&gt;&lt;h3 id="elastic-stack-elk-stack"&gt;Elastic Stack (ELK Stack)
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;📝 Overview:&lt;/strong&gt;
+Elastic Stack, formerly known as the ELK Stack, includes Elasticsearch (search and analytics), Logstash (data processing), Kibana (visualization), and Beats (data collection). It is a popular solution for logs management with high scalability.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Key features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Real-time log search and analysis.&lt;/li&gt;
+&lt;li&gt;Supports multiple data formats.&lt;/li&gt;
+&lt;li&gt;Scales well for enterprise environments.&lt;/li&gt;
+&lt;li&gt;Provides a visual interface with Kibana.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Use Elastic Stack to collect logs from web servers, analyze errors, and create dashboards that track traffic patterns.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📚 Useful resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://www.elastic.co/elastic-stack/" target="_blank" rel="noopener"
+&gt;Elastic Stack homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=CfCTWVAwFbQ" target="_blank" rel="noopener"
+&gt;Elastic Stack overview&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="loki"&gt;Loki
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;📝 Overview:&lt;/strong&gt;
+Loki is a log aggregation system developed by Grafana Labs, optimized for Kubernetes and containers. Loki stores log labels instead of full-text indexes, saving resources.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Key features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tight integration with Grafana.&lt;/li&gt;
+&lt;li&gt;Uses LogQL, a query language similar to PromQL.&lt;/li&gt;
+&lt;li&gt;Optimized for Kubernetes and container environments.&lt;/li&gt;
+&lt;li&gt;Resource-efficient compared to other solutions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Use Loki to track logs from containers in Kubernetes to detect application errors quickly.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📚 Useful resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://grafana.com/oss/loki/" target="_blank" rel="noopener"
+&gt;Loki homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://grafana.com/docs/loki/latest/?pg=oss-loki&amp;amp;plcmt=quick-links" target="_blank" rel="noopener"
+&gt;Loki documentation&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="graylog"&gt;Graylog
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;📝 Overview:&lt;/strong&gt;
+Graylog is an open-source logs management platform that supports real-time log collection, storage, and analysis. It provides a friendly web interface and supports multiple log data types.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Key features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Supports log collection protocols such as Syslog and GELF.&lt;/li&gt;
+&lt;li&gt;Powerful search interface.&lt;/li&gt;
+&lt;li&gt;Alerting capabilities for incident detection.&lt;/li&gt;
+&lt;li&gt;Real-time log queries.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Use Graylog to monitor security system logs and detect intrusion behavior.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;📚 Useful resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://www.graylog.org/" target="_blank" rel="noopener"
+&gt;Graylog homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.graylog.org/resources-videos" target="_blank" rel="noopener"
+&gt;Graylog usage guides&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-example-code"&gt;🔥 Example Code
+&lt;/h2&gt;&lt;p&gt;Below is an example of sending logs to a log collection system using JavaScript:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-javascript" data-lang="javascript"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;winston&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;require&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;winston&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kr"&gt;const&lt;/span&gt; &lt;span class="nx"&gt;logger&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="nx"&gt;winston&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;createLogger&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;level&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;info&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;format&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="nx"&gt;winston&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;format&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;json&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nx"&gt;transports&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;winston&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;transports&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;Console&lt;/span&gt;&lt;span class="p"&gt;(),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;new&lt;/span&gt; &lt;span class="nx"&gt;winston&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;transports&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;File&lt;/span&gt;&lt;span class="p"&gt;({&lt;/span&gt; &lt;span class="nx"&gt;filename&lt;/span&gt;&lt;span class="o"&gt;:&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;app.log&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;})&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;});&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;// Write logs
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;info&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Application started successfully&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;warn&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Warning: Invalid input data&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nx"&gt;logger&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nx"&gt;error&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Error: Unable to connect to the database&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;✅ Conclusion
+&lt;/h2&gt;&lt;p&gt;Logs management plays a vital role in monitoring systems and resolving incidents quickly. Tools such as &lt;strong&gt;Elastic Stack, Loki,&lt;/strong&gt; and &lt;strong&gt;Graylog&lt;/strong&gt; provide powerful solutions for log collection, analysis, and visualization. Choosing the right tool will help improve operational efficiency. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Container Orchestration&lt;/strong&gt;&lt;/em&gt; - the process of automatically managing, deploying, scaling, and coordinating containers in infrastructure environments, ensuring availability, scalability, and optimized resource usage. Common tools for container orchestration include Kubernetes, Docker Swarm, and Apache Mesos.&lt;/p&gt;</description></item></channel></rss>
