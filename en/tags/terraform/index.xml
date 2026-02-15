@@ -1,81 +1,81 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Terraform on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/terraform/</link><description>Recent content in Terraform on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 14 Feb 2026 16:30:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/terraform/index.xml" rel="self" type="application/rss+xml"/><item><title>Infrastructure Provisioning with Terraform 🟪🔳</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-eleven/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-eleven/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-eleven.webp" alt="Featured image of post Infrastructure Provisioning with Terraform 🟪🔳" />&lt;h2 id="-what-is-provisioning">🔹 What is Provisioning?
-&lt;/h2>&lt;p>Provisioning refers to the process of setting up and configuring the necessary IT infrastructure to support an application or service. This includes allocating and preparing resources such as &lt;strong>servers, storage, networking, and software environments&lt;/strong>.&lt;/p>
-&lt;p>While provisioning can be done manually, in modern DevOps, this process is typically automated using tools like &lt;strong>Terraform, Pulumi, CloudFormation&lt;/strong>. Using Infrastructure-as-Code (&lt;strong>IaC&lt;/strong>) helps define the entire provisioning process in version-controlled script files, ensuring consistency, reducing human errors, and improving scalability and disaster recovery.&lt;/p>
-&lt;p>📖 &lt;strong>Free resources to learn:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>📄 &lt;a class="link" href="https://www.redhat.com/en/topics/automation/what-is-provisioning" target="_blank" rel="noopener"
->What is provisioning? - RedHat&lt;/a>&lt;/li>
-&lt;li>📄 &lt;a class="link" href="https://www.ibm.com/topics/provisioning" target="_blank" rel="noopener"
->What is provisioning? - IBM&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=hWvDlmhASpk" target="_blank" rel="noopener"
->Open Answers: What is provisioning?&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-terraform---powerful-iac-solution">🏗️ Terraform - Powerful IaC Solution
-&lt;/h2>&lt;p>Terraform is an open-source &lt;strong>Infrastructure-as-Code (IaC)&lt;/strong> tool developed by &lt;strong>HashiCorp&lt;/strong> that helps define, deploy, and manage infrastructure on &lt;strong>multi-cloud&lt;/strong> or on-premises environments using &lt;strong>declarative&lt;/strong> configuration files.&lt;/p>
-&lt;h3 id="-benefits-of-using-terraform">🌟 Benefits of Using Terraform
-&lt;/h3>&lt;p>✅ &lt;strong>Multi-platform support&lt;/strong>: AWS, Azure, Google Cloud, Kubernetes, etc.
-✅ &lt;strong>State management&lt;/strong>: Helps track infrastructure resources.
-✅ &lt;strong>Scalability and reusability&lt;/strong>: Easy to modularize configurations.
-✅ &lt;strong>CI/CD integration&lt;/strong>: Automates infrastructure deployment.&lt;/p>
-&lt;h3 id="-example-creating-an-ec2-instance-on-aws">🔨 Example: Creating an EC2 instance on AWS
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-hcl" data-lang="hcl">&lt;span class="line">&lt;span class="cl">&lt;span class="k">provider&lt;/span> &lt;span class="s2">&amp;#34;aws&amp;#34;&lt;/span> {
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n"> region&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;us-east-1&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">resource&lt;/span> &lt;span class="s2">&amp;#34;aws_instance&amp;#34; &amp;#34;web&amp;#34;&lt;/span> {
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n"> ami&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;ami-12345678&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n"> instance_type&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;t2.micro&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n"> tags&lt;/span> &lt;span class="o">=&lt;/span> {
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n"> Name&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;Terraform-Instance&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> }
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">}
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📖 &lt;strong>Free resources to learn:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>📍 &lt;a class="link" href="https://roadmap.sh/terraform" target="_blank" rel="noopener"
->Detailed Terraform Roadmap&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=7xngnjfIlK4" target="_blank" rel="noopener"
->Complete Terraform Course&lt;/a>&lt;/li>
-&lt;li>📄 &lt;a class="link" href="https://www.terraform.io/docs" target="_blank" rel="noopener"
->Official Terraform Documentation&lt;/a>&lt;/li>
-&lt;li>📖 &lt;a class="link" href="https://thenewstack.io/how-to-scale-your-terraform-infrastructure/" target="_blank" rel="noopener"
->How to Scale Your Terraform Infrastructure&lt;/a>&lt;/li>
-&lt;li>🔥 &lt;a class="link" href="https://app.daily.dev/tags/terraform?ref=roadmapsh" target="_blank" rel="noopener"
->Explore Top Terraform Articles&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-aws-cdk---an-alternative">🔹 AWS CDK - An Alternative?
-&lt;/h2>&lt;p>AWS Cloud Development Kit (&lt;strong>AWS CDK&lt;/strong>) is an open-source framework for provisioning AWS infrastructure using code in languages like &lt;strong>TypeScript, Python, Java, C#, Go&lt;/strong>. AWS CDK uses CloudFormation to deploy resources safely and repeatedly.&lt;/p>
-&lt;p>📖 &lt;strong>Free resources to learn:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=D4Asp5g4fp8" target="_blank" rel="noopener"
->AWS CDK Course for Beginners&lt;/a>&lt;/li>
-&lt;li>📄 &lt;a class="link" href="https://www.youtube.com/watch?v=D4Asp5g4fp8" target="_blank" rel="noopener"
->Official AWS CDK Documentation&lt;/a>&lt;/li>
-&lt;li>📂 &lt;a class="link" href="https://github.com/aws-samples/aws-cdk-examples" target="_blank" rel="noopener"
->AWS CDK Examples&lt;/a>&lt;/li>
-&lt;li>🔥 &lt;a class="link" href="https://app.daily.dev/tags/aws?ref=roadmapsh" target="_blank" rel="noopener"
->Explore Top AWS Articles&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-conclusion">📌 Conclusion
-&lt;/h2>&lt;p>Terraform is the leading tool for &lt;strong>Infrastructure-as-Code&lt;/strong>, providing flexibility and powerful automation capabilities across multiple cloud platforms. If you work extensively with AWS and want to deploy using programming languages, &lt;strong>AWS CDK&lt;/strong> is also a viable option to consider.&lt;/p>
-&lt;p>Depending on project requirements, you can choose the appropriate tool to manage infrastructure more effectively. 🚀&lt;/p>
-&lt;p>👉 &lt;strong>Next step:&lt;/strong> Learn about &lt;em>&lt;strong>Configuration Management&lt;/strong>&lt;/em> - the process of managing, monitoring, and automating system, software, and infrastructure configurations to ensure consistency, stability, and easy control throughout their lifecycle. It helps track and control changes, reduce errors from manual configuration, and support rapid deployment. Popular tools include &lt;strong>Ansible, Puppet, Chef, and SaltStack&lt;/strong>.&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Terraform on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/terraform/</link><description>Recent content in Terraform on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 15 Feb 2026 12:49:12 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/terraform/index.xml" rel="self" type="application/rss+xml"/><item><title>Infrastructure Provisioning with Terraform 🟪🔳</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-eleven/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-eleven/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-eleven.webp" alt="Featured image of post Infrastructure Provisioning with Terraform 🟪🔳" /&gt;&lt;h2 id="-what-is-provisioning"&gt;🔹 What is Provisioning?
+&lt;/h2&gt;&lt;p&gt;Provisioning refers to the process of setting up and configuring the necessary IT infrastructure to support an application or service. This includes allocating and preparing resources such as &lt;strong&gt;servers, storage, networking, and software environments&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;While provisioning can be done manually, in modern DevOps, this process is typically automated using tools like &lt;strong&gt;Terraform, Pulumi, CloudFormation&lt;/strong&gt;. Using Infrastructure-as-Code (&lt;strong&gt;IaC&lt;/strong&gt;) helps define the entire provisioning process in version-controlled script files, ensuring consistency, reducing human errors, and improving scalability and disaster recovery.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📄 &lt;a class="link" href="https://www.redhat.com/en/topics/automation/what-is-provisioning" target="_blank" rel="noopener"
+&gt;What is provisioning? - RedHat&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class="link" href="https://www.ibm.com/topics/provisioning" target="_blank" rel="noopener"
+&gt;What is provisioning? - IBM&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=hWvDlmhASpk" target="_blank" rel="noopener"
+&gt;Open Answers: What is provisioning?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-terraform---powerful-iac-solution"&gt;🏗️ Terraform - Powerful IaC Solution
+&lt;/h2&gt;&lt;p&gt;Terraform is an open-source &lt;strong&gt;Infrastructure-as-Code (IaC)&lt;/strong&gt; tool developed by &lt;strong&gt;HashiCorp&lt;/strong&gt; that helps define, deploy, and manage infrastructure on &lt;strong&gt;multi-cloud&lt;/strong&gt; or on-premises environments using &lt;strong&gt;declarative&lt;/strong&gt; configuration files.&lt;/p&gt;
+&lt;h3 id="-benefits-of-using-terraform"&gt;🌟 Benefits of Using Terraform
+&lt;/h3&gt;&lt;p&gt;✅ &lt;strong&gt;Multi-platform support&lt;/strong&gt;: AWS, Azure, Google Cloud, Kubernetes, etc.
+✅ &lt;strong&gt;State management&lt;/strong&gt;: Helps track infrastructure resources.
+✅ &lt;strong&gt;Scalability and reusability&lt;/strong&gt;: Easy to modularize configurations.
+✅ &lt;strong&gt;CI/CD integration&lt;/strong&gt;: Automates infrastructure deployment.&lt;/p&gt;
+&lt;h3 id="-example-creating-an-ec2-instance-on-aws"&gt;🔨 Example: Creating an EC2 instance on AWS
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-hcl" data-lang="hcl"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;provider&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;aws&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt; region&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;us-east-1&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;resource&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;aws_instance&amp;#34; &amp;#34;web&amp;#34;&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt; ami&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;ami-12345678&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt; instance_type&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;t2.micro&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt; tags&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; {
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt; Name&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Terraform-Instance&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; }
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;}
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📍 &lt;a class="link" href="https://roadmap.sh/terraform" target="_blank" rel="noopener"
+&gt;Detailed Terraform Roadmap&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=7xngnjfIlK4" target="_blank" rel="noopener"
+&gt;Complete Terraform Course&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class="link" href="https://www.terraform.io/docs" target="_blank" rel="noopener"
+&gt;Official Terraform Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://thenewstack.io/how-to-scale-your-terraform-infrastructure/" target="_blank" rel="noopener"
+&gt;How to Scale Your Terraform Infrastructure&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔥 &lt;a class="link" href="https://app.daily.dev/tags/terraform?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Explore Top Terraform Articles&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-aws-cdk---an-alternative"&gt;🔹 AWS CDK - An Alternative?
+&lt;/h2&gt;&lt;p&gt;AWS Cloud Development Kit (&lt;strong&gt;AWS CDK&lt;/strong&gt;) is an open-source framework for provisioning AWS infrastructure using code in languages like &lt;strong&gt;TypeScript, Python, Java, C#, Go&lt;/strong&gt;. AWS CDK uses CloudFormation to deploy resources safely and repeatedly.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=D4Asp5g4fp8" target="_blank" rel="noopener"
+&gt;AWS CDK Course for Beginners&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class="link" href="https://www.youtube.com/watch?v=D4Asp5g4fp8" target="_blank" rel="noopener"
+&gt;Official AWS CDK Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📂 &lt;a class="link" href="https://github.com/aws-samples/aws-cdk-examples" target="_blank" rel="noopener"
+&gt;AWS CDK Examples&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔥 &lt;a class="link" href="https://app.daily.dev/tags/aws?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Explore Top AWS Articles&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;📌 Conclusion
+&lt;/h2&gt;&lt;p&gt;Terraform is the leading tool for &lt;strong&gt;Infrastructure-as-Code&lt;/strong&gt;, providing flexibility and powerful automation capabilities across multiple cloud platforms. If you work extensively with AWS and want to deploy using programming languages, &lt;strong&gt;AWS CDK&lt;/strong&gt; is also a viable option to consider.&lt;/p&gt;
+&lt;p&gt;Depending on project requirements, you can choose the appropriate tool to manage infrastructure more effectively. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Configuration Management&lt;/strong&gt;&lt;/em&gt; - the process of managing, monitoring, and automating system, software, and infrastructure configurations to ensure consistency, stability, and easy control throughout their lifecycle. It helps track and control changes, reduce errors from manual configuration, and support rapid deployment. Popular tools include &lt;strong&gt;Ansible, Puppet, Chef, and SaltStack&lt;/strong&gt;.&lt;/p&gt;</description></item></channel></rss>

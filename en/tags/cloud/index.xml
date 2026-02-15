@@ -1,532 +1,532 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cloud on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/cloud/</link><description>Recent content in Cloud on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 14 Feb 2026 17:00:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/cloud/index.xml" rel="self" type="application/rss+xml"/><item><title>CI/CD - Continuous Integration and Continuous Deployment 🚀</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-thirteen/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-thirteen/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-thirteen.webp" alt="Featured image of post CI/CD - Continuous Integration and Continuous Deployment 🚀" />&lt;h2 id="-what-is-cicd">🔍 What is CI/CD?
-&lt;/h2>&lt;p>CI/CD (Continuous Integration/Continuous Deployment) is a methodology that helps automate the software development process, reducing errors, speeding up deployment, and improving product quality.&lt;/p>
-&lt;ul>
-&lt;li>&lt;strong>Continuous Integration (CI):&lt;/strong> Continuous integration, helps detect errors early by automatically testing whenever there are changes in the source code.&lt;/li>
-&lt;li>&lt;strong>Continuous Deployment (CD):&lt;/strong> Continuous deployment, ensures software is released automatically and quickly.&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-popular-cicd-tools">🌟 Popular CI/CD Tools
-&lt;/h2>&lt;h3 id="-jenkins">🔧 Jenkins
-&lt;/h3>&lt;p>Jenkins is a popular open-source automation server that helps build, test, and deploy software automatically.&lt;/p>
-&lt;p>📌 &lt;strong>Key Features:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>Supports many plugins, easy integration with DevOps tools.&lt;/li>
-&lt;li>Intuitive web interface, easy to configure.&lt;/li>
-&lt;li>Supports both Windows and Linux environments.&lt;/li>
-&lt;/ul>
-&lt;p>💡 &lt;strong>Example:&lt;/strong> Configuring a simple pipeline in Jenkinsfile&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-groovy" data-lang="groovy">&lt;span class="line">&lt;span class="cl">&lt;span class="n">pipeline&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">agent&lt;/span> &lt;span class="n">any&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stages&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;Build&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">steps&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s1">&amp;#39;Building the application...&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;Test&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">steps&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s1">&amp;#39;Running tests...&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;Deploy&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">steps&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s1">&amp;#39;Deploying the application...&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📖 &lt;strong>Useful Resources:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>&lt;a class="link" href="https://www.jenkins.io/" target="_blank" rel="noopener"
->🔗 Jenkins Homepage&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=6YZvp2GwT0A" target="_blank" rel="noopener"
->🎥 Jenkins Tutorial from A-Z&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="-circleci">🔄 CircleCI
-&lt;/h3>&lt;p>CircleCI is a powerful CI/CD platform that supports many programming languages and integrates well with GitHub and Bitbucket.&lt;/p>
-&lt;p>📌 &lt;strong>Key Features:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>Supports parallel builds to increase processing speed.&lt;/li>
-&lt;li>Good integration with Docker and Kubernetes.&lt;/li>
-&lt;li>Available in cloud and self-hosted versions.&lt;/li>
-&lt;/ul>
-&lt;p>💡 &lt;strong>Example:&lt;/strong> Configuring a CircleCI pipeline in &lt;code>.circleci/config.yml&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;span class="lnt">8
-&lt;/span>&lt;span class="lnt">9
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">2.1&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">jobs&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">build&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">docker&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">circleci/node:14&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">steps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">checkout&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">npm install&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">npm test&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📖 &lt;strong>Useful Resources:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>&lt;a class="link" href="https://circleci.com/" target="_blank" rel="noopener"
->🔗 CircleCI Homepage&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=_XaYv9zvHUk" target="_blank" rel="noopener"
->🎥 CircleCI Tutorial Video&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="-gitlab-cicd">🛠️ GitLab CI/CD
-&lt;/h3>&lt;p>GitLab CI/CD is a built-in system in GitLab that allows automating testing and deployment processes right within the Git repository.&lt;/p>
-&lt;p>📌 &lt;strong>Key Features:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>Supports full pipeline automation from build, test to deploy.&lt;/li>
-&lt;li>Built into GitLab, no external tools needed.&lt;/li>
-&lt;li>Supports running pipelines on Docker containers.&lt;/li>
-&lt;/ul>
-&lt;p>💡 &lt;strong>Example:&lt;/strong> Configuring GitLab CI/CD pipeline in &lt;code>.gitlab-ci.yml&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">stages&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">build&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">test&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">deploy&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">test&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">stage&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">test&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">script&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">npm install&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">npm test&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📖 &lt;strong>Useful Resources:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>&lt;a class="link" href="https://gitlab.com/" target="_blank" rel="noopener"
->🔗 GitLab Homepage&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=z7nLsJvEyMY" target="_blank" rel="noopener"
->🎥 GitLab CI/CD Tutorial&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="-github-actions">⚡ GitHub Actions
-&lt;/h3>&lt;p>GitHub Actions is a CI/CD tool integrated directly into GitHub, helping automate testing and deployment processes whenever there are changes in the repository.&lt;/p>
-&lt;p>📌 &lt;strong>Key Features:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>Tightly integrated with GitHub, easy workflow setup.&lt;/li>
-&lt;li>Supports many operating systems and programming languages.&lt;/li>
-&lt;li>Can use marketplace with thousands of available actions.&lt;/li>
-&lt;/ul>
-&lt;p>💡 &lt;strong>Example:&lt;/strong> GitHub Actions workflow in &lt;code>.github/workflows/main.yml&lt;/code>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Node.js CI&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="l">push, pull_request]&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">jobs&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">build&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">runs-on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">ubuntu-latest&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">steps&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">actions/checkout@v3&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Setup Node.js&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">uses&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">actions/setup-node@v3&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">with&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">node-version&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">14&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">npm install&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">run&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">npm test&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📖 &lt;strong>Useful Resources:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>&lt;a class="link" href="https://docs.github.com/en/actions" target="_blank" rel="noopener"
->🔗 GitHub Actions Homepage&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=nyKZTKQS_EQ" target="_blank" rel="noopener"
->🎥 GitHub Actions Tutorial Video&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-conclusion">🎯 Conclusion
-&lt;/h2>&lt;p>CI/CD helps accelerate the software development process, minimize errors, and improve product quality. Depending on your needs and working environment, you can choose &lt;strong>Jenkins, CircleCI, GitLab CI/CD, or GitHub Actions&lt;/strong> to deploy your CI/CD system. 🚀&lt;/p>
-&lt;p>👉 &lt;strong>Next step:&lt;/strong> Learn about &lt;em>&lt;strong>Secret Management&lt;/strong>&lt;/em> - the process of storing, managing, and protecting sensitive information such as passwords, API keys, certificates, and access tokens to prevent data leakage and ensure system security. 💡&lt;/p></description></item><item><title>Configuration Management 🔧</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twelve/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twelve/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-twelve.webp" alt="Featured image of post Configuration Management 🔧" />&lt;h2 id="-configuration-management">🔧 Configuration Management
-&lt;/h2>&lt;p>Configuration management is the process of managing and maintaining consistency of components within an information technology system. In the software field, it includes monitoring, tracking, and managing system configuration changes throughout the product lifecycle. Applying configuration management helps increase synchronization, reduce error risks, and ensure compliance with standards in CI/CD (Continuous Integration and Continuous Deployment) processes.&lt;/p>
-&lt;hr>
-&lt;h2 id="-popular-configuration-management-tools">🌐 Popular Configuration Management Tools
-&lt;/h2>&lt;h3 id="-ansible">🚀 Ansible
-&lt;/h3>&lt;p>Ansible is an open automation tool, primarily used for configuration management, application deployment, and task automation.&lt;/p>
-&lt;p>🔄 &lt;strong>Features:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>Uses YAML (playbooks) to define desired states.&lt;/li>
-&lt;li>Works without requiring agent installation.&lt;/li>
-&lt;li>Suitable for small to large scale environments.&lt;/li>
-&lt;/ul>
-&lt;p>💡 &lt;strong>Ansible usage example:&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Install and start Nginx&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">hosts&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">all&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">become&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">yes&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">tasks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Install Nginx&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">apt&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">nginx&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">state&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">present&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Start Nginx&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">service&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">nginx&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">state&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">started&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📖 &lt;strong>Useful free resources:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=9Ua2b06oAr4" target="_blank" rel="noopener"
->📚 Complete Ansible Course for Beginners&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://www.ansible.com/" target="_blank" rel="noopener"
->🔗 Official Ansible Website&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=xRMPKQweySE" target="_blank" rel="noopener"
->🎥 Ansible in 100 Seconds&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="-chef">🌟 Chef
-&lt;/h3>&lt;p>Chef (now part of Progress Chef) is one of the first configuration management tools. It uses Ruby language and emphasizes idempotence (ensuring running n times produces the same result).&lt;/p>
-&lt;p>🔄 &lt;strong>Features:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>Client/server based.&lt;/li>
-&lt;li>Has Chef-Solo for standalone deployment.&lt;/li>
-&lt;li>Suitable for enterprise environments.&lt;/li>
-&lt;/ul>
-&lt;p>💡 &lt;strong>Chef usage example:&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-ruby" data-lang="ruby">&lt;span class="line">&lt;span class="cl">&lt;span class="n">package&lt;/span> &lt;span class="s1">&amp;#39;nginx&amp;#39;&lt;/span> &lt;span class="k">do&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">action&lt;/span> &lt;span class="ss">:install&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">end&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">service&lt;/span> &lt;span class="s1">&amp;#39;nginx&amp;#39;&lt;/span> &lt;span class="k">do&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">action&lt;/span> &lt;span class="o">[&lt;/span>&lt;span class="ss">:enable&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="ss">:start&lt;/span>&lt;span class="o">]&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">end&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📖 &lt;strong>Useful free resources:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>&lt;a class="link" href="https://www.chef.io/products/chef-infra" target="_blank" rel="noopener"
->🔗 Official Chef Website&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://www.tutorialspoint.com/chef/index.htm" target="_blank" rel="noopener"
->📚 Chef Tutorial&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://github.com/chef/chef" target="_blank" rel="noopener"
->🎥 Chef Tutorial Video&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h3 id="-puppet">🏰 Puppet
-&lt;/h3>&lt;p>Puppet is a declarative configuration management tool that operates in a client/server model and supports multiple operating systems.&lt;/p>
-&lt;p>🔄 &lt;strong>Features:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>Large scale management.&lt;/li>
-&lt;li>Periodic configuration checking and application.&lt;/li>
-&lt;li>Integration with many DevOps tools.&lt;/li>
-&lt;/ul>
-&lt;p>💡 &lt;strong>Puppet usage example:&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;span class="lnt">8
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-puppet" data-lang="puppet">&lt;span class="line">&lt;span class="cl">&lt;span class="k">package&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="s">&amp;#39;nginx&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="err">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span> &lt;span class="na">ensure&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="k">installed&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="err">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="err">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">service&lt;/span> &lt;span class="p">{&lt;/span> &lt;span class="s">&amp;#39;nginx&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="err">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span> &lt;span class="na">ensure&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="k">running&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="err">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span> &lt;span class="na">enable&lt;/span> &lt;span class="o">=&amp;gt;&lt;/span> &lt;span class="k">true&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="err">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="p">}&lt;/span>&lt;span class="err">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📖 &lt;strong>Useful free resources:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=Ns_tRKD20c4" target="_blank" rel="noopener"
->📚 Complete Puppet Course&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://puppet.com/" target="_blank" rel="noopener"
->🔗 Official Puppet Website&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://app.daily.dev/tags/puppet?ref=roadmapsh" target="_blank" rel="noopener"
->🎥 Great Puppet Articles&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-conclusion">🎉 Conclusion
-&lt;/h2>&lt;p>Configuration management is an important element in the DevOps process, helping ensure consistent system operation, minimize errors, and enhance reliability. Depending on needs and scale, businesses can choose Ansible, Chef, or Puppet to manage infrastructure effectively.&lt;/p>
-&lt;p>👉 &lt;strong>Next step:&lt;/strong> Learn about &lt;em>&lt;strong>Continuous Integration and Continuous Deployment&lt;/strong>&lt;/em> (CI/CD), which is an automation process in software development that helps integrate, test, and deploy applications continuously.&lt;/p></description></item><item><title>Serverless and Related Platforms ☁️</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-ten/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-ten/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-ten.webp" alt="Featured image of post Serverless and Related Platforms ☁️" />&lt;h2 id="-what-is-serverless">🚀 What is Serverless?
-&lt;/h2>&lt;p>Serverless is a cloud computing model where service providers fully manage the infrastructure, allowing developers to focus solely on writing code. The system &lt;strong>automatically allocates resources&lt;/strong> based on demand and charges only for actual resource usage. Serverless architecture is commonly applied for &lt;strong>microservices applications, event processing&lt;/strong> and helps minimize operational costs.&lt;/p>
-&lt;p>📖 &lt;strong>Free resources to learn:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>📄 &lt;a class="link" href="https://www.redhat.com/en/topics/cloud-native-apps/what-is-serverless" target="_blank" rel="noopener"
->What is Serverless?&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=vxJobGtqKVM" target="_blank" rel="noopener"
->Introduction to Serverless&lt;/a>&lt;/li>
-&lt;li>🌍 &lt;a class="link" href="https://app.daily.dev/tags/serverless?ref=roadmapsh" target="_blank" rel="noopener"
->Great articles about Serverless&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-aws-lambda">⚡ AWS Lambda
-&lt;/h2>&lt;p>AWS Lambda is a serverless service from AWS that allows running code without managing servers. Lambda &lt;strong>automatically scales&lt;/strong> based on demand, supports multiple programming languages, and easily integrates with other AWS services. It&amp;rsquo;s suitable for &lt;strong>data processing, task automation, building microservices&lt;/strong>.&lt;/p>
-&lt;p>🖥️ &lt;strong>Example:&lt;/strong> Deploying a function on AWS Lambda&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">json&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">lambda_handler&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">event&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">context&lt;/span>&lt;span class="p">):&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">return&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;statusCode&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">200&lt;/span>&lt;span class="p">,&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s1">&amp;#39;body&amp;#39;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">json&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">dumps&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;Hello from AWS Lambda!&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📖 &lt;strong>Free resources to learn:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>🔗 &lt;a class="link" href="https://docs.aws.amazon.com/lambda/latest/operatorguide/intro.html" target="_blank" rel="noopener"
->Introduction to AWS Lambda&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=RtiWU1DrMaM" target="_blank" rel="noopener"
->AWS Lambda Tutorial from A-Z&lt;/a>&lt;/li>
-&lt;li>🌍 &lt;a class="link" href="https://app.daily.dev/tags/aws?ref=roadmapsh" target="_blank" rel="noopener"
->Great articles about AWS Lambda&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-cloudflare">🌍 Cloudflare
-&lt;/h2>&lt;p>Cloudflare is a company that provides &lt;strong>CDN, security, performance optimization&lt;/strong> services for websites. Cloudflare acts as a &lt;strong>reverse proxy&lt;/strong>, helping to speed up page loading and protect websites from attacks. The company was founded in 2009 and went public in 2019.&lt;/p>
-&lt;p>📖 &lt;strong>Free resources to learn:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>🔗 &lt;a class="link" href="https://cloudflare.com/" target="_blank" rel="noopener"
->Cloudflare Homepage&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=24cml1rKGBs" target="_blank" rel="noopener"
->Introduction to Cloudflare&lt;/a>&lt;/li>
-&lt;li>🌍 &lt;a class="link" href="https://app.daily.dev/tags/cloudflare?ref=roadmapsh" target="_blank" rel="noopener"
->Great articles about Cloudflare&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-vercel">🌐 Vercel
-&lt;/h2>&lt;p>Vercel is a &lt;strong>frontend deployment&lt;/strong> platform that helps deploy web applications to the cloud quickly. It supports &lt;strong>React, Next.js, Vue, Angular&lt;/strong>, integrates with GitHub, and allows deployment with just a push command.&lt;/p>
-&lt;p>📖 &lt;strong>Free resources to learn:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>🔗 &lt;a class="link" href="https://vercel.com/" target="_blank" rel="noopener"
->Vercel Homepage&lt;/a>&lt;/li>
-&lt;li>📖 &lt;a class="link" href="https://vercel.com/docs" target="_blank" rel="noopener"
->Official Vercel Documentation&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=sPmat30SE4k" target="_blank" rel="noopener"
->Vercel Usage Guide&lt;/a>&lt;/li>
-&lt;li>🌍 &lt;a class="link" href="https://app.daily.dev/tags/vercel?ref=roadmapsh" target="_blank" rel="noopener"
->Great articles about Vercel&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-conclusion">📌 Conclusion
-&lt;/h2>&lt;p>Serverless helps &lt;strong>automate deployment, reduce costs, and easily scale&lt;/strong>. Popular platforms:&lt;/p>
-&lt;ul>
-&lt;li>&lt;strong>AWS Lambda&lt;/strong>: Event processing without servers.&lt;/li>
-&lt;li>&lt;strong>Cloudflare&lt;/strong>: CDN and website security.&lt;/li>
-&lt;li>&lt;strong>Vercel&lt;/strong>: Fast frontend deployment.&lt;/li>
-&lt;/ul>
-&lt;p>Platform selection depends on your &lt;strong>needs, technology, and budget&lt;/strong>. 🚀&lt;/p>
-&lt;p>👉 &lt;strong>Next step:&lt;/strong> Learn about &lt;em>&lt;strong>Provisioning&lt;/strong>&lt;/em> - the process of providing and configuring resources (servers, networks, storage, accounts) so that systems or applications can operate effectively.&lt;/p></description></item><item><title>Cloud Services 🌩️</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-nine/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-nine/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-nine.webp" alt="Featured image of post Cloud Services 🌩️" />&lt;h2 id="-cloud-providers">🌐 Cloud Providers
-&lt;/h2>&lt;p>Cloud service providers offer an API layer to abstract infrastructure, enabling resource deployment based on security standards and billing models. While cloud services actually run on servers in data centers, abstraction layers create the feeling of interacting with a single platform. The ability to quickly deploy, configure, and secure resources has made cloud a critical factor in the success and complexity of modern DevOps.&lt;/p>
-&lt;p>📖 &lt;strong>Free resources to learn:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>📄 &lt;a class="link" href="https://www.techtarget.com/searchitchannel/definition/cloud-service-provider-cloud-provider" target="_blank" rel="noopener"
->Cloud Service Provider&lt;/a>&lt;/li>
-&lt;li>📄 &lt;a class="link" href="https://www.redhat.com/en/topics/cloud-computing/what-are-cloud-providers" target="_blank" rel="noopener"
->What are Cloud Providers?&lt;/a>&lt;/li>
-&lt;li>🌍 &lt;a class="link" href="https://app.daily.dev/tags/cloud?ref=roadmapsh" target="_blank" rel="noopener"
->Great articles about Cloud&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-aws-amazon-web-services">☁️ AWS (Amazon Web Services)
-&lt;/h2>&lt;p>AWS has been the leading cloud computing platform since 2011, far ahead of Azure and Google Cloud. AWS provides over &lt;strong>200 services&lt;/strong>, operating on a global scale. AWS delivers flexible and cost-effective computing solutions, including: &lt;strong>computing power, data storage, content distribution&lt;/strong>, etc.&lt;/p>
-&lt;p>🖥️ &lt;strong>Example:&lt;/strong> Create an EC2 instance using AWS CLI&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">aws ec2 run-instances --image-id ami-12345678 --count &lt;span class="m">1&lt;/span> --instance-type t2.micro --key-name MyKeyPair --security-groups MySecurityGroup
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📖 &lt;strong>Free resources to learn:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=zA8guDqfv40" target="_blank" rel="noopener"
->100 hours AWS course - 2024&lt;/a>&lt;/li>
-&lt;li>🔗 &lt;a class="link" href="https://aws.amazon.com/" target="_blank" rel="noopener"
->AWS Homepage&lt;/a>&lt;/li>
-&lt;li>📄 &lt;a class="link" href="https://grapplingdev.com/tutorials/how-to-create-aws-account" target="_blank" rel="noopener"
->Guide to creating AWS account&lt;/a>&lt;/li>
-&lt;li>🌍 &lt;a class="link" href="https://app.daily.dev/tags/aws?ref=roadmapsh" target="_blank" rel="noopener"
->Great articles about AWS&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-microsoft-azure">💠 Microsoft Azure
-&lt;/h2>&lt;p>Azure is Microsoft&amp;rsquo;s cloud computing platform, providing &lt;strong>IaaS, PaaS, SaaS&lt;/strong> along with many services like &lt;strong>analytics, AI, machine learning, security&lt;/strong>. Azure supports multiple tools and programming languages, helping businesses develop rapidly.&lt;/p>
-&lt;p>🖥️ &lt;strong>Example:&lt;/strong> Deploy application on Azure App Service&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">az webapp create --resource-group MyResourceGroup --plan MyAppServicePlan --name MyUniqueApp --runtime &lt;span class="s2">&amp;#34;PYTHON:3.8&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📖 &lt;strong>Free resources to learn:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>🔗 &lt;a class="link" href="https://azure.microsoft.com/en-us/" target="_blank" rel="noopener"
->Azure Homepage&lt;/a>&lt;/li>
-&lt;li>📖 &lt;a class="link" href="https://github.com/mikeroyal/Azure-Guide" target="_blank" rel="noopener"
->Microsoft Azure Guide&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=5abffC-K40c" target="_blank" rel="noopener"
->Azure Fundamentals Certification (AZ-900)&lt;/a>&lt;/li>
-&lt;li>🌍 &lt;a class="link" href="https://app.daily.dev/tags/azure?ref=roadmapsh" target="_blank" rel="noopener"
->Great articles about Azure&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-google-cloud-platform-gcp">☁️ Google Cloud Platform (GCP)
-&lt;/h2>&lt;p>Google Cloud provides over &lt;strong>150 services&lt;/strong>, running on the same infrastructure as Google products like &lt;strong>Search, Gmail, YouTube&lt;/strong>. Services include: &lt;strong>VMs, databases, AI/ML, Kubernetes&lt;/strong>, etc.&lt;/p>
-&lt;p>🖥️ &lt;strong>Example:&lt;/strong> Create a VM on Google Cloud&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">gcloud compute instances create my-instance --machine-type&lt;span class="o">=&lt;/span>e2-medium --image-project&lt;span class="o">=&lt;/span>debian-cloud --image-family&lt;span class="o">=&lt;/span>debian-11
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📖 &lt;strong>Free resources to learn:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>🔗 &lt;a class="link" href="https://cloud.google.com/" target="_blank" rel="noopener"
->Google Cloud Homepage&lt;/a>&lt;/li>
-&lt;li>📖 &lt;a class="link" href="https://thenewstack.io/5-tips-to-become-a-google-cloud-certified-professional-architect/" target="_blank" rel="noopener"
->5 tips to become Google Cloud Certified&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=fZOz13joN0o" target="_blank" rel="noopener"
->Google Cloud Platform Course - 2023&lt;/a>&lt;/li>
-&lt;li>🌍 &lt;a class="link" href="https://app.daily.dev/tags/cloud?ref=roadmapsh" target="_blank" rel="noopener"
->Great articles about Google Cloud&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-digitalocean">🌊 DigitalOcean
-&lt;/h2>&lt;p>DigitalOcean is a cloud infrastructure provider focused on &lt;strong>simplicity, low cost, ease of use&lt;/strong>. DigitalOcean provides services like &lt;strong>virtual machines (Droplets), databases, Kubernetes, object storage&lt;/strong>, suitable for &lt;strong>startups and developers&lt;/strong>.&lt;/p>
-&lt;p>🖥️ &lt;strong>Example:&lt;/strong> Create a Droplet on DigitalOcean using API&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">curl -X POST -H &lt;span class="s2">&amp;#34;Content-Type: application/json&amp;#34;&lt;/span> -H &lt;span class="s2">&amp;#34;Authorization: Bearer YOUR_TOKEN&amp;#34;&lt;/span> -d &lt;span class="s1">&amp;#39;{&amp;#34;name&amp;#34;:&amp;#34;example-droplet&amp;#34;,&amp;#34;region&amp;#34;:&amp;#34;nyc3&amp;#34;,&amp;#34;size&amp;#34;:&amp;#34;s-1vcpu-1gb&amp;#34;,&amp;#34;image&amp;#34;:&amp;#34;ubuntu-20-04-x64&amp;#34;}&amp;#39;&lt;/span> &lt;span class="s2">&amp;#34;https://api.digitalocean.com/v2/droplets&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>📖 &lt;strong>Free resources to learn:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>🔗 &lt;a class="link" href="https://www.digitalocean.com/" target="_blank" rel="noopener"
->DigitalOcean Homepage&lt;/a>&lt;/li>
-&lt;li>📄 &lt;a class="link" href="https://hacktoberfest.com/" target="_blank" rel="noopener"
->DigitalOcean&amp;rsquo;s Hacktoberfest&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=cJKdo-glRD0" target="_blank" rel="noopener"
->Kubernetes on DigitalOcean Tutorial&lt;/a>&lt;/li>
-&lt;li>🌍 &lt;a class="link" href="https://app.daily.dev/tags/digitalocean?ref=roadmapsh" target="_blank" rel="noopener"
->Great articles about DigitalOcean&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-conclusion">📌 Conclusion
-&lt;/h2>&lt;p>Cloud service providers like &lt;strong>AWS, Azure, GCP, DigitalOcean&lt;/strong> provide flexible solutions for all &lt;strong>server, storage, AI, DevOps&lt;/strong> needs. Each platform has its own advantages:&lt;/p>
-&lt;ul>
-&lt;li>&lt;strong>AWS&lt;/strong>: Comprehensive, most services available.&lt;/li>
-&lt;li>&lt;strong>Azure&lt;/strong>: Good integration with Microsoft ecosystem.&lt;/li>
-&lt;li>&lt;strong>GCP&lt;/strong>: Optimized for AI, big data.&lt;/li>
-&lt;li>&lt;strong>DigitalOcean&lt;/strong>: Simple, suitable for startups.&lt;/li>
-&lt;/ul>
-&lt;p>Choosing the right platform depends on your &lt;strong>goals, budget, technical requirements&lt;/strong>. 🚀&lt;/p>
-&lt;p>👉 &lt;strong>Next step:&lt;/strong> Learn about &lt;em>&lt;strong>Serverless&lt;/strong>&lt;/em> - a cloud computing model that allows running applications without managing servers. Cloud providers automatically allocate resources, scale, and charge based on actual resource usage, helping optimize costs and simplify deployment.&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Cloud on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/cloud/</link><description>Recent content in Cloud on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 15 Feb 2026 12:49:12 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/cloud/index.xml" rel="self" type="application/rss+xml"/><item><title>CI/CD - Continuous Integration and Continuous Deployment 🚀</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-thirteen/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-thirteen/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-thirteen.webp" alt="Featured image of post CI/CD - Continuous Integration and Continuous Deployment 🚀" /&gt;&lt;h2 id="-what-is-cicd"&gt;🔍 What is CI/CD?
+&lt;/h2&gt;&lt;p&gt;CI/CD (Continuous Integration/Continuous Deployment) is a methodology that helps automate the software development process, reducing errors, speeding up deployment, and improving product quality.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Continuous Integration (CI):&lt;/strong&gt; Continuous integration, helps detect errors early by automatically testing whenever there are changes in the source code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Continuous Deployment (CD):&lt;/strong&gt; Continuous deployment, ensures software is released automatically and quickly.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-popular-cicd-tools"&gt;🌟 Popular CI/CD Tools
+&lt;/h2&gt;&lt;h3 id="-jenkins"&gt;🔧 Jenkins
+&lt;/h3&gt;&lt;p&gt;Jenkins is a popular open-source automation server that helps build, test, and deploy software automatically.&lt;/p&gt;
+&lt;p&gt;📌 &lt;strong&gt;Key Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Supports many plugins, easy integration with DevOps tools.&lt;/li&gt;
+&lt;li&gt;Intuitive web interface, easy to configure.&lt;/li&gt;
+&lt;li&gt;Supports both Windows and Linux environments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;💡 &lt;strong&gt;Example:&lt;/strong&gt; Configuring a simple pipeline in Jenkinsfile&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;span class="lnt"&gt;20
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;pipeline&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;agent&lt;/span&gt; &lt;span class="n"&gt;any&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;stages&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;stage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Build&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;steps&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Building the application...&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;stage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Test&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;steps&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Running tests...&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;stage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Deploy&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;steps&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Deploying the application...&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Useful Resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.jenkins.io/" target="_blank" rel="noopener"
+&gt;🔗 Jenkins Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=6YZvp2GwT0A" target="_blank" rel="noopener"
+&gt;🎥 Jenkins Tutorial from A-Z&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="-circleci"&gt;🔄 CircleCI
+&lt;/h3&gt;&lt;p&gt;CircleCI is a powerful CI/CD platform that supports many programming languages and integrates well with GitHub and Bitbucket.&lt;/p&gt;
+&lt;p&gt;📌 &lt;strong&gt;Key Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Supports parallel builds to increase processing speed.&lt;/li&gt;
+&lt;li&gt;Good integration with Docker and Kubernetes.&lt;/li&gt;
+&lt;li&gt;Available in cloud and self-hosted versions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;💡 &lt;strong&gt;Example:&lt;/strong&gt; Configuring a CircleCI pipeline in &lt;code&gt;.circleci/config.yml&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;span class="lnt"&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;2.1&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;build&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;docker&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="nt"&gt;image&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;circleci/node:14&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="l"&gt;checkout&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;npm install&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;npm test&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Useful Resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://circleci.com/" target="_blank" rel="noopener"
+&gt;🔗 CircleCI Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=_XaYv9zvHUk" target="_blank" rel="noopener"
+&gt;🎥 CircleCI Tutorial Video&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="-gitlab-cicd"&gt;🛠️ GitLab CI/CD
+&lt;/h3&gt;&lt;p&gt;GitLab CI/CD is a built-in system in GitLab that allows automating testing and deployment processes right within the Git repository.&lt;/p&gt;
+&lt;p&gt;📌 &lt;strong&gt;Key Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Supports full pipeline automation from build, test to deploy.&lt;/li&gt;
+&lt;li&gt;Built into GitLab, no external tools needed.&lt;/li&gt;
+&lt;li&gt;Supports running pipelines on Docker containers.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;💡 &lt;strong&gt;Example:&lt;/strong&gt; Configuring GitLab CI/CD pipeline in &lt;code&gt;.gitlab-ci.yml&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;stages&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="l"&gt;build&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="l"&gt;test&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="l"&gt;deploy&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;test&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;stage&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;test&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;script&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="l"&gt;npm install&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="l"&gt;npm test&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Useful Resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://gitlab.com/" target="_blank" rel="noopener"
+&gt;🔗 GitLab Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=z7nLsJvEyMY" target="_blank" rel="noopener"
+&gt;🎥 GitLab CI/CD Tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="-github-actions"&gt;⚡ GitHub Actions
+&lt;/h3&gt;&lt;p&gt;GitHub Actions is a CI/CD tool integrated directly into GitHub, helping automate testing and deployment processes whenever there are changes in the repository.&lt;/p&gt;
+&lt;p&gt;📌 &lt;strong&gt;Key Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tightly integrated with GitHub, easy workflow setup.&lt;/li&gt;
+&lt;li&gt;Supports many operating systems and programming languages.&lt;/li&gt;
+&lt;li&gt;Can use marketplace with thousands of available actions.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;💡 &lt;strong&gt;Example:&lt;/strong&gt; GitHub Actions workflow in &lt;code&gt;.github/workflows/main.yml&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;Node.js CI&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="l"&gt;push, pull_request]&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;jobs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;build&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;runs-on&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;ubuntu-latest&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;steps&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="nt"&gt;uses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;actions/checkout@v3&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;Setup Node.js&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;uses&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;actions/setup-node@v3&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;with&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;node-version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;14&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;npm install&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="nt"&gt;run&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;npm test&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Useful Resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://docs.github.com/en/actions" target="_blank" rel="noopener"
+&gt;🔗 GitHub Actions Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=nyKZTKQS_EQ" target="_blank" rel="noopener"
+&gt;🎥 GitHub Actions Tutorial Video&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🎯 Conclusion
+&lt;/h2&gt;&lt;p&gt;CI/CD helps accelerate the software development process, minimize errors, and improve product quality. Depending on your needs and working environment, you can choose &lt;strong&gt;Jenkins, CircleCI, GitLab CI/CD, or GitHub Actions&lt;/strong&gt; to deploy your CI/CD system. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Secret Management&lt;/strong&gt;&lt;/em&gt; - the process of storing, managing, and protecting sensitive information such as passwords, API keys, certificates, and access tokens to prevent data leakage and ensure system security. 💡&lt;/p&gt;</description></item><item><title>Configuration Management 🔧</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twelve/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twelve/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-twelve.webp" alt="Featured image of post Configuration Management 🔧" /&gt;&lt;h2 id="-configuration-management"&gt;🔧 Configuration Management
+&lt;/h2&gt;&lt;p&gt;Configuration management is the process of managing and maintaining consistency of components within an information technology system. In the software field, it includes monitoring, tracking, and managing system configuration changes throughout the product lifecycle. Applying configuration management helps increase synchronization, reduce error risks, and ensure compliance with standards in CI/CD (Continuous Integration and Continuous Deployment) processes.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-popular-configuration-management-tools"&gt;🌐 Popular Configuration Management Tools
+&lt;/h2&gt;&lt;h3 id="-ansible"&gt;🚀 Ansible
+&lt;/h3&gt;&lt;p&gt;Ansible is an open automation tool, primarily used for configuration management, application deployment, and task automation.&lt;/p&gt;
+&lt;p&gt;🔄 &lt;strong&gt;Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Uses YAML (playbooks) to define desired states.&lt;/li&gt;
+&lt;li&gt;Works without requiring agent installation.&lt;/li&gt;
+&lt;li&gt;Suitable for small to large scale environments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;💡 &lt;strong&gt;Ansible usage example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;- &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;Install and start Nginx&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;all&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;become&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;yes&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;tasks&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;Install Nginx&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;apt&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;nginx&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;state&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;present&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;Start Nginx&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;service&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;nginx&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;state&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;started&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Useful free resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=9Ua2b06oAr4" target="_blank" rel="noopener"
+&gt;📚 Complete Ansible Course for Beginners&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.ansible.com/" target="_blank" rel="noopener"
+&gt;🔗 Official Ansible Website&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=xRMPKQweySE" target="_blank" rel="noopener"
+&gt;🎥 Ansible in 100 Seconds&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="-chef"&gt;🌟 Chef
+&lt;/h3&gt;&lt;p&gt;Chef (now part of Progress Chef) is one of the first configuration management tools. It uses Ruby language and emphasizes idempotence (ensuring running n times produces the same result).&lt;/p&gt;
+&lt;p&gt;🔄 &lt;strong&gt;Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Client/server based.&lt;/li&gt;
+&lt;li&gt;Has Chef-Solo for standalone deployment.&lt;/li&gt;
+&lt;li&gt;Suitable for enterprise environments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;💡 &lt;strong&gt;Chef usage example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-ruby" data-lang="ruby"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;package&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;nginx&amp;#39;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;action&lt;/span&gt; &lt;span class="ss"&gt;:install&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;nginx&amp;#39;&lt;/span&gt; &lt;span class="k"&gt;do&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;action&lt;/span&gt; &lt;span class="o"&gt;[&lt;/span&gt;&lt;span class="ss"&gt;:enable&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="ss"&gt;:start&lt;/span&gt;&lt;span class="o"&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;end&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Useful free resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.chef.io/products/chef-infra" target="_blank" rel="noopener"
+&gt;🔗 Official Chef Website&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.tutorialspoint.com/chef/index.htm" target="_blank" rel="noopener"
+&gt;📚 Chef Tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://github.com/chef/chef" target="_blank" rel="noopener"
+&gt;🎥 Chef Tutorial Video&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id="-puppet"&gt;🏰 Puppet
+&lt;/h3&gt;&lt;p&gt;Puppet is a declarative configuration management tool that operates in a client/server model and supports multiple operating systems.&lt;/p&gt;
+&lt;p&gt;🔄 &lt;strong&gt;Features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Large scale management.&lt;/li&gt;
+&lt;li&gt;Periodic configuration checking and application.&lt;/li&gt;
+&lt;li&gt;Integration with many DevOps tools.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;💡 &lt;strong&gt;Puppet usage example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-puppet" data-lang="puppet"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;package&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;nginx&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="err"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;ensure&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;installed&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="err"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;service&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="s"&gt;&amp;#39;nginx&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="err"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;ensure&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;running&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="na"&gt;enable&lt;/span&gt; &lt;span class="o"&gt;=&amp;gt;&lt;/span&gt; &lt;span class="k"&gt;true&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="err"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="err"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Useful free resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=Ns_tRKD20c4" target="_blank" rel="noopener"
+&gt;📚 Complete Puppet Course&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://puppet.com/" target="_blank" rel="noopener"
+&gt;🔗 Official Puppet Website&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://app.daily.dev/tags/puppet?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;🎥 Great Puppet Articles&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🎉 Conclusion
+&lt;/h2&gt;&lt;p&gt;Configuration management is an important element in the DevOps process, helping ensure consistent system operation, minimize errors, and enhance reliability. Depending on needs and scale, businesses can choose Ansible, Chef, or Puppet to manage infrastructure effectively.&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Continuous Integration and Continuous Deployment&lt;/strong&gt;&lt;/em&gt; (CI/CD), which is an automation process in software development that helps integrate, test, and deploy applications continuously.&lt;/p&gt;</description></item><item><title>Serverless and Related Platforms ☁️</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-ten/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-ten/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-ten.webp" alt="Featured image of post Serverless and Related Platforms ☁️" /&gt;&lt;h2 id="-what-is-serverless"&gt;🚀 What is Serverless?
+&lt;/h2&gt;&lt;p&gt;Serverless is a cloud computing model where service providers fully manage the infrastructure, allowing developers to focus solely on writing code. The system &lt;strong&gt;automatically allocates resources&lt;/strong&gt; based on demand and charges only for actual resource usage. Serverless architecture is commonly applied for &lt;strong&gt;microservices applications, event processing&lt;/strong&gt; and helps minimize operational costs.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📄 &lt;a class="link" href="https://www.redhat.com/en/topics/cloud-native-apps/what-is-serverless" target="_blank" rel="noopener"
+&gt;What is Serverless?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=vxJobGtqKVM" target="_blank" rel="noopener"
+&gt;Introduction to Serverless&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/serverless?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about Serverless&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-aws-lambda"&gt;⚡ AWS Lambda
+&lt;/h2&gt;&lt;p&gt;AWS Lambda is a serverless service from AWS that allows running code without managing servers. Lambda &lt;strong&gt;automatically scales&lt;/strong&gt; based on demand, supports multiple programming languages, and easily integrates with other AWS services. It&amp;rsquo;s suitable for &lt;strong&gt;data processing, task automation, building microservices&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Example:&lt;/strong&gt; Deploying a function on AWS Lambda&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;json&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;lambda_handler&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;event&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;context&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="k"&gt;return&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s1"&gt;&amp;#39;statusCode&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;200&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s1"&gt;&amp;#39;body&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;json&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;dumps&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Hello from AWS Lambda!&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://docs.aws.amazon.com/lambda/latest/operatorguide/intro.html" target="_blank" rel="noopener"
+&gt;Introduction to AWS Lambda&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=RtiWU1DrMaM" target="_blank" rel="noopener"
+&gt;AWS Lambda Tutorial from A-Z&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/aws?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about AWS Lambda&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-cloudflare"&gt;🌍 Cloudflare
+&lt;/h2&gt;&lt;p&gt;Cloudflare is a company that provides &lt;strong&gt;CDN, security, performance optimization&lt;/strong&gt; services for websites. Cloudflare acts as a &lt;strong&gt;reverse proxy&lt;/strong&gt;, helping to speed up page loading and protect websites from attacks. The company was founded in 2009 and went public in 2019.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://cloudflare.com/" target="_blank" rel="noopener"
+&gt;Cloudflare Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=24cml1rKGBs" target="_blank" rel="noopener"
+&gt;Introduction to Cloudflare&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/cloudflare?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about Cloudflare&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-vercel"&gt;🌐 Vercel
+&lt;/h2&gt;&lt;p&gt;Vercel is a &lt;strong&gt;frontend deployment&lt;/strong&gt; platform that helps deploy web applications to the cloud quickly. It supports &lt;strong&gt;React, Next.js, Vue, Angular&lt;/strong&gt;, integrates with GitHub, and allows deployment with just a push command.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://vercel.com/" target="_blank" rel="noopener"
+&gt;Vercel Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://vercel.com/docs" target="_blank" rel="noopener"
+&gt;Official Vercel Documentation&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=sPmat30SE4k" target="_blank" rel="noopener"
+&gt;Vercel Usage Guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/vercel?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about Vercel&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;📌 Conclusion
+&lt;/h2&gt;&lt;p&gt;Serverless helps &lt;strong&gt;automate deployment, reduce costs, and easily scale&lt;/strong&gt;. Popular platforms:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AWS Lambda&lt;/strong&gt;: Event processing without servers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cloudflare&lt;/strong&gt;: CDN and website security.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vercel&lt;/strong&gt;: Fast frontend deployment.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Platform selection depends on your &lt;strong&gt;needs, technology, and budget&lt;/strong&gt;. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Provisioning&lt;/strong&gt;&lt;/em&gt; - the process of providing and configuring resources (servers, networks, storage, accounts) so that systems or applications can operate effectively.&lt;/p&gt;</description></item><item><title>Cloud Services 🌩️</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-nine/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-nine/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-nine.webp" alt="Featured image of post Cloud Services 🌩️" /&gt;&lt;h2 id="-cloud-providers"&gt;🌐 Cloud Providers
+&lt;/h2&gt;&lt;p&gt;Cloud service providers offer an API layer to abstract infrastructure, enabling resource deployment based on security standards and billing models. While cloud services actually run on servers in data centers, abstraction layers create the feeling of interacting with a single platform. The ability to quickly deploy, configure, and secure resources has made cloud a critical factor in the success and complexity of modern DevOps.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📄 &lt;a class="link" href="https://www.techtarget.com/searchitchannel/definition/cloud-service-provider-cloud-provider" target="_blank" rel="noopener"
+&gt;Cloud Service Provider&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class="link" href="https://www.redhat.com/en/topics/cloud-computing/what-are-cloud-providers" target="_blank" rel="noopener"
+&gt;What are Cloud Providers?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/cloud?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about Cloud&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-aws-amazon-web-services"&gt;☁️ AWS (Amazon Web Services)
+&lt;/h2&gt;&lt;p&gt;AWS has been the leading cloud computing platform since 2011, far ahead of Azure and Google Cloud. AWS provides over &lt;strong&gt;200 services&lt;/strong&gt;, operating on a global scale. AWS delivers flexible and cost-effective computing solutions, including: &lt;strong&gt;computing power, data storage, content distribution&lt;/strong&gt;, etc.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Example:&lt;/strong&gt; Create an EC2 instance using AWS CLI&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;aws ec2 run-instances --image-id ami-12345678 --count &lt;span class="m"&gt;1&lt;/span&gt; --instance-type t2.micro --key-name MyKeyPair --security-groups MySecurityGroup
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=zA8guDqfv40" target="_blank" rel="noopener"
+&gt;100 hours AWS course - 2024&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://aws.amazon.com/" target="_blank" rel="noopener"
+&gt;AWS Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class="link" href="https://grapplingdev.com/tutorials/how-to-create-aws-account" target="_blank" rel="noopener"
+&gt;Guide to creating AWS account&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/aws?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about AWS&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-microsoft-azure"&gt;💠 Microsoft Azure
+&lt;/h2&gt;&lt;p&gt;Azure is Microsoft&amp;rsquo;s cloud computing platform, providing &lt;strong&gt;IaaS, PaaS, SaaS&lt;/strong&gt; along with many services like &lt;strong&gt;analytics, AI, machine learning, security&lt;/strong&gt;. Azure supports multiple tools and programming languages, helping businesses develop rapidly.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Example:&lt;/strong&gt; Deploy application on Azure App Service&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;az webapp create --resource-group MyResourceGroup --plan MyAppServicePlan --name MyUniqueApp --runtime &lt;span class="s2"&gt;&amp;#34;PYTHON:3.8&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://azure.microsoft.com/en-us/" target="_blank" rel="noopener"
+&gt;Azure Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://github.com/mikeroyal/Azure-Guide" target="_blank" rel="noopener"
+&gt;Microsoft Azure Guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=5abffC-K40c" target="_blank" rel="noopener"
+&gt;Azure Fundamentals Certification (AZ-900)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/azure?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about Azure&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-google-cloud-platform-gcp"&gt;☁️ Google Cloud Platform (GCP)
+&lt;/h2&gt;&lt;p&gt;Google Cloud provides over &lt;strong&gt;150 services&lt;/strong&gt;, running on the same infrastructure as Google products like &lt;strong&gt;Search, Gmail, YouTube&lt;/strong&gt;. Services include: &lt;strong&gt;VMs, databases, AI/ML, Kubernetes&lt;/strong&gt;, etc.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Example:&lt;/strong&gt; Create a VM on Google Cloud&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;gcloud compute instances create my-instance --machine-type&lt;span class="o"&gt;=&lt;/span&gt;e2-medium --image-project&lt;span class="o"&gt;=&lt;/span&gt;debian-cloud --image-family&lt;span class="o"&gt;=&lt;/span&gt;debian-11
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://cloud.google.com/" target="_blank" rel="noopener"
+&gt;Google Cloud Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://thenewstack.io/5-tips-to-become-a-google-cloud-certified-professional-architect/" target="_blank" rel="noopener"
+&gt;5 tips to become Google Cloud Certified&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=fZOz13joN0o" target="_blank" rel="noopener"
+&gt;Google Cloud Platform Course - 2023&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/cloud?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about Google Cloud&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-digitalocean"&gt;🌊 DigitalOcean
+&lt;/h2&gt;&lt;p&gt;DigitalOcean is a cloud infrastructure provider focused on &lt;strong&gt;simplicity, low cost, ease of use&lt;/strong&gt;. DigitalOcean provides services like &lt;strong&gt;virtual machines (Droplets), databases, Kubernetes, object storage&lt;/strong&gt;, suitable for &lt;strong&gt;startups and developers&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;🖥️ &lt;strong&gt;Example:&lt;/strong&gt; Create a Droplet on DigitalOcean using API&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -X POST -H &lt;span class="s2"&gt;&amp;#34;Content-Type: application/json&amp;#34;&lt;/span&gt; -H &lt;span class="s2"&gt;&amp;#34;Authorization: Bearer YOUR_TOKEN&amp;#34;&lt;/span&gt; -d &lt;span class="s1"&gt;&amp;#39;{&amp;#34;name&amp;#34;:&amp;#34;example-droplet&amp;#34;,&amp;#34;region&amp;#34;:&amp;#34;nyc3&amp;#34;,&amp;#34;size&amp;#34;:&amp;#34;s-1vcpu-1gb&amp;#34;,&amp;#34;image&amp;#34;:&amp;#34;ubuntu-20-04-x64&amp;#34;}&amp;#39;&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;https://api.digitalocean.com/v2/droplets&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;strong&gt;Free resources to learn:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://www.digitalocean.com/" target="_blank" rel="noopener"
+&gt;DigitalOcean Homepage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📄 &lt;a class="link" href="https://hacktoberfest.com/" target="_blank" rel="noopener"
+&gt;DigitalOcean&amp;rsquo;s Hacktoberfest&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=cJKdo-glRD0" target="_blank" rel="noopener"
+&gt;Kubernetes on DigitalOcean Tutorial&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🌍 &lt;a class="link" href="https://app.daily.dev/tags/digitalocean?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Great articles about DigitalOcean&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;📌 Conclusion
+&lt;/h2&gt;&lt;p&gt;Cloud service providers like &lt;strong&gt;AWS, Azure, GCP, DigitalOcean&lt;/strong&gt; provide flexible solutions for all &lt;strong&gt;server, storage, AI, DevOps&lt;/strong&gt; needs. Each platform has its own advantages:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;AWS&lt;/strong&gt;: Comprehensive, most services available.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Azure&lt;/strong&gt;: Good integration with Microsoft ecosystem.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;GCP&lt;/strong&gt;: Optimized for AI, big data.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;DigitalOcean&lt;/strong&gt;: Simple, suitable for startups.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Choosing the right platform depends on your &lt;strong&gt;goals, budget, technical requirements&lt;/strong&gt;. 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Serverless&lt;/strong&gt;&lt;/em&gt; - a cloud computing model that allows running applications without managing servers. Cloud providers automatically allocate resources, scale, and charge based on actual resource usage, helping optimize costs and simplify deployment.&lt;/p&gt;</description></item></channel></rss>

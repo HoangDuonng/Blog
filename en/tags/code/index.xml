@@ -1,191 +1,191 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Code on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/code/</link><description>Recent content in Code on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 05 Feb 2026 10:29:10 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/code/index.xml" rel="self" type="application/rss+xml"/><item><title>Choosing a Programming Language 🤗</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-one/</link><pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-one/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-one.webp" alt="Featured image of post Choosing a Programming Language 🤗" />&lt;h2 id="-why-do-you-need-to-choose-a-programming-language">📌 Why do you need to choose a programming language?
-&lt;/h2>&lt;p>In DevOps, you will need to use programming languages to:&lt;/p>
-&lt;ul>
-&lt;li>✅ Write automation scripts.&lt;/li>
-&lt;li>✅ Manage servers and cloud.&lt;/li>
-&lt;li>✅ Create tools to support CI/CD.&lt;/li>
-&lt;li>✅ Build and deploy Infrastructure as Code (IaC).&lt;/li>
-&lt;/ul>
-&lt;p>Choosing the right language helps you work more efficiently with systems, automate many processes, and improve software development speed.&lt;/p>
-&lt;h2 id="-suitable-languages-for-devops">🔥 Suitable languages for DevOps
-&lt;/h2>&lt;h3 id="-python-main-recommendation">🐍 Python (Main recommendation)
-&lt;/h3>&lt;h4 id="-reasons-to-choose-python">&lt;strong>🔹 Reasons to choose Python:&lt;/strong>
-&lt;/h4>&lt;ul>
-&lt;li>Easy-to-read syntax, easy to learn.&lt;/li>
-&lt;li>Rich libraries supporting automation like &lt;code>fabric&lt;/code>, &lt;code>paramiko&lt;/code>, &lt;code>boto3&lt;/code> (AWS SDK), &lt;code>pyinfra&lt;/code>.&lt;/li>
-&lt;li>Strong support in Cloud management (AWS, GCP, Azure).&lt;/li>
-&lt;/ul>
-&lt;h4 id="-practical-applications">&lt;strong>🔹 Practical applications:&lt;/strong>
-&lt;/h4>&lt;ul>
-&lt;li>Write automated code deployment scripts.&lt;/li>
-&lt;li>Create server management bots.&lt;/li>
-&lt;li>Build system management APIs.&lt;/li>
-&lt;/ul>
-&lt;h4 id="-example-automated-ssh-deployment-script-with-paramiko">&lt;strong>📝 Example: Automated SSH deployment script with Paramiko&lt;/strong>
-&lt;/h4>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-python" data-lang="python">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="nn">paramiko&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">def&lt;/span> &lt;span class="nf">deploy_code&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">host&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">user&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">password&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">command&lt;/span>&lt;span class="p">):&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">client&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">paramiko&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">SSHClient&lt;/span>&lt;span class="p">()&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">client&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">set_missing_host_key_policy&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">paramiko&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">AutoAddPolicy&lt;/span>&lt;span class="p">())&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">client&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">connect&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">hostname&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">host&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">username&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">user&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">password&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">password&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stdin&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">stdout&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">stderr&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="n">client&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">exec_command&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">command&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">print&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="n">stdout&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">read&lt;/span>&lt;span class="p">()&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">decode&lt;/span>&lt;span class="p">())&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">client&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">close&lt;/span>&lt;span class="p">()&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">deploy_code&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s1">&amp;#39;192.168.1.100&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;ubuntu&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;yourpassword&amp;#39;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s1">&amp;#39;git pull origin main &amp;amp;&amp;amp; systemctl restart app&amp;#39;&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h3 id="-bash-need-to-know-basics">🖥️ Bash (Need to know basics)
-&lt;/h3>&lt;h4 id="-reasons-to-choose-bash">&lt;strong>🔹 Reasons to choose Bash:&lt;/strong>
-&lt;/h4>&lt;ul>
-&lt;li>The most popular shell script on Linux.&lt;/li>
-&lt;li>Helps you work quickly with the system.&lt;/li>
-&lt;li>Optimized for server management and small task automation.&lt;/li>
-&lt;/ul>
-&lt;h4 id="-practical-applications-1">&lt;strong>🔹 Practical applications:&lt;/strong>
-&lt;/h4>&lt;ul>
-&lt;li>Write automated server update scripts.&lt;/li>
-&lt;li>Create periodic cron jobs.&lt;/li>
-&lt;li>Manage users and permissions on Linux.&lt;/li>
-&lt;/ul>
-&lt;h4 id="-example-automated-server-update-script">&lt;strong>📝 Example: Automated server update script&lt;/strong>
-&lt;/h4>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/bash
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>sudo apt update &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> sudo apt upgrade -y
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h3 id="-go-golang-if-working-with-kubernetes">🚀 Go (Golang) (If working with Kubernetes)
-&lt;/h3>&lt;h4 id="-reasons-to-choose-go">&lt;strong>🔹 Reasons to choose Go:&lt;/strong>
-&lt;/h4>&lt;ul>
-&lt;li>High performance, easy to compile into compact binaries.&lt;/li>
-&lt;li>Kubernetes and many DevOps tools like Terraform are written in Go.&lt;/li>
-&lt;/ul>
-&lt;h4 id="-practical-applications-2">&lt;strong>🔹 Practical applications:&lt;/strong>
-&lt;/h4>&lt;ul>
-&lt;li>Write container management tools.&lt;/li>
-&lt;li>Create plugins for Kubernetes.&lt;/li>
-&lt;li>Build custom DevOps tools.&lt;/li>
-&lt;/ul>
-&lt;h4 id="-example-display-system-information-with-go">&lt;strong>📝 Example: Display system information with Go&lt;/strong>
-&lt;/h4>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-go" data-lang="go">&lt;span class="line">&lt;span class="cl">&lt;span class="kn">package&lt;/span> &lt;span class="nx">main&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kn">import&lt;/span> &lt;span class="p">(&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s">&amp;#34;fmt&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="s">&amp;#34;os&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kd">func&lt;/span> &lt;span class="nf">main&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">hostname&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">_&lt;/span> &lt;span class="o">:=&lt;/span> &lt;span class="nx">os&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Hostname&lt;/span>&lt;span class="p">()&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">fmt&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nf">Println&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s">&amp;#34;Hostname:&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">hostname&lt;/span>&lt;span class="p">)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h3 id="-groovy-if-working-with-jenkins">⚙️ Groovy (If working with Jenkins)
-&lt;/h3>&lt;h4 id="-reasons-to-choose-groovy">&lt;strong>🔹 Reasons to choose Groovy:&lt;/strong>
-&lt;/h4>&lt;ul>
-&lt;li>The main language for writing pipelines in Jenkins.&lt;/li>
-&lt;li>Flexible syntax, easy to extend and integrate with Java.&lt;/li>
-&lt;/ul>
-&lt;h4 id="-practical-applications-3">&lt;strong>🔹 Practical applications:&lt;/strong>
-&lt;/h4>&lt;ul>
-&lt;li>Write CI/CD pipelines for Jenkins.&lt;/li>
-&lt;li>Create system management scripts.&lt;/li>
-&lt;li>Automate build, test, deploy steps.&lt;/li>
-&lt;/ul>
-&lt;h4 id="-example-basic-pipeline-in-jenkinsfile">&lt;strong>📝 Example: Basic pipeline in Jenkinsfile&lt;/strong>
-&lt;/h4>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-groovy" data-lang="groovy">&lt;span class="line">&lt;span class="cl">&lt;span class="n">pipeline&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">agent&lt;/span> &lt;span class="n">any&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stages&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;Build&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">steps&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s1">&amp;#39;Building the project...&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sh&lt;/span> &lt;span class="s1">&amp;#39;mvn clean package&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;Test&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">steps&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s1">&amp;#39;Running tests...&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sh&lt;/span> &lt;span class="s1">&amp;#39;mvn test&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">stage&lt;/span>&lt;span class="o">(&lt;/span>&lt;span class="s1">&amp;#39;Deploy&amp;#39;&lt;/span>&lt;span class="o">)&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">steps&lt;/span> &lt;span class="o">{&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">echo&lt;/span> &lt;span class="s1">&amp;#39;Deploying application...&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">sh&lt;/span> &lt;span class="s1">&amp;#39;./deploy.sh&amp;#39;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h2 id="-conclusion">🎯 Conclusion
-&lt;/h2>&lt;ul>
-&lt;li>✅ &lt;strong>Python + Bash&lt;/strong> is the best choice to start with DevOps.&lt;/li>
-&lt;li>✅ If working with &lt;strong>Kubernetes&lt;/strong>, learn &lt;strong>Go&lt;/strong> as well.&lt;/li>
-&lt;li>✅ If working with &lt;strong>Jenkins&lt;/strong>, learn &lt;strong>Groovy&lt;/strong> to write pipelines.&lt;/li>
-&lt;/ul>
-&lt;p>&lt;strong>👉 Next step:&lt;/strong> Learn the basics of &lt;em>&lt;strong>Linux &amp;amp; operating systems&lt;/strong>&lt;/em>.&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Code on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/code/</link><description>Recent content in Code on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 05 Feb 2026 10:29:10 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/code/index.xml" rel="self" type="application/rss+xml"/><item><title>Choosing a Programming Language 🤗</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-one/</link><pubDate>Fri, 21 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-one/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-one.webp" alt="Featured image of post Choosing a Programming Language 🤗" /&gt;&lt;h2 id="-why-do-you-need-to-choose-a-programming-language"&gt;📌 Why do you need to choose a programming language?
+&lt;/h2&gt;&lt;p&gt;In DevOps, you will need to use programming languages to:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅ Write automation scripts.&lt;/li&gt;
+&lt;li&gt;✅ Manage servers and cloud.&lt;/li&gt;
+&lt;li&gt;✅ Create tools to support CI/CD.&lt;/li&gt;
+&lt;li&gt;✅ Build and deploy Infrastructure as Code (IaC).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Choosing the right language helps you work more efficiently with systems, automate many processes, and improve software development speed.&lt;/p&gt;
+&lt;h2 id="-suitable-languages-for-devops"&gt;🔥 Suitable languages for DevOps
+&lt;/h2&gt;&lt;h3 id="-python-main-recommendation"&gt;🐍 Python (Main recommendation)
+&lt;/h3&gt;&lt;h4 id="-reasons-to-choose-python"&gt;&lt;strong&gt;🔹 Reasons to choose Python:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;Easy-to-read syntax, easy to learn.&lt;/li&gt;
+&lt;li&gt;Rich libraries supporting automation like &lt;code&gt;fabric&lt;/code&gt;, &lt;code&gt;paramiko&lt;/code&gt;, &lt;code&gt;boto3&lt;/code&gt; (AWS SDK), &lt;code&gt;pyinfra&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Strong support in Cloud management (AWS, GCP, Azure).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-practical-applications"&gt;&lt;strong&gt;🔹 Practical applications:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;Write automated code deployment scripts.&lt;/li&gt;
+&lt;li&gt;Create server management bots.&lt;/li&gt;
+&lt;li&gt;Build system management APIs.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-example-automated-ssh-deployment-script-with-paramiko"&gt;&lt;strong&gt;📝 Example: Automated SSH deployment script with Paramiko&lt;/strong&gt;
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-python" data-lang="python"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="nn"&gt;paramiko&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;deploy_code&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;client&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;paramiko&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;SSHClient&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;set_missing_host_key_policy&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;paramiko&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;AutoAddPolicy&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;connect&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;hostname&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;host&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;username&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;user&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;password&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;stdin&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;stderr&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;exec_command&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;command&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;print&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;stdout&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;read&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;decode&lt;/span&gt;&lt;span class="p"&gt;())&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;client&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;close&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;deploy_code&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;192.168.1.100&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;ubuntu&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;yourpassword&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;git pull origin main &amp;amp;&amp;amp; systemctl restart app&amp;#39;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id="-bash-need-to-know-basics"&gt;🖥️ Bash (Need to know basics)
+&lt;/h3&gt;&lt;h4 id="-reasons-to-choose-bash"&gt;&lt;strong&gt;🔹 Reasons to choose Bash:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;The most popular shell script on Linux.&lt;/li&gt;
+&lt;li&gt;Helps you work quickly with the system.&lt;/li&gt;
+&lt;li&gt;Optimized for server management and small task automation.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-practical-applications-1"&gt;&lt;strong&gt;🔹 Practical applications:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;Write automated server update scripts.&lt;/li&gt;
+&lt;li&gt;Create periodic cron jobs.&lt;/li&gt;
+&lt;li&gt;Manage users and permissions on Linux.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-example-automated-server-update-script"&gt;&lt;strong&gt;📝 Example: Automated server update script&lt;/strong&gt;
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo apt upgrade -y
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id="-go-golang-if-working-with-kubernetes"&gt;🚀 Go (Golang) (If working with Kubernetes)
+&lt;/h3&gt;&lt;h4 id="-reasons-to-choose-go"&gt;&lt;strong&gt;🔹 Reasons to choose Go:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;High performance, easy to compile into compact binaries.&lt;/li&gt;
+&lt;li&gt;Kubernetes and many DevOps tools like Terraform are written in Go.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-practical-applications-2"&gt;&lt;strong&gt;🔹 Practical applications:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;Write container management tools.&lt;/li&gt;
+&lt;li&gt;Create plugins for Kubernetes.&lt;/li&gt;
+&lt;li&gt;Build custom DevOps tools.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-example-display-system-information-with-go"&gt;&lt;strong&gt;📝 Example: Display system information with Go&lt;/strong&gt;
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-go" data-lang="go"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;package&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;main&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kn"&gt;import&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;fmt&amp;#34;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;#34;os&amp;#34;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="kd"&gt;func&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nf"&gt;main&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;{&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;_&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;:=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;os&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Hostname&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;fmt&lt;/span&gt;&lt;span class="p"&gt;.&lt;/span&gt;&lt;span class="nf"&gt;Println&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s"&gt;&amp;#34;Hostname:&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nx"&gt;hostname&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h3 id="-groovy-if-working-with-jenkins"&gt;⚙️ Groovy (If working with Jenkins)
+&lt;/h3&gt;&lt;h4 id="-reasons-to-choose-groovy"&gt;&lt;strong&gt;🔹 Reasons to choose Groovy:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;The main language for writing pipelines in Jenkins.&lt;/li&gt;
+&lt;li&gt;Flexible syntax, easy to extend and integrate with Java.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-practical-applications-3"&gt;&lt;strong&gt;🔹 Practical applications:&lt;/strong&gt;
+&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;Write CI/CD pipelines for Jenkins.&lt;/li&gt;
+&lt;li&gt;Create system management scripts.&lt;/li&gt;
+&lt;li&gt;Automate build, test, deploy steps.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id="-example-basic-pipeline-in-jenkinsfile"&gt;&lt;strong&gt;📝 Example: Basic pipeline in Jenkinsfile&lt;/strong&gt;
+&lt;/h4&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;span class="lnt"&gt;20
+&lt;/span&gt;&lt;span class="lnt"&gt;21
+&lt;/span&gt;&lt;span class="lnt"&gt;22
+&lt;/span&gt;&lt;span class="lnt"&gt;23
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-groovy" data-lang="groovy"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="n"&gt;pipeline&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;agent&lt;/span&gt; &lt;span class="n"&gt;any&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;stages&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;stage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Build&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;steps&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Building the project...&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sh&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;mvn clean package&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;stage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Test&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;steps&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Running tests...&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sh&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;mvn test&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;stage&lt;/span&gt;&lt;span class="o"&gt;(&lt;/span&gt;&lt;span class="s1"&gt;&amp;#39;Deploy&amp;#39;&lt;/span&gt;&lt;span class="o"&gt;)&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;steps&lt;/span&gt; &lt;span class="o"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;echo&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;Deploying application...&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;sh&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;./deploy.sh&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🎯 Conclusion
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;✅ &lt;strong&gt;Python + Bash&lt;/strong&gt; is the best choice to start with DevOps.&lt;/li&gt;
+&lt;li&gt;✅ If working with &lt;strong&gt;Kubernetes&lt;/strong&gt;, learn &lt;strong&gt;Go&lt;/strong&gt; as well.&lt;/li&gt;
+&lt;li&gt;✅ If working with &lt;strong&gt;Jenkins&lt;/strong&gt;, learn &lt;strong&gt;Groovy&lt;/strong&gt; to write pipelines.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;👉 Next step:&lt;/strong&gt; Learn the basics of &lt;em&gt;&lt;strong&gt;Linux &amp;amp; operating systems&lt;/strong&gt;&lt;/em&gt;.&lt;/p&gt;</description></item></channel></rss>
