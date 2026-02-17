@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/</link><description>Recent content on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 17 Feb 2026 18:28:52 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/index.xml" rel="self" type="application/rss+xml"/><item><title>Links</title><link>https://tech.nguuyen.io.vn/en/links/</link><pubDate>Wed, 04 Feb 2026 16:27:00 +0700</pubDate><guid>https://tech.nguuyen.io.vn/en/links/</guid><description>&lt;h2 id="-connect"&gt;🌍 Connect
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/</link><description>Recent content on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 17 Feb 2026 18:33:58 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/index.xml" rel="self" type="application/rss+xml"/><item><title>Links</title><link>https://tech.nguuyen.io.vn/en/links/</link><pubDate>Wed, 04 Feb 2026 16:27:00 +0700</pubDate><guid>https://tech.nguuyen.io.vn/en/links/</guid><description>&lt;h2 id="-connect"&gt;🌍 Connect
 &lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;&lt;a class="link" href="https://github.com/HoangDuonng" target="_blank" rel="noopener"
 &gt;GitHub&lt;/a&gt;&lt;/li&gt;
@@ -367,7 +367,188 @@
 &gt;GitOps guide&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Have you tried &lt;strong&gt;GitOps&lt;/strong&gt; in your projects? Share your experience! 🚀&lt;/p&gt;
-&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Service Mesh&lt;/strong&gt;&lt;/em&gt; - a software infrastructure layer that manages communication between services in microservices systems. It provides load balancing, security, observability, traffic control, and fault handling so services can communicate efficiently without changing application code.&lt;/p&gt;</description></item><item><title>CI/CD - Continuous Integration and Continuous Deployment 🚀</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-thirteen/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-thirteen/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-thirteen.webp" alt="Featured image of post CI/CD - Continuous Integration and Continuous Deployment 🚀" /&gt;&lt;h2 id="-what-is-cicd"&gt;🔍 What is CI/CD?
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Service Mesh&lt;/strong&gt;&lt;/em&gt; - a software infrastructure layer that manages communication between services in microservices systems. It provides load balancing, security, observability, traffic control, and fault handling so services can communicate efficiently without changing application code.&lt;/p&gt;</description></item><item><title>Service Mesh - Managing Microservices Communication 🌐</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twenty-one/</link><pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twenty-one/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-twenty-one.webp" alt="Featured image of post Service Mesh - Managing Microservices Communication 🌐" /&gt;&lt;h2 id="-introduction"&gt;📌 Introduction
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Service Mesh&lt;/strong&gt; is a software infrastructure layer that manages communication between services in &lt;em&gt;&lt;strong&gt;microservices&lt;/strong&gt;&lt;/em&gt; systems. It provides &lt;strong&gt;load balancing, security, observability, traffic control, and fault handling&lt;/strong&gt;, enabling services to communicate efficiently without changing application code.&lt;/p&gt;
+&lt;p&gt;Popular Service Mesh tools include &lt;strong&gt;Istio, Linkerd, and Consul&lt;/strong&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-benefits-of-service-mesh"&gt;🚀 Benefits of Service Mesh
+&lt;/h2&gt;&lt;p&gt;✅ &lt;strong&gt;Automatic service-to-service communication management&lt;/strong&gt; - No application code changes required.
+✅ &lt;strong&gt;Enhanced security&lt;/strong&gt; - TLS encryption, service authentication, RBAC policies.
+✅ &lt;strong&gt;Performance optimization&lt;/strong&gt; - Smart load balancing and traffic control.
+✅ &lt;strong&gt;Comprehensive observability&lt;/strong&gt; - Logs, metrics, and tracing for monitoring.
+✅ &lt;strong&gt;High resilience&lt;/strong&gt; - Automatic fault detection and recovery.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-popular-service-mesh-tools"&gt;🛠️ Popular Service Mesh Tools
+&lt;/h2&gt;&lt;h3 id="1-istio---the-most-powerful-solution"&gt;1️⃣ Istio - The most powerful solution
+&lt;/h3&gt;&lt;p&gt;Istio is an open-source &lt;strong&gt;Service Mesh&lt;/strong&gt; platform that provides control, security, and observability for &lt;strong&gt;Kubernetes&lt;/strong&gt; services.&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Key features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;mTLS&lt;/strong&gt; support for secure service communication.&lt;/li&gt;
+&lt;li&gt;Smart load balancing, retries, and timeouts.&lt;/li&gt;
+&lt;li&gt;API gateway management and access policies.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Istio Gateway example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;apiVersion&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;networking.istio.io/v1alpha3&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;kind&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;Gateway&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;metadata&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;my-gateway&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;spec&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;selector&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;istio&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;ingressgateway&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;servers&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="nt"&gt;port&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;number&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="m"&gt;80&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;http&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;protocol&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;HTTP&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;hosts&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="s2"&gt;&amp;#34;example.com&amp;#34;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;a class="link" href="https://www.redhat.com/en/topics/microservices/what-is-istio" target="_blank" rel="noopener"
+&gt;Istio documentation&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id="2-linkerd---lightweight-and-fast"&gt;2️⃣ Linkerd - Lightweight and fast
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Linkerd&lt;/strong&gt; is a lightweight Service Mesh optimized for &lt;strong&gt;Kubernetes&lt;/strong&gt;, designed to reduce latency and resource usage.&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Key features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Automatic TLS (mTLS) for all communications.&lt;/li&gt;
+&lt;li&gt;Built-in tracing and metrics.&lt;/li&gt;
+&lt;li&gt;Quick installation with a single CLI command.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Linkerd configuration example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;apiVersion&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;linkerd.io/v1alpha2&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;kind&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;ServiceProfile&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;metadata&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;my-service.default.svc.cluster.local&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;spec&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;routes&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;- &lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;GET /health&amp;#34;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;condition&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;method&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;GET&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;pathRegex&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;/health&amp;#34;&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;isRetryable&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;a class="link" href="https://linkerd.io/" target="_blank" rel="noopener"
+&gt;Linkerd documentation&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id="3-consul---service-mesh-with-service-discovery"&gt;3️⃣ Consul - Service Mesh with service discovery
+&lt;/h3&gt;&lt;p&gt;Consul is not only a &lt;strong&gt;Service Mesh&lt;/strong&gt;, but also provides &lt;strong&gt;service discovery, configuration management, and secure communication&lt;/strong&gt; between services.&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Key features:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Service discovery&lt;/strong&gt; for Kubernetes and traditional systems.&lt;/li&gt;
+&lt;li&gt;Integration with &lt;strong&gt;Envoy Proxy&lt;/strong&gt; for traffic management.&lt;/li&gt;
+&lt;li&gt;Supports &lt;strong&gt;multi-cluster&lt;/strong&gt; and &lt;strong&gt;hybrid cloud&lt;/strong&gt; environments.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Consul service registration example:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-json" data-lang="json"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;service&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;name&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;web&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;port&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;8080&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nt"&gt;&amp;#34;connect&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt; &lt;span class="nt"&gt;&amp;#34;sidecar_service&amp;#34;&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="p"&gt;{}&lt;/span&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;📖 &lt;a class="link" href="https://www.consul.io/docs/intro" target="_blank" rel="noopener"
+&gt;Consul documentation&lt;/a&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-service-mesh-comparison"&gt;🔥 Service Mesh Comparison
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Feature&lt;/th&gt;
+&lt;th&gt;Istio&lt;/th&gt;
+&lt;th&gt;Linkerd&lt;/th&gt;
+&lt;th&gt;Consul&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Visual UI&lt;/td&gt;
+&lt;td&gt;✅ Yes&lt;/td&gt;
+&lt;td&gt;❌ No&lt;/td&gt;
+&lt;td&gt;✅ Yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;mTLS support&lt;/td&gt;
+&lt;td&gt;✅ Yes&lt;/td&gt;
+&lt;td&gt;✅ Yes&lt;/td&gt;
+&lt;td&gt;✅ Yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;High performance&lt;/td&gt;
+&lt;td&gt;⚠️ Needs tuning&lt;/td&gt;
+&lt;td&gt;✅ Fast&lt;/td&gt;
+&lt;td&gt;⚠️ Moderate&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Service discovery&lt;/td&gt;
+&lt;td&gt;❌ No&lt;/td&gt;
+&lt;td&gt;❌ No&lt;/td&gt;
+&lt;td&gt;✅ Yes&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;📌 Conclusion
+&lt;/h2&gt;&lt;p&gt;Service Mesh simplifies &lt;strong&gt;managing communication between microservices&lt;/strong&gt;, ensuring &lt;strong&gt;security, observability, and high performance&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;💡 If you need the &lt;strong&gt;most powerful solution&lt;/strong&gt;, try &lt;strong&gt;Istio&lt;/strong&gt;.
+💡 If you prioritize &lt;strong&gt;performance and ease of setup&lt;/strong&gt;, choose &lt;strong&gt;Linkerd&lt;/strong&gt;.
+💡 If you need &lt;strong&gt;service discovery and multi-cloud&lt;/strong&gt;, consider &lt;strong&gt;Consul&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;📖 &lt;strong&gt;References:&lt;/strong&gt;
+🔗 &lt;a class="link" href="https://istio.io/latest/docs/" target="_blank" rel="noopener"
+&gt;Istio documentation&lt;/a&gt;
+🔗 &lt;a class="link" href="https://linkerd.io/2.17/getting-started/" target="_blank" rel="noopener"
+&gt;Linkerd documentation&lt;/a&gt;
+🔗 &lt;a class="link" href="https://developer.hashicorp.com/consul" target="_blank" rel="noopener"
+&gt;Consul documentation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Have you tried any &lt;strong&gt;Service Mesh&lt;/strong&gt; deployments? Share your experience! 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Final step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;Cloud Design Patterns&lt;/strong&gt;&lt;/em&gt; - a set of proven patterns for building efficient, flexible, and scalable cloud applications. They address common challenges like high availability, fault tolerance, elastic scaling, and security in cloud environments.&lt;/p&gt;</description></item><item><title>CI/CD - Continuous Integration and Continuous Deployment 🚀</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-thirteen/</link><pubDate>Mon, 24 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-thirteen/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-thirteen.webp" alt="Featured image of post CI/CD - Continuous Integration and Continuous Deployment 🚀" /&gt;&lt;h2 id="-what-is-cicd"&gt;🔍 What is CI/CD?
 &lt;/h2&gt;&lt;p&gt;CI/CD (Continuous Integration/Continuous Deployment) is a methodology that helps automate the software development process, reducing errors, speeding up deployment, and improving product quality.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Continuous Integration (CI):&lt;/strong&gt; Continuous integration, helps detect errors early by automatically testing whenever there are changes in the source code.&lt;/li&gt;
