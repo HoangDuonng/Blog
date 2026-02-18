@@ -1,4 +1,112 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/posts/</link><description>Recent content in Posts on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 18 Feb 2026 23:38:55 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Deploy a Website to Hosting the Simplest Way (HTML/CSS or React/Vue.js) 🔥</title><link>https://tech.nguuyen.io.vn/en/posts/website/how-to-deploy-a-website/</link><pubDate>Wed, 26 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/website/how-to-deploy-a-website/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/upload-website-on-hosting.webp" alt="Featured image of post Deploy a Website to Hosting the Simplest Way (HTML/CSS or React/Vue.js) 🔥" /&gt;&lt;h2 id="how-to-upload-a-website-to-hosting-via-file-manager-and-cpanel-from-a-to-z"&gt;How to upload a website to hosting via File Manager and cPanel from A to Z
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/posts/</link><description>Recent content in Posts on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 18 Feb 2026 23:41:44 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Point a Domain to Hosting 🌐</title><link>https://tech.nguuyen.io.vn/en/posts/website/domain-to-hosting-setup/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/website/domain-to-hosting-setup/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/domain-to-hosting-setup.webp" alt="Featured image of post Point a Domain to Hosting 🌐" /&gt;&lt;h2 id="-why-point-a-domain-to-hosting"&gt;🌐 Why point a domain to hosting?
+&lt;/h2&gt;&lt;p&gt;Domain and hosting are the two essentials that keep a website online.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Domain&lt;/strong&gt; is the website address.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hosting&lt;/strong&gt; stores the website data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="why-you-need-to-point-a-domain"&gt;Why you need to point a domain
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Connect the domain to hosting so the site appears on the internet.&lt;/li&gt;
+&lt;li&gt;Let people access the site using a memorable address.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="how-it-works-"&gt;How it works 🔧
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Get &lt;strong&gt;nameserver&lt;/strong&gt; or &lt;strong&gt;IP&lt;/strong&gt; information from your hosting provider.&lt;/li&gt;
+&lt;li&gt;Configure it in your domain management dashboard.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="three-simplest-ways-to-point-a-domain-to-hosting-"&gt;Three simplest ways to point a domain to hosting 🚀
+&lt;/h2&gt;&lt;h3 id="point-using-nameservers"&gt;Point using nameservers
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Steps:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Log in to your domain management panel.&lt;/li&gt;
+&lt;li&gt;Select the domain you want to point.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/chon-ten-mien-muon-tro-ve-hosting-2.webp"
+loading="lazy"
+alt="Select the domain to point to hosting"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Select the domain to point to hosting&lt;/em&gt;&lt;/p&gt;
+&lt;ol start="3"&gt;
+&lt;li&gt;Replace the default nameservers with the hosting provider&amp;rsquo;s nameservers (found in the hosting welcome email).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/thay-doi-nameserver-1.webp"
+loading="lazy"
+alt="Replace default nameservers with your hosting nameservers"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Replace default nameservers with your hosting nameservers&lt;/em&gt;&lt;/p&gt;
+&lt;ol start="4"&gt;
+&lt;li&gt;Wait for DNS propagation (minutes to hours, up to &lt;strong&gt;24h&lt;/strong&gt;).&lt;/li&gt;
+&lt;li&gt;Verify by visiting the domain.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="point-using-ip-a-record"&gt;Point using IP (A record)
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Steps:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Log in to your domain management panel.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/chon-muc-cau-hinh-dns-1.webp"
+loading="lazy"
+alt="Select the domain and open DNS settings"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Select the domain and open DNS settings&lt;/em&gt;&lt;/p&gt;
+&lt;ol start="2"&gt;
+&lt;li&gt;Open the DNS settings.&lt;/li&gt;
+&lt;li&gt;Add two A records:
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;@&lt;/code&gt; → Hosting IP (from the provider email).&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;www&lt;/code&gt; → Hosting IP.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/them-2-ban-a-record.webp"
+loading="lazy"
+alt="Add two A records"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Add two A records&lt;/em&gt;&lt;/p&gt;
+&lt;ol start="4"&gt;
+&lt;li&gt;Save changes and wait for DNS propagation (minutes to hours).&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id="point-using-an-intermediate-nameserver"&gt;Point using an intermediate nameserver
+&lt;/h3&gt;&lt;p&gt;To point a domain via an intermediate nameserver such as Cloudflare, Namecheap FreeDNS, or Incapsula, follow these steps:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Steps:&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Create an account with the intermediate nameserver and confirm required DNS records.&lt;/li&gt;
+&lt;li&gt;In your domain registrar, change the nameservers to the intermediate provider.&lt;/li&gt;
+&lt;li&gt;Wait for propagation.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="common-issues-when-pointing-a-domain-to-hosting-"&gt;Common issues when pointing a domain to hosting ⚠️
+&lt;/h2&gt;&lt;p&gt;You may run into issues that prevent your site from working correctly. Understanding these will help you troubleshoot faster.&lt;/p&gt;
+&lt;h3 id="-wrong-hosting-domain"&gt;🚫 Wrong hosting domain
+&lt;/h3&gt;&lt;p&gt;When registering hosting, the provider asks for your domain. If it is incorrect or mismatched, the website may not work.&lt;/p&gt;
+&lt;h3 id="-using-both-methods-at-once"&gt;🚫 Using both methods at once
+&lt;/h3&gt;&lt;p&gt;If you already pointed a domain via &lt;strong&gt;nameservers&lt;/strong&gt;, do not switch to &lt;strong&gt;IP (A record)&lt;/strong&gt; at the same time. It can cause DNS conflicts.&lt;/p&gt;
+&lt;h3 id="-incorrect-dns-record-type"&gt;🚫 Incorrect DNS record type
+&lt;/h3&gt;&lt;p&gt;Common DNS record types include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;A record&lt;/strong&gt;: Points the domain to the hosting IP.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CNAME&lt;/strong&gt;: Points one domain to another.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MX record&lt;/strong&gt;: Configures email.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Entering the wrong record type can break connectivity.&lt;/p&gt;
+&lt;h3 id="-wrong-hosting-ip"&gt;🚫 Wrong hosting IP
+&lt;/h3&gt;&lt;p&gt;Hosting IPs are long and easy to mistype. Copy directly from the provider email to avoid confusion with a personal IP.&lt;/p&gt;
+&lt;p&gt;If errors occur, double-check your settings and wait for DNS updates to finish.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="video-guide-"&gt;Video guide 🎥
+&lt;/h2&gt;&lt;p&gt;For a visual walkthrough, watch the video below. It covers steps from getting nameserver details to updating settings in your domain manager.&lt;/p&gt;
+&lt;p&gt;&lt;div class="video-wrapper"&gt;
+&lt;iframe loading="lazy"
+src="https://www.youtube-nocookie.com/embed/7RjjF8Ee7Ws"
+allowfullscreen
+title="YouTube Video"
+&gt;
+&lt;/iframe&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;/p&gt;&lt;span class="cite"&gt;&lt;span&gt;― &lt;/span&gt;&lt;span&gt;Source, &lt;/span&gt;&lt;a href="https://www.youtube.com/@F8VNOfficial"&gt;&lt;cite&gt;F8 Official ✔️&lt;/cite&gt;&lt;/a&gt;&lt;/span&gt;&lt;/blockquote&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="conclusion-"&gt;Conclusion 🌟
+&lt;/h2&gt;&lt;p&gt;Pointing a domain to hosting is essential for your website to work online. Whether you use nameservers, A records, or an intermediate nameserver, double-check your settings and allow time for DNS propagation. If you encounter issues, review the configuration and try again 🔄. Good luck, and feel free to leave a comment if you need help! 💬😊&lt;/p&gt;</description></item><item><title>Deploy a Website to Hosting the Simplest Way (HTML/CSS or React/Vue.js) 🔥</title><link>https://tech.nguuyen.io.vn/en/posts/website/how-to-deploy-a-website/</link><pubDate>Wed, 26 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/website/how-to-deploy-a-website/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/upload-website-on-hosting.webp" alt="Featured image of post Deploy a Website to Hosting the Simplest Way (HTML/CSS or React/Vue.js) 🔥" /&gt;&lt;h2 id="how-to-upload-a-website-to-hosting-via-file-manager-and-cpanel-from-a-to-z"&gt;How to upload a website to hosting via File Manager and cPanel from A to Z
 &lt;/h2&gt;&lt;hr&gt;
 &lt;p&gt;Uploading a website to hosting is an essential step to bring your site online. It is not just about transferring files but also ensuring everything runs smoothly and securely. This guide walks you through the steps, from preparing files and databases to using the right upload tools.&lt;/p&gt;
 &lt;hr&gt;
