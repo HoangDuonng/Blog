@@ -1,0 +1,461 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Website on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/website/</link><description>Recent content in Website on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 18 Feb 2026 23:38:55 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/website/index.xml" rel="self" type="application/rss+xml"/><item><title>Deploy a Website to Hosting the Simplest Way (HTML/CSS or React/Vue.js) 🔥</title><link>https://tech.nguuyen.io.vn/en/posts/website/how-to-deploy-a-website/</link><pubDate>Wed, 26 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/website/how-to-deploy-a-website/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/upload-website-on-hosting.webp" alt="Featured image of post Deploy a Website to Hosting the Simplest Way (HTML/CSS or React/Vue.js) 🔥" /&gt;&lt;h2 id="how-to-upload-a-website-to-hosting-via-file-manager-and-cpanel-from-a-to-z"&gt;How to upload a website to hosting via File Manager and cPanel from A to Z
+&lt;/h2&gt;&lt;hr&gt;
+&lt;p&gt;Uploading a website to hosting is an essential step to bring your site online. It is not just about transferring files but also ensuring everything runs smoothly and securely. This guide walks you through the steps, from preparing files and databases to using the right upload tools.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="key-points-to-remember"&gt;Key points to remember
+&lt;/h2&gt;&lt;p&gt;Before you start uploading, keep these essentials in mind:&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;What to prepare before uploading&lt;/strong&gt;: Website files, database, control panel access, and an FTP client like FileZilla.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Ways to upload&lt;/strong&gt;: Choose a reliable host, then use File Manager, FTP, WordPress plugins, SSH, or provider support.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Why upload to hosting&lt;/strong&gt;: Makes your site public, improves security, boosts speed, and simplifies management.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Four steps to upload a website&lt;/strong&gt;:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Upload website files to &lt;code&gt;public_html&lt;/code&gt; via File Manager or FTP.&lt;/li&gt;
+&lt;li&gt;Verify files are in the correct location.&lt;/li&gt;
+&lt;li&gt;Create a database in cPanel, import via phpMyAdmin, and configure the connection.&lt;/li&gt;
+&lt;li&gt;Visit the website to confirm everything works.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id="what-do-you-need-before-uploading-a-website"&gt;What do you need before uploading a website?
+&lt;/h2&gt;&lt;p&gt;Prepare the following:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Website files&lt;/strong&gt;: These can be the contents of your old &lt;code&gt;public_html&lt;/code&gt; folder, source code, or the latest backup.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;📌 Note for React/Vue.js deployments&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;When building a &lt;strong&gt;React&lt;/strong&gt; or &lt;strong&gt;Vue.js&lt;/strong&gt; app, you do not upload the full source code,
+only the &lt;strong&gt;static build output&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Build and zip steps:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Run the build command:
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;React:&lt;/strong&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm run build
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Vue.js:&lt;/strong&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm run build
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;The output folder is usually &lt;code&gt;build/&lt;/code&gt; (&lt;strong&gt;React&lt;/strong&gt;) or &lt;code&gt;dist/&lt;/code&gt; (&lt;strong&gt;Vue.js&lt;/strong&gt;).&lt;/li&gt;
+&lt;li&gt;Zip the &lt;code&gt;build&lt;/code&gt; or &lt;code&gt;dist&lt;/code&gt; folder before uploading.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;📤 Uploading to the server:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;With &lt;strong&gt;cPanel&lt;/strong&gt;, extract directly in &lt;code&gt;public_html&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;With &lt;strong&gt;SSH/SFTP&lt;/strong&gt;, upload and unzip using:
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;unzip build.zip -d /var/www/html/
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;Ensure your &lt;strong&gt;Apache/Nginx&lt;/strong&gt; config points to the folder containing &lt;code&gt;index.html&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Database file&lt;/strong&gt; (if applicable).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Control panel access&lt;/strong&gt; for the new hosting account.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;FTP client&lt;/strong&gt; such as FileZilla.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To upload, access your hosting control panel via an FTP client like FileZilla. If your site already exists, use the CMS or cPanel backup feature to download it and upload to the new host.&lt;/p&gt;
+&lt;h3 id="choose-a-reliable-hosting-provider"&gt;Choose a reliable hosting provider
+&lt;/h3&gt;&lt;p&gt;Quality hosting affects both speed and long-term performance. Choose carefully based on:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Live support&lt;/strong&gt;: 24/7 customer support for quick issue resolution.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Account control&lt;/strong&gt;: Full access to cPanel or equivalent tools.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scalability&lt;/strong&gt;: Ability to upgrade storage, bandwidth, or domains.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Clear refund policy&lt;/strong&gt;: Flexible refunds for testing services.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Free add-ons&lt;/strong&gt;: SSL, scheduled backups, or free migrations.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;ICANN-accredited domains&lt;/strong&gt;: Protect your brand with trusted domain registration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Review provider reputation and user feedback on forums or review sites before deciding.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="choose-a-website-upload-method"&gt;Choose a website upload method
+&lt;/h3&gt;&lt;p&gt;There are five main ways to upload a website depending on your tools and needs:&lt;/p&gt;
+&lt;h4 id="use-file-manager"&gt;Use File Manager
+&lt;/h4&gt;&lt;p&gt;File Manager is a web-based file tool built into cPanel or other hosting dashboards.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Free.&lt;/li&gt;
+&lt;li&gt;Easy to use.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Upload size limits (usually 256 MB).&lt;/li&gt;
+&lt;li&gt;Can only extract archives within that size limit.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: For larger files, use FTP and unzip via SSH.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-16.webp"
+loading="lazy"
+alt="Access File Manager"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Figure 1: Access File Manager&lt;/em&gt;&lt;/p&gt;
+&lt;h4 id="use-ftp"&gt;Use FTP
+&lt;/h4&gt;&lt;p&gt;FTP (File Transfer Protocol) lets you upload files using an FTP client like FileZilla. This is efficient and has no upload size limit.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;No upload size limits.&lt;/li&gt;
+&lt;li&gt;Faster for large files.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Requires an FTP client.&lt;/li&gt;
+&lt;li&gt;Requires FTP credentials from your host.&lt;/li&gt;
+&lt;li&gt;Lower security, use SFTP for better protection.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/locating-ftp-details-4.webp"
+loading="lazy"
+alt="FTP details"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Figure 2: FTP details&lt;/em&gt;&lt;/p&gt;
+&lt;h4 id="use-wordpress-migration-plugins"&gt;Use WordPress migration plugins
+&lt;/h4&gt;&lt;p&gt;If you use WordPress, plugins like All in One WP Migration can move your entire site automatically.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Easy to use with minimal technical knowledge.&lt;/li&gt;
+&lt;li&gt;Simple drag and drop workflow.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Upload size limits (usually 256 MB).&lt;/li&gt;
+&lt;li&gt;For larger files, use FTP + SSH.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: After upload, move files out of subfolders into &lt;code&gt;public_html&lt;/code&gt; so the site loads correctly.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/img_20230304150023-8.webp"
+loading="lazy"
+alt="Use WordPress Migration Plugin"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Figure 3: Use WordPress Migration Plugin&lt;/em&gt;&lt;/p&gt;
+&lt;h4 id="use-ssh-secure-shell"&gt;Use SSH (Secure Shell)
+&lt;/h4&gt;&lt;p&gt;SSH lets you upload and manage files via command line, ideal for large files or high speed.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fast with no size limits.&lt;/li&gt;
+&lt;li&gt;Extract archives directly on the server.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Requires basic command-line skills and SSH access.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Su-dung-SSH-upload-website.webp"
+loading="lazy"
+alt="Upload via SSH"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Figure 4: Upload via SSH&lt;/em&gt;&lt;/p&gt;
+&lt;h4 id="use-import-site-automatic-importer"&gt;Use Import Site (automatic importer)
+&lt;/h4&gt;&lt;p&gt;Some hosting providers offer an &lt;strong&gt;Import Site&lt;/strong&gt; tool that uploads and extracts a website into &lt;code&gt;public_html&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Quick and easy upload.&lt;/li&gt;
+&lt;li&gt;Minimal technical effort.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Depends on whether your host supports the tool.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;: Ask your hosting provider if they support site import.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/import-website-tool-2.webp"
+loading="lazy"
+alt="Import Site tool"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Figure 5: Import Site tool&lt;/em&gt;&lt;/p&gt;
+&lt;h4 id="ask-hosting-support"&gt;Ask hosting support
+&lt;/h4&gt;&lt;p&gt;Most providers offer migration help, especially if you are switching hosts.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Saves time and avoids technical mistakes.&lt;/li&gt;
+&lt;li&gt;Done by experts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;May be a paid service.&lt;/li&gt;
+&lt;li&gt;Depends on support availability.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;: Check the provider&amp;rsquo;s migration policy before requesting support.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Nho-su-ho-tro-tu-nha-cung-cap-hosting.webp"
+loading="lazy"
+alt="Ask hosting support"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Figure 6: Ask hosting support&lt;/em&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;📌 &lt;strong&gt;Notes after uploading&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Move all data from subfolders into &lt;code&gt;public_html&lt;/code&gt;&lt;/strong&gt; so the site loads correctly.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Check file structure and database connections&lt;/strong&gt; to avoid runtime errors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Choose the best method&lt;/strong&gt; based on file size, platform, and your skills.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="why-you-should-upload-a-website-to-hosting"&gt;Why you should upload a website to hosting
+&lt;/h2&gt;&lt;p&gt;Uploading to hosting is required to make your site public, but it also brings major benefits in security, performance, and reliability:&lt;/p&gt;
+&lt;h3 id="publish-your-website-globally"&gt;Publish your website globally
+&lt;/h3&gt;&lt;p&gt;When hosted, your website becomes accessible worldwide via your domain name. Otherwise, only your local machine can access it.&lt;/p&gt;
+&lt;h3 id="security-and-data-safety"&gt;Security and data safety
+&lt;/h3&gt;&lt;p&gt;Professional hosting provides strong security measures such as SSL certificates, firewalls, and data protection tools. This keeps your site and brand data safe from attacks and breaches.&lt;/p&gt;
+&lt;h3 id="speed-and-performance"&gt;Speed and performance
+&lt;/h3&gt;&lt;p&gt;Hosting servers are optimized for high traffic and fast internet speeds, improving page load times and user experience while reducing lag.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Tang-toc-do-va-hieu-suat-Website.webp"
+loading="lazy"
+alt="Speed and performance"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Figure 7: Speed and performance&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="stability-and-reliability"&gt;Stability and reliability
+&lt;/h3&gt;&lt;p&gt;Hosting providers manage the hardware and network, ensuring high uptime so your website stays available without long downtime.&lt;/p&gt;
+&lt;h3 id="easy-management"&gt;Easy management
+&lt;/h3&gt;&lt;p&gt;Hosting dashboards make it easy to back up data, upgrade software, and optimize performance.&lt;/p&gt;
+&lt;h3 id="scalability-and-long-term-growth"&gt;Scalability and long-term growth
+&lt;/h3&gt;&lt;p&gt;Hosting services scale with your traffic and resource needs, unlike personal machines that struggle with growth.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Tinh-mo-rong-va-phat-trien-lau-dai.webp"
+loading="lazy"
+alt="Scalability and growth"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Figure 8: Scalability and growth&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;In short, hosting your website improves security, performance, stability, and manageability. It is the foundation for sustainable growth and easy global access.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="step-1-choose-how-to-upload-website-files"&gt;Step 1: Choose how to upload website files
+&lt;/h2&gt;&lt;h3 id="method-1-upload-via-file-manager-in-cpanel"&gt;Method 1: Upload via File Manager in cPanel
+&lt;/h3&gt;&lt;h3 id="method-2-upload-via-ftp-client"&gt;Method 2: Upload via FTP client
+&lt;/h3&gt;&lt;p&gt;After you choose a method, follow the guide below.&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&amp;mdash;Method 1: Upload via File Manager in cPanel&amp;mdash; (Easiest)&lt;/p&gt;
+&lt;p&gt;Access cPanel and follow these steps:&lt;/p&gt;
+&lt;p&gt;Step 1: Click &lt;strong&gt;File Manager&lt;/strong&gt; under the &lt;strong&gt;Files&lt;/strong&gt; section.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Choose File Manager&lt;/strong&gt;
+&lt;em&gt;Illustration: Choose File Manager&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-1.webp"
+loading="lazy"
+alt="Choose File Manager"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Choose File Manager&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Step 2: In &lt;strong&gt;File Manager&lt;/strong&gt;, open the &lt;code&gt;public_html&lt;/code&gt; folder.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Open public_html&lt;/strong&gt;
+&lt;em&gt;Illustration: Open public_html&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-2.webp"
+loading="lazy"
+alt="Open public_html"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Open public_html&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Step 3: Click &lt;strong&gt;Upload&lt;/strong&gt; inside &lt;code&gt;public_html&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Click Upload&lt;/strong&gt;
+&lt;em&gt;Illustration: Click Upload&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-3.webp"
+loading="lazy"
+alt="Click Upload"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Click Upload&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Step 4: Use &lt;strong&gt;Select File&lt;/strong&gt; to pick files or drag and drop into the upload area.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Select file&lt;/strong&gt;
+&lt;em&gt;Illustration: Select file&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-4.webp"
+loading="lazy"
+alt="Select file"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Select file&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Step 5: In this example, drag and drop &lt;code&gt;wordpress.zip&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Select wordpress zip&lt;/strong&gt;
+&lt;em&gt;Illustration: Select wordpress zip (or dist.zip/build.zip)&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-5.webp"
+loading="lazy"
+alt="Select wordpress zip"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Select wordpress zip&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Step 6: After upload, return to &lt;strong&gt;File Manager&lt;/strong&gt;. The archive appears in &lt;code&gt;public_html&lt;/code&gt;. Right-click and choose &lt;strong&gt;Extract&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Extract file&lt;/strong&gt;
+&lt;em&gt;Illustration: Extract file&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-6.webp"
+loading="lazy"
+alt="Extract file"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Extract file&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Step 7: Choose the extraction location. In this example, use &lt;code&gt;/public_html&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Choose extraction location&lt;/strong&gt;
+&lt;em&gt;Illustration: Choose extraction location&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-7.webp"
+loading="lazy"
+alt="Choose extraction location"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Choose extraction location&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Step 8: After extraction, you will see the files in &lt;code&gt;public_html&lt;/code&gt;. This is the website root.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Return to the original folder&lt;/strong&gt;
+&lt;em&gt;Illustration: Return to the original folder&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-8.webp"
+loading="lazy"
+alt="Return to the original folder"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Return to the original folder&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Step 9: The website is now uploaded. Enter your URL in a browser to visit.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Language selection during WordPress setup&lt;/strong&gt; &lt;em&gt;&lt;strong&gt;(If applicable)&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;hr&gt;
+&lt;p&gt;&amp;mdash;Method 2: Upload via FTP client&amp;mdash;&lt;/p&gt;
+&lt;p&gt;Some users prefer FTP clients like &lt;strong&gt;FileZilla, SmartFTP, CoreFTP&lt;/strong&gt;, or similar tools. In this guide, we use &lt;strong&gt;FileZilla&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Notes before uploading via FTP:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Your skills:&lt;/strong&gt; If you are new to hosting, &lt;strong&gt;File Manager&lt;/strong&gt; is easier. If you are experienced, &lt;strong&gt;FTP&lt;/strong&gt; is faster.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Website size:&lt;/strong&gt; Large websites are easier with FTP because there are no upload limits.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Special requirements:&lt;/strong&gt; If you need special server configuration, check with your hosting provider.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Step 1: Get FTP information via &lt;strong&gt;FTP Access&lt;/strong&gt;. If you forgot the password, reset it under &lt;strong&gt;Change account password&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Get FTP Access details&lt;/strong&gt;
+&lt;em&gt;Illustration: Get FTP Access details&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-9.webp"
+loading="lazy"
+alt="Get FTP Access details"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Get FTP Access details&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Step 2: Open &lt;strong&gt;FileZilla&lt;/strong&gt;, enter FTP details, and click &lt;strong&gt;Quickconnect&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Click Quickconnect&lt;/strong&gt;
+&lt;em&gt;Illustration: Click Quickconnect&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-10.webp"
+loading="lazy"
+alt="Click Quickconnect"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Click Quickconnect&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Step 3: After connecting, locate your website files and drag them from the left pane to the right pane, targeting &lt;code&gt;public_html&lt;/code&gt;. Unzip archives before upload because FTP cannot extract files.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Drag and drop files&lt;/strong&gt;
+&lt;em&gt;Illustration: Drag and drop files&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-11.webp"
+loading="lazy"
+alt="Drag and drop files"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Drag and drop files&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Step 4: You can also upload archives via FTP, then extract using &lt;strong&gt;File Manager&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Upload archives via FTP&lt;/strong&gt;
+&lt;em&gt;Illustration: Upload archives via FTP&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-12.webp"
+loading="lazy"
+alt="Upload archives via FTP"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Upload archives via FTP&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Step 5: After upload, enter the website URL in a browser to confirm installation or customize it.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="step-2-verify-files-are-inside-public_html"&gt;Step 2: Verify files are inside public_html
+&lt;/h2&gt;&lt;p&gt;After uploading, check that all files are in &lt;code&gt;public_html&lt;/code&gt;. If you extracted a backup into a subfolder, users would need to visit &lt;code&gt;example.com/something&lt;/code&gt; instead of &lt;code&gt;example.com&lt;/code&gt;. Fix this by moving files:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open the folder with the website files.&lt;/li&gt;
+&lt;li&gt;Select all files, right-click, and choose &lt;strong&gt;Move&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Select &lt;code&gt;public_html&lt;/code&gt; and click &lt;strong&gt;Proceed&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;If your site has been running already, upload the &lt;strong&gt;database&lt;/strong&gt; as well.&lt;/p&gt;
+&lt;p&gt;After confirming file placement, open your domain in a browser. If DNS is not updated, you can:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Edit the &lt;strong&gt;hosts file&lt;/strong&gt; to simulate DNS changes.&lt;/li&gt;
+&lt;li&gt;Use &lt;strong&gt;online tools&lt;/strong&gt; to check DNS status.&lt;/li&gt;
+&lt;li&gt;Install &lt;strong&gt;browser plugins&lt;/strong&gt; for virtual hosts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;If you need to move a site from a subfolder into &lt;code&gt;public_html&lt;/code&gt;, use &lt;strong&gt;File Manager&lt;/strong&gt; or &lt;strong&gt;FTP&lt;/strong&gt;. Remember to upload the database if needed.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="step-3-upload-the-database-to-hosting"&gt;Step 3: Upload the database to hosting
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;Perform this step only if your website uses a &lt;em&gt;&lt;strong&gt;database&lt;/strong&gt;&lt;/em&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="create-a-database-in-cpanel"&gt;Create a database in cPanel
+&lt;/h3&gt;&lt;p&gt;Create a new database in &lt;strong&gt;MySQL Databases&lt;/strong&gt; and record:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;MySQL Database&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MySQL User&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MySQL Host&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;MySQL Password&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-13.webp"
+loading="lazy"
+alt="Create a new database"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Create a new database&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="open-phpmyadmin"&gt;Open phpMyAdmin
+&lt;/h3&gt;&lt;p&gt;In &lt;strong&gt;phpMyAdmin&lt;/strong&gt;, import your MySQL database. If importing into an existing database, clear it first to avoid errors.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-14.webp"
+loading="lazy"
+alt="Open phpMyAdmin"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Open phpMyAdmin&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="import-the-database"&gt;Import the database
+&lt;/h3&gt;&lt;p&gt;Go to the &lt;strong&gt;Import&lt;/strong&gt; tab and upload your SQL file (&lt;code&gt;.sql&lt;/code&gt;, &lt;code&gt;.sql.zip&lt;/code&gt;, or &lt;code&gt;.sql.gz&lt;/code&gt;). Click &lt;strong&gt;Choose File&lt;/strong&gt;, then &lt;strong&gt;Go&lt;/strong&gt; to start. When phpMyAdmin shows &lt;em&gt;Import has been successfully finished, 302 queries executed&lt;/em&gt;, the upload is done.&lt;/p&gt;
+&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-15.webp"
+loading="lazy"
+alt="Import database"
+&gt;&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Import database&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="update-configuration-for-database-connection"&gt;Update configuration for database connection
+&lt;/h3&gt;&lt;p&gt;After upload, open your &lt;strong&gt;PHP configuration file&lt;/strong&gt; and fill in host, database name, username, and password. The file name and location depend on your software. For &lt;strong&gt;WordPress&lt;/strong&gt;, the file is &lt;code&gt;wp-config.php&lt;/code&gt; in &lt;code&gt;public_html&lt;/code&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;⚠ &lt;strong&gt;Notes:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Large databases should be split into smaller files to speed up uploads.&lt;/li&gt;
+&lt;li&gt;If your database contains special characters, convert them to &lt;strong&gt;ASCII&lt;/strong&gt; before upload.&lt;/li&gt;
+&lt;li&gt;If import errors occur, check for corruption. Create a fresh database and try again.&lt;/li&gt;
+&lt;li&gt;After uploading, test your website to ensure everything works.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h3 id="update-configuration-for-database-connection-1"&gt;Update configuration for database connection
+&lt;/h3&gt;&lt;p&gt;After uploading, open the PHP config file to enter the &lt;strong&gt;host&lt;/strong&gt;, &lt;strong&gt;database name&lt;/strong&gt;, &lt;strong&gt;username&lt;/strong&gt;, and &lt;strong&gt;password&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The file name and location depend on your software. For example, &lt;strong&gt;WordPress&lt;/strong&gt; uses &lt;code&gt;wp-config.php&lt;/code&gt; in &lt;code&gt;public_html&lt;/code&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="step-4-check-if-the-website-is-stable"&gt;Step 4: Check if the website is stable
+&lt;/h2&gt;&lt;p&gt;To ensure stability after upload and domain mapping, perform the following checks:&lt;/p&gt;
+&lt;h3 id="-check-website-access"&gt;🔍 Check website access
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Access via domain or IP:&lt;/strong&gt; If it loads, the site is live.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Wait for DNS propagation:&lt;/strong&gt; New DNS changes can take &lt;strong&gt;24 hours&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Check immediately using:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;🖥️ &lt;strong&gt;Hosts file:&lt;/strong&gt; Edit the hosts file to simulate DNS changes.&lt;/li&gt;
+&lt;li&gt;🌐 &lt;strong&gt;Online tools:&lt;/strong&gt; Use online DNS checkers.&lt;/li&gt;
+&lt;li&gt;🔌 &lt;strong&gt;Browser plugins:&lt;/strong&gt; Use plugins for virtual hosts.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-test-website-functions"&gt;🛠️ Test website functions
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Visit multiple pages and verify links.&lt;/li&gt;
+&lt;li&gt;Ensure features work as expected.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-check-load-speed"&gt;⚡ Check load speed
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Use &lt;strong&gt;Google PageSpeed Insights&lt;/strong&gt; or &lt;strong&gt;GTmetrix&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-check-for-errors"&gt;🚨 Check for errors
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;404:&lt;/strong&gt; Page not found.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;500:&lt;/strong&gt; Hosting server error.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;503:&lt;/strong&gt; Server maintenance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-test-across-browsers-and-devices"&gt;🌍 Test across browsers and devices
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Try &lt;strong&gt;Chrome, Firefox, Safari, Edge&lt;/strong&gt; on &lt;strong&gt;desktop, mobile, tablet&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-test-at-different-times"&gt;⏳ Test at different times
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Performance can vary throughout the day.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;👉 &lt;strong&gt;If issues appear and you are unsure how to fix them, contact your hosting provider.&lt;/strong&gt; 🚀&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;📌 Conclusion
+&lt;/h2&gt;&lt;p&gt;Uploading a website to hosting is a key step for stable online operation. By preparing correctly and following the steps above, you ensure your website is ready to serve users effectively.&lt;/p&gt;
+&lt;p&gt;💡 If you have questions or need help, leave a comment below. I will respond soon.&lt;/p&gt;
+&lt;p&gt;Thanks for reading! 🚀&lt;/p&gt;</description></item></channel></rss>
