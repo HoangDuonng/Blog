@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/categories/devops/</link><description>Recent content in DevOps on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Tue, 17 Feb 2026 18:33:58 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/categories/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Application Monitoring 📊</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-eighteen/</link><pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-eighteen/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-eighteen.webp" alt="Featured image of post Application Monitoring 📊" /&gt;&lt;h2 id="-application-monitoring"&gt;📊 Application Monitoring
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>DevOps on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/categories/devops/</link><description>Recent content in DevOps on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 18 Feb 2026 23:37:14 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/categories/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Application Monitoring 📊</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-eighteen/</link><pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-eighteen/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-eighteen.webp" alt="Featured image of post Application Monitoring 📊" /&gt;&lt;h2 id="-application-monitoring"&gt;📊 Application Monitoring
 &lt;/h2&gt;&lt;p&gt;Application monitoring is the continuous tracking and analysis of software applications to ensure they run optimally, detect incidents, and provide deep insights into system performance. Monitoring covers critical metrics such as:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;⏳ &lt;strong&gt;Response time&lt;/strong&gt;&lt;/li&gt;
@@ -204,7 +204,52 @@
 &lt;h2 id="-conclusion"&gt;🎯 Conclusion
 &lt;/h2&gt;&lt;p&gt;Artifact management is critical in the software development process. Using tools like &lt;strong&gt;Artifactory, Nexus, and Cloudsmith&lt;/strong&gt; ensures organized, secure, and efficient storage and deployment. Depending on project needs, you can choose the tool that best fits your DevOps workflow.&lt;/p&gt;
 &lt;p&gt;🛠️ What tools do you use to manage artifacts? Share your experience!&lt;/p&gt;
-&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;GitOps&lt;/strong&gt;&lt;/em&gt; - the process of provisioning and configuring resources (servers, networks, storage, accounts) so that systems or applications can operate effectively.&lt;/p&gt;</description></item><item><title>GitOps - Automated Deployment with Git 🌟</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twenty/</link><pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twenty/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-twenty.webp" alt="Featured image of post GitOps - Automated Deployment with Git 🌟" /&gt;&lt;h2 id="introduction"&gt;Introduction
+&lt;p&gt;👉 &lt;strong&gt;Next step:&lt;/strong&gt; Learn about &lt;em&gt;&lt;strong&gt;GitOps&lt;/strong&gt;&lt;/em&gt; - the process of provisioning and configuring resources (servers, networks, storage, accounts) so that systems or applications can operate effectively.&lt;/p&gt;</description></item><item><title>Cloud Design Patterns 🌟</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twenty-two/</link><pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twenty-two/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-twenty-two.webp" alt="Featured image of post Cloud Design Patterns 🌟" /&gt;&lt;h2 id="introduction"&gt;Introduction
+&lt;/h2&gt;&lt;p&gt;Cloud design patterns are reusable solutions for common problems in cloud architectures. These patterns address scalability, reliability, security, and performance challenges in distributed systems.&lt;/p&gt;
+&lt;p&gt;They provide best practices for designing and deploying cloud applications, including data management, messaging, resiliency, and deployment. Common examples include:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Circuit Breaker&lt;/strong&gt;: Prevents cascading failures by temporarily breaking connections after repeated errors.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;CQRS (Command Query Responsibility Segregation)&lt;/strong&gt;: Separates read and write operations to improve performance.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sidecar Pattern&lt;/strong&gt;: Splits auxiliary application components into separate processes or containers for more flexibility.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-availability"&gt;🔹 Availability
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Availability&lt;/strong&gt; is the percentage of time a system operates as expected, often called &lt;strong&gt;uptime&lt;/strong&gt;. It can be affected by hardware or software failures, infrastructure issues, cyberattacks, or excessive load.&lt;/p&gt;
+&lt;p&gt;Cloud providers typically define &lt;strong&gt;service level agreements (SLA)&lt;/strong&gt; that specify guaranteed uptime. For example, a company might promise 99.99% availability.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Example&lt;/strong&gt;:
+A system that guarantees &lt;strong&gt;99.99% uptime&lt;/strong&gt; can only be down for &lt;strong&gt;52 minutes per year&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id="-data-management"&gt;🔹 Data Management
+&lt;/h2&gt;&lt;p&gt;Data management is a key factor in cloud applications and influences most quality attributes. Data is often stored in multiple locations to improve performance, scale, or availability. This introduces challenges such as:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Maintaining data consistency&lt;/strong&gt; when synchronizing across servers.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Securing data&lt;/strong&gt; during storage, transit, and access.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scalability&lt;/strong&gt; to handle growth demands.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Example&lt;/strong&gt;:
+Banking systems must ensure transactions remain consistent across data centers to avoid incorrect account balances.&lt;/p&gt;
+&lt;h2 id="-design-and-implementation"&gt;🔹 Design and Implementation
+&lt;/h2&gt;&lt;p&gt;Good design helps systems stay maintainable, consistent, and reusable across multiple scenarios. Decisions made during design and implementation directly affect cost and overall cloud application quality.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Key design principles&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Consistency&lt;/strong&gt;: Components should follow a defined structure.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Scalability&lt;/strong&gt;: Systems must handle high traffic without performance degradation.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Reusability&lt;/strong&gt;: Components should be usable across different applications.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🔹 Example&lt;/strong&gt;:
+An e-commerce system uses microservices architecture to scale individual services independently (payments, cart, product search).&lt;/p&gt;
+&lt;h2 id="-management-and-monitoring"&gt;🔹 Management and Monitoring
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;DevOps management and monitoring&lt;/strong&gt; covers the lifecycle from planning, development, testing, deployment, to operations. A solid monitoring system tracks the status of applications, services, and infrastructure in production.&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Key monitoring components&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Real-time streaming&lt;/strong&gt;: Observe systems in real time.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Historical replay&lt;/strong&gt;: Store history for incident analysis.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Visualization&lt;/strong&gt;: Present data visually to evaluate system health.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Example&lt;/strong&gt;:
+Using &lt;strong&gt;Prometheus + Grafana&lt;/strong&gt; to monitor Kubernetes container performance.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🔥 Conclusion
+&lt;/h2&gt;&lt;p&gt;Cloud design patterns optimize system architecture by providing solutions for common challenges such as performance, security, and scalability. Choosing the right patterns helps businesses build resilient, flexible, and maintainable systems.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Wrap-up:&lt;/strong&gt; You have completed the DevOps journey, combining &lt;em&gt;&lt;strong&gt;Development&lt;/strong&gt;&lt;/em&gt; and &lt;em&gt;&lt;strong&gt;Operations&lt;/strong&gt;&lt;/em&gt; to speed up software delivery, improve reliability, and optimize workflows. Thank you for following along, and we hope this knowledge supports your next steps! 🚀&lt;/p&gt;</description></item><item><title>GitOps - Automated Deployment with Git 🌟</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twenty/</link><pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-twenty/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-twenty.webp" alt="Featured image of post GitOps - Automated Deployment with Git 🌟" /&gt;&lt;h2 id="introduction"&gt;Introduction
 &lt;/h2&gt;&lt;p&gt;GitOps is a method for managing infrastructure and application deployments by using Git as the single source of truth. It automates deployments, ensures consistency, and improves change tracking.&lt;/p&gt;
 &lt;p&gt;GitOps extends DevOps practices by applying version control and CI/CD principles to infrastructure management. Instead of manual changes, every update flows through pull requests and is automatically synchronized with live environments.&lt;/p&gt;
 &lt;h2 id="-benefits-of-gitops"&gt;🚀 Benefits of GitOps
