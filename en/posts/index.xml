@@ -1,4 +1,71 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/posts/</link><description>Recent content in Posts on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 18 Feb 2026 23:41:44 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Point a Domain to Hosting 🌐</title><link>https://tech.nguuyen.io.vn/en/posts/website/domain-to-hosting-setup/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/website/domain-to-hosting-setup/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/domain-to-hosting-setup.webp" alt="Featured image of post Point a Domain to Hosting 🌐" /&gt;&lt;h2 id="-why-point-a-domain-to-hosting"&gt;🌐 Why point a domain to hosting?
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/posts/</link><description>Recent content in Posts on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 20 Feb 2026 00:27:08 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Introduction to Nginx 🚀</title><link>https://tech.nguuyen.io.vn/en/posts/website/nginx-introduction-guide/</link><pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/website/nginx-introduction-guide/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/nginx-introduction-guide.webp" alt="Featured image of post Introduction to Nginx 🚀" /&gt;&lt;h2 id="-what-is-nginx"&gt;🔀 What is Nginx?
+&lt;/h2&gt;&lt;p align="center"&gt;
+&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi.jpg" alt="NGINX is a reliable open-source web server"&gt;
+&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;NGINX is a reliable open-source web server&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Nginx is an open-source web server that uses an asynchronous, event-driven architecture. It was originally built for HTTP caching, later expanded to support reverse proxy, HTTP load balancing, and mail protocols such as IMAP4, POP3, and SMTP.&lt;/p&gt;
+&lt;p&gt;Released in October 2014, Nginx is used by large companies like Google, Adobe, Netflix, and WordPress because it can handle thousands of concurrent connections.&lt;/p&gt;
+&lt;h2 id="-how-nginx-works"&gt;⚙️ How Nginx works
+&lt;/h2&gt;&lt;p align="center"&gt;
+&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-nginx-cung-hoat-dong-tuong-tu-nhu-cac-server-khac.jpg" alt="NGINX works similarly to other servers"&gt;
+&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;NGINX works similarly to other servers&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Nginx follows an asynchronous processing model, unlike the sequential processing used by traditional web servers.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Each process has multiple worker connections to handle requests.&lt;/li&gt;
+&lt;li&gt;Worker connections pass requests to worker processes, which forward them to the master process.&lt;/li&gt;
+&lt;li&gt;With this model, one worker connection can handle up to 1024 requests at once, enabling Nginx to serve thousands of requests efficiently.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-nginx-features"&gt;🔥 Nginx features
+&lt;/h2&gt;&lt;p align="center"&gt;
+&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-may-chu-nginx-co-nhieu-tinh-nang-va-uu-diem-vuot-troi-trong-lap-trinh.png" alt="NGINX offers powerful features for web development"&gt;
+&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;NGINX offers powerful features for web development&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Nginx provides many standout features:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;⚡ Handles over 10,000 concurrent connections with low memory usage.&lt;/li&gt;
+&lt;li&gt;📂 Serves static files and file indexing.&lt;/li&gt;
+&lt;li&gt;🔄 Load balancing and reverse proxy with caching.&lt;/li&gt;
+&lt;li&gt;🚀 Supports FastCGI, uWSGI, SCGI, and Memcached.&lt;/li&gt;
+&lt;li&gt;🛠️ Modular architecture with automatic gzip compression.&lt;/li&gt;
+&lt;li&gt;🔐 SSL/TLS encryption support.&lt;/li&gt;
+&lt;li&gt;🔀 URL rewrites using regular expressions.&lt;/li&gt;
+&lt;li&gt;🌐 WebSocket support and connection limits.&lt;/li&gt;
+&lt;li&gt;📡 IPv6 compatibility.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-nginx-vs-apache"&gt;⚖️ Nginx vs Apache
+&lt;/h2&gt;&lt;p align="center"&gt;
+&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-so-voi-apache-server-nginx-server-co-kha-nhieu-uu-diem.jpg" alt="Compared to Apache, NGINX has many advantages"&gt;
+&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;Compared to Apache, NGINX has many advantages&lt;/em&gt;&lt;/p&gt;
+&lt;h3 id="-apache-server"&gt;&lt;strong&gt;🖥️ Apache server:&lt;/strong&gt;
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Processes requests using a forked threaded model or keep-alive.&lt;/li&gt;
+&lt;li&gt;Handles both static and dynamic content.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-nginx-server"&gt;&lt;strong&gt;🌍 Nginx server:&lt;/strong&gt;
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Uses a non-blocking event loop.&lt;/li&gt;
+&lt;li&gt;Serves static content more efficiently than Apache.&lt;/li&gt;
+&lt;li&gt;Faster request handling and better resource usage.&lt;/li&gt;
+&lt;li&gt;Requires a separate processor for dynamic content.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id="-how-to-check-if-a-website-uses-nginx"&gt;🔎 How to check if a website uses Nginx
+&lt;/h2&gt;&lt;p align="center"&gt;
+&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-ban-co-the-dua-vao-cac-cong-cu-san-co-de-kiem-tra-website-co-chay-nginx.png" alt="You can use available tools to check if a website runs Nginx"&gt;
+&lt;/p&gt;
+&lt;p align="center"&gt;&lt;em&gt;You can use available tools to check if a website runs Nginx&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;You can check if a website runs Nginx by inspecting HTTP headers:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Open the website in Chrome.&lt;/li&gt;
+&lt;li&gt;Press &lt;strong&gt;Ctrl + Shift + I&lt;/strong&gt; or &lt;strong&gt;F12&lt;/strong&gt; to open DevTools.&lt;/li&gt;
+&lt;li&gt;Switch to the &lt;strong&gt;Network&lt;/strong&gt; tab.&lt;/li&gt;
+&lt;li&gt;Select any request and inspect &lt;strong&gt;Headers&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;You can also use tools like &lt;strong&gt;Pingdom&lt;/strong&gt; or &lt;strong&gt;GTmetrix&lt;/strong&gt; to check.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-conclusion"&gt;🎯 Conclusion
+&lt;/h2&gt;&lt;p&gt;Nginx has become one of the most popular web servers thanks to high performance, the ability to handle thousands of concurrent connections, and powerful features. Whether you need to serve static content, balance load, or run a reverse proxy, Nginx is a strong choice. Hopefully this guide helps you understand Nginx and how it works. If you are considering an optimized web server for your project, try Nginx and explore its benefits! 🚀😊&lt;/p&gt;</description></item><item><title>Point a Domain to Hosting 🌐</title><link>https://tech.nguuyen.io.vn/en/posts/website/domain-to-hosting-setup/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/website/domain-to-hosting-setup/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/domain-to-hosting-setup.webp" alt="Featured image of post Point a Domain to Hosting 🌐" /&gt;&lt;h2 id="-why-point-a-domain-to-hosting"&gt;🌐 Why point a domain to hosting?
 &lt;/h2&gt;&lt;p&gt;Domain and hosting are the two essentials that keep a website online.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Domain&lt;/strong&gt; is the website address.&lt;/li&gt;
