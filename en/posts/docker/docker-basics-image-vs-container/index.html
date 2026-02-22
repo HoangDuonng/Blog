@@ -1,0 +1,284 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Understand the difference between Docker Image and Container - core concepts of Docker. Detailed guide with real examples for beginners."><title>Docker Basics: Image vs Container</title><link rel=canonical href=https://tech.nguuyen.io.vn/en/posts/docker/docker-basics-image-vs-container/><link rel=stylesheet href=/scss/style.min.008e990398a8bda07a1c08244e5228e1367c0d5878a70860ee0645df1783fec0.css><meta property='og:title' content="Docker Basics: Image vs Container"><meta property='og:description' content="Understand the difference between Docker Image and Container - core concepts of Docker. Detailed guide with real examples for beginners."><meta property='og:url' content='https://tech.nguuyen.io.vn/en/posts/docker/docker-basics-image-vs-container/'><meta property='og:site_name' content='Hoang Duong'><meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:tag' content='docker'><meta property='article:tag' content='container'><meta property='article:tag' content='image'><meta property='article:tag' content='beginner'><meta property='article:tag' content='docker-basics'><meta property='article:published_time' content='2026-01-25T00:00:00+00:00'><meta property='article:modified_time' content='2026-02-22T14:30:00+07:00'><meta property='og:image' content='https://tech.nguuyen.io.vn/images/docker/docker-basics-image-vs-container.webp'><meta name=twitter:title content="Docker Basics: Image vs Container"><meta name=twitter:description content="Understand the difference between Docker Image and Container - core concepts of Docker. Detailed guide with real examples for beginners."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://tech.nguuyen.io.vn/images/docker/docker-basics-image-vs-container.webp'><link rel=icon type=image/x-icon href=/favicon.ico><style>:root{--article-font-family:"Roboto", var(--base-font-family)}</style><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/en/><img src=/img/hoang_hu_9c3522a14c2c01cd.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/en>Hoang Duong</a></h1><h2 class=site-description>And, when you want something, all the universe conspires in helping you to achieve it.</h2></div></header><ol class=menu-social><li><a href=https://github.com/HoangDuonng target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.instagram.com/ngu_uuen/ target=_blank title=Instagram rel=me><svg class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="4"/><path d="M16.5 7.5h.01"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/en/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home page</span></a></li><li><a href=/en/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About me</span></a></li><li><a href=/en/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/en/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/en/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://tech.nguuyen.io.vn/>Tiếng Việt</option><option value=https://tech.nguuyen.io.vn/en/ selected>English</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#docker-image-and-container---two-essential-concepts>Docker Image and Container - Two Essential Concepts</a></li><li><a href=#i-what-is-a-docker-image>I. What is a Docker Image?</a><ol><li><a href=#1-key-characteristics-of-docker-image>1. Key Characteristics of Docker Image</a></li><li><a href=#2-common-image-commands>2. Common Image Commands</a></li></ol></li><li><a href=#ii-what-is-a-docker-container>II. What is a Docker Container?</a><ol><li><a href=#1-key-characteristics-of-docker-container>1. Key Characteristics of Docker Container</a></li><li><a href=#2-comparing-container-with-virtual-machine>2. Comparing Container with Virtual Machine</a></li></ol></li><li><a href=#iii-detailed-comparison-image-vs-container>III. Detailed Comparison: Image vs Container</a><ol><li><a href=#complete-comparison-table>Complete Comparison Table</a></li><li><a href=#relationship-between-image-and-container>Relationship between Image and Container</a></li></ol></li><li><a href=#iv-real-world-example-from-start-to-finish>IV. Real-World Example from Start to Finish</a><ol><li><a href=#1-create-dockerfile-to-build-image>1. Create Dockerfile (to build image)</a></li><li><a href=#2-build-image-from-dockerfile>2. Build image from Dockerfile</a></li><li><a href=#3-create-and-run-container-from-image>3. Create and run container from image</a></li><li><a href=#4-interact-with-container>4. Interact with container</a></li><li><a href=#5-remove-container-and-image>5. Remove container and image</a></li></ol></li><li><a href=#v-best-practices-with-image-and-container>V. Best Practices with Image and Container</a><ol><li><a href=#1-image-management>1. Image Management</a></li><li><a href=#2-container-management>2. Container Management</a></li></ol></li><li><a href=#common-troubleshooting>Common Troubleshooting</a><ol><li><a href=#1-cannot-create-container-from-image>1. Cannot create container from image</a></li><li><a href=#2-container-doesnt-persist-data-when-stopped>2. Container doesn&rsquo;t persist data when stopped</a></li><li><a href=#3-container-not-accessible-from-outside>3. Container not accessible from outside</a></li></ol></li><li><a href=#implementation-notes->Implementation Notes 🔧</a></li><li><a href=#-conclusion>🎯 Conclusion</a></li><li><a href=#references>References</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/en/posts/docker/docker-basics-image-vs-container/><img src=/images/docker/docker-basics-image-vs-container.webp loading=lazy alt="Featured image of post Docker Basics: Image vs Container"></a></div><div class=article-details><header class=article-category><a href=/en/categories/docker/ style=background-color:#2a9d8f;color:#fff>Docker</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/en/posts/docker/docker-basics-image-vs-container/>Docker Basics: Image vs Container</a></h2><h3 class=article-subtitle>Understand the difference between Docker Image and Container - core concepts of Docker. Detailed guide with real examples for beginners.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>25/01/2026</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>7 minute read</time></div><div><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span class=article-author--name>Hoàng Dương</span></div></footer><footer class=article-translations><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg><div><a href=https://tech.nguuyen.io.vn/posts/docker/docker-basics-image-vs-container/ class=link>Tiếng Việt</a></div></footer></div></header><section class=article-content><h2 id=docker-image-and-container---two-essential-concepts>Docker Image and Container - Two Essential Concepts</h2><p>When starting with Docker, the two most important concepts you need to understand are <strong>Image</strong> and <strong>Container</strong>. Beginners often confuse them, but in reality, they play different roles in the Docker ecosystem. Image is like a <strong>recipe repository</strong> (cooking instructions), while Container is <strong>the actual execution</strong> (the prepared dish). 🍳</p><p>In this article, I&rsquo;ll explain the detailed differences between Image and Container, how they work together, and provide real examples for better understanding.</p><hr><h2 id=i-what-is-a-docker-image>I. What is a Docker Image?</h2><p>A Docker Image is a <strong>template</strong> used to create a Container. It contains everything needed to run an application:</p><ul><li>Operating system — usually minimal Linux</li><li>Runtime environment — Node.js, Python, Java, etc.</li><li>Application code</li><li>Dependencies (libraries)</li><li>Configuration files</li><li>Environment variables</li></ul><h3 id=1-key-characteristics-of-docker-image>1. Key Characteristics of Docker Image</h3><ul><li><strong>Read-only</strong>: Image is read-only and cannot be changed after creation</li><li><strong>Layered structure</strong>: Image is built from layers, each layer representing a command in Dockerfile</li><li><strong>Reusable</strong>: The same image can be used to create multiple containers</li><li><strong>Version-controlled</strong>: Each image has tags (e.g., <code>1.0</code>, <code>latest</code>, <code>alpine</code>) for version management</li></ul><p><strong>Example of Image Structure:</strong></p><div class=table-wrapper><table><thead><tr><th>Layer</th><th>Content</th></tr></thead><tbody><tr><td>Layer 1</td><td>Base OS (Alpine Linux)</td></tr><tr><td>Layer 2</td><td>System packages (curl, wget)</td></tr><tr><td>Layer 3</td><td>Node.js runtime (18.x)</td></tr><tr><td>Layer 4</td><td>Application code</td></tr><tr><td>Layer 5</td><td>Environment variables</td></tr></tbody></table></div><h3 id=2-common-image-commands>2. Common Image Commands</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Pull an image from Docker Hub</span>
+</span></span><span class=line><span class=cl>docker pull node:18-alpine
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># List downloaded images</span>
+</span></span><span class=line><span class=cl>docker images
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Remove an unused image</span>
+</span></span><span class=line><span class=cl>docker image rm node:18-alpine
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Remove all unused images</span>
+</span></span><span class=line><span class=cl>docker image prune -a
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Build image from Dockerfile</span>
+</span></span><span class=line><span class=cl>docker build -t myapp:1.0 .
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=ii-what-is-a-docker-container>II. What is a Docker Container?</h2><p>A Docker Container is a <strong>running instance</strong> created from a Docker Image. Container has:</p><ul><li>Its own file system</li><li>Isolated network space</li><li>Independent processes and operations</li><li>Its own environment variables</li></ul><h3 id=1-key-characteristics-of-docker-container>1. Key Characteristics of Docker Container</h3><ul><li><strong>Read-only base + Read-write layer</strong>: Container has a read-write layer that allows data changes</li><li><strong>Isolated</strong>: Container is isolated from host and other containers</li><li><strong>Stateful</strong>: Container can be in various states: running, stopped, paused, exited</li><li><strong>Ephemeral</strong>: Containers can be created and deleted quickly (&lt; 1 second)</li></ul><p><strong>Example of Container:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Create and run container from image</span>
+</span></span><span class=line><span class=cl>docker run -d --name myapp node:18-alpine node server.js
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># List running containers</span>
+</span></span><span class=line><span class=cl>docker ps
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># List all containers (including stopped)</span>
+</span></span><span class=line><span class=cl>docker ps -a
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Stop container</span>
+</span></span><span class=line><span class=cl>docker stop myapp
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Restart container</span>
+</span></span><span class=line><span class=cl>docker start myapp
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Remove container</span>
+</span></span><span class=line><span class=cl>docker rm myapp
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># View container logs</span>
+</span></span><span class=line><span class=cl>docker logs myapp
+</span></span></code></pre></td></tr></table></div></div><h3 id=2-comparing-container-with-virtual-machine>2. Comparing Container with Virtual Machine</h3><div class=table-wrapper><table><thead><tr><th>Aspect</th><th>Docker Container</th><th>Virtual Machine</th></tr></thead><tbody><tr><td>Operating System</td><td>Share kernel with host</td><td>Full dedicated OS</td></tr><tr><td>Boot Time</td><td>~ 1-2 seconds</td><td>~ 1-2 minutes</td></tr><tr><td>Disk Size</td><td>MB (10-100 MB)</td><td>GB (1-10 GB)</td></tr><tr><td>Performance</td><td>Nearly native</td><td>Needs virtualization overhead</td></tr><tr><td>Max Per Host</td><td>Hundreds</td><td>Tens</td></tr></tbody></table></div><p align=center><img src=https://assets.bytebytego.com/diagrams/0414-how-does-docker-work.png alt="Docker Container Architecture">
+<em>Docker Container Architecture</em></p><hr><h2 id=iii-detailed-comparison-image-vs-container>III. Detailed Comparison: Image vs Container</h2><p>For easy visualization, see the comparison table below:</p><h3 id=complete-comparison-table>Complete Comparison Table</h3><div class=table-wrapper><table><thead><tr><th>Aspect</th><th>Image</th><th>Container</th></tr></thead><tbody><tr><td><strong>Analogy</strong></td><td>Recipe repository (cooking recipe)</td><td>Prepared dish</td></tr><tr><td><strong>State</strong></td><td>Static (read-only)</td><td>Dynamic (read-write)</td></tr><tr><td><strong>Changes</strong></td><td>Cannot change after creation</td><td>Can change while running</td></tr><tr><td><strong>Quantity</strong></td><td>1 image creates N containers</td><td>Many containers from 1 image</td></tr><tr><td><strong>Creation Time</strong></td><td>Slow (first build ~5-10 mins)</td><td>Fast (&lt; 1 second)</td></tr><tr><td><strong>Storage</strong></td><td>Stored in Docker cache</td><td>Stored at runtime or in volumes</td></tr><tr><td><strong>Portability</strong></td><td>Easy to share (push/pull)</td><td>Only runs where Docker is installed</td></tr><tr><td><strong>Version</strong></td><td>Has tags for management (1.0, 2.0, latest)</td><td>No separate version</td></tr><tr><td><strong>Network</strong></td><td>No</td><td>Has isolated network</td></tr><tr><td><strong>Storage</strong></td><td>Stored in layers</td><td>Has read-write layer on top of image</td></tr></tbody></table></div><h3 id=relationship-between-image-and-container>Relationship between Image and Container</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Docker Image (Template)
+</span></span><span class=line><span class=cl>       ↓
+</span></span><span class=line><span class=cl>    docker run
+</span></span><span class=line><span class=cl>       ↓
+</span></span><span class=line><span class=cl>Docker Container (Running Instance)
+</span></span><span class=line><span class=cl>       ↓
+</span></span><span class=line><span class=cl>    docker commit
+</span></span><span class=line><span class=cl>       ↓
+</span></span><span class=line><span class=cl>Docker Image baru (updated)
+</span></span></code></pre></td></tr></table></div></div><p><strong>Notes:</strong></p><ul><li><strong>Image</strong> is like a <code>class</code> in Object Oriented Programming (OOP)</li><li><strong>Container</strong> is like an <code>object</code> (instance of a class)</li><li>Use <code>docker run</code> to create container from image</li><li>Use <code>docker commit</code> to save container as a new image</li></ul><hr><h2 id=iv-real-world-example-from-start-to-finish>IV. Real-World Example from Start to Finish</h2><p>For better understanding, let&rsquo;s do a detailed example:</p><h3 id=1-create-dockerfile-to-build-image>1. Create Dockerfile (to build image)</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dockerfile data-lang=dockerfile><span class=line><span class=cl><span class=c># Dockerfile</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=k>FROM</span><span class=w> </span><span class=s>node:18-alpine</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=k>WORKDIR</span><span class=w> </span><span class=s>/app</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=k>COPY</span> package*.json ./<span class=err>
+</span></span></span><span class=line><span class=cl><span class=k>RUN</span> npm install<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=k>COPY</span> . .<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=k>CMD</span> <span class=p>[</span><span class=s2>&#34;node&#34;</span><span class=p>,</span> <span class=s2>&#34;server.js&#34;</span><span class=p>]</span><span class=err>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=2-build-image-from-dockerfile>2. Build image from Dockerfile</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Build image with name myapp and tag 1.0</span>
+</span></span><span class=line><span class=cl>docker build -t myapp:1.0 .
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># View created image</span>
+</span></span><span class=line><span class=cl>docker images
+</span></span><span class=line><span class=cl><span class=c1># Output:</span>
+</span></span><span class=line><span class=cl><span class=c1># REPOSITORY   TAG        IMAGE ID       CREATED        SIZE</span>
+</span></span><span class=line><span class=cl><span class=c1># myapp        1.0        abc123def456   2 minutes ago  150MB</span>
+</span></span></code></pre></td></tr></table></div></div><h3 id=3-create-and-run-container-from-image>3. Create and run container from image</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Run container from image myapp:1.0</span>
+</span></span><span class=line><span class=cl>docker run -d <span class=se>\
+</span></span></span><span class=line><span class=cl>  --name myapp-container <span class=se>\
+</span></span></span><span class=line><span class=cl>  -p 3000:3000 <span class=se>\
+</span></span></span><span class=line><span class=cl>  myapp:1.0
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># View running containers</span>
+</span></span><span class=line><span class=cl>docker ps
+</span></span><span class=line><span class=cl><span class=c1># Output:</span>
+</span></span><span class=line><span class=cl><span class=c1># CONTAINER ID   IMAGE       COMMAND            STATUS          PORTS</span>
+</span></span><span class=line><span class=cl><span class=c1># xyz789ghi012   myapp:1.0   &#34;node server.js&#34;   Up 2 minutes    0.0.0.0:3000-&gt;3000/tcp</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># View logs</span>
+</span></span><span class=line><span class=cl>docker logs myapp-container
+</span></span></code></pre></td></tr></table></div></div><h3 id=4-interact-with-container>4. Interact with container</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Access container shell</span>
+</span></span><span class=line><span class=cl>docker <span class=nb>exec</span> -it myapp-container sh
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Inside container — you can:</span>
+</span></span><span class=line><span class=cl>ls -la /app
+</span></span><span class=line><span class=cl>curl http://localhost:3000
+</span></span></code></pre></td></tr></table></div></div><h3 id=5-remove-container-and-image>5. Remove container and image</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Stop container</span>
+</span></span><span class=line><span class=cl>docker stop myapp-container
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Remove container</span>
+</span></span><span class=line><span class=cl>docker rm myapp-container
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Remove image</span>
+</span></span><span class=line><span class=cl>docker rmi myapp:1.0
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=v-best-practices-with-image-and-container>V. Best Practices with Image and Container</h2><h3 id=1-image-management>1. Image Management</h3><ul><li>✅ Use specific versions (e.g., <code>node:18.12-alpine</code> instead of <code>node:latest</code>)</li><li>✅ Reduce size using minimal base images (alpine, distroless)</li><li>✅ Leverage layer cache by ordering commands properly</li><li>✅ Use <code>.dockerignore</code> to exclude unnecessary files</li><li>✅ Regularly remove unused images with <code>docker image prune</code></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Example: Use specific image version</span>
+</span></span><span class=line><span class=cl>FROM node:18.12.1-alpine
+</span></span><span class=line><span class=cl><span class=c1># instead of</span>
+</span></span><span class=line><span class=cl>FROM node:latest
+</span></span></code></pre></td></tr></table></div></div><h3 id=2-container-management>2. Container Management</h3><ul><li>✅ Name containers clearly (<code>--name app-container</code>)</li><li>✅ Use <code>-d</code> (detached mode) to run containers in background</li><li>✅ Regularly check logs for debugging (<code>docker logs -f</code>)</li><li>✅ Use volumes if data persistence is needed</li><li>✅ Limit resources with <code>--cpus</code>, <code>--memory</code></li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Run container with resource limits</span>
+</span></span><span class=line><span class=cl>docker run -d <span class=se>\
+</span></span></span><span class=line><span class=cl>  --name app <span class=se>\
+</span></span></span><span class=line><span class=cl>  --cpus<span class=o>=</span><span class=s2>&#34;1.5&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  --memory<span class=o>=</span><span class=s2>&#34;512m&#34;</span> <span class=se>\
+</span></span></span><span class=line><span class=cl>  -p 8080:80 <span class=se>\
+</span></span></span><span class=line><span class=cl>  myapp:1.0
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=common-troubleshooting>Common Troubleshooting</h2><h3 id=1-cannot-create-container-from-image>1. Cannot create container from image</h3><p><strong>Error:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Error: Cannot start container from image
+</span></span></code></pre></td></tr></table></div></div><p><strong>Causes:</strong></p><ul><li>Image hasn&rsquo;t been built or pulled</li><li>Image is corrupted</li><li>Port is already in use by another container</li></ul><p><strong>Solution:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Check if image exists</span>
+</span></span><span class=line><span class=cl>docker images <span class=p>|</span> grep myapp
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Pull again if not present</span>
+</span></span><span class=line><span class=cl>docker pull myapp:1.0
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Rebuild image</span>
+</span></span><span class=line><span class=cl>docker build -t myapp:1.0 .
+</span></span></code></pre></td></tr></table></div></div><h3 id=2-container-doesnt-persist-data-when-stopped>2. Container doesn&rsquo;t persist data when stopped</h3><p><strong>Cause:</strong> Container is <strong>ephemeral</strong>, data inside will be lost when it stops or is removed.</p><p><strong>Solution:</strong> Use Docker Volumes</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Create volume</span>
+</span></span><span class=line><span class=cl>docker volume create myapp-data
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Mount volume to container</span>
+</span></span><span class=line><span class=cl>docker run -d <span class=se>\
+</span></span></span><span class=line><span class=cl>  --name app <span class=se>\
+</span></span></span><span class=line><span class=cl>  -v myapp-data:/app/data <span class=se>\
+</span></span></span><span class=line><span class=cl>  myapp:1.0
+</span></span></code></pre></td></tr></table></div></div><h3 id=3-container-not-accessible-from-outside>3. Container not accessible from outside</h3><p><strong>Error:</strong> Cannot access <code>http://localhost:3000</code> when running container</p><p><strong>Solution:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># Ensure port is mapped from container → host</span>
+</span></span><span class=line><span class=cl>docker run -d <span class=se>\
+</span></span></span><span class=line><span class=cl>  --name app <span class=se>\
+</span></span></span><span class=line><span class=cl>  -p 3000:3000 <span class=se>\
+</span></span></span><span class=line><span class=cl>  myapp:1.0
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># For multi-container setup, use docker network</span>
+</span></span><span class=line><span class=cl>docker network create mynet
+</span></span><span class=line><span class=cl>docker run -d --network mynet --name app1 myapp:1.0
+</span></span><span class=line><span class=cl>docker run -d --network mynet --name app2 myapp:1.0
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=implementation-notes->Implementation Notes 🔧</h2><p><strong>When applying to your project</strong>, remember these important points:</p><ul><li><strong>Don&rsquo;t modify containers directly</strong> — Rebuild image with Dockerfile</li><li><strong>Use docker-compose.yaml</strong> to manage multiple containers and dependencies</li><li><strong>Use CI/CD</strong> to automatically build and push images to Docker Hub/Registry</li><li><strong>Monitor resources</strong> with <code>docker stats</code> or Prometheus + Grafana</li><li><strong>Backup data</strong> regularly from volumes</li></ul><p><strong>Best practices:</strong></p><ul><li>Always name images and containers clearly</li><li>Use specific tags for different environments (dev, staging, prod)</li><li>Write <code>.dockerignore</code> to reduce image size and speed up builds</li><li>Use multi-stage build to create minimal images</li></ul><p><strong>Troubleshooting:</strong></p><ul><li>When container crashes, check logs: <code>docker logs &lt;container-name></code></li><li>When pulling fails, check network: <code>ping registry-1.docker.io</code></li><li>When container can&rsquo;t access files, mount volume with correct permissions</li></ul><hr><h2 id=-conclusion>🎯 Conclusion</h2><p>To summarize:</p><ul><li><strong>Docker Image = Recipe repository (read-only template)</strong> — Contains all settings needed to run an application</li><li><strong>Docker Container = Prepared dish (running instance)</strong> — Container created from image with read-write layer</li><li>Image is static, Container is dynamic</li><li>Use <code>docker run</code> to create container from image</li><li>Use <code>docker commit</code> to update container as a new image</li></ul><p>Now you understand the differences between Image and Container. Next step: learn how to use Dockerfile to build images and Docker Compose to manage multiple containers. 🚀</p><p>If you found this article helpful, remember to ⭐ star the repo or 📱 share with friends! 😊</p><hr><h2 id=references>References</h2><ul><li><a class=link href=https://docs.docker.com/ target=_blank rel=noopener>Docker Official Documentation</a></li><li><a class=link href=https://docs.docker.com/develop/dev-best-practices/ target=_blank rel=noopener>Best practices for writing Dockerfiles</a></li></ul></section><footer class=article-footer><section class=article-tags><a href=/en/tags/docker/>Docker</a>
+<a href=/en/tags/container/>Container</a>
+<a href=/en/tags/image/>Image</a>
+<a href=/en/tags/beginner/>Beginner</a>
+<a href=/en/tags/docker-basics/>Docker-Basics</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section><section class=article-lastmod><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<span>Last updated on 14:30 22/02/2026</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/en/posts/installation-guides/setup-docker-on-ubuntu/><div class=article-image><img src=/images/installation-guides/docker-installation-ubuntu.webp loading=lazy data-key data-hash=/images/installation-guides/docker-installation-ubuntu.webp></div><div class=article-details><h2 class=article-title>How to Install Docker on Ubuntu 🐳</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=hoangduonng/blog_comments issue-term=pathname label=comments theme=icy-dark crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2025 -
+2026 Hoang Duong</section><section class=powerby>Built with <a href=https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/ target=_blank rel=noopener>Ngữ Uyển ❤️</a><br>Theme <no value>designed by Jimmy</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
