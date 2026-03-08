@@ -1,0 +1,414 @@
+<!doctype html><html lang=vi dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Hướng dẫn thiết lập pipeline CI/CD với GitHub Actions để tự động build, test và push Docker image lên Docker Hub và GitHub Container Registry (GHCR)."><title>CI/CD với GitHub Actions cho ứng dụng Docker</title>
+<link rel=canonical href=https://tech.nguuyen.io.vn/posts/docker/github-actions-ci-cd-docker/><link rel=stylesheet href=/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css><meta property='og:title' content="CI/CD với GitHub Actions cho ứng dụng Docker"><meta property='og:description' content="Hướng dẫn thiết lập pipeline CI/CD với GitHub Actions để tự động build, test và push Docker image lên Docker Hub và GitHub Container Registry (GHCR)."><meta property='og:url' content='https://tech.nguuyen.io.vn/posts/docker/github-actions-ci-cd-docker/'><meta property='og:site_name' content='Hoàng Dương'><meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:tag' content='docker'><meta property='article:tag' content='github-actions'><meta property='article:tag' content='ci-cd'><meta property='article:tag' content='devops'><meta property='article:tag' content='automation'><meta property='article:tag' content='beginner'><meta property='article:published_time' content='2026-03-08T00:00:00+00:00'><meta property='article:modified_time' content='2026-03-08T00:00:00+00:00'><meta property='og:image' content='https://tech.nguuyen.io.vn/images/docker/github-actions-ci-cd-docker.webp'><meta name=twitter:title content="CI/CD với GitHub Actions cho ứng dụng Docker"><meta name=twitter:description content="Hướng dẫn thiết lập pipeline CI/CD với GitHub Actions để tự động build, test và push Docker image lên Docker Hub và GitHub Container Registry (GHCR)."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://tech.nguuyen.io.vn/images/docker/github-actions-ci-cd-docker.webp'><link rel=icon type=image/x-icon href=/favicon.ico><style>:root{--article-font-family:"Roboto", var(--base-font-family)}</style><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Hiển thị Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/hoang_hu_f5b001d7581bed29.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Hoàng Dương</a></h1><h2 class=site-description>And, when you want something, all the universe conspires in helping you to achieve it.</h2></div></header><ol class=menu-social><li><a href=https://github.com/HoangDuonng target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.instagram.com/ngu_uuen/ target=_blank title=Instagram rel=me><svg class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="4"/><path d="M16.5 7.5h.01"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Trang chủ</span></a></li><li><a href=/gi%E1%BB%9Bi-thi%E1%BB%87u/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>Về tôi</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Lưu trữ</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Tìm kiếm</span></a></li><li><a href=/li%C3%AAn-k%E1%BA%BFt/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Liên kết</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://tech.nguuyen.io.vn/ selected>Tiếng Việt</option><option value=https://tech.nguuyen.io.vn/en/>English</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Chế độ tối</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><h2 class="widget-title section-title">Mục lục</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#github-actions--docker--tự-động-hóa-từ-code-đến-container>GitHub Actions + Docker — Tự động hóa từ code đến container</a></li><li><a href=#i-github-actions-là-gì>I. GitHub Actions là gì?</a><ol><li><a href=#1-các-khái-niệm-cơ-bản>1. Các khái niệm cơ bản</a></li><li><a href=#2-cấu-trúc-thư-mục>2. Cấu trúc thư mục</a></li></ol></li><li><a href=#ii-docker-official-actions>II. Docker Official Actions</a></li><li><a href=#iii-workflow-cơ-bản--build-và-push-lên-docker-hub>III. Workflow cơ bản — Build và Push lên Docker Hub</a><ol><li><a href=#1-chuẩn-bị-secrets>1. Chuẩn bị secrets</a></li><li><a href=#2-tạo-workflow-file>2. Tạo workflow file</a></li><li><a href=#3-giải-thích-từng-phần>3. Giải thích từng phần</a></li></ol></li><li><a href=#iv-push-lên-github-container-registry-ghcr>IV. Push lên GitHub Container Registry (GHCR)</a><ol><li><a href=#điểm-khác-biệt-so-với-docker-hub>Điểm khác biệt so với Docker Hub</a></li></ol></li><li><a href=#v-tự-động-tạo-tags-với-metadata-action>V. Tự động tạo tags với Metadata Action</a><ol><li><a href=#kết-quả-tags-theo-từng-event>Kết quả tags theo từng event</a></li></ol></li><li><a href=#vi-tối-ưu-build-với-cache>VI. Tối ưu build với Cache</a><ol><li><a href=#1-github-actions-cache-khuyến-nghị>1. GitHub Actions Cache (Khuyến nghị)</a></li><li><a href=#2-registry-cache>2. Registry Cache</a></li><li><a href=#so-sánh-các-loại-cache>So sánh các loại cache</a></li></ol></li><li><a href=#vii-ví-dụ-thực-tế--workflow-hoàn-chỉnh>VII. Ví dụ thực tế — Workflow hoàn chỉnh</a><ol><li><a href=#luồng-hoạt-động>Luồng hoạt động</a></li></ol></li><li><a href=#viii-troubleshooting-phổ-biến>VIII. Troubleshooting phổ biến</a><ol><li><a href=#1-lỗi-authentication>1. Lỗi authentication</a></li><li><a href=#2-build-chậm>2. Build chậm</a></li><li><a href=#3-lỗi-permission-khi-push-lên-ghcr>3. Lỗi permission khi push lên GHCR</a></li></ol></li><li><a href=#ghi-chú-triển-khai>Ghi chú triển khai</a></li><li><a href=#-lời-kết>🎯 Lời kết</a></li><li><a href=#tài-liệu-tham-khảo>Tài liệu tham khảo</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/posts/docker/github-actions-ci-cd-docker/><img src=/images/docker/github-actions-ci-cd-docker.webp loading=lazy alt="Featured image of post CI/CD với GitHub Actions cho ứng dụng Docker"></a></div><div class=article-details><header class=article-category><a href=/categories/docker/ style=background-color:#2a9d8f;color:#fff>Docker</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/docker/github-actions-ci-cd-docker/>CI/CD với GitHub Actions cho ứng dụng Docker</a></h2><h3 class=article-subtitle>Hướng dẫn thiết lập pipeline CI/CD với GitHub Actions để tự động build, test và push Docker image lên Docker Hub và GitHub Container Registry (GHCR).</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>08/03/2026</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>8 phút đọc</time></div><div><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span class=article-author--name>Hoàng Dương</span></div></footer></div></header><section class=article-content><h2 id=github-actions--docker--tự-động-hóa-từ-code-đến-container>GitHub Actions + Docker — Tự động hóa từ code đến container</h2><p>Khi bạn đã biết viết Dockerfile và dùng Docker Compose, bước tiếp theo là <strong>tự động hóa</strong> quá trình build và push Docker image mỗi khi code thay đổi. <strong>GitHub Actions</strong> là công cụ CI/CD miễn phí tích hợp sẵn trong GitHub, rất phù hợp để bắt đầu.</p><p>Trong bài viết này, mình sẽ hướng dẫn bạn từ cơ bản đến thực hành: tạo workflow build Docker image, push lên registry, và tối ưu với cache.</p><hr><h2 id=i-github-actions-là-gì>I. GitHub Actions là gì?</h2><p>GitHub Actions là nền tảng CI/CD được tích hợp trực tiếp trong GitHub, cho phép bạn <strong>tự động hóa workflow</strong> phát triển phần mềm ngay trong repository.</p><h3 id=1-các-khái-niệm-cơ-bản>1. Các khái niệm cơ bản</h3><div class=table-wrapper><table><thead><tr><th>Khái niệm</th><th>Giải thích</th></tr></thead><tbody><tr><td><strong>Workflow</strong></td><td>File YAML định nghĩa pipeline, lưu trong <code>.github/workflows/</code></td></tr><tr><td><strong>Event</strong></td><td>Sự kiện kích hoạt workflow (push, pull_request, tag&mldr;)</td></tr><tr><td><strong>Job</strong></td><td>Một nhóm các bước (steps) chạy trên cùng một runner</td></tr><tr><td><strong>Step</strong></td><td>Một bước đơn lẻ trong job (chạy lệnh hoặc dùng action)</td></tr><tr><td><strong>Action</strong></td><td>Thành phần tái sử dụng, có thể do cộng đồng hoặc Docker cung cấp</td></tr><tr><td><strong>Runner</strong></td><td>Máy ảo thực thi workflow (GitHub cung cấp miễn phí Ubuntu, Windows, macOS)</td></tr></tbody></table></div><h3 id=2-cấu-trúc-thư-mục>2. Cấu trúc thư mục</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>my-project/
+</span></span><span class=line><span class=cl>├── .github/
+</span></span><span class=line><span class=cl>│   └── workflows/
+</span></span><span class=line><span class=cl>│       └── docker-build.yml    # Workflow file
+</span></span><span class=line><span class=cl>├── Dockerfile
+</span></span><span class=line><span class=cl>├── src/
+</span></span><span class=line><span class=cl>└── ...
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=ii-docker-official-actions>II. Docker Official Actions</h2><p>Docker cung cấp bộ Actions chính thức giúp bạn build và push image một cách chuẩn hóa:</p><div class=table-wrapper><table><thead><tr><th>Action</th><th>Chức năng</th></tr></thead><tbody><tr><td><strong>docker/login-action</strong></td><td>Đăng nhập vào Docker registry</td></tr><tr><td><strong>docker/setup-buildx-action</strong></td><td>Thiết lập Docker Buildx (hỗ trợ build nâng cao)</td></tr><tr><td><strong>docker/build-push-action</strong></td><td>Build và push Docker image</td></tr><tr><td><strong>docker/metadata-action</strong></td><td>Tự động tạo tags và labels từ Git metadata</td></tr><tr><td><strong>docker/setup-qemu-action</strong></td><td>Cài QEMU cho multi-platform build</td></tr></tbody></table></div><hr><h2 id=iii-workflow-cơ-bản--build-và-push-lên-docker-hub>III. Workflow cơ bản — Build và Push lên Docker Hub</h2><h3 id=1-chuẩn-bị-secrets>1. Chuẩn bị secrets</h3><p>Trước khi tạo workflow, bạn cần thêm secrets trong repo GitHub:</p><ol><li>Vào <strong>Settings → Secrets and variables → Actions</strong></li><li>Thêm 2 secrets:<ul><li><code>DOCKERHUB_USERNAME</code> — Tên tài khoản Docker Hub</li><li><code>DOCKERHUB_TOKEN</code> — Access token (tạo tại <a class=link href=https://hub.docker.com/settings/security target=_blank rel=noopener>hub.docker.com/settings/security</a>)</li></ul></li></ol><h3 id=2-tạo-workflow-file>2. Tạo workflow file</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># .github/workflows/docker-build.yml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build and Push Docker Image</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>push</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>main]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>pull_request</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>main]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>build</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Checkout code</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v4</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Login to Docker Hub</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/login-action@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>username</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.DOCKERHUB_USERNAME }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>password</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.DOCKERHUB_TOKEN }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Set up Docker Buildx</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/setup-buildx-action@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build and push</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/build-push-action@v6</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>context</span><span class=p>:</span><span class=w> </span><span class=l>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>push</span><span class=p>:</span><span class=w> </span><span class=l>${{ github.event_name != &#39;pull_request&#39; }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>tags</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=3-giải-thích-từng-phần>3. Giải thích từng phần</h3><div class=table-wrapper><table><thead><tr><th>Phần</th><th>Ý nghĩa</th></tr></thead><tbody><tr><td><code>on: push: branches: [main]</code></td><td>Chạy workflow khi push code lên branch <code>main</code></td></tr><tr><td><code>on: pull_request</code></td><td>Chạy khi tạo PR (chỉ build, không push)</td></tr><tr><td><code>actions/checkout@v4</code></td><td>Clone code từ repo về runner</td></tr><tr><td><code>docker/login-action@v3</code></td><td>Đăng nhập Docker Hub bằng secrets</td></tr><tr><td><code>docker/setup-buildx-action@v3</code></td><td>Cài Docker Buildx — hỗ trợ cache, multi-platform</td></tr><tr><td><code>docker/build-push-action@v6</code></td><td>Build image từ Dockerfile và push lên registry</td></tr><tr><td><code>push: ${{ github.event_name != 'pull_request' }}</code></td><td>Chỉ push image khi không phải PR (tránh push image chưa review)</td></tr></tbody></table></div><hr><h2 id=iv-push-lên-github-container-registry-ghcr>IV. Push lên GitHub Container Registry (GHCR)</h2><p>Ngoài Docker Hub, bạn có thể push image lên <strong>GHCR</strong> — registry miễn phí của GitHub, tiện lợi vì không cần tạo tài khoản bên ngoài.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># .github/workflows/docker-ghcr.yml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build and Push to GHCR</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>push</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>main]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>tags</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;v*&#34;</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>permissions</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>contents</span><span class=p>:</span><span class=w> </span><span class=l>read</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>packages</span><span class=p>:</span><span class=w> </span><span class=l>write</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>build</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Checkout code</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v4</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Login to GitHub Container Registry</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/login-action@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>registry</span><span class=p>:</span><span class=w> </span><span class=l>ghcr.io</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>username</span><span class=p>:</span><span class=w> </span><span class=l>${{ github.actor }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>password</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.GITHUB_TOKEN }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Set up Docker Buildx</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/setup-buildx-action@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Extract metadata (tags, labels)</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>id</span><span class=p>:</span><span class=w> </span><span class=l>meta</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/metadata-action@v5</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>images</span><span class=p>:</span><span class=w> </span><span class=l>ghcr.io/${{ github.repository }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>tags</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>            type=ref,event=branch
+</span></span></span><span class=line><span class=cl><span class=sd>            type=semver,pattern={{version}}
+</span></span></span><span class=line><span class=cl><span class=sd>            type=semver,pattern={{major}}.{{minor}}
+</span></span></span><span class=line><span class=cl><span class=sd>            type=sha</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build and push</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/build-push-action@v6</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>context</span><span class=p>:</span><span class=w> </span><span class=l>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>push</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>tags</span><span class=p>:</span><span class=w> </span><span class=l>${{ steps.meta.outputs.tags }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>labels</span><span class=p>:</span><span class=w> </span><span class=l>${{ steps.meta.outputs.labels }}</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=điểm-khác-biệt-so-với-docker-hub>Điểm khác biệt so với Docker Hub</h3><div class=table-wrapper><table><thead><tr><th>Tiêu chí</th><th>Docker Hub</th><th>GHCR</th></tr></thead><tbody><tr><td><strong>Registry URL</strong></td><td><code>docker.io</code> (mặc định)</td><td><code>ghcr.io</code></td></tr><tr><td><strong>Authentication</strong></td><td>Username + Access Token</td><td><code>GITHUB_TOKEN</code> (tự động)</td></tr><tr><td><strong>Giá</strong></td><td>Miễn phí (giới hạn pull)</td><td>Miễn phí (theo quota GitHub)</td></tr><tr><td><strong>Tích hợp</strong></td><td>Phổ biến nhất</td><td>Tích hợp sâu với GitHub</td></tr></tbody></table></div><hr><h2 id=v-tự-động-tạo-tags-với-metadata-action>V. Tự động tạo tags với Metadata Action</h2><p>Thay vì đặt tag thủ công (<code>latest</code>, <code>v1.0</code>), bạn có thể dùng <code>docker/metadata-action</code> để <strong>tự động tạo tags</strong> dựa trên Git events:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Extract metadata</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>id</span><span class=p>:</span><span class=w> </span><span class=l>meta</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/metadata-action@v5</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>images</span><span class=p>:</span><span class=w> </span><span class=l>user/myapp</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>tags</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>      type=ref,event=branch
+</span></span></span><span class=line><span class=cl><span class=sd>      type=ref,event=pr
+</span></span></span><span class=line><span class=cl><span class=sd>      type=semver,pattern={{version}}
+</span></span></span><span class=line><span class=cl><span class=sd>      type=semver,pattern={{major}}.{{minor}}
+</span></span></span><span class=line><span class=cl><span class=sd>      type=sha</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=kết-quả-tags-theo-từng-event>Kết quả tags theo từng event</h3><div class=table-wrapper><table><thead><tr><th>Git Event</th><th>Ví dụ</th><th>Docker Tag</th></tr></thead><tbody><tr><td>Push branch <code>main</code></td><td><code>refs/heads/main</code></td><td><code>main</code></td></tr><tr><td>Push branch <code>dev</code></td><td><code>refs/heads/dev</code></td><td><code>dev</code></td></tr><tr><td>Pull Request #42</td><td><code>refs/pull/42/merge</code></td><td><code>pr-42</code></td></tr><tr><td>Push tag <code>v1.2.3</code></td><td><code>refs/tags/v1.2.3</code></td><td><code>1.2.3</code>, <code>1.2</code></td></tr><tr><td>Commit SHA</td><td><code>abc1234</code></td><td><code>sha-abc1234</code></td></tr></tbody></table></div><hr><h2 id=vi-tối-ưu-build-với-cache>VI. Tối ưu build với Cache</h2><p>Mỗi lần workflow chạy, Docker phải build lại từ đầu. Để <strong>tăng tốc đáng kể</strong>, hãy sử dụng cache.</p><h3 id=1-github-actions-cache-khuyến-nghị>1. GitHub Actions Cache (Khuyến nghị)</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build and push</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/build-push-action@v6</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>context</span><span class=p>:</span><span class=w> </span><span class=l>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>push</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>tags</span><span class=p>:</span><span class=w> </span><span class=l>user/myapp:latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>cache-from</span><span class=p>:</span><span class=w> </span><span class=l>type=gha</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>cache-to</span><span class=p>:</span><span class=w> </span><span class=l>type=gha,mode=max</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><strong>Ưu điểm:</strong> Đơn giản nhất, sử dụng GitHub Cache API, không cần cấu hình thêm.</p><h3 id=2-registry-cache>2. Registry Cache</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build and push</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/build-push-action@v6</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>context</span><span class=p>:</span><span class=w> </span><span class=l>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>push</span><span class=p>:</span><span class=w> </span><span class=kc>true</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>tags</span><span class=p>:</span><span class=w> </span><span class=l>user/myapp:latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>cache-from</span><span class=p>:</span><span class=w> </span><span class=l>type=registry,ref=user/myapp:buildcache</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>cache-to</span><span class=p>:</span><span class=w> </span><span class=l>type=registry,ref=user/myapp:buildcache,mode=max</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p><strong>Ưu điểm:</strong> Cache được lưu trên registry, có thể chia sẻ giữa nhiều CI runners.</p><h3 id=so-sánh-các-loại-cache>So sánh các loại cache</h3><div class=table-wrapper><table><thead><tr><th>Loại cache</th><th>Ưu điểm</th><th>Nhược điểm</th></tr></thead><tbody><tr><td><strong>GitHub Actions (gha)</strong></td><td>Đơn giản, không cần setup thêm</td><td>Giới hạn 10GB/repo</td></tr><tr><td><strong>Registry</strong></td><td>Chia sẻ được, persistent</td><td>Tốn bandwidth upload</td></tr><tr><td><strong>Inline</strong></td><td>Gắn liền với image</td><td>Chỉ hỗ trợ <code>min</code> mode</td></tr></tbody></table></div><hr><h2 id=vii-ví-dụ-thực-tế--workflow-hoàn-chỉnh>VII. Ví dụ thực tế — Workflow hoàn chỉnh</h2><p>Dưới đây là workflow hoàn chỉnh kết hợp tất cả best practices:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span><span class=lnt>55
+</span><span class=lnt>56
+</span><span class=lnt>57
+</span><span class=lnt>58
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># .github/workflows/docker-ci.yml</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Docker CI/CD</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>on</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>push</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>main, dev]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>tags</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=s2>&#34;v*.*.*&#34;</span><span class=p>]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>pull_request</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>branches</span><span class=p>:</span><span class=w> </span><span class=p>[</span><span class=l>main]</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>env</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>REGISTRY</span><span class=p>:</span><span class=w> </span><span class=l>ghcr.io</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>IMAGE_NAME</span><span class=p>:</span><span class=w> </span><span class=l>${{ github.repository }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>permissions</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>contents</span><span class=p>:</span><span class=w> </span><span class=l>read</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>packages</span><span class=p>:</span><span class=w> </span><span class=l>write</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>jobs</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>build-and-push</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>runs-on</span><span class=p>:</span><span class=w> </span><span class=l>ubuntu-latest</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>    </span><span class=nt>steps</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Checkout code</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>actions/checkout@v4</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Set up Docker Buildx</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/setup-buildx-action@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Login to GHCR</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>if</span><span class=p>:</span><span class=w> </span><span class=l>github.event_name != &#39;pull_request&#39;</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/login-action@v3</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>registry</span><span class=p>:</span><span class=w> </span><span class=l>${{ env.REGISTRY }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>username</span><span class=p>:</span><span class=w> </span><span class=l>${{ github.actor }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>password</span><span class=p>:</span><span class=w> </span><span class=l>${{ secrets.GITHUB_TOKEN }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Extract metadata</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>id</span><span class=p>:</span><span class=w> </span><span class=l>meta</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/metadata-action@v5</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>images</span><span class=p>:</span><span class=w> </span><span class=l>${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>tags</span><span class=p>:</span><span class=w> </span><span class=p>|</span><span class=sd>
+</span></span></span><span class=line><span class=cl><span class=sd>            type=ref,event=branch
+</span></span></span><span class=line><span class=cl><span class=sd>            type=ref,event=pr
+</span></span></span><span class=line><span class=cl><span class=sd>            type=semver,pattern={{version}}
+</span></span></span><span class=line><span class=cl><span class=sd>            type=semver,pattern={{major}}.{{minor}}
+</span></span></span><span class=line><span class=cl><span class=sd>            type=sha</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>      </span>- <span class=nt>name</span><span class=p>:</span><span class=w> </span><span class=l>Build and push</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>uses</span><span class=p>:</span><span class=w> </span><span class=l>docker/build-push-action@v6</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>        </span><span class=nt>with</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>context</span><span class=p>:</span><span class=w> </span><span class=l>.</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>push</span><span class=p>:</span><span class=w> </span><span class=l>${{ github.event_name != &#39;pull_request&#39; }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>tags</span><span class=p>:</span><span class=w> </span><span class=l>${{ steps.meta.outputs.tags }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>labels</span><span class=p>:</span><span class=w> </span><span class=l>${{ steps.meta.outputs.labels }}</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>cache-from</span><span class=p>:</span><span class=w> </span><span class=l>type=gha</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>          </span><span class=nt>cache-to</span><span class=p>:</span><span class=w> </span><span class=l>type=gha,mode=max</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><h3 id=luồng-hoạt-động>Luồng hoạt động</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Developer push code lên GitHub
+</span></span><span class=line><span class=cl>        ↓
+</span></span><span class=line><span class=cl>GitHub Actions tự động kích hoạt
+</span></span><span class=line><span class=cl>        ↓
+</span></span><span class=line><span class=cl>Checkout code → Setup Buildx → Login Registry
+</span></span><span class=line><span class=cl>        ↓
+</span></span><span class=line><span class=cl>Tự động tạo tags từ Git metadata
+</span></span><span class=line><span class=cl>        ↓
+</span></span><span class=line><span class=cl>Build Docker image (có cache)
+</span></span><span class=line><span class=cl>        ↓
+</span></span><span class=line><span class=cl>Push image lên GHCR (nếu không phải PR)
+</span></span><span class=line><span class=cl>        ↓
+</span></span><span class=line><span class=cl>Image sẵn sàng để deploy 🚀
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=viii-troubleshooting-phổ-biến>VIII. Troubleshooting phổ biến</h2><h3 id=1-lỗi-authentication>1. Lỗi authentication</h3><p><strong>Lỗi:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Error: denied: denied
+</span></span></code></pre></td></tr></table></div></div><p><strong>Nguyên nhân:</strong> Secrets chưa được cấu hình hoặc token hết hạn.</p><p><strong>Giải pháp:</strong></p><ul><li>Kiểm tra secrets trong <strong>Settings → Secrets and variables → Actions</strong></li><li>Với GHCR: đảm bảo có <code>permissions: packages: write</code> trong workflow</li><li>Với Docker Hub: tạo lại Access Token tại <a class=link href=https://hub.docker.com/settings/security target=_blank rel=noopener>hub.docker.com</a></li></ul><h3 id=2-build-chậm>2. Build chậm</h3><p><strong>Nguyên nhân:</strong> Không sử dụng cache hoặc Dockerfile chưa tối ưu layer.</p><p><strong>Giải pháp:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=c># Thêm cache vào build step</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>cache-from</span><span class=p>:</span><span class=w> </span><span class=l>type=gha</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w></span><span class=nt>cache-to</span><span class=p>:</span><span class=w> </span><span class=l>type=gha,mode=max</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><p>Và đảm bảo Dockerfile tận dụng layer caching (copy <code>package.json</code> trước, <code>COPY . .</code> sau).</p><h3 id=3-lỗi-permission-khi-push-lên-ghcr>3. Lỗi permission khi push lên GHCR</h3><p><strong>Lỗi:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Error: unexpected status from HEAD request: 403 Forbidden
+</span></span></code></pre></td></tr></table></div></div><p><strong>Giải pháp:</strong> Thêm <code>permissions</code> vào workflow:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-yaml data-lang=yaml><span class=line><span class=cl><span class=nt>permissions</span><span class=p>:</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>contents</span><span class=p>:</span><span class=w> </span><span class=l>read</span><span class=w>
+</span></span></span><span class=line><span class=cl><span class=w>  </span><span class=nt>packages</span><span class=p>:</span><span class=w> </span><span class=l>write</span><span class=w>
+</span></span></span></code></pre></td></tr></table></div></div><hr><h2 id=ghi-chú-triển-khai>Ghi chú triển khai</h2><ul><li><strong>Khi áp dụng vào dự án của bạn</strong>, hãy lưu ý các điểm quan trọng:<ul><li>Luôn dùng secrets cho credentials, <strong>không bao giờ</strong> hardcode token trong workflow</li><li>Sử dụng <code>push: ${{ github.event_name != 'pull_request' }}</code> để tránh push image từ PR chưa review</li><li>Pin version cho actions (dùng <code>@v3</code>, <code>@v6</code> thay vì <code>@main</code>)</li></ul></li><li><strong>Best practices</strong>:<ul><li>Sử dụng <code>docker/metadata-action</code> để quản lý tags tự động</li><li>Bật cache (<code>type=gha</code>) để tăng tốc build</li><li>Tách workflow cho <code>build + test</code> và <code>deploy</code> riêng biệt</li></ul></li><li><strong>Troubleshooting</strong>:<ul><li>Xem logs chi tiết trong tab <strong>Actions</strong> của repo GitHub</li><li>Dùng <code>docker compose config</code> để validate cấu hình trước khi push</li><li>Kiểm tra quota cache GitHub tại <strong>Settings → Actions → Cache</strong></li></ul></li></ul><hr><h2 id=-lời-kết>🎯 Lời kết</h2><p>GitHub Actions + Docker là combo mạnh mẽ để <strong>tự động hóa pipeline</strong> từ code đến container image. Với các workflow trong bài viết này, bạn có thể:</p><ul><li>✅ Tự động build Docker image mỗi khi push code</li><li>✅ Push image lên Docker Hub hoặc GHCR</li><li>✅ Tự động tạo tags theo Git metadata (branch, tag, SHA)</li><li>✅ Tối ưu tốc độ build với cache</li></ul><p>Nếu bạn thấy bài viết này hữu ích, hãy nhớ ⭐ star repo hoặc 📱 chia sẻ với bạn bè nhé! 😊</p><hr><h2 id=tài-liệu-tham-khảo>Tài liệu tham khảo</h2><ul><li><a class=link href=https://docs.github.com/en/actions target=_blank rel=noopener>GitHub Actions Documentation</a> — Tài liệu chính thức GitHub Actions</li><li><a class=link href=https://docs.docker.com/build/ci/github-actions/ target=_blank rel=noopener>Docker Build GitHub Actions</a> — Hướng dẫn chính thức Docker cho GitHub Actions</li><li><a class=link href=https://github.com/docker/build-push-action target=_blank rel=noopener>Docker/build-push-action</a> — Repository chính thức của Build and Push Action</li><li><a class=link href=https://docs.docker.com/build/ci/github-actions/cache/ target=_blank rel=noopener>Cache management with GitHub Actions</a> — Hướng dẫn cache cho Docker build trên GitHub Actions</li></ul></section><footer class=article-footer><section class=article-tags><a href=/tags/docker/>Docker</a>
+<a href=/tags/github-actions/>Github-Actions</a>
+<a href=/tags/ci-cd/>Ci-Cd</a>
+<a href=/tags/devops/>Devops</a>
+<a href=/tags/automation/>Automation</a>
+<a href=/tags/beginner/>Beginner</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Bài viết liên quan</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/posts/docker/docker-compose-v2-best-practices/><div class=article-image><img src=/images/docker/docker-compose-v2.webp loading=lazy data-key data-hash=/images/docker/docker-compose-v2.webp></div><div class=article-details><h2 class=article-title>Docker Compose cho người mới (v2) — Thực hành</h2></div></a></article><article class=has-image><a href=/posts/docker/docker-basics-image-vs-container/><div class=article-image><img src=/images/docker/docker-basics-image-vs-container.webp loading=lazy data-key data-hash=/images/docker/docker-basics-image-vs-container.webp></div><div class=article-details><h2 class=article-title>Docker cơ bản: Image vs Container</h2></div></a></article><article class=has-image><a href=/posts/installation-guides/setup-docker-on-ubuntu/><div class=article-image><img src=/images/installation-guides/docker-installation-ubuntu.webp loading=lazy data-key data-hash=/images/installation-guides/docker-installation-ubuntu.webp></div><div class=article-details><h2 class=article-title>Cách cài đặt Docker trên Ubuntu 🐳</h2></div></a></article><article class=has-image><a href=/posts/devops/devops-step-six/><div class=article-image><img src=/images/devops/devops-step-six.webp loading=lazy data-key data-hash=/images/devops/devops-step-six.webp></div><div class=article-details><h2 class=article-title>Containers, Docker và LXC 🏗️</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=hoangduonng/blog_comments issue-term=pathname label=comments theme=icy-dark crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2025 -
+2026 Hoàng Dương</section><section class=powerby>Built with <a href=https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/ target=_blank rel=noopener>Ngữ Uyển ❤️</a><br>Theme <no value>thiết kế bởi Jimmy</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

@@ -1,165 +1,165 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Terminal on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/terminal/</link><description>Recent content in Terminal on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 05 Feb 2026 10:29:10 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/terminal/index.xml" rel="self" type="application/rss+xml"/><item><title>Terminal Knowledge 📟</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-three/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-three/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-three.webp" alt="Featured image of post Terminal Knowledge 📟" /&gt;&lt;h2 id="-terminal-knowledge"&gt;🖥️ Terminal Knowledge
-&lt;/h2&gt;&lt;p&gt;Terminal is a text interface that allows users to interact with computer systems through CLI (Command Line Interface). It is an essential tool for system management, command execution, and task automation.&lt;/p&gt;
-&lt;h3 id="-free-resources"&gt;📚 Free Resources
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a class="link" href="https://en.wikipedia.org/wiki/Command-line_interface" target="_blank" rel="noopener"
-&gt;📄 Article: What is CLI?&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="link" href="https://www.google.com/search?q=terminal%20knowledge%20guide%20for%20devops" target="_blank" rel="noopener"
-&gt;🔍 Google Search&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/results?search_query=terminal%20knowledge%20for%20devops" target="_blank" rel="noopener"
-&gt;▶️ YouTube Search&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;🔹 &lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ls -l &lt;span class="c1"&gt;# List files in current directory&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt; &lt;span class="c1"&gt;# Display current directory path&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id="-process-monitoring"&gt;📊 Process Monitoring
-&lt;/h2&gt;&lt;p&gt;Process monitoring is the continuous observation and analysis of processes in IT systems to ensure performance, efficiency, and compliance. It helps track important metrics such as resource usage and behavior of individual processes or applications running in the system.&lt;/p&gt;
-&lt;h3 id="-recommended-tools"&gt;🏆 Recommended Tools
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;🟣 lsof&lt;/strong&gt; - Lists information about files opened by processes.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-free-resources-1"&gt;📚 Free Resources
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a class="link" href="https://neverendingsecurity.wordpress.com/2015/04/13/lsof-commands-cheatsheet/" target="_blank" rel="noopener"
-&gt;📄 Lsof Cheat Sheet&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="link" href="https://man7.org/linux/man-pages/man8/lsof.8.html" target="_blank" rel="noopener"
-&gt;📖 lsof Documentation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=n9nZ1ellaV0" target="_blank" rel="noopener"
-&gt;▶️ Video: Linux Crash Course - lsof Command&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="link" href="https://app.daily.dev/tags/monitoring?ref=roadmapsh" target="_blank" rel="noopener"
-&gt;📝 Great Articles on Monitoring&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;🔹 &lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lsof -i :80 &lt;span class="c1"&gt;# List processes using port 80&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ps aux &lt;span class="c1"&gt;# Display all running processes&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id="-performance-monitoring"&gt;🚀 Performance Monitoring
-&lt;/h2&gt;&lt;p&gt;Performance monitoring helps collect, analyze, and report key performance metrics from applications, networks, servers, and databases.&lt;/p&gt;
-&lt;h3 id="-recommended-tools-1"&gt;🏆 Recommended Tools
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;🟣 vmstat&lt;/strong&gt; - Virtual memory and system performance monitoring tool.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-free-resources-2"&gt;📚 Free Resources
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a class="link" href="https://www.redhat.com/sysadmin/linux-commands-vmstat" target="_blank" rel="noopener"
-&gt;📖 Linux Commands: Exploring Virtual Memory with vmstat&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="link" href="https://man7.org/linux/man-pages/man8/vmstat.8.html" target="_blank" rel="noopener"
-&gt;📄 vmstat Documentation&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="link" href="https://phoenixnap.com/kb/vmstat-command" target="_blank" rel="noopener"
-&gt;▶️ vmstat Tutorial&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="link" href="https://app.daily.dev/tags/monitoring?ref=roadmapsh" target="_blank" rel="noopener"
-&gt;📝 Great Articles on Monitoring&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;🔹 &lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vmstat &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="m"&gt;10&lt;/span&gt; &lt;span class="c1"&gt;# Update system status every 5 seconds for 10 times&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id="-networking-tools"&gt;🌐 Networking Tools
-&lt;/h2&gt;&lt;p&gt;Networking tools support monitoring, analyzing, troubleshooting, and managing network systems.&lt;/p&gt;
-&lt;h3 id="-recommended-tools-2"&gt;🏆 Recommended Tools
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;🟣 Wireshark&lt;/strong&gt; - Deep packet analysis.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;🟣 Nmap&lt;/strong&gt; - Network scanning and security testing.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Ping&lt;/strong&gt; - Basic connectivity testing.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Traceroute&lt;/strong&gt; - Determine packet path through network.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Netstat&lt;/strong&gt; - Display network connections.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Tcpdump&lt;/strong&gt; - Command-line packet capture and analysis.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Iperf&lt;/strong&gt; - Network performance testing.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Netcat&lt;/strong&gt; - Perform various network tasks.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Nslookup/Dig&lt;/strong&gt; - DNS queries.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;PuTTY&lt;/strong&gt; - Remote connection via SSH or Telnet.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;🔹 &lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ping google.com &lt;span class="c1"&gt;# Test connection to Google&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nmap -sS 192.168.1.1 &lt;span class="c1"&gt;# Scan internal server ports&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id="-text-manipulation"&gt;✂️ Text Manipulation
-&lt;/h2&gt;&lt;p&gt;Tools that support editing, processing, and converting text data.&lt;/p&gt;
-&lt;h3 id="-recommended-tools-3"&gt;🏆 Recommended Tools
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;🟣 sed&lt;/strong&gt; - Stream editor for data manipulation.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;🟣 awk&lt;/strong&gt; - Pattern scanning and data extraction.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;🟣 grep&lt;/strong&gt; - Text search using regular expressions.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;cut, sort, tr, uniq&lt;/strong&gt; - Supporting commands for text data processing.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;🔹 &lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;grep &lt;span class="s2"&gt;&amp;#34;error&amp;#34;&lt;/span&gt; logfile.txt &lt;span class="c1"&gt;# Find &amp;#34;error&amp;#34; in logfile.txt&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;awk &lt;span class="s1"&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt; data.txt &lt;span class="c1"&gt;# Get first column from data.txt&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id="-bash-scripts"&gt;⚡ Bash Scripts
-&lt;/h2&gt;&lt;p&gt;Bash is a powerful shell on Unix/Linux that helps execute commands and automate tasks.&lt;/p&gt;
-&lt;p&gt;🔹 &lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/bin/bash
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Hello, World!&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id="-editors"&gt;✍️ Editors
-&lt;/h2&gt;&lt;p&gt;Text editors are essential tools for editing and managing text files.&lt;/p&gt;
-&lt;h3 id="-recommended-tools-4"&gt;🏆 Recommended Tools
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;🟣 Vim&lt;/strong&gt; - Powerful, highly customizable, suitable for programmers.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;🟣 Emacs&lt;/strong&gt; - Flexible with many supporting plugins.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Sublime Text&lt;/strong&gt; - High speed, user-friendly interface.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Visual Studio Code&lt;/strong&gt; - Open source, supports debugging, extensions, integrated development tools.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;🔹 &lt;strong&gt;Example:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vim myfile.txt &lt;span class="c1"&gt;# Open file with Vim&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nano myfile.txt &lt;span class="c1"&gt;# Open file with Nano&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id="-conclusion"&gt;🔚 Conclusion
-&lt;/h2&gt;&lt;p&gt;Understanding and mastering these tools helps you work more efficiently in Linux and DevOps environments. Tools &lt;em&gt;&lt;strong&gt;🟣 marked&lt;/strong&gt;&lt;/em&gt; are the most popular and powerful ones, recommended by many experts. You can learn more through the accompanying free resources. If there&amp;rsquo;s anything that needs clarification or addition, please provide feedback so I can update accordingly!&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;👉 Next step:&lt;/strong&gt; Advance your knowledge of &lt;em&gt;&lt;strong&gt;Version Control Systems&lt;/strong&gt;&lt;/em&gt; to effectively track, manage, and collaborate on source code.&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Terminal on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/terminal/</link><description>Recent content in Terminal on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Thu, 05 Feb 2026 10:29:10 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/terminal/index.xml" rel="self" type="application/rss+xml"/><item><title>Terminal Knowledge 📟</title><link>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-three/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/devops/devops-step-three/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-three.webp" alt="Featured image of post Terminal Knowledge 📟" />&lt;h2 id="-terminal-knowledge">🖥️ Terminal Knowledge
+&lt;/h2>&lt;p>Terminal is a text interface that allows users to interact with computer systems through CLI (Command Line Interface). It is an essential tool for system management, command execution, and task automation.&lt;/p>
+&lt;h3 id="-free-resources">📚 Free Resources
+&lt;/h3>&lt;ul>
+&lt;li>&lt;a class="link" href="https://en.wikipedia.org/wiki/Command-line_interface" target="_blank" rel="noopener"
+>📄 Article: What is CLI?&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.google.com/search?q=terminal%20knowledge%20guide%20for%20devops" target="_blank" rel="noopener"
+>🔍 Google Search&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.youtube.com/results?search_query=terminal%20knowledge%20for%20devops" target="_blank" rel="noopener"
+>▶️ YouTube Search&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>🔹 &lt;strong>Example:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">ls -l &lt;span class="c1"># List files in current directory&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">pwd&lt;/span> &lt;span class="c1"># Display current directory path&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-process-monitoring">📊 Process Monitoring
+&lt;/h2>&lt;p>Process monitoring is the continuous observation and analysis of processes in IT systems to ensure performance, efficiency, and compliance. It helps track important metrics such as resource usage and behavior of individual processes or applications running in the system.&lt;/p>
+&lt;h3 id="-recommended-tools">🏆 Recommended Tools
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>🟣 lsof&lt;/strong> - Lists information about files opened by processes.&lt;/li>
+&lt;/ul>
+&lt;h3 id="-free-resources-1">📚 Free Resources
+&lt;/h3>&lt;ul>
+&lt;li>&lt;a class="link" href="https://neverendingsecurity.wordpress.com/2015/04/13/lsof-commands-cheatsheet/" target="_blank" rel="noopener"
+>📄 Lsof Cheat Sheet&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://man7.org/linux/man-pages/man8/lsof.8.html" target="_blank" rel="noopener"
+>📖 lsof Documentation&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=n9nZ1ellaV0" target="_blank" rel="noopener"
+>▶️ Video: Linux Crash Course - lsof Command&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://app.daily.dev/tags/monitoring?ref=roadmapsh" target="_blank" rel="noopener"
+>📝 Great Articles on Monitoring&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>🔹 &lt;strong>Example:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">lsof -i :80 &lt;span class="c1"># List processes using port 80&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ps aux &lt;span class="c1"># Display all running processes&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-performance-monitoring">🚀 Performance Monitoring
+&lt;/h2>&lt;p>Performance monitoring helps collect, analyze, and report key performance metrics from applications, networks, servers, and databases.&lt;/p>
+&lt;h3 id="-recommended-tools-1">🏆 Recommended Tools
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>🟣 vmstat&lt;/strong> - Virtual memory and system performance monitoring tool.&lt;/li>
+&lt;/ul>
+&lt;h3 id="-free-resources-2">📚 Free Resources
+&lt;/h3>&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.redhat.com/sysadmin/linux-commands-vmstat" target="_blank" rel="noopener"
+>📖 Linux Commands: Exploring Virtual Memory with vmstat&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://man7.org/linux/man-pages/man8/vmstat.8.html" target="_blank" rel="noopener"
+>📄 vmstat Documentation&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://phoenixnap.com/kb/vmstat-command" target="_blank" rel="noopener"
+>▶️ vmstat Tutorial&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://app.daily.dev/tags/monitoring?ref=roadmapsh" target="_blank" rel="noopener"
+>📝 Great Articles on Monitoring&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>🔹 &lt;strong>Example:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">vmstat &lt;span class="m">5&lt;/span> &lt;span class="m">10&lt;/span> &lt;span class="c1"># Update system status every 5 seconds for 10 times&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-networking-tools">🌐 Networking Tools
+&lt;/h2>&lt;p>Networking tools support monitoring, analyzing, troubleshooting, and managing network systems.&lt;/p>
+&lt;h3 id="-recommended-tools-2">🏆 Recommended Tools
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>🟣 Wireshark&lt;/strong> - Deep packet analysis.&lt;/li>
+&lt;li>&lt;strong>🟣 Nmap&lt;/strong> - Network scanning and security testing.&lt;/li>
+&lt;li>&lt;strong>Ping&lt;/strong> - Basic connectivity testing.&lt;/li>
+&lt;li>&lt;strong>Traceroute&lt;/strong> - Determine packet path through network.&lt;/li>
+&lt;li>&lt;strong>Netstat&lt;/strong> - Display network connections.&lt;/li>
+&lt;li>&lt;strong>Tcpdump&lt;/strong> - Command-line packet capture and analysis.&lt;/li>
+&lt;li>&lt;strong>Iperf&lt;/strong> - Network performance testing.&lt;/li>
+&lt;li>&lt;strong>Netcat&lt;/strong> - Perform various network tasks.&lt;/li>
+&lt;li>&lt;strong>Nslookup/Dig&lt;/strong> - DNS queries.&lt;/li>
+&lt;li>&lt;strong>PuTTY&lt;/strong> - Remote connection via SSH or Telnet.&lt;/li>
+&lt;/ul>
+&lt;p>🔹 &lt;strong>Example:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">ping google.com &lt;span class="c1"># Test connection to Google&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nmap -sS 192.168.1.1 &lt;span class="c1"># Scan internal server ports&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-text-manipulation">✂️ Text Manipulation
+&lt;/h2>&lt;p>Tools that support editing, processing, and converting text data.&lt;/p>
+&lt;h3 id="-recommended-tools-3">🏆 Recommended Tools
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>🟣 sed&lt;/strong> - Stream editor for data manipulation.&lt;/li>
+&lt;li>&lt;strong>🟣 awk&lt;/strong> - Pattern scanning and data extraction.&lt;/li>
+&lt;li>&lt;strong>🟣 grep&lt;/strong> - Text search using regular expressions.&lt;/li>
+&lt;li>&lt;strong>cut, sort, tr, uniq&lt;/strong> - Supporting commands for text data processing.&lt;/li>
+&lt;/ul>
+&lt;p>🔹 &lt;strong>Example:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">grep &lt;span class="s2">&amp;#34;error&amp;#34;&lt;/span> logfile.txt &lt;span class="c1"># Find &amp;#34;error&amp;#34; in logfile.txt&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;{print $1}&amp;#39;&lt;/span> data.txt &lt;span class="c1"># Get first column from data.txt&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-bash-scripts">⚡ Bash Scripts
+&lt;/h2>&lt;p>Bash is a powerful shell on Unix/Linux that helps execute commands and automate tasks.&lt;/p>
+&lt;p>🔹 &lt;strong>Example:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Hello, World!&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-editors">✍️ Editors
+&lt;/h2>&lt;p>Text editors are essential tools for editing and managing text files.&lt;/p>
+&lt;h3 id="-recommended-tools-4">🏆 Recommended Tools
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>🟣 Vim&lt;/strong> - Powerful, highly customizable, suitable for programmers.&lt;/li>
+&lt;li>&lt;strong>🟣 Emacs&lt;/strong> - Flexible with many supporting plugins.&lt;/li>
+&lt;li>&lt;strong>Sublime Text&lt;/strong> - High speed, user-friendly interface.&lt;/li>
+&lt;li>&lt;strong>Visual Studio Code&lt;/strong> - Open source, supports debugging, extensions, integrated development tools.&lt;/li>
+&lt;/ul>
+&lt;p>🔹 &lt;strong>Example:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">vim myfile.txt &lt;span class="c1"># Open file with Vim&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nano myfile.txt &lt;span class="c1"># Open file with Nano&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-conclusion">🔚 Conclusion
+&lt;/h2>&lt;p>Understanding and mastering these tools helps you work more efficiently in Linux and DevOps environments. Tools &lt;em>&lt;strong>🟣 marked&lt;/strong>&lt;/em> are the most popular and powerful ones, recommended by many experts. You can learn more through the accompanying free resources. If there&amp;rsquo;s anything that needs clarification or addition, please provide feedback so I can update accordingly!&lt;/p>
+&lt;p>&lt;strong>👉 Next step:&lt;/strong> Advance your knowledge of &lt;em>&lt;strong>Version Control Systems&lt;/strong>&lt;/em> to effectively track, manage, and collaborate on source code.&lt;/p></description></item></channel></rss>

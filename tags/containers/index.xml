@@ -1,66 +1,66 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Containers on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/containers/</link><description>Recent content in Containers on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 23 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/containers/index.xml" rel="self" type="application/rss+xml"/><item><title>Containers, Docker và LXC 🏗️</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-six/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-six/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-six.webp" alt="Featured image of post Containers, Docker và LXC 🏗️" /&gt;&lt;h2 id="-containers-docker-và-lxc"&gt;📦 Containers, Docker và LXC
-&lt;/h2&gt;&lt;p&gt;Containers là môi trường nhẹ, di động và cách ly giúp đóng gói ứng dụng cùng với tất cả các phụ thuộc của chúng, đảm bảo triển khai đồng nhất trên nhiều môi trường khác nhau. Công nghệ container giúp đơn giản hóa quá trình triển khai ứng dụng, hỗ trợ mô hình kiến trúc microservices, và tối ưu hóa tài nguyên hệ thống.&lt;/p&gt;
-&lt;h2 id="-containers-là-gì"&gt;🏗️ Containers là gì?
-&lt;/h2&gt;&lt;p&gt;Containers là một phương pháp ảo hóa ở cấp độ hệ điều hành, cho phép chạy nhiều ứng dụng cô lập trên cùng một kernel. Không giống như máy ảo (VM) yêu cầu hệ điều hành riêng biệt cho mỗi môi trường, container chỉ sử dụng nhân hệ điều hành của máy chủ, giúp giảm chi phí tài nguyên và tăng hiệu suất.&lt;/p&gt;
-&lt;h3 id="-đặc-điểm-chính-của-containers"&gt;🎯 Đặc điểm chính của Containers
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;🏋️ &lt;strong&gt;Nhẹ&lt;/strong&gt;: Chia sẻ kernel với hệ điều hành máy chủ, giảm bớt tài nguyên tiêu thụ.&lt;/li&gt;
-&lt;li&gt;🚀 &lt;strong&gt;Di động&lt;/strong&gt;: Chạy nhất quán trên nhiều nền tảng từ máy cá nhân đến cloud.&lt;/li&gt;
-&lt;li&gt;🔒 &lt;strong&gt;Cô lập&lt;/strong&gt;: Ứng dụng và thư viện được đóng gói riêng biệt.&lt;/li&gt;
-&lt;li&gt;📈 &lt;strong&gt;Hiệu suất cao&lt;/strong&gt;: Không cần khởi động hệ điều hành riêng biệt như máy ảo.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="-docker---nền-tảng-container-phổ-biến-nhất"&gt;🐳 Docker - Nền tảng container phổ biến nhất
-&lt;/h2&gt;&lt;p&gt;&lt;a class="link" href="https://www.docker.com/" target="_blank" rel="noopener"
-&gt;Docker&lt;/a&gt; là một nền tảng mã nguồn mở giúp tự động hóa việc triển khai ứng dụng bằng cách sử dụng công nghệ container. Docker giúp đóng gói ứng dụng với toàn bộ thư viện và cấu hình cần thiết để chạy trên nhiều môi trường khác nhau.&lt;/p&gt;
-&lt;h3 id="-tính-năng-nổi-bật-của-docker"&gt;✨ Tính năng nổi bật của Docker
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;📦 &lt;strong&gt;Docker Engine&lt;/strong&gt;: Công cụ để tạo và chạy container.&lt;/li&gt;
-&lt;li&gt;🔄 &lt;strong&gt;Docker Compose&lt;/strong&gt;: Quản lý nhiều container trong một ứng dụng.&lt;/li&gt;
-&lt;li&gt;🏗️ &lt;strong&gt;Docker Hub&lt;/strong&gt;: Kho lưu trữ và chia sẻ hình ảnh container.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-ví-dụ-sử-dụng-docker"&gt;🔍 Ví dụ sử dụng Docker:
-&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker run -d -p 80:80 nginx
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Lệnh trên sẽ chạy một container Nginx trên cổng 80.&lt;/p&gt;
-&lt;p&gt;📚 &lt;strong&gt;Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;📖 &lt;a class="link" href="https://docs.docker.com/" target="_blank" rel="noopener"
-&gt;Tài liệu Docker&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=RqTEHSBrYFw" target="_blank" rel="noopener"
-&gt;Docker trong 5 phút&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="-lxc---linux-containers"&gt;🖥️ LXC - Linux Containers
-&lt;/h2&gt;&lt;p&gt;LXC (Linux Containers) là một phương pháp ảo hóa cấp hệ điều hành cho phép chạy nhiều hệ thống Linux cô lập trên cùng một kernel.&lt;/p&gt;
-&lt;h3 id="-đặc-điểm-của-lxc"&gt;🛠️ Đặc điểm của LXC:
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;🏗️ Tạo môi trường gần giống máy ảo nhưng hiệu suất cao hơn.&lt;/li&gt;
-&lt;li&gt;⚡ Khởi động nhanh hơn so với VM truyền thống.&lt;/li&gt;
-&lt;li&gt;🔍 Sử dụng các công nghệ của Linux như cgroups và namespaces.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-ví-dụ-tạo-một-container-lxc"&gt;📌 Ví dụ tạo một container LXC:
-&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lxc-create -n my-container -t ubuntu
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lxc-start -n my-container -d
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;📚 &lt;strong&gt;Tài nguyên hữu ích:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;📖 &lt;a class="link" href="https://linuxcontainers.org/" target="_blank" rel="noopener"
-&gt;Trang chủ LXC&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=CWmkSj_B-wo" target="_blank" rel="noopener"
-&gt;Hướng dẫn sử dụng LXC&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="-kết-luận"&gt;🎯 Kết luận
-&lt;/h2&gt;&lt;p&gt;Containers giúp triển khai ứng dụng nhanh chóng, hiệu quả và tiết kiệm tài nguyên. &lt;strong&gt;Docker&lt;/strong&gt; là lựa chọn phổ biến cho phát triển ứng dụng, trong khi &lt;strong&gt;LXC&lt;/strong&gt; phù hợp hơn cho mô phỏng hệ điều hành đầy đủ. Hãy chọn công cụ phù hợp với nhu cầu của bạn! 🚀&lt;/p&gt;
-&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Application Gateway&lt;/strong&gt;&lt;/em&gt; một dịch vụ quản lý traffic tầng ứng dụng giúp tối ưu hóa, bảo mật và kiểm soát luồng truy cập giữa client và backend. Nó có thể đóng vai trò như một reverse proxy, bảo vệ hệ thống và đảm bảo request được xử lý đúng cách.&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Containers on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/containers/</link><description>Recent content in Containers on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 23 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/containers/index.xml" rel="self" type="application/rss+xml"/><item><title>Containers, Docker và LXC 🏗️</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-six/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-six/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-six.webp" alt="Featured image of post Containers, Docker và LXC 🏗️" />&lt;h2 id="-containers-docker-và-lxc">📦 Containers, Docker và LXC
+&lt;/h2>&lt;p>Containers là môi trường nhẹ, di động và cách ly giúp đóng gói ứng dụng cùng với tất cả các phụ thuộc của chúng, đảm bảo triển khai đồng nhất trên nhiều môi trường khác nhau. Công nghệ container giúp đơn giản hóa quá trình triển khai ứng dụng, hỗ trợ mô hình kiến trúc microservices, và tối ưu hóa tài nguyên hệ thống.&lt;/p>
+&lt;h2 id="-containers-là-gì">🏗️ Containers là gì?
+&lt;/h2>&lt;p>Containers là một phương pháp ảo hóa ở cấp độ hệ điều hành, cho phép chạy nhiều ứng dụng cô lập trên cùng một kernel. Không giống như máy ảo (VM) yêu cầu hệ điều hành riêng biệt cho mỗi môi trường, container chỉ sử dụng nhân hệ điều hành của máy chủ, giúp giảm chi phí tài nguyên và tăng hiệu suất.&lt;/p>
+&lt;h3 id="-đặc-điểm-chính-của-containers">🎯 Đặc điểm chính của Containers
+&lt;/h3>&lt;ul>
+&lt;li>🏋️ &lt;strong>Nhẹ&lt;/strong>: Chia sẻ kernel với hệ điều hành máy chủ, giảm bớt tài nguyên tiêu thụ.&lt;/li>
+&lt;li>🚀 &lt;strong>Di động&lt;/strong>: Chạy nhất quán trên nhiều nền tảng từ máy cá nhân đến cloud.&lt;/li>
+&lt;li>🔒 &lt;strong>Cô lập&lt;/strong>: Ứng dụng và thư viện được đóng gói riêng biệt.&lt;/li>
+&lt;li>📈 &lt;strong>Hiệu suất cao&lt;/strong>: Không cần khởi động hệ điều hành riêng biệt như máy ảo.&lt;/li>
+&lt;/ul>
+&lt;h2 id="-docker---nền-tảng-container-phổ-biến-nhất">🐳 Docker - Nền tảng container phổ biến nhất
+&lt;/h2>&lt;p>&lt;a class="link" href="https://www.docker.com/" target="_blank" rel="noopener"
+>Docker&lt;/a> là một nền tảng mã nguồn mở giúp tự động hóa việc triển khai ứng dụng bằng cách sử dụng công nghệ container. Docker giúp đóng gói ứng dụng với toàn bộ thư viện và cấu hình cần thiết để chạy trên nhiều môi trường khác nhau.&lt;/p>
+&lt;h3 id="-tính-năng-nổi-bật-của-docker">✨ Tính năng nổi bật của Docker
+&lt;/h3>&lt;ul>
+&lt;li>📦 &lt;strong>Docker Engine&lt;/strong>: Công cụ để tạo và chạy container.&lt;/li>
+&lt;li>🔄 &lt;strong>Docker Compose&lt;/strong>: Quản lý nhiều container trong một ứng dụng.&lt;/li>
+&lt;li>🏗️ &lt;strong>Docker Hub&lt;/strong>: Kho lưu trữ và chia sẻ hình ảnh container.&lt;/li>
+&lt;/ul>
+&lt;h3 id="-ví-dụ-sử-dụng-docker">🔍 Ví dụ sử dụng Docker:
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker run -d -p 80:80 nginx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Lệnh trên sẽ chạy một container Nginx trên cổng 80.&lt;/p>
+&lt;p>📚 &lt;strong>Tài nguyên hữu ích:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>📖 &lt;a class="link" href="https://docs.docker.com/" target="_blank" rel="noopener"
+>Tài liệu Docker&lt;/a>&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=RqTEHSBrYFw" target="_blank" rel="noopener"
+>Docker trong 5 phút&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="-lxc---linux-containers">🖥️ LXC - Linux Containers
+&lt;/h2>&lt;p>LXC (Linux Containers) là một phương pháp ảo hóa cấp hệ điều hành cho phép chạy nhiều hệ thống Linux cô lập trên cùng một kernel.&lt;/p>
+&lt;h3 id="-đặc-điểm-của-lxc">🛠️ Đặc điểm của LXC:
+&lt;/h3>&lt;ul>
+&lt;li>🏗️ Tạo môi trường gần giống máy ảo nhưng hiệu suất cao hơn.&lt;/li>
+&lt;li>⚡ Khởi động nhanh hơn so với VM truyền thống.&lt;/li>
+&lt;li>🔍 Sử dụng các công nghệ của Linux như cgroups và namespaces.&lt;/li>
+&lt;/ul>
+&lt;h3 id="-ví-dụ-tạo-một-container-lxc">📌 Ví dụ tạo một container LXC:
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">lxc-create -n my-container -t ubuntu
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">lxc-start -n my-container -d
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>📚 &lt;strong>Tài nguyên hữu ích:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>📖 &lt;a class="link" href="https://linuxcontainers.org/" target="_blank" rel="noopener"
+>Trang chủ LXC&lt;/a>&lt;/li>
+&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=CWmkSj_B-wo" target="_blank" rel="noopener"
+>Hướng dẫn sử dụng LXC&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;h2 id="-kết-luận">🎯 Kết luận
+&lt;/h2>&lt;p>Containers giúp triển khai ứng dụng nhanh chóng, hiệu quả và tiết kiệm tài nguyên. &lt;strong>Docker&lt;/strong> là lựa chọn phổ biến cho phát triển ứng dụng, trong khi &lt;strong>LXC&lt;/strong> phù hợp hơn cho mô phỏng hệ điều hành đầy đủ. Hãy chọn công cụ phù hợp với nhu cầu của bạn! 🚀&lt;/p>
+&lt;p>👉 &lt;strong>Bước tiếp theo:&lt;/strong> Tìm hiểu về &lt;em>&lt;strong>Application Gateway&lt;/strong>&lt;/em> một dịch vụ quản lý traffic tầng ứng dụng giúp tối ưu hóa, bảo mật và kiểm soát luồng truy cập giữa client và backend. Nó có thể đóng vai trò như một reverse proxy, bảo vệ hệ thống và đảm bảo request được xử lý đúng cách.&lt;/p></description></item></channel></rss>

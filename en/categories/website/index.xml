@@ -1,1096 +1,1087 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Website on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/categories/website/</link><description>Recent content in Website on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 20 Feb 2026 00:31:32 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/categories/website/index.xml" rel="self" type="application/rss+xml"/><item><title>How to Install Nginx on Ubuntu 24.04 ⚙️</title><link>https://tech.nguuyen.io.vn/en/posts/installation-guides/how-to-install-nginx/</link><pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/installation-guides/how-to-install-nginx/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/how-to-install-nginx.webp" alt="Featured image of post How to Install Nginx on Ubuntu 24.04 ⚙️" /&gt;&lt;h2 id="-introduction"&gt;📌 Introduction
-&lt;/h2&gt;&lt;p&gt;Nginx is an open-source web server that can serve static and dynamic web applications. It can run as a web server, load balancer, reverse proxy, or HTTP cache, and integrates with existing applications to build complete systems or distribute web apps via IP or domain.&lt;/p&gt;
-&lt;p&gt;This guide shows how to install Nginx on Ubuntu 24.04 and set up a sample web app on your server.&lt;/p&gt;
-&lt;h2 id="-prerequisites"&gt;✅ Prerequisites
-&lt;/h2&gt;&lt;p&gt;Before you begin, make sure you:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;🚀 Provision an Ubuntu 24.04 server.&lt;/li&gt;
-&lt;li&gt;🌍 Create an A record pointing your domain or subdomain to the server IP (e.g., &lt;code&gt;app.example.com&lt;/code&gt;).&lt;/li&gt;
-&lt;li&gt;🔐 Access the server via SSH and create a non-root sudo user.&lt;/li&gt;
-&lt;li&gt;🔄 Update the system packages.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="-install-nginx-on-ubuntu-2404"&gt;⚙️ Install NGINX on Ubuntu 24.04
-&lt;/h2&gt;&lt;p&gt;The latest NGINX package is available in Ubuntu 24.04&amp;rsquo;s default APT repository. Follow these steps to update the system and install NGINX.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;🔄 Update package lists&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt update
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;📦 Install NGINX&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt install nginx -y
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;🔍 Check installed NGINX version&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo nginx -version
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Sample output:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nginx version: nginx/1.24.0 (Ubuntu)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id="-manage-the-nginx-service"&gt;⚙️ Manage the NGINX service
-&lt;/h2&gt;&lt;p&gt;NGINX uses the &lt;code&gt;nginx&lt;/code&gt; systemd service to manage runtime and processes. Use the commands below to enable and manage the service.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;🚀 Enable NGINX to start on boot&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; nginx
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Result:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Synchronizing state of nginx.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Executing: /usr/lib/systemd/systemd-sysv-install enable nginx
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;▶️ Start NGINX&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl start nginx
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;⏹️ Stop NGINX&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl stop nginx
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;🔄 Restart NGINX&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl restart nginx
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;🔍 Check NGINX status&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl status nginx
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Sample output:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
-&lt;/span&gt;&lt;span class="lnt"&gt; 2
-&lt;/span&gt;&lt;span class="lnt"&gt; 3
-&lt;/span&gt;&lt;span class="lnt"&gt; 4
-&lt;/span&gt;&lt;span class="lnt"&gt; 5
-&lt;/span&gt;&lt;span class="lnt"&gt; 6
-&lt;/span&gt;&lt;span class="lnt"&gt; 7
-&lt;/span&gt;&lt;span class="lnt"&gt; 8
-&lt;/span&gt;&lt;span class="lnt"&gt; 9
-&lt;/span&gt;&lt;span class="lnt"&gt;10
-&lt;/span&gt;&lt;span class="lnt"&gt;11
-&lt;/span&gt;&lt;span class="lnt"&gt;12
-&lt;/span&gt;&lt;span class="lnt"&gt;13
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-gdscript3" data-lang="gdscript3"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="err"&gt;●&lt;/span&gt; &lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt; &lt;span class="n"&gt;A&lt;/span&gt; &lt;span class="n"&gt;high&lt;/span&gt; &lt;span class="n"&gt;performance&lt;/span&gt; &lt;span class="n"&gt;web&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt; &lt;span class="ow"&gt;and&lt;/span&gt; &lt;span class="n"&gt;a&lt;/span&gt; &lt;span class="n"&gt;reverse&lt;/span&gt; &lt;span class="n"&gt;proxy&lt;/span&gt; &lt;span class="n"&gt;server&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Loaded&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;loaded&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;lib&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;systemd&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;enabled&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;preset&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;enabled&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Active&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;active&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;running&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt; &lt;span class="n"&gt;since&lt;/span&gt; &lt;span class="n"&gt;Wed&lt;/span&gt; &lt;span class="mi"&gt;2024&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;06&lt;/span&gt;&lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="mi"&gt;26&lt;/span&gt; &lt;span class="mi"&gt;10&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;55&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="mi"&gt;50&lt;/span&gt; &lt;span class="n"&gt;UTC&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="mi"&gt;1&lt;/span&gt;&lt;span class="nb"&gt;min&lt;/span&gt; &lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="n"&gt;s&lt;/span&gt; &lt;span class="n"&gt;ago&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Docs&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="n"&gt;man&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="mi"&gt;8&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Process&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2397&lt;/span&gt; &lt;span class="n"&gt;ExecStartPre&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;t&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;q&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="n"&gt;daemon&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;master_process&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;exited&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;SUCCESS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Process&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2399&lt;/span&gt; &lt;span class="n"&gt;ExecStart&lt;/span&gt;&lt;span class="o"&gt;=/&lt;/span&gt;&lt;span class="n"&gt;usr&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;sbin&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt; &lt;span class="o"&gt;-&lt;/span&gt;&lt;span class="n"&gt;g&lt;/span&gt; &lt;span class="n"&gt;daemon&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="n"&gt;master_process&lt;/span&gt; &lt;span class="n"&gt;on&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;code&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="n"&gt;exited&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;status&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;0&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;SUCCESS&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Main&lt;/span&gt; &lt;span class="n"&gt;PID&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2400&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Tasks&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;2&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;limit&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;1068&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;Memory&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;1.7&lt;/span&gt;&lt;span class="n"&gt;M&lt;/span&gt; &lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;peak&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mf"&gt;2.4&lt;/span&gt;&lt;span class="n"&gt;M&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;CPU&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="mi"&gt;13&lt;/span&gt;&lt;span class="n"&gt;ms&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="n"&gt;CGroup&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt; &lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;system&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;slice&lt;/span&gt;&lt;span class="o"&gt;/&lt;/span&gt;&lt;span class="n"&gt;nginx&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;service&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="err"&gt;├─&lt;/span&gt;&lt;span class="mi"&gt;2400&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;nginx: master process /usr/sbin/nginx -g daemon on; master_process on;&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="err"&gt;└─&lt;/span&gt;&lt;span class="mi"&gt;2401&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;nginx: worker process&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;If &lt;code&gt;Active: active (running)&lt;/code&gt; appears, NGINX is running. If you see &lt;code&gt;Active: active (failed)&lt;/code&gt;, stop any process using HTTP port &lt;code&gt;80&lt;/code&gt;, then restart NGINX.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id="-create-an-nginx-virtual-host"&gt;🌐 Create an Nginx virtual host
-&lt;/h2&gt;&lt;p&gt;An Nginx virtual host serves web app files from a specific directory using a domain name. Follow these steps to set up a sample virtual host securely.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;📂 Create a new virtual host config file&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;In &lt;code&gt;/etc/nginx/sites-available&lt;/code&gt;, create a new config file, for example: &lt;code&gt;app.example.com.conf&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo nano /etc/nginx/sites-available/app.example.com.conf
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;Add the following configuration:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
-&lt;/span&gt;&lt;span class="lnt"&gt; 2
-&lt;/span&gt;&lt;span class="lnt"&gt; 3
-&lt;/span&gt;&lt;span class="lnt"&gt; 4
-&lt;/span&gt;&lt;span class="lnt"&gt; 5
-&lt;/span&gt;&lt;span class="lnt"&gt; 6
-&lt;/span&gt;&lt;span class="lnt"&gt; 7
-&lt;/span&gt;&lt;span class="lnt"&gt; 8
-&lt;/span&gt;&lt;span class="lnt"&gt; 9
-&lt;/span&gt;&lt;span class="lnt"&gt;10
-&lt;/span&gt;&lt;span class="lnt"&gt;11
-&lt;/span&gt;&lt;span class="lnt"&gt;12
-&lt;/span&gt;&lt;span class="lnt"&gt;13
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-nginx" data-lang="nginx"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;server&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="mi"&gt;80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;listen&lt;/span&gt; &lt;span class="s"&gt;[::]:80&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;server_name&lt;/span&gt; &lt;span class="s"&gt;app.example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;root&lt;/span&gt; &lt;span class="s"&gt;/var/www/app.example.com&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;index&lt;/span&gt; &lt;span class="s"&gt;index.html&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;location&lt;/span&gt; &lt;span class="s"&gt;/&lt;/span&gt; &lt;span class="p"&gt;{&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="kn"&gt;try_files&lt;/span&gt; &lt;span class="nv"&gt;$uri&lt;/span&gt; &lt;span class="nv"&gt;$uri/&lt;/span&gt; &lt;span class="p"&gt;=&lt;/span&gt;&lt;span class="mi"&gt;404&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;}&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;Save and close the file.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;✅ Test Nginx configuration&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Check the configuration for errors:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo nginx -t
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;Result:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nginx: configuration file /etc/nginx/nginx.conf test is successful
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;🔗 Enable the virtual host&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Link the config file into &lt;code&gt;/etc/nginx/sites-enabled&lt;/code&gt;:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo ln -s /etc/nginx/sites-available/app.example.com.conf /etc/nginx/sites-enabled/
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;📁 Create the web root directory&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo mkdir -p /var/www/app.example.com
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;📝 Create a sample HTML file&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Create &lt;code&gt;index.html&lt;/code&gt; in the web root:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo nano /var/www/app.example.com/index.html
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;Add the following content:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;span class="lnt"&gt;3
-&lt;/span&gt;&lt;span class="lnt"&gt;4
-&lt;/span&gt;&lt;span class="lnt"&gt;5
-&lt;/span&gt;&lt;span class="lnt"&gt;6
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-html" data-lang="html"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;Hello Hoang Duong&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;Save and close the file.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;🔄 Restart Nginx&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo systemctl restart nginx
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;🌍 Verify the virtual host&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Use &lt;code&gt;curl&lt;/code&gt; to test:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ curl http://app.example.com
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;Result:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Hello Hoang Duong
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id="-secure-the-nginx-web-server"&gt;🔒 Secure the Nginx web server
-&lt;/h2&gt;&lt;p&gt;SSL certificates encrypt communication between the browser and your server over HTTPS. By default, Nginx listens on insecure HTTP port 80. Follow these steps to obtain a trusted SSL certificate from Let&amp;rsquo;s Encrypt and enable HTTPS.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Install Certbot – Let&amp;rsquo;s Encrypt client 🔧&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Install Certbot using Snap:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo snap install --classic certbot
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;ul&gt;
-&lt;li&gt;Verify the Certbot version:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo certbot --version
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;📌 &lt;strong&gt;Sample output:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;certbot 2.11.0
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h2 id="-generate-an-ssl-certificate-for-nginx"&gt;🛡️ Generate an SSL certificate for Nginx
-&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;Create a new SSL certificate for your domain. Replace &lt;code&gt;app.example.com&lt;/code&gt; with your real domain:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo certbot --nginx -d app.example.com --agree-tos
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;This will:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;✅ Generate a valid SSL certificate&lt;/li&gt;
-&lt;li&gt;✅ Automatically configure Nginx to use SSL&lt;/li&gt;
-&lt;li&gt;✅ Enable HTTPS on your web server&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Test automatic renewal 🔄&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Let&amp;rsquo;s Encrypt certificates last 90 days. Check auto-renewal with:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo certbot renew --dry-run
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;If no errors appear, the certificate will renew automatically.&lt;/p&gt;
-&lt;h2 id="-verify-the-site-with-https"&gt;🌐 Verify the site with HTTPS
-&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;Open the browser and visit:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;https://app.example.com
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;If you see the lock icon 🔒, SSL is installed successfully! 🚀&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="-configure-ufw-firewall-rules"&gt;🔥 Configure UFW firewall rules
-&lt;/h2&gt;&lt;p&gt;Uncomplicated Firewall (UFW) is installed and enabled by default on Ubuntu 24.04. Follow these steps to allow HTTP and HTTPS traffic.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Allow HTTP (Port 80) 🔌&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Run:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo ufw allow 80/tcp
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Allow HTTPS (Port 443) 🔐&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Run:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo ufw allow 443/tcp
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Check firewall status 🔢&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Run:&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ sudo ufw status
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;👉 &lt;strong&gt;Sample output:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
-&lt;/span&gt;&lt;span class="lnt"&gt; 2
-&lt;/span&gt;&lt;span class="lnt"&gt; 3
-&lt;/span&gt;&lt;span class="lnt"&gt; 4
-&lt;/span&gt;&lt;span class="lnt"&gt; 5
-&lt;/span&gt;&lt;span class="lnt"&gt; 6
-&lt;/span&gt;&lt;span class="lnt"&gt; 7
-&lt;/span&gt;&lt;span class="lnt"&gt; 8
-&lt;/span&gt;&lt;span class="lnt"&gt; 9
-&lt;/span&gt;&lt;span class="lnt"&gt;10
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-fallback" data-lang="fallback"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Status: active
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;To Action From
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;-- ------ ----
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;22/tcp ALLOW Anywhere
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;80/tcp ALLOW Anywhere
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;443/tcp ALLOW Anywhere
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;22/tcp (v6) ALLOW Anywhere (v6)
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;80/tcp (v6) ALLOW Anywhere (v6)
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;443/tcp (v6) ALLOW Anywhere (v6)
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;🛡️ After setup, the server only allows HTTP and HTTPS connections.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="-conclusion"&gt;🎯 Conclusion
-&lt;/h2&gt;&lt;p&gt;Congratulations on installing Nginx on Ubuntu 24.04 and configuring a web server for your applications. Nginx supports multiple virtual hosts to deploy applications securely. You can also integrate Nginx with MySQL and PHP to build dynamic web apps. For more configuration options, visit the official &lt;a class="link" href="https://docs.nginx.com/" target="_blank" rel="noopener"
-&gt;Nginx documentation&lt;/a&gt;. 🚀😊&lt;/p&gt;</description></item><item><title>Introduction to Nginx 🚀</title><link>https://tech.nguuyen.io.vn/en/posts/website/nginx-introduction-guide/</link><pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/website/nginx-introduction-guide/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/nginx-introduction-guide.webp" alt="Featured image of post Introduction to Nginx 🚀" /&gt;&lt;h2 id="-what-is-nginx"&gt;🔀 What is Nginx?
-&lt;/h2&gt;&lt;p align="center"&gt;
-&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi.jpg" alt="NGINX is a reliable open-source web server"&gt;
-&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;NGINX is a reliable open-source web server&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Nginx is an open-source web server that uses an asynchronous, event-driven architecture. It was originally built for HTTP caching, later expanded to support reverse proxy, HTTP load balancing, and mail protocols such as IMAP4, POP3, and SMTP.&lt;/p&gt;
-&lt;p&gt;Released in October 2014, Nginx is used by large companies like Google, Adobe, Netflix, and WordPress because it can handle thousands of concurrent connections.&lt;/p&gt;
-&lt;h2 id="-how-nginx-works"&gt;⚙️ How Nginx works
-&lt;/h2&gt;&lt;p align="center"&gt;
-&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-nginx-cung-hoat-dong-tuong-tu-nhu-cac-server-khac.jpg" alt="NGINX works similarly to other servers"&gt;
-&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;NGINX works similarly to other servers&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Nginx follows an asynchronous processing model, unlike the sequential processing used by traditional web servers.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Each process has multiple worker connections to handle requests.&lt;/li&gt;
-&lt;li&gt;Worker connections pass requests to worker processes, which forward them to the master process.&lt;/li&gt;
-&lt;li&gt;With this model, one worker connection can handle up to 1024 requests at once, enabling Nginx to serve thousands of requests efficiently.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="-nginx-features"&gt;🔥 Nginx features
-&lt;/h2&gt;&lt;p align="center"&gt;
-&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-may-chu-nginx-co-nhieu-tinh-nang-va-uu-diem-vuot-troi-trong-lap-trinh.png" alt="NGINX offers powerful features for web development"&gt;
-&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;NGINX offers powerful features for web development&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Nginx provides many standout features:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;⚡ Handles over 10,000 concurrent connections with low memory usage.&lt;/li&gt;
-&lt;li&gt;📂 Serves static files and file indexing.&lt;/li&gt;
-&lt;li&gt;🔄 Load balancing and reverse proxy with caching.&lt;/li&gt;
-&lt;li&gt;🚀 Supports FastCGI, uWSGI, SCGI, and Memcached.&lt;/li&gt;
-&lt;li&gt;🛠️ Modular architecture with automatic gzip compression.&lt;/li&gt;
-&lt;li&gt;🔐 SSL/TLS encryption support.&lt;/li&gt;
-&lt;li&gt;🔀 URL rewrites using regular expressions.&lt;/li&gt;
-&lt;li&gt;🌐 WebSocket support and connection limits.&lt;/li&gt;
-&lt;li&gt;📡 IPv6 compatibility.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="-nginx-vs-apache"&gt;⚖️ Nginx vs Apache
-&lt;/h2&gt;&lt;p align="center"&gt;
-&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-so-voi-apache-server-nginx-server-co-kha-nhieu-uu-diem.jpg" alt="Compared to Apache, NGINX has many advantages"&gt;
-&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Compared to Apache, NGINX has many advantages&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="-apache-server"&gt;&lt;strong&gt;🖥️ Apache server:&lt;/strong&gt;
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Processes requests using a forked threaded model or keep-alive.&lt;/li&gt;
-&lt;li&gt;Handles both static and dynamic content.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-nginx-server"&gt;&lt;strong&gt;🌍 Nginx server:&lt;/strong&gt;
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Uses a non-blocking event loop.&lt;/li&gt;
-&lt;li&gt;Serves static content more efficiently than Apache.&lt;/li&gt;
-&lt;li&gt;Faster request handling and better resource usage.&lt;/li&gt;
-&lt;li&gt;Requires a separate processor for dynamic content.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id="-how-to-check-if-a-website-uses-nginx"&gt;🔎 How to check if a website uses Nginx
-&lt;/h2&gt;&lt;p align="center"&gt;
-&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-ban-co-the-dua-vao-cac-cong-cu-san-co-de-kiem-tra-website-co-chay-nginx.png" alt="You can use available tools to check if a website runs Nginx"&gt;
-&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;You can use available tools to check if a website runs Nginx&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;You can check if a website runs Nginx by inspecting HTTP headers:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Open the website in Chrome.&lt;/li&gt;
-&lt;li&gt;Press &lt;strong&gt;Ctrl + Shift + I&lt;/strong&gt; or &lt;strong&gt;F12&lt;/strong&gt; to open DevTools.&lt;/li&gt;
-&lt;li&gt;Switch to the &lt;strong&gt;Network&lt;/strong&gt; tab.&lt;/li&gt;
-&lt;li&gt;Select any request and inspect &lt;strong&gt;Headers&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;You can also use tools like &lt;strong&gt;Pingdom&lt;/strong&gt; or &lt;strong&gt;GTmetrix&lt;/strong&gt; to check.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="-conclusion"&gt;🎯 Conclusion
-&lt;/h2&gt;&lt;p&gt;Nginx has become one of the most popular web servers thanks to high performance, the ability to handle thousands of concurrent connections, and powerful features. Whether you need to serve static content, balance load, or run a reverse proxy, Nginx is a strong choice. Hopefully this guide helps you understand Nginx and how it works. If you are considering an optimized web server for your project, try Nginx and explore its benefits! 🚀😊&lt;/p&gt;</description></item><item><title>Point a Domain to Hosting 🌐</title><link>https://tech.nguuyen.io.vn/en/posts/website/domain-to-hosting-setup/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/website/domain-to-hosting-setup/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/domain-to-hosting-setup.webp" alt="Featured image of post Point a Domain to Hosting 🌐" /&gt;&lt;h2 id="-why-point-a-domain-to-hosting"&gt;🌐 Why point a domain to hosting?
-&lt;/h2&gt;&lt;p&gt;Domain and hosting are the two essentials that keep a website online.&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Domain&lt;/strong&gt; is the website address.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Hosting&lt;/strong&gt; stores the website data.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="why-you-need-to-point-a-domain"&gt;Why you need to point a domain
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Connect the domain to hosting so the site appears on the internet.&lt;/li&gt;
-&lt;li&gt;Let people access the site using a memorable address.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="how-it-works-"&gt;How it works 🔧
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Get &lt;strong&gt;nameserver&lt;/strong&gt; or &lt;strong&gt;IP&lt;/strong&gt; information from your hosting provider.&lt;/li&gt;
-&lt;li&gt;Configure it in your domain management dashboard.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id="three-simplest-ways-to-point-a-domain-to-hosting-"&gt;Three simplest ways to point a domain to hosting 🚀
-&lt;/h2&gt;&lt;h3 id="point-using-nameservers"&gt;Point using nameservers
-&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Steps:&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Log in to your domain management panel.&lt;/li&gt;
-&lt;li&gt;Select the domain you want to point.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/chon-ten-mien-muon-tro-ve-hosting-2.webp"
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Website on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/categories/website/</link><description>Recent content in Website on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Fri, 20 Feb 2026 00:31:32 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/categories/website/index.xml" rel="self" type="application/rss+xml"/><item><title>How to Install Nginx on Ubuntu 24.04 ⚙️</title><link>https://tech.nguuyen.io.vn/en/posts/installation-guides/how-to-install-nginx/</link><pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/installation-guides/how-to-install-nginx/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/how-to-install-nginx.webp" alt="Featured image of post How to Install Nginx on Ubuntu 24.04 ⚙️" />&lt;h2 id="-introduction">📌 Introduction
+&lt;/h2>&lt;p>Nginx is an open-source web server that can serve static and dynamic web applications. It can run as a web server, load balancer, reverse proxy, or HTTP cache, and integrates with existing applications to build complete systems or distribute web apps via IP or domain.&lt;/p>
+&lt;p>This guide shows how to install Nginx on Ubuntu 24.04 and set up a sample web app on your server.&lt;/p>
+&lt;h2 id="-prerequisites">✅ Prerequisites
+&lt;/h2>&lt;p>Before you begin, make sure you:&lt;/p>
+&lt;ul>
+&lt;li>🚀 Provision an Ubuntu 24.04 server.&lt;/li>
+&lt;li>🌍 Create an A record pointing your domain or subdomain to the server IP (e.g., &lt;code>app.example.com&lt;/code>).&lt;/li>
+&lt;li>🔐 Access the server via SSH and create a non-root sudo user.&lt;/li>
+&lt;li>🔄 Update the system packages.&lt;/li>
+&lt;/ul>
+&lt;h2 id="-install-nginx-on-ubuntu-2404">⚙️ Install NGINX on Ubuntu 24.04
+&lt;/h2>&lt;p>The latest NGINX package is available in Ubuntu 24.04&amp;rsquo;s default APT repository. Follow these steps to update the system and install NGINX.&lt;/p>
+&lt;p>&lt;strong>🔄 Update package lists&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt update
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>📦 Install NGINX&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt install nginx -y
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>🔍 Check installed NGINX version&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo nginx -version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Sample output:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">nginx version: nginx/1.24.0 (Ubuntu)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-manage-the-nginx-service">⚙️ Manage the NGINX service
+&lt;/h2>&lt;p>NGINX uses the &lt;code>nginx&lt;/code> systemd service to manage runtime and processes. Use the commands below to enable and manage the service.&lt;/p>
+&lt;p>&lt;strong>🚀 Enable NGINX to start on boot&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo systemctl &lt;span class="nb">enable&lt;/span> nginx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Result:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Synchronizing state of nginx.service with SysV service script with /usr/lib/systemd/systemd-sysv-install.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Executing: /usr/lib/systemd/systemd-sysv-install enable nginx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>▶️ Start NGINX&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo systemctl start nginx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>⏹️ Stop NGINX&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo systemctl stop nginx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>🔄 Restart NGINX&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo systemctl restart nginx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>🔍 Check NGINX status&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo systemctl status nginx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Sample output:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="err">●&lt;/span> &lt;span class="n">nginx&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">service&lt;/span> &lt;span class="o">-&lt;/span> &lt;span class="n">A&lt;/span> &lt;span class="n">high&lt;/span> &lt;span class="n">performance&lt;/span> &lt;span class="n">web&lt;/span> &lt;span class="n">server&lt;/span> &lt;span class="ow">and&lt;/span> &lt;span class="n">a&lt;/span> &lt;span class="n">reverse&lt;/span> &lt;span class="n">proxy&lt;/span> &lt;span class="n">server&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Loaded&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">loaded&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">lib&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">systemd&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">system&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">nginx&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">service&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">enabled&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">preset&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">enabled&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Active&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">active&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">running&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="n">since&lt;/span> &lt;span class="n">Wed&lt;/span> &lt;span class="mi">2024&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">06&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="mi">26&lt;/span> &lt;span class="mi">10&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">55&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">50&lt;/span> &lt;span class="n">UTC&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="nb">min&lt;/span> &lt;span class="mi">0&lt;/span>&lt;span class="n">s&lt;/span> &lt;span class="n">ago&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Docs&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="n">man&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="n">nginx&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="mi">8&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Process&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">2397&lt;/span> &lt;span class="n">ExecStartPre&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">nginx&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">t&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">q&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">g&lt;/span> &lt;span class="n">daemon&lt;/span> &lt;span class="n">on&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">master_process&lt;/span> &lt;span class="n">on&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">code&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">exited&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">status&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">SUCCESS&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Process&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">2399&lt;/span> &lt;span class="n">ExecStart&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">nginx&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">g&lt;/span> &lt;span class="n">daemon&lt;/span> &lt;span class="n">on&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="n">master_process&lt;/span> &lt;span class="n">on&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">code&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">exited&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="n">status&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="mi">0&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">SUCCESS&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Main&lt;/span> &lt;span class="n">PID&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">2400&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">nginx&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Tasks&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">2&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">limit&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">1068&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">Memory&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mf">1.7&lt;/span>&lt;span class="n">M&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="n">peak&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mf">2.4&lt;/span>&lt;span class="n">M&lt;/span>&lt;span class="p">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CPU&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="mi">13&lt;/span>&lt;span class="n">ms&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="n">CGroup&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">system&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">slice&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">nginx&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">service&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">├─&lt;/span>&lt;span class="mi">2400&lt;/span> &lt;span class="s2">&amp;#34;nginx: master process /usr/sbin/nginx -g daemon on; master_process on;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="err">└─&lt;/span>&lt;span class="mi">2401&lt;/span> &lt;span class="s2">&amp;#34;nginx: worker process&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>If &lt;code>Active: active (running)&lt;/code> appears, NGINX is running. If you see &lt;code>Active: active (failed)&lt;/code>, stop any process using HTTP port &lt;code>80&lt;/code>, then restart NGINX.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-create-an-nginx-virtual-host">🌐 Create an Nginx virtual host
+&lt;/h2>&lt;p>An Nginx virtual host serves web app files from a specific directory using a domain name. Follow these steps to set up a sample virtual host securely.&lt;/p>
+&lt;p>&lt;strong>📂 Create a new virtual host config file&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>In &lt;code>/etc/nginx/sites-available&lt;/code>, create a new config file, for example: &lt;code>app.example.com.conf&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo nano /etc/nginx/sites-available/app.example.com.conf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>Add the following configuration:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-nginx" data-lang="nginx">&lt;span class="line">&lt;span class="cl">&lt;span class="k">server&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">listen&lt;/span> &lt;span class="mi">80&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">listen&lt;/span> &lt;span class="s">[::]:80&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">server_name&lt;/span> &lt;span class="s">app.example.com&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">root&lt;/span> &lt;span class="s">/var/www/app.example.com&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">index&lt;/span> &lt;span class="s">index.html&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">location&lt;/span> &lt;span class="s">/&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">try_files&lt;/span> &lt;span class="nv">$uri&lt;/span> &lt;span class="nv">$uri/&lt;/span> &lt;span class="p">=&lt;/span>&lt;span class="mi">404&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>Save and close the file.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>✅ Test Nginx configuration&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Check the configuration for errors:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo nginx -t
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>Result:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nginx: configuration file /etc/nginx/nginx.conf test is successful
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>🔗 Enable the virtual host&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Link the config file into &lt;code>/etc/nginx/sites-enabled&lt;/code>:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo ln -s /etc/nginx/sites-available/app.example.com.conf /etc/nginx/sites-enabled/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>📁 Create the web root directory&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo mkdir -p /var/www/app.example.com
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>📝 Create a sample HTML file&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Create &lt;code>index.html&lt;/code> in the web root:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo nano /var/www/app.example.com/index.html
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>Add the following content:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-html" data-lang="html">&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&amp;lt;/&lt;/span>&lt;span class="nt">head&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;&lt;/span>&lt;span class="nt">h1&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>Hello Hoang Duong&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">h1&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">body&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">&amp;lt;/&lt;/span>&lt;span class="nt">html&lt;/span>&lt;span class="p">&amp;gt;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>Save and close the file.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>🔄 Restart Nginx&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ sudo systemctl restart nginx
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>🌍 Verify the virtual host&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Use &lt;code>curl&lt;/code> to test:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ curl http://app.example.com
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>Result:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Hello Hoang Duong
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-secure-the-nginx-web-server">🔒 Secure the Nginx web server
+&lt;/h2>&lt;p>SSL certificates encrypt communication between the browser and your server over HTTPS. By default, Nginx listens on insecure HTTP port 80. Follow these steps to obtain a trusted SSL certificate from Let&amp;rsquo;s Encrypt and enable HTTPS.&lt;/p>
+&lt;p>&lt;strong>Install Certbot – Let&amp;rsquo;s Encrypt client 🔧&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Install Certbot using Snap:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ sudo snap install --classic certbot
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;ul>
+&lt;li>Verify the Certbot version:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ sudo certbot --version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>📌 &lt;strong>Sample output:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">certbot 2.11.0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h2 id="-generate-an-ssl-certificate-for-nginx">🛡️ Generate an SSL certificate for Nginx
+&lt;/h2>&lt;ul>
+&lt;li>Create a new SSL certificate for your domain. Replace &lt;code>app.example.com&lt;/code> with your real domain:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ sudo certbot --nginx -d app.example.com --agree-tos
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>This will:&lt;/p>
+&lt;ul>
+&lt;li>✅ Generate a valid SSL certificate&lt;/li>
+&lt;li>✅ Automatically configure Nginx to use SSL&lt;/li>
+&lt;li>✅ Enable HTTPS on your web server&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Test automatic renewal 🔄&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Let&amp;rsquo;s Encrypt certificates last 90 days. Check auto-renewal with:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ sudo certbot renew --dry-run
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If no errors appear, the certificate will renew automatically.&lt;/p>
+&lt;h2 id="-verify-the-site-with-https">🌐 Verify the site with HTTPS
+&lt;/h2>&lt;ul>
+&lt;li>Open the browser and visit:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">https://app.example.com
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If you see the lock icon 🔒, SSL is installed successfully! 🚀&lt;/p>
+&lt;hr>
+&lt;h2 id="-configure-ufw-firewall-rules">🔥 Configure UFW firewall rules
+&lt;/h2>&lt;p>Uncomplicated Firewall (UFW) is installed and enabled by default on Ubuntu 24.04. Follow these steps to allow HTTP and HTTPS traffic.&lt;/p>
+&lt;p>&lt;strong>Allow HTTP (Port 80) 🔌&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Run:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ sudo ufw allow 80/tcp
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Allow HTTPS (Port 443) 🔐&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Run:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ sudo ufw allow 443/tcp
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Check firewall status 🔢&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Run:&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">$ sudo ufw status
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>👉 &lt;strong>Sample output:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Status: active
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">To Action From
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">-- ------ ----
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">22/tcp ALLOW Anywhere
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">80/tcp ALLOW Anywhere
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">443/tcp ALLOW Anywhere
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">22/tcp (v6) ALLOW Anywhere (v6)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">80/tcp (v6) ALLOW Anywhere (v6)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">443/tcp (v6) ALLOW Anywhere (v6)
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>🛡️ After setup, the server only allows HTTP and HTTPS connections.&lt;/p>
+&lt;hr>
+&lt;h2 id="-conclusion">🎯 Conclusion
+&lt;/h2>&lt;p>Congratulations on installing Nginx on Ubuntu 24.04 and configuring a web server for your applications. Nginx supports multiple virtual hosts to deploy applications securely. You can also integrate Nginx with MySQL and PHP to build dynamic web apps. For more configuration options, visit the official &lt;a class="link" href="https://docs.nginx.com/" target="_blank" rel="noopener"
+>Nginx documentation&lt;/a>. 🚀😊&lt;/p></description></item><item><title>Introduction to Nginx 🚀</title><link>https://tech.nguuyen.io.vn/en/posts/website/nginx-introduction-guide/</link><pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/website/nginx-introduction-guide/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/nginx-introduction-guide.webp" alt="Featured image of post Introduction to Nginx 🚀" />&lt;h2 id="-what-is-nginx">🔀 What is Nginx?
+&lt;/h2>&lt;p align="center">
+&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi.jpg" alt="NGINX is a reliable open-source web server">
+&lt;/p>
+&lt;p align="center">&lt;em>NGINX is a reliable open-source web server&lt;/em>&lt;/p>
+&lt;p>Nginx is an open-source web server that uses an asynchronous, event-driven architecture. It was originally built for HTTP caching, later expanded to support reverse proxy, HTTP load balancing, and mail protocols such as IMAP4, POP3, and SMTP.&lt;/p>
+&lt;p>Released in October 2014, Nginx is used by large companies like Google, Adobe, Netflix, and WordPress because it can handle thousands of concurrent connections.&lt;/p>
+&lt;h2 id="-how-nginx-works">⚙️ How Nginx works
+&lt;/h2>&lt;p align="center">
+&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-nginx-cung-hoat-dong-tuong-tu-nhu-cac-server-khac.jpg" alt="NGINX works similarly to other servers">
+&lt;/p>
+&lt;p align="center">&lt;em>NGINX works similarly to other servers&lt;/em>&lt;/p>
+&lt;p>Nginx follows an asynchronous processing model, unlike the sequential processing used by traditional web servers.&lt;/p>
+&lt;ul>
+&lt;li>Each process has multiple worker connections to handle requests.&lt;/li>
+&lt;li>Worker connections pass requests to worker processes, which forward them to the master process.&lt;/li>
+&lt;li>With this model, one worker connection can handle up to 1024 requests at once, enabling Nginx to serve thousands of requests efficiently.&lt;/li>
+&lt;/ul>
+&lt;h2 id="-nginx-features">🔥 Nginx features
+&lt;/h2>&lt;p align="center">
+&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-may-chu-nginx-co-nhieu-tinh-nang-va-uu-diem-vuot-troi-trong-lap-trinh.png" alt="NGINX offers powerful features for web development">
+&lt;/p>
+&lt;p align="center">&lt;em>NGINX offers powerful features for web development&lt;/em>&lt;/p>
+&lt;p>Nginx provides many standout features:&lt;/p>
+&lt;ul>
+&lt;li>⚡ Handles over 10,000 concurrent connections with low memory usage.&lt;/li>
+&lt;li>📂 Serves static files and file indexing.&lt;/li>
+&lt;li>🔄 Load balancing and reverse proxy with caching.&lt;/li>
+&lt;li>🚀 Supports FastCGI, uWSGI, SCGI, and Memcached.&lt;/li>
+&lt;li>🛠️ Modular architecture with automatic gzip compression.&lt;/li>
+&lt;li>🔐 SSL/TLS encryption support.&lt;/li>
+&lt;li>🔀 URL rewrites using regular expressions.&lt;/li>
+&lt;li>🌐 WebSocket support and connection limits.&lt;/li>
+&lt;li>📡 IPv6 compatibility.&lt;/li>
+&lt;/ul>
+&lt;h2 id="-nginx-vs-apache">⚖️ Nginx vs Apache
+&lt;/h2>&lt;p align="center">
+&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-so-voi-apache-server-nginx-server-co-kha-nhieu-uu-diem.jpg" alt="Compared to Apache, NGINX has many advantages">
+&lt;/p>
+&lt;p align="center">&lt;em>Compared to Apache, NGINX has many advantages&lt;/em>&lt;/p>
+&lt;h3 id="-apache-server">&lt;strong>🖥️ Apache server:&lt;/strong>
+&lt;/h3>&lt;ul>
+&lt;li>Processes requests using a forked threaded model or keep-alive.&lt;/li>
+&lt;li>Handles both static and dynamic content.&lt;/li>
+&lt;/ul>
+&lt;h3 id="-nginx-server">&lt;strong>🌍 Nginx server:&lt;/strong>
+&lt;/h3>&lt;ul>
+&lt;li>Uses a non-blocking event loop.&lt;/li>
+&lt;li>Serves static content more efficiently than Apache.&lt;/li>
+&lt;li>Faster request handling and better resource usage.&lt;/li>
+&lt;li>Requires a separate processor for dynamic content.&lt;/li>
+&lt;/ul>
+&lt;h2 id="-how-to-check-if-a-website-uses-nginx">🔎 How to check if a website uses Nginx
+&lt;/h2>&lt;p align="center">
+&lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi-ban-co-the-dua-vao-cac-cong-cu-san-co-de-kiem-tra-website-co-chay-nginx.png" alt="You can use available tools to check if a website runs Nginx">
+&lt;/p>
+&lt;p align="center">&lt;em>You can use available tools to check if a website runs Nginx&lt;/em>&lt;/p>
+&lt;p>You can check if a website runs Nginx by inspecting HTTP headers:&lt;/p>
+&lt;ol>
+&lt;li>Open the website in Chrome.&lt;/li>
+&lt;li>Press &lt;strong>Ctrl + Shift + I&lt;/strong> or &lt;strong>F12&lt;/strong> to open DevTools.&lt;/li>
+&lt;li>Switch to the &lt;strong>Network&lt;/strong> tab.&lt;/li>
+&lt;li>Select any request and inspect &lt;strong>Headers&lt;/strong>.&lt;/li>
+&lt;/ol>
+&lt;p>You can also use tools like &lt;strong>Pingdom&lt;/strong> or &lt;strong>GTmetrix&lt;/strong> to check.&lt;/p>
+&lt;hr>
+&lt;h2 id="-conclusion">🎯 Conclusion
+&lt;/h2>&lt;p>Nginx has become one of the most popular web servers thanks to high performance, the ability to handle thousands of concurrent connections, and powerful features. Whether you need to serve static content, balance load, or run a reverse proxy, Nginx is a strong choice. Hopefully this guide helps you understand Nginx and how it works. If you are considering an optimized web server for your project, try Nginx and explore its benefits! 🚀😊&lt;/p></description></item><item><title>Point a Domain to Hosting 🌐</title><link>https://tech.nguuyen.io.vn/en/posts/website/domain-to-hosting-setup/</link><pubDate>Thu, 27 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/website/domain-to-hosting-setup/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/domain-to-hosting-setup.webp" alt="Featured image of post Point a Domain to Hosting 🌐" />&lt;h2 id="-why-point-a-domain-to-hosting">🌐 Why point a domain to hosting?
+&lt;/h2>&lt;p>Domain and hosting are the two essentials that keep a website online.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Domain&lt;/strong> is the website address.&lt;/li>
+&lt;li>&lt;strong>Hosting&lt;/strong> stores the website data.&lt;/li>
+&lt;/ul>
+&lt;h3 id="why-you-need-to-point-a-domain">Why you need to point a domain
+&lt;/h3>&lt;ul>
+&lt;li>Connect the domain to hosting so the site appears on the internet.&lt;/li>
+&lt;li>Let people access the site using a memorable address.&lt;/li>
+&lt;/ul>
+&lt;h3 id="how-it-works-">How it works 🔧
+&lt;/h3>&lt;ul>
+&lt;li>Get &lt;strong>nameserver&lt;/strong> or &lt;strong>IP&lt;/strong> information from your hosting provider.&lt;/li>
+&lt;li>Configure it in your domain management dashboard.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="three-simplest-ways-to-point-a-domain-to-hosting-">Three simplest ways to point a domain to hosting 🚀
+&lt;/h2>&lt;h3 id="point-using-nameservers">Point using nameservers
+&lt;/h3>&lt;p>&lt;strong>Steps:&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>Log in to your domain management panel.&lt;/li>
+&lt;li>Select the domain you want to point.&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/chon-ten-mien-muon-tro-ve-hosting-2.webp"
 loading="lazy"
 alt="Select the domain to point to hosting"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Select the domain to point to hosting&lt;/em&gt;&lt;/p&gt;
-&lt;ol start="3"&gt;
-&lt;li&gt;Replace the default nameservers with the hosting provider&amp;rsquo;s nameservers (found in the hosting welcome email).&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/thay-doi-nameserver-1.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Select the domain to point to hosting&lt;/em>&lt;/p>
+&lt;ol start="3">
+&lt;li>Replace the default nameservers with the hosting provider&amp;rsquo;s nameservers (found in the hosting welcome email).&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/thay-doi-nameserver-1.webp"
 loading="lazy"
 alt="Replace default nameservers with your hosting nameservers"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Replace default nameservers with your hosting nameservers&lt;/em&gt;&lt;/p&gt;
-&lt;ol start="4"&gt;
-&lt;li&gt;Wait for DNS propagation (minutes to hours, up to &lt;strong&gt;24h&lt;/strong&gt;).&lt;/li&gt;
-&lt;li&gt;Verify by visiting the domain.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id="point-using-ip-a-record"&gt;Point using IP (A record)
-&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Steps:&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Log in to your domain management panel.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/chon-muc-cau-hinh-dns-1.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Replace default nameservers with your hosting nameservers&lt;/em>&lt;/p>
+&lt;ol start="4">
+&lt;li>Wait for DNS propagation (minutes to hours, up to &lt;strong>24h&lt;/strong>).&lt;/li>
+&lt;li>Verify by visiting the domain.&lt;/li>
+&lt;/ol>
+&lt;h3 id="point-using-ip-a-record">Point using IP (A record)
+&lt;/h3>&lt;p>&lt;strong>Steps:&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>Log in to your domain management panel.&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/chon-muc-cau-hinh-dns-1.webp"
 loading="lazy"
 alt="Select the domain and open DNS settings"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Select the domain and open DNS settings&lt;/em&gt;&lt;/p&gt;
-&lt;ol start="2"&gt;
-&lt;li&gt;Open the DNS settings.&lt;/li&gt;
-&lt;li&gt;Add two A records:
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;@&lt;/code&gt; → Hosting IP (from the provider email).&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;www&lt;/code&gt; → Hosting IP.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/them-2-ban-a-record.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Select the domain and open DNS settings&lt;/em>&lt;/p>
+&lt;ol start="2">
+&lt;li>Open the DNS settings.&lt;/li>
+&lt;li>Add two A records:
+&lt;ul>
+&lt;li>&lt;code>@&lt;/code> → Hosting IP (from the provider email).&lt;/li>
+&lt;li>&lt;code>www&lt;/code> → Hosting IP.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ol>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/03/them-2-ban-a-record.webp"
 loading="lazy"
 alt="Add two A records"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Add two A records&lt;/em&gt;&lt;/p&gt;
-&lt;ol start="4"&gt;
-&lt;li&gt;Save changes and wait for DNS propagation (minutes to hours).&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h3 id="point-using-an-intermediate-nameserver"&gt;Point using an intermediate nameserver
-&lt;/h3&gt;&lt;p&gt;To point a domain via an intermediate nameserver such as Cloudflare, Namecheap FreeDNS, or Incapsula, follow these steps:&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Steps:&lt;/strong&gt;&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Create an account with the intermediate nameserver and confirm required DNS records.&lt;/li&gt;
-&lt;li&gt;In your domain registrar, change the nameservers to the intermediate provider.&lt;/li&gt;
-&lt;li&gt;Wait for propagation.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id="common-issues-when-pointing-a-domain-to-hosting-"&gt;Common issues when pointing a domain to hosting ⚠️
-&lt;/h2&gt;&lt;p&gt;You may run into issues that prevent your site from working correctly. Understanding these will help you troubleshoot faster.&lt;/p&gt;
-&lt;h3 id="-wrong-hosting-domain"&gt;🚫 Wrong hosting domain
-&lt;/h3&gt;&lt;p&gt;When registering hosting, the provider asks for your domain. If it is incorrect or mismatched, the website may not work.&lt;/p&gt;
-&lt;h3 id="-using-both-methods-at-once"&gt;🚫 Using both methods at once
-&lt;/h3&gt;&lt;p&gt;If you already pointed a domain via &lt;strong&gt;nameservers&lt;/strong&gt;, do not switch to &lt;strong&gt;IP (A record)&lt;/strong&gt; at the same time. It can cause DNS conflicts.&lt;/p&gt;
-&lt;h3 id="-incorrect-dns-record-type"&gt;🚫 Incorrect DNS record type
-&lt;/h3&gt;&lt;p&gt;Common DNS record types include:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;A record&lt;/strong&gt;: Points the domain to the hosting IP.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;CNAME&lt;/strong&gt;: Points one domain to another.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;MX record&lt;/strong&gt;: Configures email.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Entering the wrong record type can break connectivity.&lt;/p&gt;
-&lt;h3 id="-wrong-hosting-ip"&gt;🚫 Wrong hosting IP
-&lt;/h3&gt;&lt;p&gt;Hosting IPs are long and easy to mistype. Copy directly from the provider email to avoid confusion with a personal IP.&lt;/p&gt;
-&lt;p&gt;If errors occur, double-check your settings and wait for DNS updates to finish.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="video-guide-"&gt;Video guide 🎥
-&lt;/h2&gt;&lt;p&gt;For a visual walkthrough, watch the video below. It covers steps from getting nameserver details to updating settings in your domain manager.&lt;/p&gt;
-&lt;p&gt;&lt;div class="video-wrapper"&gt;
+>&lt;/p>
+&lt;p align="center">&lt;em>Add two A records&lt;/em>&lt;/p>
+&lt;ol start="4">
+&lt;li>Save changes and wait for DNS propagation (minutes to hours).&lt;/li>
+&lt;/ol>
+&lt;h3 id="point-using-an-intermediate-nameserver">Point using an intermediate nameserver
+&lt;/h3>&lt;p>To point a domain via an intermediate nameserver such as Cloudflare, Namecheap FreeDNS, or Incapsula, follow these steps:&lt;/p>
+&lt;p>&lt;strong>Steps:&lt;/strong>&lt;/p>
+&lt;ol>
+&lt;li>Create an account with the intermediate nameserver and confirm required DNS records.&lt;/li>
+&lt;li>In your domain registrar, change the nameservers to the intermediate provider.&lt;/li>
+&lt;li>Wait for propagation.&lt;/li>
+&lt;/ol>
+&lt;h2 id="common-issues-when-pointing-a-domain-to-hosting-">Common issues when pointing a domain to hosting ⚠️
+&lt;/h2>&lt;p>You may run into issues that prevent your site from working correctly. Understanding these will help you troubleshoot faster.&lt;/p>
+&lt;h3 id="-wrong-hosting-domain">🚫 Wrong hosting domain
+&lt;/h3>&lt;p>When registering hosting, the provider asks for your domain. If it is incorrect or mismatched, the website may not work.&lt;/p>
+&lt;h3 id="-using-both-methods-at-once">🚫 Using both methods at once
+&lt;/h3>&lt;p>If you already pointed a domain via &lt;strong>nameservers&lt;/strong>, do not switch to &lt;strong>IP (A record)&lt;/strong> at the same time. It can cause DNS conflicts.&lt;/p>
+&lt;h3 id="-incorrect-dns-record-type">🚫 Incorrect DNS record type
+&lt;/h3>&lt;p>Common DNS record types include:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>A record&lt;/strong>: Points the domain to the hosting IP.&lt;/li>
+&lt;li>&lt;strong>CNAME&lt;/strong>: Points one domain to another.&lt;/li>
+&lt;li>&lt;strong>MX record&lt;/strong>: Configures email.&lt;/li>
+&lt;/ul>
+&lt;p>Entering the wrong record type can break connectivity.&lt;/p>
+&lt;h3 id="-wrong-hosting-ip">🚫 Wrong hosting IP
+&lt;/h3>&lt;p>Hosting IPs are long and easy to mistype. Copy directly from the provider email to avoid confusion with a personal IP.&lt;/p>
+&lt;p>If errors occur, double-check your settings and wait for DNS updates to finish.&lt;/p>
+&lt;hr>
+&lt;h2 id="video-guide-">Video guide 🎥
+&lt;/h2>&lt;p>For a visual walkthrough, watch the video below. It covers steps from getting nameserver details to updating settings in your domain manager.&lt;/p>
+&lt;p>&lt;div class="video-wrapper">
 &lt;iframe loading="lazy"
 src="https://www.youtube-nocookie.com/embed/7RjjF8Ee7Ws"
 allowfullscreen
 title="YouTube Video"
-&gt;
-&lt;/iframe&gt;
-&lt;/div&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;/p&gt;&lt;span class="cite"&gt;&lt;span&gt;― &lt;/span&gt;&lt;span&gt;Source, &lt;/span&gt;&lt;a href="https://www.youtube.com/@F8VNOfficial"&gt;&lt;cite&gt;F8 Official ✔️&lt;/cite&gt;&lt;/a&gt;&lt;/span&gt;&lt;/blockquote&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="conclusion-"&gt;Conclusion 🌟
-&lt;/h2&gt;&lt;p&gt;Pointing a domain to hosting is essential for your website to work online. Whether you use nameservers, A records, or an intermediate nameserver, double-check your settings and allow time for DNS propagation. If you encounter issues, review the configuration and try again 🔄. Good luck, and feel free to leave a comment if you need help! 💬😊&lt;/p&gt;</description></item><item><title>Deploy a Website to Hosting the Simplest Way (HTML/CSS or React/Vue.js) 🔥</title><link>https://tech.nguuyen.io.vn/en/posts/website/how-to-deploy-a-website/</link><pubDate>Wed, 26 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/website/how-to-deploy-a-website/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/upload-website-on-hosting.webp" alt="Featured image of post Deploy a Website to Hosting the Simplest Way (HTML/CSS or React/Vue.js) 🔥" /&gt;&lt;h2 id="how-to-upload-a-website-to-hosting-via-file-manager-and-cpanel-from-a-to-z"&gt;How to upload a website to hosting via File Manager and cPanel from A to Z
-&lt;/h2&gt;&lt;hr&gt;
-&lt;p&gt;Uploading a website to hosting is an essential step to bring your site online. It is not just about transferring files but also ensuring everything runs smoothly and securely. This guide walks you through the steps, from preparing files and databases to using the right upload tools.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="key-points-to-remember"&gt;Key points to remember
-&lt;/h2&gt;&lt;p&gt;Before you start uploading, keep these essentials in mind:&lt;/p&gt;
-&lt;p&gt;✅ &lt;strong&gt;What to prepare before uploading&lt;/strong&gt;: Website files, database, control panel access, and an FTP client like FileZilla.&lt;/p&gt;
-&lt;p&gt;✅ &lt;strong&gt;Ways to upload&lt;/strong&gt;: Choose a reliable host, then use File Manager, FTP, WordPress plugins, SSH, or provider support.&lt;/p&gt;
-&lt;p&gt;✅ &lt;strong&gt;Why upload to hosting&lt;/strong&gt;: Makes your site public, improves security, boosts speed, and simplifies management.&lt;/p&gt;
-&lt;p&gt;✅ &lt;strong&gt;Four steps to upload a website&lt;/strong&gt;:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Upload website files to &lt;code&gt;public_html&lt;/code&gt; via File Manager or FTP.&lt;/li&gt;
-&lt;li&gt;Verify files are in the correct location.&lt;/li&gt;
-&lt;li&gt;Create a database in cPanel, import via phpMyAdmin, and configure the connection.&lt;/li&gt;
-&lt;li&gt;Visit the website to confirm everything works.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id="what-do-you-need-before-uploading-a-website"&gt;What do you need before uploading a website?
-&lt;/h2&gt;&lt;p&gt;Prepare the following:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Website files&lt;/strong&gt;: These can be the contents of your old &lt;code&gt;public_html&lt;/code&gt; folder, source code, or the latest backup.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;📌 Note for React/Vue.js deployments&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;When building a &lt;strong&gt;React&lt;/strong&gt; or &lt;strong&gt;Vue.js&lt;/strong&gt; app, you do not upload the full source code,
-only the &lt;strong&gt;static build output&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;🔹 Build and zip steps:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Run the build command:
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;React:&lt;/strong&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm run build
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Vue.js:&lt;/strong&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;npm run build
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;The output folder is usually &lt;code&gt;build/&lt;/code&gt; (&lt;strong&gt;React&lt;/strong&gt;) or &lt;code&gt;dist/&lt;/code&gt; (&lt;strong&gt;Vue.js&lt;/strong&gt;).&lt;/li&gt;
-&lt;li&gt;Zip the &lt;code&gt;build&lt;/code&gt; or &lt;code&gt;dist&lt;/code&gt; folder before uploading.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;📤 Uploading to the server:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;With &lt;strong&gt;cPanel&lt;/strong&gt;, extract directly in &lt;code&gt;public_html&lt;/code&gt;.&lt;/li&gt;
-&lt;li&gt;With &lt;strong&gt;SSH/SFTP&lt;/strong&gt;, upload and unzip using:
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-sh" data-lang="sh"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;unzip build.zip -d /var/www/html/
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;/li&gt;
-&lt;li&gt;Ensure your &lt;strong&gt;Apache/Nginx&lt;/strong&gt; config points to the folder containing &lt;code&gt;index.html&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Database file&lt;/strong&gt; (if applicable).&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Control panel access&lt;/strong&gt; for the new hosting account.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;FTP client&lt;/strong&gt; such as FileZilla.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;To upload, access your hosting control panel via an FTP client like FileZilla. If your site already exists, use the CMS or cPanel backup feature to download it and upload to the new host.&lt;/p&gt;
-&lt;h3 id="choose-a-reliable-hosting-provider"&gt;Choose a reliable hosting provider
-&lt;/h3&gt;&lt;p&gt;Quality hosting affects both speed and long-term performance. Choose carefully based on:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Live support&lt;/strong&gt;: 24/7 customer support for quick issue resolution.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Account control&lt;/strong&gt;: Full access to cPanel or equivalent tools.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Scalability&lt;/strong&gt;: Ability to upgrade storage, bandwidth, or domains.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Clear refund policy&lt;/strong&gt;: Flexible refunds for testing services.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Free add-ons&lt;/strong&gt;: SSL, scheduled backups, or free migrations.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;ICANN-accredited domains&lt;/strong&gt;: Protect your brand with trusted domain registration.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: Review provider reputation and user feedback on forums or review sites before deciding.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id="choose-a-website-upload-method"&gt;Choose a website upload method
-&lt;/h3&gt;&lt;p&gt;There are five main ways to upload a website depending on your tools and needs:&lt;/p&gt;
-&lt;h4 id="use-file-manager"&gt;Use File Manager
-&lt;/h4&gt;&lt;p&gt;File Manager is a web-based file tool built into cPanel or other hosting dashboards.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Free.&lt;/li&gt;
-&lt;li&gt;Easy to use.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Upload size limits (usually 256 MB).&lt;/li&gt;
-&lt;li&gt;Can only extract archives within that size limit.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: For larger files, use FTP and unzip via SSH.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-16.webp"
+>
+&lt;/iframe>
+&lt;/div>
+&lt;blockquote>
+&lt;p>&lt;/p>&lt;span class="cite">&lt;span>― &lt;/span>&lt;span>Source, &lt;/span>&lt;a href="https://www.youtube.com/@F8VNOfficial">&lt;cite>F8 Official ✔️&lt;/cite>&lt;/a>&lt;/span>&lt;/blockquote>&lt;/p>
+&lt;hr>
+&lt;h2 id="conclusion-">Conclusion 🌟
+&lt;/h2>&lt;p>Pointing a domain to hosting is essential for your website to work online. Whether you use nameservers, A records, or an intermediate nameserver, double-check your settings and allow time for DNS propagation. If you encounter issues, review the configuration and try again 🔄. Good luck, and feel free to leave a comment if you need help! 💬😊&lt;/p></description></item><item><title>Deploy a Website to Hosting the Simplest Way (HTML/CSS or React/Vue.js) 🔥</title><link>https://tech.nguuyen.io.vn/en/posts/website/how-to-deploy-a-website/</link><pubDate>Wed, 26 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/website/how-to-deploy-a-website/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/upload-website-on-hosting.webp" alt="Featured image of post Deploy a Website to Hosting the Simplest Way (HTML/CSS or React/Vue.js) 🔥" />&lt;h2 id="how-to-upload-a-website-to-hosting-via-file-manager-and-cpanel-from-a-to-z">How to upload a website to hosting via File Manager and cPanel from A to Z
+&lt;/h2>&lt;hr>
+&lt;p>Uploading a website to hosting is an essential step to bring your site online. It is not just about transferring files but also ensuring everything runs smoothly and securely. This guide walks you through the steps, from preparing files and databases to using the right upload tools.&lt;/p>
+&lt;hr>
+&lt;h2 id="key-points-to-remember">Key points to remember
+&lt;/h2>&lt;p>Before you start uploading, keep these essentials in mind:&lt;/p>
+&lt;p>✅ &lt;strong>What to prepare before uploading&lt;/strong>: Website files, database, control panel access, and an FTP client like FileZilla.&lt;/p>
+&lt;p>✅ &lt;strong>Ways to upload&lt;/strong>: Choose a reliable host, then use File Manager, FTP, WordPress plugins, SSH, or provider support.&lt;/p>
+&lt;p>✅ &lt;strong>Why upload to hosting&lt;/strong>: Makes your site public, improves security, boosts speed, and simplifies management.&lt;/p>
+&lt;p>✅ &lt;strong>Four steps to upload a website&lt;/strong>:&lt;/p>
+&lt;ol>
+&lt;li>Upload website files to &lt;code>public_html&lt;/code> via File Manager or FTP.&lt;/li>
+&lt;li>Verify files are in the correct location.&lt;/li>
+&lt;li>Create a database in cPanel, import via phpMyAdmin, and configure the connection.&lt;/li>
+&lt;li>Visit the website to confirm everything works.&lt;/li>
+&lt;/ol>
+&lt;h2 id="what-do-you-need-before-uploading-a-website">What do you need before uploading a website?
+&lt;/h2>&lt;p>Prepare the following:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Website files&lt;/strong>: These can be the contents of your old &lt;code>public_html&lt;/code> folder, source code, or the latest backup.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>📌 Note for React/Vue.js deployments&lt;/strong>&lt;/p>
+&lt;p>When building a &lt;strong>React&lt;/strong> or &lt;strong>Vue.js&lt;/strong> app, you do not upload the full source code,
+only the &lt;strong>static build output&lt;/strong>.&lt;/p>
+&lt;p>&lt;strong>🔹 Build and zip steps:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Run the build command:
+&lt;ul>
+&lt;li>&lt;strong>React:&lt;/strong>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">npm run build
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>&lt;strong>Vue.js:&lt;/strong>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">npm run build
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>The output folder is usually &lt;code>build/&lt;/code> (&lt;strong>React&lt;/strong>) or &lt;code>dist/&lt;/code> (&lt;strong>Vue.js&lt;/strong>).&lt;/li>
+&lt;li>Zip the &lt;code>build&lt;/code> or &lt;code>dist&lt;/code> folder before uploading.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>📤 Uploading to the server:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>With &lt;strong>cPanel&lt;/strong>, extract directly in &lt;code>public_html&lt;/code>.&lt;/li>
+&lt;li>With &lt;strong>SSH/SFTP&lt;/strong>, upload and unzip using:
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-sh" data-lang="sh">&lt;span class="line">&lt;span class="cl">unzip build.zip -d /var/www/html/
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;/li>
+&lt;li>Ensure your &lt;strong>Apache/Nginx&lt;/strong> config points to the folder containing &lt;code>index.html&lt;/code>.&lt;/li>
+&lt;/ul>&lt;/blockquote>
+&lt;ul>
+&lt;li>&lt;strong>Database file&lt;/strong> (if applicable).&lt;/li>
+&lt;li>&lt;strong>Control panel access&lt;/strong> for the new hosting account.&lt;/li>
+&lt;li>&lt;strong>FTP client&lt;/strong> such as FileZilla.&lt;/li>
+&lt;/ul>
+&lt;p>To upload, access your hosting control panel via an FTP client like FileZilla. If your site already exists, use the CMS or cPanel backup feature to download it and upload to the new host.&lt;/p>
+&lt;h3 id="choose-a-reliable-hosting-provider">Choose a reliable hosting provider
+&lt;/h3>&lt;p>Quality hosting affects both speed and long-term performance. Choose carefully based on:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Live support&lt;/strong>: 24/7 customer support for quick issue resolution.&lt;/li>
+&lt;li>&lt;strong>Account control&lt;/strong>: Full access to cPanel or equivalent tools.&lt;/li>
+&lt;li>&lt;strong>Scalability&lt;/strong>: Ability to upgrade storage, bandwidth, or domains.&lt;/li>
+&lt;li>&lt;strong>Clear refund policy&lt;/strong>: Flexible refunds for testing services.&lt;/li>
+&lt;li>&lt;strong>Free add-ons&lt;/strong>: SSL, scheduled backups, or free migrations.&lt;/li>
+&lt;li>&lt;strong>ICANN-accredited domains&lt;/strong>: Protect your brand with trusted domain registration.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Note&lt;/strong>: Review provider reputation and user feedback on forums or review sites before deciding.&lt;/p>&lt;/blockquote>
+&lt;h3 id="choose-a-website-upload-method">Choose a website upload method
+&lt;/h3>&lt;p>There are five main ways to upload a website depending on your tools and needs:&lt;/p>
+&lt;h4 id="use-file-manager">Use File Manager
+&lt;/h4>&lt;p>File Manager is a web-based file tool built into cPanel or other hosting dashboards.&lt;/p>
+&lt;p>&lt;strong>Pros:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Free.&lt;/li>
+&lt;li>Easy to use.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Cons:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Upload size limits (usually 256 MB).&lt;/li>
+&lt;li>Can only extract archives within that size limit.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Note&lt;/strong>: For larger files, use FTP and unzip via SSH.&lt;/p>&lt;/blockquote>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-16.webp"
 loading="lazy"
 alt="Access File Manager"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Figure 1: Access File Manager&lt;/em&gt;&lt;/p&gt;
-&lt;h4 id="use-ftp"&gt;Use FTP
-&lt;/h4&gt;&lt;p&gt;FTP (File Transfer Protocol) lets you upload files using an FTP client like FileZilla. This is efficient and has no upload size limit.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;No upload size limits.&lt;/li&gt;
-&lt;li&gt;Faster for large files.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Requires an FTP client.&lt;/li&gt;
-&lt;li&gt;Requires FTP credentials from your host.&lt;/li&gt;
-&lt;li&gt;Lower security, use SFTP for better protection.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/locating-ftp-details-4.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Figure 1: Access File Manager&lt;/em>&lt;/p>
+&lt;h4 id="use-ftp">Use FTP
+&lt;/h4>&lt;p>FTP (File Transfer Protocol) lets you upload files using an FTP client like FileZilla. This is efficient and has no upload size limit.&lt;/p>
+&lt;p>&lt;strong>Pros:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>No upload size limits.&lt;/li>
+&lt;li>Faster for large files.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Cons:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Requires an FTP client.&lt;/li>
+&lt;li>Requires FTP credentials from your host.&lt;/li>
+&lt;li>Lower security, use SFTP for better protection.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/locating-ftp-details-4.webp"
 loading="lazy"
 alt="FTP details"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Figure 2: FTP details&lt;/em&gt;&lt;/p&gt;
-&lt;h4 id="use-wordpress-migration-plugins"&gt;Use WordPress migration plugins
-&lt;/h4&gt;&lt;p&gt;If you use WordPress, plugins like All in One WP Migration can move your entire site automatically.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Easy to use with minimal technical knowledge.&lt;/li&gt;
-&lt;li&gt;Simple drag and drop workflow.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Upload size limits (usually 256 MB).&lt;/li&gt;
-&lt;li&gt;For larger files, use FTP + SSH.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Note&lt;/strong&gt;: After upload, move files out of subfolders into &lt;code&gt;public_html&lt;/code&gt; so the site loads correctly.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/img_20230304150023-8.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Figure 2: FTP details&lt;/em>&lt;/p>
+&lt;h4 id="use-wordpress-migration-plugins">Use WordPress migration plugins
+&lt;/h4>&lt;p>If you use WordPress, plugins like All in One WP Migration can move your entire site automatically.&lt;/p>
+&lt;p>&lt;strong>Pros:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Easy to use with minimal technical knowledge.&lt;/li>
+&lt;li>Simple drag and drop workflow.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Cons:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Upload size limits (usually 256 MB).&lt;/li>
+&lt;li>For larger files, use FTP + SSH.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Note&lt;/strong>: After upload, move files out of subfolders into &lt;code>public_html&lt;/code> so the site loads correctly.&lt;/p>&lt;/blockquote>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/img_20230304150023-8.webp"
 loading="lazy"
 alt="Use WordPress Migration Plugin"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Figure 3: Use WordPress Migration Plugin&lt;/em&gt;&lt;/p&gt;
-&lt;h4 id="use-ssh-secure-shell"&gt;Use SSH (Secure Shell)
-&lt;/h4&gt;&lt;p&gt;SSH lets you upload and manage files via command line, ideal for large files or high speed.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Fast with no size limits.&lt;/li&gt;
-&lt;li&gt;Extract archives directly on the server.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Requires basic command-line skills and SSH access.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Su-dung-SSH-upload-website.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Figure 3: Use WordPress Migration Plugin&lt;/em>&lt;/p>
+&lt;h4 id="use-ssh-secure-shell">Use SSH (Secure Shell)
+&lt;/h4>&lt;p>SSH lets you upload and manage files via command line, ideal for large files or high speed.&lt;/p>
+&lt;p>&lt;strong>Pros:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Fast with no size limits.&lt;/li>
+&lt;li>Extract archives directly on the server.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Cons:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Requires basic command-line skills and SSH access.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Su-dung-SSH-upload-website.webp"
 loading="lazy"
 alt="Upload via SSH"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Figure 4: Upload via SSH&lt;/em&gt;&lt;/p&gt;
-&lt;h4 id="use-import-site-automatic-importer"&gt;Use Import Site (automatic importer)
-&lt;/h4&gt;&lt;p&gt;Some hosting providers offer an &lt;strong&gt;Import Site&lt;/strong&gt; tool that uploads and extracts a website into &lt;code&gt;public_html&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Quick and easy upload.&lt;/li&gt;
-&lt;li&gt;Minimal technical effort.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Depends on whether your host supports the tool.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;: Ask your hosting provider if they support site import.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/import-website-tool-2.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Figure 4: Upload via SSH&lt;/em>&lt;/p>
+&lt;h4 id="use-import-site-automatic-importer">Use Import Site (automatic importer)
+&lt;/h4>&lt;p>Some hosting providers offer an &lt;strong>Import Site&lt;/strong> tool that uploads and extracts a website into &lt;code>public_html&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Pros:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Quick and easy upload.&lt;/li>
+&lt;li>Minimal technical effort.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Cons:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Depends on whether your host supports the tool.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Tip&lt;/strong>: Ask your hosting provider if they support site import.&lt;/p>&lt;/blockquote>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/import-website-tool-2.webp"
 loading="lazy"
 alt="Import Site tool"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Figure 5: Import Site tool&lt;/em&gt;&lt;/p&gt;
-&lt;h4 id="ask-hosting-support"&gt;Ask hosting support
-&lt;/h4&gt;&lt;p&gt;Most providers offer migration help, especially if you are switching hosts.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Pros:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Saves time and avoids technical mistakes.&lt;/li&gt;
-&lt;li&gt;Done by experts.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Cons:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;May be a paid service.&lt;/li&gt;
-&lt;li&gt;Depends on support availability.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Tip&lt;/strong&gt;: Check the provider&amp;rsquo;s migration policy before requesting support.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Nho-su-ho-tro-tu-nha-cung-cap-hosting.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Figure 5: Import Site tool&lt;/em>&lt;/p>
+&lt;h4 id="ask-hosting-support">Ask hosting support
+&lt;/h4>&lt;p>Most providers offer migration help, especially if you are switching hosts.&lt;/p>
+&lt;p>&lt;strong>Pros:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Saves time and avoids technical mistakes.&lt;/li>
+&lt;li>Done by experts.&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Cons:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>May be a paid service.&lt;/li>
+&lt;li>Depends on support availability.&lt;/li>
+&lt;/ul>
+&lt;blockquote>
+&lt;p>&lt;strong>Tip&lt;/strong>: Check the provider&amp;rsquo;s migration policy before requesting support.&lt;/p>&lt;/blockquote>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Nho-su-ho-tro-tu-nha-cung-cap-hosting.webp"
 loading="lazy"
 alt="Ask hosting support"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Figure 6: Ask hosting support&lt;/em&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;📌 &lt;strong&gt;Notes after uploading&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Move all data from subfolders into &lt;code&gt;public_html&lt;/code&gt;&lt;/strong&gt; so the site loads correctly.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Check file structure and database connections&lt;/strong&gt; to avoid runtime errors.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Choose the best method&lt;/strong&gt; based on file size, platform, and your skills.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;hr&gt;
-&lt;h2 id="why-you-should-upload-a-website-to-hosting"&gt;Why you should upload a website to hosting
-&lt;/h2&gt;&lt;p&gt;Uploading to hosting is required to make your site public, but it also brings major benefits in security, performance, and reliability:&lt;/p&gt;
-&lt;h3 id="publish-your-website-globally"&gt;Publish your website globally
-&lt;/h3&gt;&lt;p&gt;When hosted, your website becomes accessible worldwide via your domain name. Otherwise, only your local machine can access it.&lt;/p&gt;
-&lt;h3 id="security-and-data-safety"&gt;Security and data safety
-&lt;/h3&gt;&lt;p&gt;Professional hosting provides strong security measures such as SSL certificates, firewalls, and data protection tools. This keeps your site and brand data safe from attacks and breaches.&lt;/p&gt;
-&lt;h3 id="speed-and-performance"&gt;Speed and performance
-&lt;/h3&gt;&lt;p&gt;Hosting servers are optimized for high traffic and fast internet speeds, improving page load times and user experience while reducing lag.&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Tang-toc-do-va-hieu-suat-Website.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Figure 6: Ask hosting support&lt;/em>&lt;/p>
+&lt;blockquote>
+&lt;p>📌 &lt;strong>Notes after uploading&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Move all data from subfolders into &lt;code>public_html&lt;/code>&lt;/strong> so the site loads correctly.&lt;/li>
+&lt;li>&lt;strong>Check file structure and database connections&lt;/strong> to avoid runtime errors.&lt;/li>
+&lt;li>&lt;strong>Choose the best method&lt;/strong> based on file size, platform, and your skills.&lt;/li>
+&lt;/ul>&lt;/blockquote>
+&lt;hr>
+&lt;h2 id="why-you-should-upload-a-website-to-hosting">Why you should upload a website to hosting
+&lt;/h2>&lt;p>Uploading to hosting is required to make your site public, but it also brings major benefits in security, performance, and reliability:&lt;/p>
+&lt;h3 id="publish-your-website-globally">Publish your website globally
+&lt;/h3>&lt;p>When hosted, your website becomes accessible worldwide via your domain name. Otherwise, only your local machine can access it.&lt;/p>
+&lt;h3 id="security-and-data-safety">Security and data safety
+&lt;/h3>&lt;p>Professional hosting provides strong security measures such as SSL certificates, firewalls, and data protection tools. This keeps your site and brand data safe from attacks and breaches.&lt;/p>
+&lt;h3 id="speed-and-performance">Speed and performance
+&lt;/h3>&lt;p>Hosting servers are optimized for high traffic and fast internet speeds, improving page load times and user experience while reducing lag.&lt;/p>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Tang-toc-do-va-hieu-suat-Website.webp"
 loading="lazy"
 alt="Speed and performance"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Figure 7: Speed and performance&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="stability-and-reliability"&gt;Stability and reliability
-&lt;/h3&gt;&lt;p&gt;Hosting providers manage the hardware and network, ensuring high uptime so your website stays available without long downtime.&lt;/p&gt;
-&lt;h3 id="easy-management"&gt;Easy management
-&lt;/h3&gt;&lt;p&gt;Hosting dashboards make it easy to back up data, upgrade software, and optimize performance.&lt;/p&gt;
-&lt;h3 id="scalability-and-long-term-growth"&gt;Scalability and long-term growth
-&lt;/h3&gt;&lt;p&gt;Hosting services scale with your traffic and resource needs, unlike personal machines that struggle with growth.&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Tinh-mo-rong-va-phat-trien-lau-dai.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Figure 7: Speed and performance&lt;/em>&lt;/p>
+&lt;h3 id="stability-and-reliability">Stability and reliability
+&lt;/h3>&lt;p>Hosting providers manage the hardware and network, ensuring high uptime so your website stays available without long downtime.&lt;/p>
+&lt;h3 id="easy-management">Easy management
+&lt;/h3>&lt;p>Hosting dashboards make it easy to back up data, upgrade software, and optimize performance.&lt;/p>
+&lt;h3 id="scalability-and-long-term-growth">Scalability and long-term growth
+&lt;/h3>&lt;p>Hosting services scale with your traffic and resource needs, unlike personal machines that struggle with growth.&lt;/p>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2024/09/Tinh-mo-rong-va-phat-trien-lau-dai.webp"
 loading="lazy"
 alt="Scalability and growth"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Figure 8: Scalability and growth&lt;/em&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;In short, hosting your website improves security, performance, stability, and manageability. It is the foundation for sustainable growth and easy global access.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="step-1-choose-how-to-upload-website-files"&gt;Step 1: Choose how to upload website files
-&lt;/h2&gt;&lt;h3 id="method-1-upload-via-file-manager-in-cpanel"&gt;Method 1: Upload via File Manager in cPanel
-&lt;/h3&gt;&lt;h3 id="method-2-upload-via-ftp-client"&gt;Method 2: Upload via FTP client
-&lt;/h3&gt;&lt;p&gt;After you choose a method, follow the guide below.&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;&amp;mdash;Method 1: Upload via File Manager in cPanel&amp;mdash; (Easiest)&lt;/p&gt;
-&lt;p&gt;Access cPanel and follow these steps:&lt;/p&gt;
-&lt;p&gt;Step 1: Click &lt;strong&gt;File Manager&lt;/strong&gt; under the &lt;strong&gt;Files&lt;/strong&gt; section.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Choose File Manager&lt;/strong&gt;
-&lt;em&gt;Illustration: Choose File Manager&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-1.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Figure 8: Scalability and growth&lt;/em>&lt;/p>
+&lt;hr>
+&lt;p>In short, hosting your website improves security, performance, stability, and manageability. It is the foundation for sustainable growth and easy global access.&lt;/p>
+&lt;hr>
+&lt;h2 id="step-1-choose-how-to-upload-website-files">Step 1: Choose how to upload website files
+&lt;/h2>&lt;h3 id="method-1-upload-via-file-manager-in-cpanel">Method 1: Upload via File Manager in cPanel
+&lt;/h3>&lt;h3 id="method-2-upload-via-ftp-client">Method 2: Upload via FTP client
+&lt;/h3>&lt;p>After you choose a method, follow the guide below.&lt;/p>
+&lt;hr>
+&lt;p>&amp;mdash;Method 1: Upload via File Manager in cPanel&amp;mdash; (Easiest)&lt;/p>
+&lt;p>Access cPanel and follow these steps:&lt;/p>
+&lt;p>Step 1: Click &lt;strong>File Manager&lt;/strong> under the &lt;strong>Files&lt;/strong> section.&lt;/p>
+&lt;p>&lt;strong>Choose File Manager&lt;/strong>
+&lt;em>Illustration: Choose File Manager&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-1.webp"
 loading="lazy"
 alt="Choose File Manager"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Choose File Manager&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Step 2: In &lt;strong&gt;File Manager&lt;/strong&gt;, open the &lt;code&gt;public_html&lt;/code&gt; folder.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Open public_html&lt;/strong&gt;
-&lt;em&gt;Illustration: Open public_html&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-2.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Choose File Manager&lt;/em>&lt;/p>
+&lt;p>Step 2: In &lt;strong>File Manager&lt;/strong>, open the &lt;code>public_html&lt;/code> folder.&lt;/p>
+&lt;p>&lt;strong>Open public_html&lt;/strong>
+&lt;em>Illustration: Open public_html&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-2.webp"
 loading="lazy"
 alt="Open public_html"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Open public_html&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Step 3: Click &lt;strong&gt;Upload&lt;/strong&gt; inside &lt;code&gt;public_html&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Click Upload&lt;/strong&gt;
-&lt;em&gt;Illustration: Click Upload&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-3.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Open public_html&lt;/em>&lt;/p>
+&lt;p>Step 3: Click &lt;strong>Upload&lt;/strong> inside &lt;code>public_html&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Click Upload&lt;/strong>
+&lt;em>Illustration: Click Upload&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-3.webp"
 loading="lazy"
 alt="Click Upload"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Click Upload&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Step 4: Use &lt;strong&gt;Select File&lt;/strong&gt; to pick files or drag and drop into the upload area.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Select file&lt;/strong&gt;
-&lt;em&gt;Illustration: Select file&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-4.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Click Upload&lt;/em>&lt;/p>
+&lt;p>Step 4: Use &lt;strong>Select File&lt;/strong> to pick files or drag and drop into the upload area.&lt;/p>
+&lt;p>&lt;strong>Select file&lt;/strong>
+&lt;em>Illustration: Select file&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-4.webp"
 loading="lazy"
 alt="Select file"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Select file&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Step 5: In this example, drag and drop &lt;code&gt;wordpress.zip&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Select wordpress zip&lt;/strong&gt;
-&lt;em&gt;Illustration: Select wordpress zip (or dist.zip/build.zip)&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-5.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Select file&lt;/em>&lt;/p>
+&lt;p>Step 5: In this example, drag and drop &lt;code>wordpress.zip&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Select wordpress zip&lt;/strong>
+&lt;em>Illustration: Select wordpress zip (or dist.zip/build.zip)&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-5.webp"
 loading="lazy"
 alt="Select wordpress zip"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Select wordpress zip&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Step 6: After upload, return to &lt;strong&gt;File Manager&lt;/strong&gt;. The archive appears in &lt;code&gt;public_html&lt;/code&gt;. Right-click and choose &lt;strong&gt;Extract&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Extract file&lt;/strong&gt;
-&lt;em&gt;Illustration: Extract file&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-6.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Select wordpress zip&lt;/em>&lt;/p>
+&lt;p>Step 6: After upload, return to &lt;strong>File Manager&lt;/strong>. The archive appears in &lt;code>public_html&lt;/code>. Right-click and choose &lt;strong>Extract&lt;/strong>.&lt;/p>
+&lt;p>&lt;strong>Extract file&lt;/strong>
+&lt;em>Illustration: Extract file&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-6.webp"
 loading="lazy"
 alt="Extract file"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Extract file&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Step 7: Choose the extraction location. In this example, use &lt;code&gt;/public_html&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Choose extraction location&lt;/strong&gt;
-&lt;em&gt;Illustration: Choose extraction location&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-7.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Extract file&lt;/em>&lt;/p>
+&lt;p>Step 7: Choose the extraction location. In this example, use &lt;code>/public_html&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Choose extraction location&lt;/strong>
+&lt;em>Illustration: Choose extraction location&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-7.webp"
 loading="lazy"
 alt="Choose extraction location"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Choose extraction location&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Step 8: After extraction, you will see the files in &lt;code&gt;public_html&lt;/code&gt;. This is the website root.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Return to the original folder&lt;/strong&gt;
-&lt;em&gt;Illustration: Return to the original folder&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-8.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Choose extraction location&lt;/em>&lt;/p>
+&lt;p>Step 8: After extraction, you will see the files in &lt;code>public_html&lt;/code>. This is the website root.&lt;/p>
+&lt;p>&lt;strong>Return to the original folder&lt;/strong>
+&lt;em>Illustration: Return to the original folder&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-8.webp"
 loading="lazy"
 alt="Return to the original folder"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Return to the original folder&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Step 9: The website is now uploaded. Enter your URL in a browser to visit.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Language selection during WordPress setup&lt;/strong&gt; &lt;em&gt;&lt;strong&gt;(If applicable)&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;hr&gt;
-&lt;p&gt;&amp;mdash;Method 2: Upload via FTP client&amp;mdash;&lt;/p&gt;
-&lt;p&gt;Some users prefer FTP clients like &lt;strong&gt;FileZilla, SmartFTP, CoreFTP&lt;/strong&gt;, or similar tools. In this guide, we use &lt;strong&gt;FileZilla&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Notes before uploading via FTP:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Your skills:&lt;/strong&gt; If you are new to hosting, &lt;strong&gt;File Manager&lt;/strong&gt; is easier. If you are experienced, &lt;strong&gt;FTP&lt;/strong&gt; is faster.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Website size:&lt;/strong&gt; Large websites are easier with FTP because there are no upload limits.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Special requirements:&lt;/strong&gt; If you need special server configuration, check with your hosting provider.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Step 1: Get FTP information via &lt;strong&gt;FTP Access&lt;/strong&gt;. If you forgot the password, reset it under &lt;strong&gt;Change account password&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Get FTP Access details&lt;/strong&gt;
-&lt;em&gt;Illustration: Get FTP Access details&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-9.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Return to the original folder&lt;/em>&lt;/p>
+&lt;p>Step 9: The website is now uploaded. Enter your URL in a browser to visit.&lt;/p>
+&lt;p>&lt;strong>Language selection during WordPress setup&lt;/strong> &lt;em>&lt;strong>(If applicable)&lt;/strong>&lt;/em>&lt;/p>
+&lt;hr>
+&lt;p>&amp;mdash;Method 2: Upload via FTP client&amp;mdash;&lt;/p>
+&lt;p>Some users prefer FTP clients like &lt;strong>FileZilla, SmartFTP, CoreFTP&lt;/strong>, or similar tools. In this guide, we use &lt;strong>FileZilla&lt;/strong>.&lt;/p>
+&lt;p>Notes before uploading via FTP:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Your skills:&lt;/strong> If you are new to hosting, &lt;strong>File Manager&lt;/strong> is easier. If you are experienced, &lt;strong>FTP&lt;/strong> is faster.&lt;/li>
+&lt;li>&lt;strong>Website size:&lt;/strong> Large websites are easier with FTP because there are no upload limits.&lt;/li>
+&lt;li>&lt;strong>Special requirements:&lt;/strong> If you need special server configuration, check with your hosting provider.&lt;/li>
+&lt;/ul>
+&lt;p>Step 1: Get FTP information via &lt;strong>FTP Access&lt;/strong>. If you forgot the password, reset it under &lt;strong>Change account password&lt;/strong>.&lt;/p>
+&lt;p>&lt;strong>Get FTP Access details&lt;/strong>
+&lt;em>Illustration: Get FTP Access details&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-9.webp"
 loading="lazy"
 alt="Get FTP Access details"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Get FTP Access details&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Step 2: Open &lt;strong&gt;FileZilla&lt;/strong&gt;, enter FTP details, and click &lt;strong&gt;Quickconnect&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Click Quickconnect&lt;/strong&gt;
-&lt;em&gt;Illustration: Click Quickconnect&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-10.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Get FTP Access details&lt;/em>&lt;/p>
+&lt;p>Step 2: Open &lt;strong>FileZilla&lt;/strong>, enter FTP details, and click &lt;strong>Quickconnect&lt;/strong>.&lt;/p>
+&lt;p>&lt;strong>Click Quickconnect&lt;/strong>
+&lt;em>Illustration: Click Quickconnect&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-10.webp"
 loading="lazy"
 alt="Click Quickconnect"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Click Quickconnect&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Step 3: After connecting, locate your website files and drag them from the left pane to the right pane, targeting &lt;code&gt;public_html&lt;/code&gt;. Unzip archives before upload because FTP cannot extract files.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Drag and drop files&lt;/strong&gt;
-&lt;em&gt;Illustration: Drag and drop files&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-11.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Click Quickconnect&lt;/em>&lt;/p>
+&lt;p>Step 3: After connecting, locate your website files and drag them from the left pane to the right pane, targeting &lt;code>public_html&lt;/code>. Unzip archives before upload because FTP cannot extract files.&lt;/p>
+&lt;p>&lt;strong>Drag and drop files&lt;/strong>
+&lt;em>Illustration: Drag and drop files&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-11.webp"
 loading="lazy"
 alt="Drag and drop files"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Drag and drop files&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Step 4: You can also upload archives via FTP, then extract using &lt;strong&gt;File Manager&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Upload archives via FTP&lt;/strong&gt;
-&lt;em&gt;Illustration: Upload archives via FTP&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-12.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Drag and drop files&lt;/em>&lt;/p>
+&lt;p>Step 4: You can also upload archives via FTP, then extract using &lt;strong>File Manager&lt;/strong>.&lt;/p>
+&lt;p>&lt;strong>Upload archives via FTP&lt;/strong>
+&lt;em>Illustration: Upload archives via FTP&lt;/em>&lt;/p>
+&lt;p>&lt;img src="https://static.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-12.webp"
 loading="lazy"
 alt="Upload archives via FTP"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Upload archives via FTP&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;Step 5: After upload, enter the website URL in a browser to confirm installation or customize it.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="step-2-verify-files-are-inside-public_html"&gt;Step 2: Verify files are inside public_html
-&lt;/h2&gt;&lt;p&gt;After uploading, check that all files are in &lt;code&gt;public_html&lt;/code&gt;. If you extracted a backup into a subfolder, users would need to visit &lt;code&gt;example.com/something&lt;/code&gt; instead of &lt;code&gt;example.com&lt;/code&gt;. Fix this by moving files:&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;Open the folder with the website files.&lt;/li&gt;
-&lt;li&gt;Select all files, right-click, and choose &lt;strong&gt;Move&lt;/strong&gt;.&lt;/li&gt;
-&lt;li&gt;Select &lt;code&gt;public_html&lt;/code&gt; and click &lt;strong&gt;Proceed&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;If your site has been running already, upload the &lt;strong&gt;database&lt;/strong&gt; as well.&lt;/p&gt;
-&lt;p&gt;After confirming file placement, open your domain in a browser. If DNS is not updated, you can:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Edit the &lt;strong&gt;hosts file&lt;/strong&gt; to simulate DNS changes.&lt;/li&gt;
-&lt;li&gt;Use &lt;strong&gt;online tools&lt;/strong&gt; to check DNS status.&lt;/li&gt;
-&lt;li&gt;Install &lt;strong&gt;browser plugins&lt;/strong&gt; for virtual hosts.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;If you need to move a site from a subfolder into &lt;code&gt;public_html&lt;/code&gt;, use &lt;strong&gt;File Manager&lt;/strong&gt; or &lt;strong&gt;FTP&lt;/strong&gt;. Remember to upload the database if needed.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="step-3-upload-the-database-to-hosting"&gt;Step 3: Upload the database to hosting
-&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;Perform this step only if your website uses a &lt;em&gt;&lt;strong&gt;database&lt;/strong&gt;&lt;/em&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h3 id="create-a-database-in-cpanel"&gt;Create a database in cPanel
-&lt;/h3&gt;&lt;p&gt;Create a new database in &lt;strong&gt;MySQL Databases&lt;/strong&gt; and record:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;MySQL Database&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;MySQL User&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;MySQL Host&lt;/strong&gt;&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;MySQL Password&lt;/strong&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-13.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Upload archives via FTP&lt;/em>&lt;/p>
+&lt;p>Step 5: After upload, enter the website URL in a browser to confirm installation or customize it.&lt;/p>
+&lt;hr>
+&lt;h2 id="step-2-verify-files-are-inside-public_html">Step 2: Verify files are inside public_html
+&lt;/h2>&lt;p>After uploading, check that all files are in &lt;code>public_html&lt;/code>. If you extracted a backup into a subfolder, users would need to visit &lt;code>example.com/something&lt;/code> instead of &lt;code>example.com&lt;/code>. Fix this by moving files:&lt;/p>
+&lt;ol>
+&lt;li>Open the folder with the website files.&lt;/li>
+&lt;li>Select all files, right-click, and choose &lt;strong>Move&lt;/strong>.&lt;/li>
+&lt;li>Select &lt;code>public_html&lt;/code> and click &lt;strong>Proceed&lt;/strong>.&lt;/li>
+&lt;/ol>
+&lt;p>If your site has been running already, upload the &lt;strong>database&lt;/strong> as well.&lt;/p>
+&lt;p>After confirming file placement, open your domain in a browser. If DNS is not updated, you can:&lt;/p>
+&lt;ul>
+&lt;li>Edit the &lt;strong>hosts file&lt;/strong> to simulate DNS changes.&lt;/li>
+&lt;li>Use &lt;strong>online tools&lt;/strong> to check DNS status.&lt;/li>
+&lt;li>Install &lt;strong>browser plugins&lt;/strong> for virtual hosts.&lt;/li>
+&lt;/ul>
+&lt;p>If you need to move a site from a subfolder into &lt;code>public_html&lt;/code>, use &lt;strong>File Manager&lt;/strong> or &lt;strong>FTP&lt;/strong>. Remember to upload the database if needed.&lt;/p>
+&lt;hr>
+&lt;h2 id="step-3-upload-the-database-to-hosting">Step 3: Upload the database to hosting
+&lt;/h2>&lt;blockquote>
+&lt;p>Perform this step only if your website uses a &lt;em>&lt;strong>database&lt;/strong>&lt;/em>.&lt;/p>&lt;/blockquote>
+&lt;h3 id="create-a-database-in-cpanel">Create a database in cPanel
+&lt;/h3>&lt;p>Create a new database in &lt;strong>MySQL Databases&lt;/strong> and record:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>MySQL Database&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>MySQL User&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>MySQL Host&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>MySQL Password&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-13.webp"
 loading="lazy"
 alt="Create a new database"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Create a new database&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="open-phpmyadmin"&gt;Open phpMyAdmin
-&lt;/h3&gt;&lt;p&gt;In &lt;strong&gt;phpMyAdmin&lt;/strong&gt;, import your MySQL database. If importing into an existing database, clear it first to avoid errors.&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-14.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Create a new database&lt;/em>&lt;/p>
+&lt;h3 id="open-phpmyadmin">Open phpMyAdmin
+&lt;/h3>&lt;p>In &lt;strong>phpMyAdmin&lt;/strong>, import your MySQL database. If importing into an existing database, clear it first to avoid errors.&lt;/p>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-14.webp"
 loading="lazy"
 alt="Open phpMyAdmin"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Open phpMyAdmin&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="import-the-database"&gt;Import the database
-&lt;/h3&gt;&lt;p&gt;Go to the &lt;strong&gt;Import&lt;/strong&gt; tab and upload your SQL file (&lt;code&gt;.sql&lt;/code&gt;, &lt;code&gt;.sql.zip&lt;/code&gt;, or &lt;code&gt;.sql.gz&lt;/code&gt;). Click &lt;strong&gt;Choose File&lt;/strong&gt;, then &lt;strong&gt;Go&lt;/strong&gt; to start. When phpMyAdmin shows &lt;em&gt;Import has been successfully finished, 302 queries executed&lt;/em&gt;, the upload is done.&lt;/p&gt;
-&lt;p&gt;&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-15.webp"
+>&lt;/p>
+&lt;p align="center">&lt;em>Open phpMyAdmin&lt;/em>&lt;/p>
+&lt;h3 id="import-the-database">Import the database
+&lt;/h3>&lt;p>Go to the &lt;strong>Import&lt;/strong> tab and upload your SQL file (&lt;code>.sql&lt;/code>, &lt;code>.sql.zip&lt;/code>, or &lt;code>.sql.gz&lt;/code>). Click &lt;strong>Choose File&lt;/strong>, then &lt;strong>Go&lt;/strong> to start. When phpMyAdmin shows &lt;em>Import has been successfully finished, 302 queries executed&lt;/em>, the upload is done.&lt;/p>
+&lt;p>&lt;img src="https://image.vietnix.vn/wp-content/uploads/2023/11/upload-website-len-hosting-15.webp"
 loading="lazy"
 alt="Import database"
-&gt;&lt;/p&gt;
-&lt;p align="center"&gt;&lt;em&gt;Import database&lt;/em&gt;&lt;/p&gt;
-&lt;h3 id="update-configuration-for-database-connection"&gt;Update configuration for database connection
-&lt;/h3&gt;&lt;p&gt;After upload, open your &lt;strong&gt;PHP configuration file&lt;/strong&gt; and fill in host, database name, username, and password. The file name and location depend on your software. For &lt;strong&gt;WordPress&lt;/strong&gt;, the file is &lt;code&gt;wp-config.php&lt;/code&gt; in &lt;code&gt;public_html&lt;/code&gt;.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;⚠ &lt;strong&gt;Notes:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Large databases should be split into smaller files to speed up uploads.&lt;/li&gt;
-&lt;li&gt;If your database contains special characters, convert them to &lt;strong&gt;ASCII&lt;/strong&gt; before upload.&lt;/li&gt;
-&lt;li&gt;If import errors occur, check for corruption. Create a fresh database and try again.&lt;/li&gt;
-&lt;li&gt;After uploading, test your website to ensure everything works.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;h3 id="update-configuration-for-database-connection-1"&gt;Update configuration for database connection
-&lt;/h3&gt;&lt;p&gt;After uploading, open the PHP config file to enter the &lt;strong&gt;host&lt;/strong&gt;, &lt;strong&gt;database name&lt;/strong&gt;, &lt;strong&gt;username&lt;/strong&gt;, and &lt;strong&gt;password&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;The file name and location depend on your software. For example, &lt;strong&gt;WordPress&lt;/strong&gt; uses &lt;code&gt;wp-config.php&lt;/code&gt; in &lt;code&gt;public_html&lt;/code&gt;.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="step-4-check-if-the-website-is-stable"&gt;Step 4: Check if the website is stable
-&lt;/h2&gt;&lt;p&gt;To ensure stability after upload and domain mapping, perform the following checks:&lt;/p&gt;
-&lt;h3 id="-check-website-access"&gt;🔍 Check website access
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Access via domain or IP:&lt;/strong&gt; If it loads, the site is live.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Wait for DNS propagation:&lt;/strong&gt; New DNS changes can take &lt;strong&gt;24 hours&lt;/strong&gt;.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Check immediately using:&lt;/strong&gt;
-&lt;ul&gt;
-&lt;li&gt;🖥️ &lt;strong&gt;Hosts file:&lt;/strong&gt; Edit the hosts file to simulate DNS changes.&lt;/li&gt;
-&lt;li&gt;🌐 &lt;strong&gt;Online tools:&lt;/strong&gt; Use online DNS checkers.&lt;/li&gt;
-&lt;li&gt;🔌 &lt;strong&gt;Browser plugins:&lt;/strong&gt; Use plugins for virtual hosts.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-test-website-functions"&gt;🛠️ Test website functions
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Visit multiple pages and verify links.&lt;/li&gt;
-&lt;li&gt;Ensure features work as expected.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-check-load-speed"&gt;⚡ Check load speed
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Use &lt;strong&gt;Google PageSpeed Insights&lt;/strong&gt; or &lt;strong&gt;GTmetrix&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-check-for-errors"&gt;🚨 Check for errors
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;404:&lt;/strong&gt; Page not found.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;500:&lt;/strong&gt; Hosting server error.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;503:&lt;/strong&gt; Server maintenance.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-test-across-browsers-and-devices"&gt;🌍 Test across browsers and devices
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Try &lt;strong&gt;Chrome, Firefox, Safari, Edge&lt;/strong&gt; on &lt;strong&gt;desktop, mobile, tablet&lt;/strong&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="-test-at-different-times"&gt;⏳ Test at different times
-&lt;/h3&gt;&lt;ul&gt;
-&lt;li&gt;Performance can vary throughout the day.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;👉 &lt;strong&gt;If issues appear and you are unsure how to fix them, contact your hosting provider.&lt;/strong&gt; 🚀&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="-conclusion"&gt;📌 Conclusion
-&lt;/h2&gt;&lt;p&gt;Uploading a website to hosting is a key step for stable online operation. By preparing correctly and following the steps above, you ensure your website is ready to serve users effectively.&lt;/p&gt;
-&lt;p&gt;💡 If you have questions or need help, leave a comment below. I will respond soon.&lt;/p&gt;
-&lt;p&gt;Thanks for reading! 🚀&lt;/p&gt;</description></item></channel></rss>
+>&lt;/p>
+&lt;p align="center">&lt;em>Import database&lt;/em>&lt;/p>
+&lt;h3 id="update-configuration-for-database-connection">Update configuration for database connection
+&lt;/h3>&lt;p>After upload, open your &lt;strong>PHP configuration file&lt;/strong> and fill in host, database name, username, and password. The file name and location depend on your software. For &lt;strong>WordPress&lt;/strong>, the file is &lt;code>wp-config.php&lt;/code> in &lt;code>public_html&lt;/code>.&lt;/p>
+&lt;blockquote>
+&lt;p>⚠ &lt;strong>Notes:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Large databases should be split into smaller files to speed up uploads.&lt;/li>
+&lt;li>If your database contains special characters, convert them to &lt;strong>ASCII&lt;/strong> before upload.&lt;/li>
+&lt;li>If import errors occur, check for corruption. Create a fresh database and try again.&lt;/li>
+&lt;li>After uploading, test your website to ensure everything works.&lt;/li>
+&lt;/ul>&lt;/blockquote>
+&lt;h3 id="update-configuration-for-database-connection-1">Update configuration for database connection
+&lt;/h3>&lt;p>After uploading, open the PHP config file to enter the &lt;strong>host&lt;/strong>, &lt;strong>database name&lt;/strong>, &lt;strong>username&lt;/strong>, and &lt;strong>password&lt;/strong>.&lt;/p>
+&lt;p>The file name and location depend on your software. For example, &lt;strong>WordPress&lt;/strong> uses &lt;code>wp-config.php&lt;/code> in &lt;code>public_html&lt;/code>.&lt;/p>
+&lt;hr>
+&lt;h2 id="step-4-check-if-the-website-is-stable">Step 4: Check if the website is stable
+&lt;/h2>&lt;p>To ensure stability after upload and domain mapping, perform the following checks:&lt;/p>
+&lt;h3 id="-check-website-access">🔍 Check website access
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>Access via domain or IP:&lt;/strong> If it loads, the site is live.&lt;/li>
+&lt;li>&lt;strong>Wait for DNS propagation:&lt;/strong> New DNS changes can take &lt;strong>24 hours&lt;/strong>.&lt;/li>
+&lt;li>&lt;strong>Check immediately using:&lt;/strong>
+&lt;ul>
+&lt;li>🖥️ &lt;strong>Hosts file:&lt;/strong> Edit the hosts file to simulate DNS changes.&lt;/li>
+&lt;li>🌐 &lt;strong>Online tools:&lt;/strong> Use online DNS checkers.&lt;/li>
+&lt;li>🔌 &lt;strong>Browser plugins:&lt;/strong> Use plugins for virtual hosts.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;h3 id="-test-website-functions">🛠️ Test website functions
+&lt;/h3>&lt;ul>
+&lt;li>Visit multiple pages and verify links.&lt;/li>
+&lt;li>Ensure features work as expected.&lt;/li>
+&lt;/ul>
+&lt;h3 id="-check-load-speed">⚡ Check load speed
+&lt;/h3>&lt;ul>
+&lt;li>Use &lt;strong>Google PageSpeed Insights&lt;/strong> or &lt;strong>GTmetrix&lt;/strong>.&lt;/li>
+&lt;/ul>
+&lt;h3 id="-check-for-errors">🚨 Check for errors
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>404:&lt;/strong> Page not found.&lt;/li>
+&lt;li>&lt;strong>500:&lt;/strong> Hosting server error.&lt;/li>
+&lt;li>&lt;strong>503:&lt;/strong> Server maintenance.&lt;/li>
+&lt;/ul>
+&lt;h3 id="-test-across-browsers-and-devices">🌍 Test across browsers and devices
+&lt;/h3>&lt;ul>
+&lt;li>Try &lt;strong>Chrome, Firefox, Safari, Edge&lt;/strong> on &lt;strong>desktop, mobile, tablet&lt;/strong>.&lt;/li>
+&lt;/ul>
+&lt;h3 id="-test-at-different-times">⏳ Test at different times
+&lt;/h3>&lt;ul>
+&lt;li>Performance can vary throughout the day.&lt;/li>
+&lt;/ul>
+&lt;p>👉 &lt;strong>If issues appear and you are unsure how to fix them, contact your hosting provider.&lt;/strong> 🚀&lt;/p>
+&lt;hr>
+&lt;h2 id="-conclusion">📌 Conclusion
+&lt;/h2>&lt;p>Uploading a website to hosting is a key step for stable online operation. By preparing correctly and following the steps above, you ensure your website is ready to serve users effectively.&lt;/p>
+&lt;p>💡 If you have questions or need help, leave a comment below. I will respond soon.&lt;/p>
+&lt;p>Thanks for reading! 🚀&lt;/p></description></item></channel></rss>
