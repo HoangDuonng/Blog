@@ -1,4 +1,682 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nginx on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/nginx/</link><description>Recent content in Nginx on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 30 Nov 2025 23:55:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/nginx/index.xml" rel="self" type="application/rss+xml"/><item><title>Giới thiệu về Nginx 🚀</title><link>https://tech.nguuyen.io.vn/posts/website/nginx-introduction-guide/</link><pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/website/nginx-introduction-guide/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/nginx-introduction-guide.webp" alt="Featured image of post Giới thiệu về Nginx 🚀" />&lt;h2 id="-nginx-là-gì">🔀 Nginx là gì?
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Nginx on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/nginx/</link><description>Recent content in Nginx on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Tue, 10 Feb 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/nginx/index.xml" rel="self" type="application/rss+xml"/><item><title>Triển khai Node.js với Docker + Nginx</title><link>https://tech.nguuyen.io.vn/posts/docker/deploy-nodejs-docker-nginx/</link><pubDate>Tue, 10 Feb 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/docker/deploy-nodejs-docker-nginx/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker/deploy-nodejs-docker-nginx.webp" alt="Featured image of post Triển khai Node.js với Docker + Nginx" />&lt;h2 id="triển-khai-nodejs-với-docker--nginx--case-study">Triển khai Node.js với Docker + Nginx — Case Study
+&lt;/h2>&lt;p>Bạn đã viết xong API bằng Node.js, test local ngon lành. Nhưng khi đưa lên server thật, bạn gặp hàng loạt câu hỏi:&lt;/p>
+&lt;ul>
+&lt;li>Làm sao chạy app ổn định, tự restart khi crash?&lt;/li>
+&lt;li>Làm sao để client không truy cập thẳng vào port 3000?&lt;/li>
+&lt;li>Làm sao xử lý SSL, rate limit, static files?&lt;/li>
+&lt;/ul>
+&lt;p>Câu trả lời: &lt;strong>Docker + Nginx reverse proxy&lt;/strong>. Trong bài viết này, tôi sẽ hướng dẫn bạn triển khai một ứng dụng Node.js (Express) từ đầu đến cuối, sử dụng Docker để đóng gói và Nginx làm reverse proxy phía trước.&lt;/p>
+&lt;hr>
+&lt;h2 id="kiến-trúc-tổng-quan">Kiến trúc tổng quan
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Client (Browser / Mobile)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ▼
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ┌─────────┐
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ Nginx │ ← Port 80/443 (HTTP/HTTPS)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ (proxy) │
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └────┬─────┘
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ proxy_pass http://app:3000
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ▼
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> ┌─────────┐
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ Node.js │ ← Port 3000 (internal)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> │ (Express)│
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> └─────────┘
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Nginx&lt;/strong> đứng trước nhận request từ client, sau đó chuyển tiếp (proxy) đến &lt;strong>Node.js&lt;/strong> chạy bên trong. Client không bao giờ truy cập trực tiếp vào Node.js.&lt;/p>
+&lt;p>&lt;strong>Tại sao cần Nginx phía trước?&lt;/strong>&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Lý do&lt;/th>
+&lt;th>Giải thích&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>Reverse proxy&lt;/strong>&lt;/td>
+&lt;td>Ẩn port thật của app, client chỉ thấy port 80/443&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Static files&lt;/strong>&lt;/td>
+&lt;td>Nginx phục vụ file tĩnh (CSS, JS, ảnh) nhanh hơn Node.js rất nhiều&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>SSL termination&lt;/strong>&lt;/td>
+&lt;td>Nginx xử lý HTTPS, Node.js chỉ nhận HTTP thuần&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Rate limiting&lt;/strong>&lt;/td>
+&lt;td>Giới hạn request ở tầng Nginx, bảo vệ Node.js khỏi quá tải&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Load balancing&lt;/strong>&lt;/td>
+&lt;td>Khi scale nhiều instance Node.js, Nginx phân phối request&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="bước-1-tạo-ứng-dụng-nodejs-express">Bước 1: Tạo ứng dụng Node.js (Express)
+&lt;/h2>&lt;h3 id="cấu-trúc-project">Cấu trúc project
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">my-app/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── src/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── server.js
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── package.json
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── package-lock.json
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── Dockerfile
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── .dockerignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">├── nginx/
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └── default.conf
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└── docker-compose.yml
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="file-packagejson">File &lt;code>package.json&lt;/code>
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;name&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;my-app&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;version&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;1.0.0&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;main&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;src/server.js&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;scripts&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;start&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;node src/server.js&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">},&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;dependencies&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nt">&amp;#34;express&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span> &lt;span class="s2">&amp;#34;^4.21.0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="file-srcserverjs">File &lt;code>src/server.js&lt;/code>
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-javascript" data-lang="javascript">&lt;span class="line">&lt;span class="cl">&lt;span class="kr">const&lt;/span> &lt;span class="nx">express&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">require&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;express&amp;#34;&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">const&lt;/span> &lt;span class="nx">app&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">express&lt;/span>&lt;span class="p">();&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="kr">const&lt;/span> &lt;span class="nx">PORT&lt;/span> &lt;span class="o">=&lt;/span> &lt;span class="nx">process&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">env&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">PORT&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="mi">3000&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">app&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">req&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">res&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">res&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">json&lt;/span>&lt;span class="p">({&lt;/span> &lt;span class="nx">message&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;Hello from Node.js!&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">timestamp&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="k">new&lt;/span> &lt;span class="nb">Date&lt;/span>&lt;span class="p">()&lt;/span> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">app&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">get&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="s2">&amp;#34;/health&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">(&lt;/span>&lt;span class="nx">req&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="nx">res&lt;/span>&lt;span class="p">)&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">res&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">json&lt;/span>&lt;span class="p">({&lt;/span> &lt;span class="nx">status&lt;/span>&lt;span class="o">:&lt;/span> &lt;span class="s2">&amp;#34;ok&amp;#34;&lt;/span> &lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nx">app&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">listen&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="nx">PORT&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;0.0.0.0&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="p">()&lt;/span> &lt;span class="p">=&amp;gt;&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nx">console&lt;/span>&lt;span class="p">.&lt;/span>&lt;span class="nx">log&lt;/span>&lt;span class="p">(&lt;/span>&lt;span class="sb">`Server running on port &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nx">PORT&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="sb">`&lt;/span>&lt;span class="p">);&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">});&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>&lt;strong>Lưu ý:&lt;/strong> &lt;code>app.listen(PORT, &amp;quot;0.0.0.0&amp;quot;)&lt;/code> — phải bind &lt;code>0.0.0.0&lt;/code> để container nhận được request từ bên ngoài. Nếu bind &lt;code>127.0.0.1&lt;/code> (localhost), Nginx sẽ không thể kết nối đến app.&lt;/p>&lt;/blockquote>
+&lt;hr>
+&lt;h2 id="bước-2-viết-dockerfile-cho-nodejs">Bước 2: Viết Dockerfile cho Node.js
+&lt;/h2>&lt;h3 id="file-dockerignore">File &lt;code>.dockerignore&lt;/code>
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl">node_modules
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">npm-debug.log
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">.git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">.env
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Theo &lt;a class="link" href="https://docs.docker.com/language/nodejs/containerize/" target="_blank" rel="noopener"
+>tài liệu chính thức của Docker&lt;/a>, Dockerfile cho Node.js nên dùng &lt;strong>multi-stage build&lt;/strong>, tạo &lt;strong>non-root user&lt;/strong> và sử dụng &lt;strong>cache mount&lt;/strong> để tối ưu.&lt;/p>
+&lt;h3 id="file-dockerfile">File &lt;code>Dockerfile&lt;/code>
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Stage 1: Install dependencies&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">FROM&lt;/span>&lt;span class="s"> node:18-alpine AS deps&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> package.json package-lock.json ./&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> --mount&lt;span class="o">=&lt;/span>&lt;span class="nv">type&lt;/span>&lt;span class="o">=&lt;/span>cache,target&lt;span class="o">=&lt;/span>/root/.npm &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> npm ci --only&lt;span class="o">=&lt;/span>production&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="c"># Stage 2: Production&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">FROM&lt;/span>&lt;span class="s"> node:18-alpine AS production&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="c"># Tạo non-root user (theo best practice từ Docker docs)&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> addgroup -g &lt;span class="m">1001&lt;/span> -S nodejs &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> adduser -S nodejs -u &lt;span class="m">1001&lt;/span> -G nodejs&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">ENV&lt;/span> &lt;span class="nv">NODE_ENV&lt;/span>&lt;span class="o">=&lt;/span>production
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">COPY&lt;/span> --from&lt;span class="o">=&lt;/span>deps /app/node_modules ./node_modules&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> src ./src&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> package.json ./&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">USER&lt;/span>&lt;span class="s"> nodejs&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">EXPOSE&lt;/span>&lt;span class="s"> 3000&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">CMD&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;node&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;src/server.js&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Giải thích:&lt;/strong>&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Kỹ thuật&lt;/th>
+&lt;th>Mục đích&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>node:18-alpine&lt;/code>&lt;/td>
+&lt;td>Base image nhỏ (~170 MB thay vì ~900 MB của &lt;code>node:18&lt;/code>)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Multi-stage build&lt;/td>
+&lt;td>Stage &lt;code>deps&lt;/code> cài dependencies, stage &lt;code>production&lt;/code> chỉ copy kết quả&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>npm ci&lt;/code>&lt;/td>
+&lt;td>Cài đặt chính xác theo &lt;code>package-lock.json&lt;/code>, đảm bảo reproducible builds&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>--mount=type=cache&lt;/code>&lt;/td>
+&lt;td>Cache npm packages giữa các lần build&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Non-root user&lt;/td>
+&lt;td>Không chạy app bằng root, tăng bảo mật&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>COPY src ./src&lt;/code>&lt;/td>
+&lt;td>Chỉ copy source code cần thiết, không copy toàn bộ project&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="bước-3-cấu-hình-nginx-làm-reverse-proxy">Bước 3: Cấu hình Nginx làm Reverse Proxy
+&lt;/h2>&lt;h3 id="file-nginxdefaultconf">File &lt;code>nginx/default.conf&lt;/code>
+&lt;/h3>&lt;p>Theo &lt;a class="link" href="https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/" target="_blank" rel="noopener"
+>tài liệu chính thức của Nginx&lt;/a>, directive &lt;code>proxy_pass&lt;/code> được dùng để chuyển tiếp request đến server khác. Các header &lt;code>proxy_set_header&lt;/code> cần được thiết lập để server backend nhận đúng thông tin client.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-nginx" data-lang="nginx">&lt;span class="line">&lt;span class="cl">&lt;span class="k">upstream&lt;/span> &lt;span class="s">nodejs_app&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">server&lt;/span> &lt;span class="n">app&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">3000&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">server&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">listen&lt;/span> &lt;span class="mi">80&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">server_name&lt;/span> &lt;span class="s">_&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Giới hạn kích thước request body (chống upload quá lớn)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kn">client_max_body_size&lt;/span> &lt;span class="mi">10m&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">location&lt;/span> &lt;span class="s">/&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">proxy_pass&lt;/span> &lt;span class="s">http://nodejs_app&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Chuyển tiếp thông tin client gốc đến Node.js
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kn">proxy_set_header&lt;/span> &lt;span class="s">Host&lt;/span> &lt;span class="nv">$host&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">proxy_set_header&lt;/span> &lt;span class="s">X-Real-IP&lt;/span> &lt;span class="nv">$remote_addr&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">proxy_set_header&lt;/span> &lt;span class="s">X-Forwarded-For&lt;/span> &lt;span class="nv">$proxy_add_x_forwarded_for&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">proxy_set_header&lt;/span> &lt;span class="s">X-Forwarded-Proto&lt;/span> &lt;span class="nv">$scheme&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Hỗ trợ WebSocket (nếu app cần)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kn">proxy_http_version&lt;/span> &lt;span class="mi">1&lt;/span>&lt;span class="s">.1&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">proxy_set_header&lt;/span> &lt;span class="s">Upgrade&lt;/span> &lt;span class="nv">$http_upgrade&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">proxy_set_header&lt;/span> &lt;span class="s">Connection&lt;/span> &lt;span class="s">&amp;#34;upgrade&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Health check endpoint (Nginx trả thẳng, không cần qua Node.js)
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kn">location&lt;/span> &lt;span class="p">=&lt;/span> &lt;span class="s">/nginx-health&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">access_log&lt;/span> &lt;span class="no">off&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">return&lt;/span> &lt;span class="mi">200&lt;/span> &lt;span class="s">&amp;#34;ok&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="kn">add_header&lt;/span> &lt;span class="s">Content-Type&lt;/span> &lt;span class="s">text/plain&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Giải thích các directive quan trọng:&lt;/strong>&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Directive&lt;/th>
+&lt;th>Ý nghĩa&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>upstream nodejs_app&lt;/code>&lt;/td>
+&lt;td>Định nghĩa nhóm backend server. Khi scale nhiều instance, thêm server vào đây&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>proxy_pass http://nodejs_app&lt;/code>&lt;/td>
+&lt;td>Chuyển tiếp request đến upstream đã định nghĩa&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>proxy_set_header Host $host&lt;/code>&lt;/td>
+&lt;td>Giữ nguyên hostname gốc từ client (mặc định Nginx đổi thành &lt;code>$proxy_host&lt;/code>)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>proxy_set_header X-Real-IP&lt;/code>&lt;/td>
+&lt;td>Gửi IP thật của client đến Node.js (không phải IP của Nginx)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>proxy_set_header X-Forwarded-For&lt;/code>&lt;/td>
+&lt;td>Chuỗi IP qua các proxy, giúp Node.js biết client thật&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>proxy_set_header X-Forwarded-Proto&lt;/code>&lt;/td>
+&lt;td>Cho Node.js biết client dùng HTTP hay HTTPS&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>proxy_http_version 1.1&lt;/code>&lt;/td>
+&lt;td>Bắt buộc để hỗ trợ WebSocket và keep-alive&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="bước-4-docker-compose--kết-nối-tất-cả">Bước 4: Docker Compose — Kết nối tất cả
+&lt;/h2>&lt;p>Theo &lt;a class="link" href="https://docs.docker.com/compose/production/" target="_blank" rel="noopener"
+>Docker Compose production guide&lt;/a>, khi deploy production nên: bỏ volume bind cho code, set restart policy, và tách file compose cho từng môi trường.&lt;/p>
+&lt;h3 id="file-docker-composeyml">File &lt;code>docker-compose.yml&lt;/code>
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">services&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">app&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">build&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">context&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">.&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">dockerfile&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Dockerfile&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">target&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">production&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">container_name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">nodejs-app&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">restart&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">unless-stopped&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">environment&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">NODE_ENV=production&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">PORT=3000&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">expose&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;3000&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">healthcheck&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">test&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;CMD&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;wget&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;--quiet&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;--tries=1&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;--spider&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="s2">&amp;#34;http://localhost:3000/health&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">interval&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">30s&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">timeout&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">5s&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">retries&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="m">3&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">start_period&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">10s&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">networks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">app-network&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">nginx&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">image&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">nginx:1.27-alpine&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">container_name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">nginx-proxy&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">restart&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">unless-stopped&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">ports&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="s2">&amp;#34;80:80&amp;#34;&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">volumes&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">./nginx/default.conf:/etc/nginx/conf.d/default.conf:ro&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">depends_on&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">app&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">condition&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">service_healthy&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">networks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>- &lt;span class="l">app-network&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">networks&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">app-network&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">driver&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">bridge&lt;/span>&lt;span class="w">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Các điểm quan trọng:&lt;/strong>&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Cấu hình&lt;/th>
+&lt;th>Giải thích&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>expose: &amp;quot;3000&amp;quot;&lt;/code>&lt;/td>
+&lt;td>Chỉ mở port nội bộ giữa các container, &lt;strong>không&lt;/strong> expose ra host&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>ports: &amp;quot;80:80&amp;quot;&lt;/code>&lt;/td>
+&lt;td>Chỉ Nginx được expose ra ngoài&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>depends_on: condition: service_healthy&lt;/code>&lt;/td>
+&lt;td>Nginx chỉ start sau khi Node.js healthy&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>restart: unless-stopped&lt;/code>&lt;/td>
+&lt;td>Tự restart khi crash, trừ khi bạn chủ động stop&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>:ro&lt;/code> (read-only)&lt;/td>
+&lt;td>Mount config Nginx ở chế độ chỉ đọc&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>networks: app-network&lt;/code>&lt;/td>
+&lt;td>Cả 2 container cùng network, Nginx gọi &lt;code>app:3000&lt;/code> qua tên service&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="bước-5-build-và-chạy">Bước 5: Build và chạy
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Build và chạy tất cả&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker compose up --build -d
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Xem logs&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker compose logs -f
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Kiểm tra trạng thái&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker compose ps
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Kiểm tra hoạt động:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Request qua Nginx (port 80)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">curl http://localhost
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Kiểm tra health của Node.js&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">curl http://localhost/health
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Kiểm tra health của Nginx&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">curl http://localhost/nginx-health
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Kết quả mong đợi:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-json" data-lang="json">&lt;span class="line">&lt;span class="cl">&lt;span class="p">{&lt;/span>&lt;span class="nt">&amp;#34;message&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="s2">&amp;#34;Hello from Node.js!&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span>&lt;span class="nt">&amp;#34;timestamp&amp;#34;&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="s2">&amp;#34;2026-02-10T12:00:00.000Z&amp;#34;&lt;/span>&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="bước-6-deploy-lại-khi-thay-đổi-code">Bước 6: Deploy lại khi thay đổi code
+&lt;/h2>&lt;p>Theo &lt;a class="link" href="https://docs.docker.com/compose/production/" target="_blank" rel="noopener"
+>Docker Compose docs&lt;/a>, khi cập nhật code, bạn chỉ cần rebuild service cần thiết:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Rebuild chỉ service app (không ảnh hưởng Nginx)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker compose build app
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker compose up --no-deps -d app
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Flag &lt;code>--no-deps&lt;/code> đảm bảo chỉ restart service &lt;code>app&lt;/code>, không restart Nginx. Client không bị gián đoạn.&lt;/p>
+&lt;hr>
+&lt;h2 id="mở-rộng-scale-nhiều-instance-nodejs">Mở rộng: Scale nhiều instance Node.js
+&lt;/h2>&lt;p>Khi traffic tăng, bạn có thể chạy nhiều instance Node.js và để Nginx load balance:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker compose up --scale &lt;span class="nv">app&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">3&lt;/span> -d
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Cập nhật &lt;code>nginx/default.conf&lt;/code> để Nginx biết có nhiều instance:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-nginx" data-lang="nginx">&lt;span class="line">&lt;span class="cl">&lt;span class="k">upstream&lt;/span> &lt;span class="s">nodejs_app&lt;/span> &lt;span class="p">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="c1"># Docker Compose DNS tự động resolve tên service
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="c1"># thành tất cả container IP đang chạy
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1">&lt;/span> &lt;span class="kn">server&lt;/span> &lt;span class="n">app&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="mi">3000&lt;/span>&lt;span class="p">;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="p">}&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Khi dùng Docker Compose với &lt;code>--scale&lt;/code>, Docker DNS tự động resolve &lt;code>app&lt;/code> thành tất cả IP của các container &lt;code>app&lt;/code>. Nginx sẽ round-robin request đến từng instance.&lt;/p>
+&lt;hr>
+&lt;h2 id="ghi-chú-triển-khai">Ghi chú triển khai
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>Khi áp dụng vào dự án của bạn&lt;/strong>, hãy lưu ý:
+&lt;ul>
+&lt;li>Luôn dùng &lt;code>expose&lt;/code> thay vì &lt;code>ports&lt;/code> cho service backend — chỉ Nginx mới cần expose ra ngoài&lt;/li>
+&lt;li>Bind &lt;code>0.0.0.0&lt;/code> trong Node.js, không bind &lt;code>127.0.0.1&lt;/code>&lt;/li>
+&lt;li>Dùng &lt;code>npm ci&lt;/code> thay &lt;code>npm install&lt;/code> để đảm bảo reproducible builds&lt;/li>
+&lt;li>Tạo non-root user trong Dockerfile cho bảo mật&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Best practices&lt;/strong>:
+&lt;ul>
+&lt;li>Dùng &lt;code>docker compose up --no-deps -d app&lt;/code> khi chỉ cần redeploy app&lt;/li>
+&lt;li>Pin version cho base image (&lt;code>node:18-alpine&lt;/code>, &lt;code>nginx:1.27-alpine&lt;/code>) thay vì &lt;code>latest&lt;/code>&lt;/li>
+&lt;li>Tách &lt;code>docker-compose.prod.yml&lt;/code> riêng cho production config&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Troubleshooting&lt;/strong>:
+&lt;ul>
+&lt;li>Nginx báo &lt;code>502 Bad Gateway&lt;/code>? → Node.js chưa start xong hoặc bind sai address. Kiểm tra &lt;code>docker compose logs app&lt;/code>&lt;/li>
+&lt;li>Không kết nối được giữa Nginx và Node.js? → Đảm bảo cả 2 cùng network và dùng đúng tên service trong &lt;code>proxy_pass&lt;/code>&lt;/li>
+&lt;li>Request bị timeout? → Kiểm tra &lt;code>client_max_body_size&lt;/code> và &lt;code>proxy_read_timeout&lt;/code> trong Nginx config&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-lời-kết">🎯 Lời kết
+&lt;/h2>&lt;p>Tóm tắt lại flow triển khai:&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>Viết app&lt;/strong> Node.js (Express) với health check endpoint&lt;/li>
+&lt;li>&lt;strong>Dockerfile&lt;/strong> multi-stage build + non-root user&lt;/li>
+&lt;li>&lt;strong>Nginx config&lt;/strong> reverse proxy với &lt;code>proxy_pass&lt;/code> và các header cần thiết&lt;/li>
+&lt;li>&lt;strong>Docker Compose&lt;/strong> kết nối app + Nginx, chỉ expose port 80&lt;/li>
+&lt;li>&lt;strong>Deploy&lt;/strong> bằng &lt;code>docker compose up --build -d&lt;/code>&lt;/li>
+&lt;li>&lt;strong>Update&lt;/strong> bằng &lt;code>docker compose build app &amp;amp;&amp;amp; docker compose up --no-deps -d app&lt;/code>&lt;/li>
+&lt;/ol>
+&lt;p>Đây là kiến trúc cơ bản nhất để đưa một ứng dụng Node.js lên production. Từ đây bạn có thể mở rộng thêm SSL (Let&amp;rsquo;s Encrypt), database, monitoring tuỳ nhu cầu. 🚀&lt;/p>
+&lt;p>Nếu bạn thấy bài viết này hữu ích, hãy nhớ ⭐ star repo hoặc 📱 chia sẻ với bạn bè nhé! 😊&lt;/p>
+&lt;hr>
+&lt;h2 id="tài-liệu-tham-khảo">Tài liệu tham khảo
+&lt;/h2>&lt;ul>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/language/nodejs/containerize/" target="_blank" rel="noopener"
+>Docker Official - Containerize Node.js&lt;/a> — Hướng dẫn chính thức Docker cho Node.js&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/compose/production/" target="_blank" rel="noopener"
+>Docker Compose in Production&lt;/a> — Hướng dẫn deploy production với Compose&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.nginx.com/nginx/admin-guide/web-server/reverse-proxy/" target="_blank" rel="noopener"
+>Nginx Reverse Proxy&lt;/a> — Tài liệu chính thức cấu hình reverse proxy&lt;/li>
+&lt;li>&lt;a class="link" href="https://nginx.org/en/docs/beginners_guide.html" target="_blank" rel="noopener"
+>Nginx Beginner&amp;rsquo;s Guide&lt;/a> — Hướng dẫn cơ bản từ nginx.org&lt;/li>
+&lt;/ul></description></item><item><title>Giới thiệu về Nginx 🚀</title><link>https://tech.nguuyen.io.vn/posts/website/nginx-introduction-guide/</link><pubDate>Mon, 10 Mar 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/website/nginx-introduction-guide/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/website/nginx-introduction-guide.webp" alt="Featured image of post Giới thiệu về Nginx 🚀" />&lt;h2 id="-nginx-là-gì">🔀 Nginx là gì?
 &lt;/h2>&lt;p align="center">
 &lt;img src="https://wiki.matbao.net/wp-content/uploads/2019/09/nginx-la-gi.jpg" alt="NGINX là một phần mềm web server mã nguồn mở đáng tin cậy">
 &lt;/p>
