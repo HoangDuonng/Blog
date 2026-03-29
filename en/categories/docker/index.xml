@@ -1,4 +1,579 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/categories/docker/</link><description>Recent content in Docker on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 22 Feb 2026 19:24:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/categories/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker Compose for Beginners (v2) — Hands-on Practice</title><link>https://tech.nguuyen.io.vn/en/posts/docker/docker-compose-v2-best-practices/</link><pubDate>Wed, 04 Feb 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/docker/docker-compose-v2-best-practices/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker/docker-compose-v2.webp" alt="Featured image of post Docker Compose for Beginners (v2) — Hands-on Practice" />&lt;h2 id="docker-compose-v2---multi-container-management-tool">Docker Compose v2 - Multi-container Management Tool
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Docker on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/categories/docker/</link><description>Recent content in Docker on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 22 Mar 2026 20:00:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/categories/docker/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker Build Cache &amp; Layering</title><link>https://tech.nguuyen.io.vn/en/posts/docker/docker-build-cache-layering/</link><pubDate>Sun, 22 Mar 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/docker/docker-build-cache-layering/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker/docker-build-cache-layering.webp" alt="Featured image of post Docker Build Cache &amp; Layering" />&lt;h2 id="docker-build-cache--layering">Docker Build Cache &amp;amp; Layering
+&lt;/h2>&lt;p>Have you ever wondered why the &lt;strong>first build&lt;/strong> takes 5–10 minutes, but the &lt;strong>second build&lt;/strong> finishes in just a few seconds? That&amp;rsquo;s thanks to &lt;strong>Build Cache&lt;/strong>. But sometimes, changing just one line of code causes Docker to rebuild everything — that&amp;rsquo;s because you don&amp;rsquo;t yet understand how &lt;strong>Layering&lt;/strong> works. 🧱&lt;/p>
+&lt;p>In this article, I&amp;rsquo;ll explain in detail how Layers and Build Cache work, how Docker decides when to use cache versus rebuild, and techniques to optimize for faster builds.&lt;/p>
+&lt;hr>
+&lt;h2 id="what-is-a-layer-in-docker">What Is a Layer in Docker?
+&lt;/h2>&lt;p>Each instruction in a Dockerfile creates a &lt;strong>layer&lt;/strong> in the image. You can think of an image as a stack of layers piled on top of each other, with each layer adding new content on top of the previous one.&lt;/p>
+&lt;h3 id="how-layers-are-created">How Layers Are Created
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="k">FROM&lt;/span>&lt;span class="s"> node:18-alpine # Layer 1: Base image&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app # Layer 2: Create working directory&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> package.json ./ &lt;span class="c1"># Layer 3: Copy package.json file&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> npm install &lt;span class="c1"># Layer 4: Install dependencies&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> . . &lt;span class="c1"># Layer 5: Copy source code&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> npm run build &lt;span class="c1"># Layer 6: Build the application&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Layer&lt;/th>
+&lt;th>Dockerfile Instruction&lt;/th>
+&lt;th>Content&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Layer 1&lt;/td>
+&lt;td>&lt;code>FROM node:18-alpine&lt;/code>&lt;/td>
+&lt;td>Base OS + Node.js runtime&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Layer 2&lt;/td>
+&lt;td>&lt;code>WORKDIR /app&lt;/code>&lt;/td>
+&lt;td>Create and switch to /app directory&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Layer 3&lt;/td>
+&lt;td>&lt;code>COPY package.json ./&lt;/code>&lt;/td>
+&lt;td>Add package.json file&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Layer 4&lt;/td>
+&lt;td>&lt;code>RUN npm install&lt;/code>&lt;/td>
+&lt;td>Install node_modules&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Layer 5&lt;/td>
+&lt;td>&lt;code>COPY . .&lt;/code>&lt;/td>
+&lt;td>Add all source code&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Layer 6&lt;/td>
+&lt;td>&lt;code>RUN npm run build&lt;/code>&lt;/td>
+&lt;td>Generate build files (dist/)&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="key-characteristics-of-layers">Key Characteristics of Layers
+&lt;/h3>&lt;ul>
+&lt;li>&lt;strong>Read-only&lt;/strong>: Each layer is immutable once created — it cannot be modified&lt;/li>
+&lt;li>&lt;strong>Shareable&lt;/strong>: Multiple images can share identical layers (e.g., the same &lt;code>node:18-alpine&lt;/code> base image)&lt;/li>
+&lt;li>&lt;strong>Ordered&lt;/strong>: Each layer stacks on top of the previous one, forming a complete file system&lt;/li>
+&lt;li>&lt;strong>Sized&lt;/strong>: Each layer has its own size — the sum of all layers equals the image size&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="how-does-build-cache-work">How Does Build Cache Work?
+&lt;/h2>&lt;p>Build Cache is the mechanism that allows Docker to &lt;strong>skip unnecessary steps&lt;/strong> when rebuilding an image. If a layer hasn&amp;rsquo;t changed since the last build, Docker reuses the previous result instead of running it again.&lt;/p>
+&lt;h3 id="dockers-cache-rules">Docker&amp;rsquo;s Cache Rules
+&lt;/h3>&lt;p>Docker checks cache in order for each instruction in the Dockerfile:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">Instruction 1 → Cache hit? ✅ Reuse → Continue
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Instruction 2 → Cache hit? ✅ Reuse → Continue
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Instruction 3 → Cache hit? ❌ Cache miss → Rebuild from here onward
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Instruction 4 → Must rebuild (because instruction 3 changed)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Instruction 5 → Must rebuild
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>The most important rule:&lt;/strong> When a layer is invalidated (cache miss), &lt;strong>all subsequent layers must also be rebuilt&lt;/strong> — even if they haven&amp;rsquo;t changed at all.&lt;/p>
+&lt;h3 id="when-is-cache-invalidated">When Is Cache Invalidated?
+&lt;/h3>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Scenario&lt;/th>
+&lt;th>Cache invalidated?&lt;/th>
+&lt;th>Explanation&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Dockerfile instruction changed&lt;/td>
+&lt;td>✅ Yes&lt;/td>
+&lt;td>Docker compares instruction strings — different → rebuild&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Files in &lt;code>COPY&lt;/code>/&lt;code>ADD&lt;/code> changed&lt;/td>
+&lt;td>✅ Yes&lt;/td>
+&lt;td>Docker computes file checksums — different → rebuild&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Only file &lt;code>mtime&lt;/code> changed&lt;/td>
+&lt;td>❌ No&lt;/td>
+&lt;td>Docker ignores modification time, only checks content&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>RUN&lt;/code> instruction identical to last&lt;/td>
+&lt;td>❌ No&lt;/td>
+&lt;td>Same instruction string → use cache (even if outdated)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Previous layer was invalidated&lt;/td>
+&lt;td>✅ Yes&lt;/td>
+&lt;td>All subsequent layers must rebuild&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;h3 id="cache-invalidation-example">Cache Invalidation Example
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="k">FROM&lt;/span>&lt;span class="s"> node:18-alpine # ✅ Cache hit (unchanged)&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app # ✅ Cache hit (unchanged)&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> . . &lt;span class="c1"># ❌ Cache miss (you edited a .js file)&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> npm install &lt;span class="c1"># ❌ Must rebuild (because COPY above missed)&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> npm run build &lt;span class="c1"># ❌ Must rebuild (because previous layer missed)&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>You only edited one small &lt;code>.js&lt;/code> file, but &lt;code>npm install&lt;/code> has to run again even though &lt;code>package.json&lt;/code> hasn&amp;rsquo;t changed. This is the most common issue with unoptimized Dockerfiles.&lt;/p>
+&lt;hr>
+&lt;h2 id="techniques-to-optimize-build-cache">Techniques to Optimize Build Cache
+&lt;/h2>&lt;h3 id="order-instructions-by-change-frequency">Order Instructions by Change Frequency
+&lt;/h3>&lt;p>&lt;strong>Principle:&lt;/strong> Instructions that rarely change → place first. Instructions that change often → place last.&lt;/p>
+&lt;p>&lt;strong>❌ Not optimized:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="k">FROM&lt;/span>&lt;span class="s"> node:18-alpine&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> . . &lt;span class="c1"># Copies everything (changes frequently)&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> npm install &lt;span class="c1"># Must re-run every time code changes&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> npm run build&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>✅ Optimized:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="k">FROM&lt;/span>&lt;span class="s"> node:18-alpine&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> package.json yarn.lock ./ &lt;span class="c1"># Rarely changes → copy first&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> npm install &lt;span class="c1"># Only rebuilds when dependencies change&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> . . &lt;span class="c1"># Changes often → copy last&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> npm run build&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Result:&lt;/strong> When only source code changes, &lt;code>npm install&lt;/code> is cached → saving 2–5 minutes per build.&lt;/p>
+&lt;h3 id="use-dockerignore">Use .dockerignore
+&lt;/h3>&lt;p>The &lt;code>.dockerignore&lt;/code> file excludes unnecessary files from the build context, reducing the risk of unnecessary cache invalidation.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-plaintext" data-lang="plaintext">&lt;span class="line">&lt;span class="cl"># .dockerignore
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">node_modules
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">dist
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">.git
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">.env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">*.log
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">tmp*
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">.DS_Store
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Why is this important?&lt;/strong> Without &lt;code>.dockerignore&lt;/code>, the &lt;code>COPY . .&lt;/code> instruction copies &lt;code>node_modules&lt;/code> (hundreds of MBs) and &lt;code>.git&lt;/code> into the build context. Any change in these directories triggers a cache miss.&lt;/p>
+&lt;h3 id="use-cache-mounts">Use Cache Mounts
+&lt;/h3>&lt;p>Cache mounts allow you to persist package manager caches &lt;strong>across builds&lt;/strong>, even when a layer is rebuilt.&lt;/p>
+&lt;p>&lt;strong>Node.js:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="k">FROM&lt;/span>&lt;span class="s"> node:18-alpine&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> package.json yarn.lock ./&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> --mount&lt;span class="o">=&lt;/span>&lt;span class="nv">type&lt;/span>&lt;span class="o">=&lt;/span>cache,target&lt;span class="o">=&lt;/span>/root/.npm &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> npm install&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> . .&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> npm run build&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Python:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="k">FROM&lt;/span>&lt;span class="s"> python:3.11-slim&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> requirements.txt ./&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> --mount&lt;span class="o">=&lt;/span>&lt;span class="nv">type&lt;/span>&lt;span class="o">=&lt;/span>cache,target&lt;span class="o">=&lt;/span>/root/.cache/pip &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> pip install -r requirements.txt&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> . .&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Go:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="k">FROM&lt;/span>&lt;span class="s"> golang:1.21-alpine&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> go.mod go.sum ./&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> --mount&lt;span class="o">=&lt;/span>&lt;span class="nv">type&lt;/span>&lt;span class="o">=&lt;/span>cache,target&lt;span class="o">=&lt;/span>/go/pkg/mod &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --mount&lt;span class="o">=&lt;/span>&lt;span class="nv">type&lt;/span>&lt;span class="o">=&lt;/span>cache,target&lt;span class="o">=&lt;/span>/root/.cache/go-build &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> go mod download&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> . .&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> go build -o /app/server&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Benefit:&lt;/strong> Even when &lt;code>package.json&lt;/code> changes and the layer must rebuild, previously downloaded packages are still stored in the cache mount → only new packages are downloaded, not everything from scratch.&lt;/p>
+&lt;h3 id="multi-stage-build">Multi-stage Build
+&lt;/h3>&lt;p>Multi-stage builds separate the build process from the runtime, reducing the final image size and optimizing cache for each stage.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Stage 1: Build (heavy layers but not included in the final image)&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">FROM&lt;/span>&lt;span class="s"> node:18-alpine AS builder&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> package.json yarn.lock ./&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> npm install&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> . .&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> npm run build&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="c"># Stage 2: Runtime (only contains necessary files)&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">FROM&lt;/span>&lt;span class="s"> nginx:alpine AS production&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> --from&lt;span class="o">=&lt;/span>builder /app/dist /usr/share/nginx/html&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">EXPOSE&lt;/span>&lt;span class="s"> 80&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">CMD&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;nginx&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;-g&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;daemon off;&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Stage&lt;/th>
+&lt;th>Purpose&lt;/th>
+&lt;th>Size&lt;/th>
+&lt;th>Included in final image?&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>builder&lt;/td>
+&lt;td>Build application&lt;/td>
+&lt;td>~500 MB&lt;/td>
+&lt;td>❌ No&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>production&lt;/td>
+&lt;td>Run application&lt;/td>
+&lt;td>~30 MB&lt;/td>
+&lt;td>✅ Yes&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="real-world-example-optimizing-a-nodejs-dockerfile">Real-World Example: Optimizing a Node.js Dockerfile
+&lt;/h2>&lt;h3 id="unoptimized-dockerfile">Unoptimized Dockerfile
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="k">FROM&lt;/span>&lt;span class="s"> node:18&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> . .&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> npm install&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> npm run build&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">CMD&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;node&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;dist/server.js&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Issues:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>❌ Large base image (&lt;code>node:18&lt;/code> ~ 900 MB)&lt;/li>
+&lt;li>❌ &lt;code>COPY . .&lt;/code> before &lt;code>npm install&lt;/code> → any code change rebuilds dependencies&lt;/li>
+&lt;li>❌ No &lt;code>.dockerignore&lt;/code> → copies &lt;code>node_modules&lt;/code>, &lt;code>.git&lt;/code>&lt;/li>
+&lt;li>❌ No multi-stage → final image includes devDependencies&lt;/li>
+&lt;/ul>
+&lt;h3 id="optimized-dockerfile">Optimized Dockerfile
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-dockerfile" data-lang="dockerfile">&lt;span class="line">&lt;span class="cl">&lt;span class="c"># Stage 1: Install dependencies&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">FROM&lt;/span>&lt;span class="s"> node:18-alpine AS deps&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> package.json package-lock.json ./&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> --mount&lt;span class="o">=&lt;/span>&lt;span class="nv">type&lt;/span>&lt;span class="o">=&lt;/span>cache,target&lt;span class="o">=&lt;/span>/root/.npm &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> npm ci --only&lt;span class="o">=&lt;/span>production&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="c"># Stage 2: Build&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">FROM&lt;/span>&lt;span class="s"> node:18-alpine AS builder&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> package.json package-lock.json ./&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> --mount&lt;span class="o">=&lt;/span>&lt;span class="nv">type&lt;/span>&lt;span class="o">=&lt;/span>cache,target&lt;span class="o">=&lt;/span>/root/.npm &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> npm ci&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> . .&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">RUN&lt;/span> npm run build&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="c"># Stage 3: Runtime&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">FROM&lt;/span>&lt;span class="s"> node:18-alpine AS runtime&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">WORKDIR&lt;/span>&lt;span class="s"> /app&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">ENV&lt;/span> &lt;span class="nv">NODE_ENV&lt;/span>&lt;span class="o">=&lt;/span>production
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">COPY&lt;/span> --from&lt;span class="o">=&lt;/span>deps /app/node_modules ./node_modules&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> --from&lt;span class="o">=&lt;/span>builder /app/dist ./dist&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">COPY&lt;/span> package.json ./&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">EXPOSE&lt;/span>&lt;span class="s"> 3000&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="err">&lt;/span>&lt;span class="k">CMD&lt;/span> &lt;span class="p">[&lt;/span>&lt;span class="s2">&amp;#34;node&amp;#34;&lt;/span>&lt;span class="p">,&lt;/span> &lt;span class="s2">&amp;#34;dist/server.js&amp;#34;&lt;/span>&lt;span class="p">]&lt;/span>&lt;span class="err">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Improvements:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>✅ Small base image (&lt;code>node:18-alpine&lt;/code> ~ 170 MB)&lt;/li>
+&lt;li>✅ Separate &lt;code>COPY package.json&lt;/code> → efficient dependency caching&lt;/li>
+&lt;li>✅ Cache mount for npm → faster re-downloads on rebuild&lt;/li>
+&lt;li>✅ Multi-stage → final image only contains production dependencies&lt;/li>
+&lt;li>✅ Uses &lt;code>npm ci&lt;/code> instead of &lt;code>npm install&lt;/code> → ensures reproducible builds&lt;/li>
+&lt;/ul>
+&lt;h3 id="results-comparison">Results Comparison
+&lt;/h3>&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Criteria&lt;/th>
+&lt;th>Unoptimized&lt;/th>
+&lt;th>Optimized&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>Image size&lt;/td>
+&lt;td>~900 MB&lt;/td>
+&lt;td>~170 MB&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>First build&lt;/td>
+&lt;td>~5 minutes&lt;/td>
+&lt;td>~5 minutes&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Rebuild on code change&lt;/td>
+&lt;td>~5 minutes&lt;/td>
+&lt;td>~30 seconds&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>Rebuild on dependency change&lt;/td>
+&lt;td>~5 minutes&lt;/td>
+&lt;td>~2 minutes&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="useful-commands-for-debugging-cache">Useful Commands for Debugging Cache
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># View detailed build output (shows cache hit/miss)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker build --progress&lt;span class="o">=&lt;/span>plain -t myapp .
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Build without cache (force full rebuild)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker build --no-cache -t myapp .
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Invalidate cache for a specific stage only&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker build --no-cache-filter builder -t myapp .
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># View image layers&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker &lt;span class="nb">history&lt;/span> myapp
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Check build cache disk usage&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker builder du
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Clear build cache&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker builder prune
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Reading build output:&lt;/strong> During builds, Docker shows &lt;code>CACHED&lt;/code> for layers that use cache:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl"> =&amp;gt; CACHED [deps 2/3] COPY package.json package-lock.json ./
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> =&amp;gt; CACHED [deps 3/3] RUN npm ci --only=production
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> =&amp;gt; [builder 4/5] COPY . .
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> =&amp;gt; [builder 5/5] RUN npm run build
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Lines with &lt;code>CACHED&lt;/code> mean the layer was retrieved from cache and didn&amp;rsquo;t need to be rebuilt.&lt;/p>
+&lt;hr>
+&lt;h2 id="implementation-notes">Implementation Notes
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>When applying to your project&lt;/strong>, keep these important points in mind:
+&lt;ul>
+&lt;li>Always create a &lt;code>.dockerignore&lt;/code> file before writing your Dockerfile&lt;/li>
+&lt;li>Separate &lt;code>COPY package.json&lt;/code> before &lt;code>RUN npm install&lt;/code>&lt;/li>
+&lt;li>Use multi-stage builds for production images&lt;/li>
+&lt;li>Cache mounts (&lt;code>--mount=type=cache&lt;/code>) require BuildKit (enabled by default since Docker 23.0+)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Best practices&lt;/strong>:
+&lt;ul>
+&lt;li>Order instructions: rarely changes → first, frequently changes → last&lt;/li>
+&lt;li>Use &lt;code>npm ci&lt;/code> instead of &lt;code>npm install&lt;/code> in CI/CD&lt;/li>
+&lt;li>Pin specific versions for base images (&lt;code>node:18.12-alpine&lt;/code> instead of &lt;code>node:latest&lt;/code>)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Troubleshooting&lt;/strong>:
+&lt;ul>
+&lt;li>Build is slow even though nothing changed? → Check &lt;code>.dockerignore&lt;/code>, unrelated files may be triggering cache misses&lt;/li>
+&lt;li>Cache mounts not working? → Make sure Docker BuildKit is enabled: &lt;code>DOCKER_BUILDKIT=1&lt;/code>&lt;/li>
+&lt;li>Want to see which layer missed? → Use &lt;code>docker build --progress=plain&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-conclusion">🎯 Conclusion
+&lt;/h2>&lt;p>To summarize:&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>Layer&lt;/strong> = each instruction in a Dockerfile creates a layer in the image&lt;/li>
+&lt;li>&lt;strong>Build Cache&lt;/strong> = Docker stores layer results and reuses them when rebuilding&lt;/li>
+&lt;li>&lt;strong>Cache invalidation&lt;/strong> = when a layer changes, all subsequent layers must rebuild&lt;/li>
+&lt;li>&lt;strong>Optimization&lt;/strong> = proper instruction ordering + &lt;code>.dockerignore&lt;/code> + cache mounts + multi-stage builds&lt;/li>
+&lt;/ul>
+&lt;p>By understanding and applying these 4 techniques, you can reduce Docker build times from &lt;strong>5 minutes to under 30 seconds&lt;/strong> in most cases. 🚀&lt;/p>
+&lt;p>If you find this article helpful, feel free to ⭐ star the repo or 📱 share it with your friends! 😊&lt;/p>
+&lt;hr>
+&lt;h2 id="references">References
+&lt;/h2>&lt;ul>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/build/cache/" target="_blank" rel="noopener"
+>Docker Official Documentation - Build Cache&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/build/cache/invalidation/" target="_blank" rel="noopener"
+>Docker Official Documentation - Cache Invalidation&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/build/cache/optimize/" target="_blank" rel="noopener"
+>Docker Official Documentation - Optimize Cache&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/develop/dev-best-practices/" target="_blank" rel="noopener"
+>Best practices for writing Dockerfiles&lt;/a>&lt;/li>
+&lt;/ul></description></item><item><title>Docker Compose for Beginners (v2) — Hands-on Practice</title><link>https://tech.nguuyen.io.vn/en/posts/docker/docker-compose-v2-best-practices/</link><pubDate>Wed, 04 Feb 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/docker/docker-compose-v2-best-practices/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker/docker-compose-v2.webp" alt="Featured image of post Docker Compose for Beginners (v2) — Hands-on Practice" />&lt;h2 id="docker-compose-v2---multi-container-management-tool">Docker Compose v2 - Multi-container Management Tool
 &lt;/h2>&lt;p>Docker Compose is a tool that helps you &lt;strong>define and run multiple containers&lt;/strong> simultaneously through a YAML file. Version v2 brings many improvements in performance and new features.&lt;/p>
 &lt;hr>
 &lt;h2 id="i-installation-and-preparation">I. Installation and Preparation

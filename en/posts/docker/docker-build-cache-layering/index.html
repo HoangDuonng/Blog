@@ -1,0 +1,274 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Understand Docker's Layer and Build Cache mechanisms — why builds are slow and how to optimize for faster builds."><title>Docker Build Cache & Layering</title>
+<link rel=canonical href=https://tech.nguuyen.io.vn/en/posts/docker/docker-build-cache-layering/><link rel=stylesheet href=/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css><meta property='og:title' content="Docker Build Cache & Layering"><meta property='og:description' content="Understand Docker's Layer and Build Cache mechanisms — why builds are slow and how to optimize for faster builds."><meta property='og:url' content='https://tech.nguuyen.io.vn/en/posts/docker/docker-build-cache-layering/'><meta property='og:site_name' content='Hoang Duong'><meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:tag' content='docker'><meta property='article:tag' content='build-cache'><meta property='article:tag' content='layering'><meta property='article:tag' content='optimization'><meta property='article:tag' content='dockerfile'><meta property='article:published_time' content='2026-03-22T00:00:00+00:00'><meta property='article:modified_time' content='2026-03-22T20:00:00+07:00'><meta property='og:image' content='https://tech.nguuyen.io.vn/images/docker/docker-build-cache-layering.webp'><meta name=twitter:title content="Docker Build Cache & Layering"><meta name=twitter:description content="Understand Docker's Layer and Build Cache mechanisms — why builds are slow and how to optimize for faster builds."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://tech.nguuyen.io.vn/images/docker/docker-build-cache-layering.webp'><link rel=icon type=image/x-icon href=/favicon.ico><style>:root{--article-font-family:"Roboto", var(--base-font-family)}</style><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/en/><img src=/img/hoang_hu_f5b001d7581bed29.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/en>Hoang Duong</a></h1><h2 class=site-description>And, when you want something, all the universe conspires in helping you to achieve it.</h2></div></header><ol class=menu-social><li><a href=https://github.com/HoangDuonng target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.instagram.com/ngu_uuen/ target=_blank title=Instagram rel=me><svg class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="4"/><path d="M16.5 7.5h.01"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/en/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home page</span></a></li><li><a href=/en/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About me</span></a></li><li><a href=/en/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/en/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/en/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://tech.nguuyen.io.vn/>Tiếng Việt</option><option value=https://tech.nguuyen.io.vn/en/ selected>English</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#docker-build-cache--layering>Docker Build Cache & Layering</a></li><li><a href=#what-is-a-layer-in-docker>What Is a Layer in Docker?</a><ol><li><a href=#how-layers-are-created>How Layers Are Created</a></li><li><a href=#key-characteristics-of-layers>Key Characteristics of Layers</a></li></ol></li><li><a href=#how-does-build-cache-work>How Does Build Cache Work?</a><ol><li><a href=#dockers-cache-rules>Docker&rsquo;s Cache Rules</a></li><li><a href=#when-is-cache-invalidated>When Is Cache Invalidated?</a></li><li><a href=#cache-invalidation-example>Cache Invalidation Example</a></li></ol></li><li><a href=#techniques-to-optimize-build-cache>Techniques to Optimize Build Cache</a><ol><li><a href=#order-instructions-by-change-frequency>Order Instructions by Change Frequency</a></li><li><a href=#use-dockerignore>Use .dockerignore</a></li><li><a href=#use-cache-mounts>Use Cache Mounts</a></li><li><a href=#multi-stage-build>Multi-stage Build</a></li></ol></li><li><a href=#real-world-example-optimizing-a-nodejs-dockerfile>Real-World Example: Optimizing a Node.js Dockerfile</a><ol><li><a href=#unoptimized-dockerfile>Unoptimized Dockerfile</a></li><li><a href=#optimized-dockerfile>Optimized Dockerfile</a></li><li><a href=#results-comparison>Results Comparison</a></li></ol></li><li><a href=#useful-commands-for-debugging-cache>Useful Commands for Debugging Cache</a></li><li><a href=#implementation-notes>Implementation Notes</a></li><li><a href=#-conclusion>🎯 Conclusion</a></li><li><a href=#references>References</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/en/posts/docker/docker-build-cache-layering/><img src=/images/docker/docker-build-cache-layering.webp loading=lazy alt="Featured image of post Docker Build Cache & Layering"></a></div><div class=article-details><header class=article-category><a href=/en/categories/docker/ style=background-color:#2a9d8f;color:#fff>Docker</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/en/posts/docker/docker-build-cache-layering/>Docker Build Cache & Layering</a></h2><h3 class=article-subtitle>Understand Docker's Layer and Build Cache mechanisms — why builds are slow and how to optimize for faster builds.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>22/03/2026</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>8 minute read</time></div><div><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span class=article-author--name>Hoàng Dương</span></div></footer><footer class=article-translations><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg><div><a href=https://tech.nguuyen.io.vn/posts/docker/docker-build-cache-layering/ class=link>Tiếng Việt</a></div></footer></div></header><section class=article-content><h2 id=docker-build-cache--layering>Docker Build Cache & Layering</h2><p>Have you ever wondered why the <strong>first build</strong> takes 5–10 minutes, but the <strong>second build</strong> finishes in just a few seconds? That&rsquo;s thanks to <strong>Build Cache</strong>. But sometimes, changing just one line of code causes Docker to rebuild everything — that&rsquo;s because you don&rsquo;t yet understand how <strong>Layering</strong> works. 🧱</p><p>In this article, I&rsquo;ll explain in detail how Layers and Build Cache work, how Docker decides when to use cache versus rebuild, and techniques to optimize for faster builds.</p><hr><h2 id=what-is-a-layer-in-docker>What Is a Layer in Docker?</h2><p>Each instruction in a Dockerfile creates a <strong>layer</strong> in the image. You can think of an image as a stack of layers piled on top of each other, with each layer adding new content on top of the previous one.</p><h3 id=how-layers-are-created>How Layers Are Created</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dockerfile data-lang=dockerfile><span class=line><span class=cl><span class=k>FROM</span><span class=s> node:18-alpine        # Layer 1: Base image</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /app               # Layer 2: Create working directory</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> package.json ./       <span class=c1># Layer 3: Copy package.json file</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> npm install            <span class=c1># Layer 4: Install dependencies</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> . .                   <span class=c1># Layer 5: Copy source code</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> npm run build          <span class=c1># Layer 6: Build the application</span><span class=err>
+</span></span></span></code></pre></td></tr></table></div></div><div class=table-wrapper><table><thead><tr><th>Layer</th><th>Dockerfile Instruction</th><th>Content</th></tr></thead><tbody><tr><td>Layer 1</td><td><code>FROM node:18-alpine</code></td><td>Base OS + Node.js runtime</td></tr><tr><td>Layer 2</td><td><code>WORKDIR /app</code></td><td>Create and switch to /app directory</td></tr><tr><td>Layer 3</td><td><code>COPY package.json ./</code></td><td>Add package.json file</td></tr><tr><td>Layer 4</td><td><code>RUN npm install</code></td><td>Install node_modules</td></tr><tr><td>Layer 5</td><td><code>COPY . .</code></td><td>Add all source code</td></tr><tr><td>Layer 6</td><td><code>RUN npm run build</code></td><td>Generate build files (dist/)</td></tr></tbody></table></div><h3 id=key-characteristics-of-layers>Key Characteristics of Layers</h3><ul><li><strong>Read-only</strong>: Each layer is immutable once created — it cannot be modified</li><li><strong>Shareable</strong>: Multiple images can share identical layers (e.g., the same <code>node:18-alpine</code> base image)</li><li><strong>Ordered</strong>: Each layer stacks on top of the previous one, forming a complete file system</li><li><strong>Sized</strong>: Each layer has its own size — the sum of all layers equals the image size</li></ul><hr><h2 id=how-does-build-cache-work>How Does Build Cache Work?</h2><p>Build Cache is the mechanism that allows Docker to <strong>skip unnecessary steps</strong> when rebuilding an image. If a layer hasn&rsquo;t changed since the last build, Docker reuses the previous result instead of running it again.</p><h3 id=dockers-cache-rules>Docker&rsquo;s Cache Rules</h3><p>Docker checks cache in order for each instruction in the Dockerfile:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl>Instruction 1 → Cache hit? ✅ Reuse → Continue
+</span></span><span class=line><span class=cl>Instruction 2 → Cache hit? ✅ Reuse → Continue
+</span></span><span class=line><span class=cl>Instruction 3 → Cache hit? ❌ Cache miss → Rebuild from here onward
+</span></span><span class=line><span class=cl>Instruction 4 → Must rebuild (because instruction 3 changed)
+</span></span><span class=line><span class=cl>Instruction 5 → Must rebuild
+</span></span></code></pre></td></tr></table></div></div><p><strong>The most important rule:</strong> When a layer is invalidated (cache miss), <strong>all subsequent layers must also be rebuilt</strong> — even if they haven&rsquo;t changed at all.</p><h3 id=when-is-cache-invalidated>When Is Cache Invalidated?</h3><div class=table-wrapper><table><thead><tr><th>Scenario</th><th>Cache invalidated?</th><th>Explanation</th></tr></thead><tbody><tr><td>Dockerfile instruction changed</td><td>✅ Yes</td><td>Docker compares instruction strings — different → rebuild</td></tr><tr><td>Files in <code>COPY</code>/<code>ADD</code> changed</td><td>✅ Yes</td><td>Docker computes file checksums — different → rebuild</td></tr><tr><td>Only file <code>mtime</code> changed</td><td>❌ No</td><td>Docker ignores modification time, only checks content</td></tr><tr><td><code>RUN</code> instruction identical to last</td><td>❌ No</td><td>Same instruction string → use cache (even if outdated)</td></tr><tr><td>Previous layer was invalidated</td><td>✅ Yes</td><td>All subsequent layers must rebuild</td></tr></tbody></table></div><h3 id=cache-invalidation-example>Cache Invalidation Example</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dockerfile data-lang=dockerfile><span class=line><span class=cl><span class=k>FROM</span><span class=s> node:18-alpine          # ✅ Cache hit (unchanged)</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /app                 # ✅ Cache hit (unchanged)</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> . .                     <span class=c1># ❌ Cache miss (you edited a .js file)</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> npm install              <span class=c1># ❌ Must rebuild (because COPY above missed)</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> npm run build            <span class=c1># ❌ Must rebuild (because previous layer missed)</span><span class=err>
+</span></span></span></code></pre></td></tr></table></div></div><p>You only edited one small <code>.js</code> file, but <code>npm install</code> has to run again even though <code>package.json</code> hasn&rsquo;t changed. This is the most common issue with unoptimized Dockerfiles.</p><hr><h2 id=techniques-to-optimize-build-cache>Techniques to Optimize Build Cache</h2><h3 id=order-instructions-by-change-frequency>Order Instructions by Change Frequency</h3><p><strong>Principle:</strong> Instructions that rarely change → place first. Instructions that change often → place last.</p><p><strong>❌ Not optimized:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dockerfile data-lang=dockerfile><span class=line><span class=cl><span class=k>FROM</span><span class=s> node:18-alpine</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /app</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> . .                     <span class=c1># Copies everything (changes frequently)</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> npm install              <span class=c1># Must re-run every time code changes</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> npm run build<span class=err>
+</span></span></span></code></pre></td></tr></table></div></div><p><strong>✅ Optimized:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dockerfile data-lang=dockerfile><span class=line><span class=cl><span class=k>FROM</span><span class=s> node:18-alpine</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /app</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> package.json yarn.lock ./    <span class=c1># Rarely changes → copy first</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> npm install                   <span class=c1># Only rebuilds when dependencies change</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> . .                          <span class=c1># Changes often → copy last</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> npm run build<span class=err>
+</span></span></span></code></pre></td></tr></table></div></div><p><strong>Result:</strong> When only source code changes, <code>npm install</code> is cached → saving 2–5 minutes per build.</p><h3 id=use-dockerignore>Use .dockerignore</h3><p>The <code>.dockerignore</code> file excludes unnecessary files from the build context, reducing the risk of unnecessary cache invalidation.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-plaintext data-lang=plaintext><span class=line><span class=cl># .dockerignore
+</span></span><span class=line><span class=cl>node_modules
+</span></span><span class=line><span class=cl>dist
+</span></span><span class=line><span class=cl>.git
+</span></span><span class=line><span class=cl>.env
+</span></span><span class=line><span class=cl>*.log
+</span></span><span class=line><span class=cl>tmp*
+</span></span><span class=line><span class=cl>.DS_Store
+</span></span></code></pre></td></tr></table></div></div><p><strong>Why is this important?</strong> Without <code>.dockerignore</code>, the <code>COPY . .</code> instruction copies <code>node_modules</code> (hundreds of MBs) and <code>.git</code> into the build context. Any change in these directories triggers a cache miss.</p><h3 id=use-cache-mounts>Use Cache Mounts</h3><p>Cache mounts allow you to persist package manager caches <strong>across builds</strong>, even when a layer is rebuilt.</p><p><strong>Node.js:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dockerfile data-lang=dockerfile><span class=line><span class=cl><span class=k>FROM</span><span class=s> node:18-alpine</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /app</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> package.json yarn.lock ./<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> --mount<span class=o>=</span><span class=nv>type</span><span class=o>=</span>cache,target<span class=o>=</span>/root/.npm <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    npm install<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> . .<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> npm run build<span class=err>
+</span></span></span></code></pre></td></tr></table></div></div><p><strong>Python:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dockerfile data-lang=dockerfile><span class=line><span class=cl><span class=k>FROM</span><span class=s> python:3.11-slim</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /app</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> requirements.txt ./<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> --mount<span class=o>=</span><span class=nv>type</span><span class=o>=</span>cache,target<span class=o>=</span>/root/.cache/pip <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    pip install -r requirements.txt<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> . .<span class=err>
+</span></span></span></code></pre></td></tr></table></div></div><p><strong>Go:</strong></p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dockerfile data-lang=dockerfile><span class=line><span class=cl><span class=k>FROM</span><span class=s> golang:1.21-alpine</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /app</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> go.mod go.sum ./<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> --mount<span class=o>=</span><span class=nv>type</span><span class=o>=</span>cache,target<span class=o>=</span>/go/pkg/mod <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    --mount<span class=o>=</span><span class=nv>type</span><span class=o>=</span>cache,target<span class=o>=</span>/root/.cache/go-build <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    go mod download<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> . .<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> go build -o /app/server<span class=err>
+</span></span></span></code></pre></td></tr></table></div></div><p><strong>Benefit:</strong> Even when <code>package.json</code> changes and the layer must rebuild, previously downloaded packages are still stored in the cache mount → only new packages are downloaded, not everything from scratch.</p><h3 id=multi-stage-build>Multi-stage Build</h3><p>Multi-stage builds separate the build process from the runtime, reducing the final image size and optimizing cache for each stage.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dockerfile data-lang=dockerfile><span class=line><span class=cl><span class=c># Stage 1: Build (heavy layers but not included in the final image)</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>FROM</span><span class=s> node:18-alpine AS builder</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /app</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> package.json yarn.lock ./<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> npm install<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> . .<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> npm run build<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># Stage 2: Runtime (only contains necessary files)</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>FROM</span><span class=s> nginx:alpine AS production</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> --from<span class=o>=</span>builder /app/dist /usr/share/nginx/html<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>EXPOSE</span><span class=s> 80</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>CMD</span> <span class=p>[</span><span class=s2>&#34;nginx&#34;</span><span class=p>,</span> <span class=s2>&#34;-g&#34;</span><span class=p>,</span> <span class=s2>&#34;daemon off;&#34;</span><span class=p>]</span><span class=err>
+</span></span></span></code></pre></td></tr></table></div></div><div class=table-wrapper><table><thead><tr><th>Stage</th><th>Purpose</th><th>Size</th><th>Included in final image?</th></tr></thead><tbody><tr><td>builder</td><td>Build application</td><td>~500 MB</td><td>❌ No</td></tr><tr><td>production</td><td>Run application</td><td>~30 MB</td><td>✅ Yes</td></tr></tbody></table></div><hr><h2 id=real-world-example-optimizing-a-nodejs-dockerfile>Real-World Example: Optimizing a Node.js Dockerfile</h2><h3 id=unoptimized-dockerfile>Unoptimized Dockerfile</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dockerfile data-lang=dockerfile><span class=line><span class=cl><span class=k>FROM</span><span class=s> node:18</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /app</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> . .<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> npm install<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> npm run build<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>CMD</span> <span class=p>[</span><span class=s2>&#34;node&#34;</span><span class=p>,</span> <span class=s2>&#34;dist/server.js&#34;</span><span class=p>]</span><span class=err>
+</span></span></span></code></pre></td></tr></table></div></div><p><strong>Issues:</strong></p><ul><li>❌ Large base image (<code>node:18</code> ~ 900 MB)</li><li>❌ <code>COPY . .</code> before <code>npm install</code> → any code change rebuilds dependencies</li><li>❌ No <code>.dockerignore</code> → copies <code>node_modules</code>, <code>.git</code></li><li>❌ No multi-stage → final image includes devDependencies</li></ul><h3 id=optimized-dockerfile>Optimized Dockerfile</h3><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-dockerfile data-lang=dockerfile><span class=line><span class=cl><span class=c># Stage 1: Install dependencies</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>FROM</span><span class=s> node:18-alpine AS deps</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /app</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> package.json package-lock.json ./<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> --mount<span class=o>=</span><span class=nv>type</span><span class=o>=</span>cache,target<span class=o>=</span>/root/.npm <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    npm ci --only<span class=o>=</span>production<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># Stage 2: Build</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>FROM</span><span class=s> node:18-alpine AS builder</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /app</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> package.json package-lock.json ./<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> --mount<span class=o>=</span><span class=nv>type</span><span class=o>=</span>cache,target<span class=o>=</span>/root/.npm <span class=se>\
+</span></span></span><span class=line><span class=cl><span class=se></span>    npm ci<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> . .<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>RUN</span> npm run build<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=c># Stage 3: Runtime</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>FROM</span><span class=s> node:18-alpine AS runtime</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>WORKDIR</span><span class=s> /app</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>ENV</span> <span class=nv>NODE_ENV</span><span class=o>=</span>production
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>COPY</span> --from<span class=o>=</span>deps /app/node_modules ./node_modules<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> --from<span class=o>=</span>builder /app/dist ./dist<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>COPY</span> package.json ./<span class=err>
+</span></span></span><span class=line><span class=cl><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>EXPOSE</span><span class=s> 3000</span><span class=err>
+</span></span></span><span class=line><span class=cl><span class=err></span><span class=k>CMD</span> <span class=p>[</span><span class=s2>&#34;node&#34;</span><span class=p>,</span> <span class=s2>&#34;dist/server.js&#34;</span><span class=p>]</span><span class=err>
+</span></span></span></code></pre></td></tr></table></div></div><p><strong>Improvements:</strong></p><ul><li>✅ Small base image (<code>node:18-alpine</code> ~ 170 MB)</li><li>✅ Separate <code>COPY package.json</code> → efficient dependency caching</li><li>✅ Cache mount for npm → faster re-downloads on rebuild</li><li>✅ Multi-stage → final image only contains production dependencies</li><li>✅ Uses <code>npm ci</code> instead of <code>npm install</code> → ensures reproducible builds</li></ul><h3 id=results-comparison>Results Comparison</h3><div class=table-wrapper><table><thead><tr><th>Criteria</th><th>Unoptimized</th><th>Optimized</th></tr></thead><tbody><tr><td>Image size</td><td>~900 MB</td><td>~170 MB</td></tr><tr><td>First build</td><td>~5 minutes</td><td>~5 minutes</td></tr><tr><td>Rebuild on code change</td><td>~5 minutes</td><td>~30 seconds</td></tr><tr><td>Rebuild on dependency change</td><td>~5 minutes</td><td>~2 minutes</td></tr></tbody></table></div><hr><h2 id=useful-commands-for-debugging-cache>Useful Commands for Debugging Cache</h2><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=c1># View detailed build output (shows cache hit/miss)</span>
+</span></span><span class=line><span class=cl>docker build --progress<span class=o>=</span>plain -t myapp .
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Build without cache (force full rebuild)</span>
+</span></span><span class=line><span class=cl>docker build --no-cache -t myapp .
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Invalidate cache for a specific stage only</span>
+</span></span><span class=line><span class=cl>docker build --no-cache-filter builder -t myapp .
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># View image layers</span>
+</span></span><span class=line><span class=cl>docker <span class=nb>history</span> myapp
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Check build cache disk usage</span>
+</span></span><span class=line><span class=cl>docker builder du
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># Clear build cache</span>
+</span></span><span class=line><span class=cl>docker builder prune
+</span></span></code></pre></td></tr></table></div></div><p><strong>Reading build output:</strong> During builds, Docker shows <code>CACHED</code> for layers that use cache:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-fallback data-lang=fallback><span class=line><span class=cl> =&gt; CACHED [deps 2/3] COPY package.json package-lock.json ./
+</span></span><span class=line><span class=cl> =&gt; CACHED [deps 3/3] RUN npm ci --only=production
+</span></span><span class=line><span class=cl> =&gt; [builder 4/5] COPY . .
+</span></span><span class=line><span class=cl> =&gt; [builder 5/5] RUN npm run build
+</span></span></code></pre></td></tr></table></div></div><p>Lines with <code>CACHED</code> mean the layer was retrieved from cache and didn&rsquo;t need to be rebuilt.</p><hr><h2 id=implementation-notes>Implementation Notes</h2><ul><li><strong>When applying to your project</strong>, keep these important points in mind:<ul><li>Always create a <code>.dockerignore</code> file before writing your Dockerfile</li><li>Separate <code>COPY package.json</code> before <code>RUN npm install</code></li><li>Use multi-stage builds for production images</li><li>Cache mounts (<code>--mount=type=cache</code>) require BuildKit (enabled by default since Docker 23.0+)</li></ul></li><li><strong>Best practices</strong>:<ul><li>Order instructions: rarely changes → first, frequently changes → last</li><li>Use <code>npm ci</code> instead of <code>npm install</code> in CI/CD</li><li>Pin specific versions for base images (<code>node:18.12-alpine</code> instead of <code>node:latest</code>)</li></ul></li><li><strong>Troubleshooting</strong>:<ul><li>Build is slow even though nothing changed? → Check <code>.dockerignore</code>, unrelated files may be triggering cache misses</li><li>Cache mounts not working? → Make sure Docker BuildKit is enabled: <code>DOCKER_BUILDKIT=1</code></li><li>Want to see which layer missed? → Use <code>docker build --progress=plain</code></li></ul></li></ul><hr><h2 id=-conclusion>🎯 Conclusion</h2><p>To summarize:</p><ul><li><strong>Layer</strong> = each instruction in a Dockerfile creates a layer in the image</li><li><strong>Build Cache</strong> = Docker stores layer results and reuses them when rebuilding</li><li><strong>Cache invalidation</strong> = when a layer changes, all subsequent layers must rebuild</li><li><strong>Optimization</strong> = proper instruction ordering + <code>.dockerignore</code> + cache mounts + multi-stage builds</li></ul><p>By understanding and applying these 4 techniques, you can reduce Docker build times from <strong>5 minutes to under 30 seconds</strong> in most cases. 🚀</p><p>If you find this article helpful, feel free to ⭐ star the repo or 📱 share it with your friends! 😊</p><hr><h2 id=references>References</h2><ul><li><a class=link href=https://docs.docker.com/build/cache/ target=_blank rel=noopener>Docker Official Documentation - Build Cache</a></li><li><a class=link href=https://docs.docker.com/build/cache/invalidation/ target=_blank rel=noopener>Docker Official Documentation - Cache Invalidation</a></li><li><a class=link href=https://docs.docker.com/build/cache/optimize/ target=_blank rel=noopener>Docker Official Documentation - Optimize Cache</a></li><li><a class=link href=https://docs.docker.com/develop/dev-best-practices/ target=_blank rel=noopener>Best practices for writing Dockerfiles</a></li></ul></section><footer class=article-footer><section class=article-tags><a href=/en/tags/docker/>Docker</a>
+<a href=/en/tags/build-cache/>Build-Cache</a>
+<a href=/en/tags/layering/>Layering</a>
+<a href=/en/tags/optimization/>Optimization</a>
+<a href=/en/tags/dockerfile/>Dockerfile</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section><section class=article-lastmod><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<span>Last updated on 20:00 22/03/2026</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/en/posts/docker/docker-compose-v2-best-practices/><div class=article-image><img src=/images/docker/docker-compose-v2.webp loading=lazy data-key data-hash=/images/docker/docker-compose-v2.webp></div><div class=article-details><h2 class=article-title>Docker Compose for Beginners (v2) — Hands-on Practice</h2></div></a></article><article class=has-image><a href=/en/posts/docker/docker-basics-image-vs-container/><div class=article-image><img src=/images/docker/docker-basics-image-vs-container.webp loading=lazy data-key data-hash=/images/docker/docker-basics-image-vs-container.webp></div><div class=article-details><h2 class=article-title>Docker Basics: Image vs Container</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=hoangduonng/blog_comments issue-term=pathname label=comments theme=icy-dark crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2025 -
+2026 Hoang Duong</section><section class=powerby>Built with <a href=https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/ target=_blank rel=noopener>Ngữ Uyển ❤️</a><br>Theme <no value>designed by Jimmy</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
