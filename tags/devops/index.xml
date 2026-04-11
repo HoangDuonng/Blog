@@ -2,9 +2,9 @@
 &lt;/h2>&lt;p>Khi bạn đã biết viết Dockerfile và dùng Docker Compose, bước tiếp theo là &lt;strong>tự động hóa&lt;/strong> quá trình build và push Docker image mỗi khi code thay đổi. &lt;strong>GitHub Actions&lt;/strong> là công cụ CI/CD miễn phí tích hợp sẵn trong GitHub, rất phù hợp để bắt đầu.&lt;/p>
 &lt;p>Trong bài viết này, mình sẽ hướng dẫn bạn từ cơ bản đến thực hành: tạo workflow build Docker image, push lên registry, và tối ưu với cache.&lt;/p>
 &lt;hr>
-&lt;h2 id="i-github-actions-là-gì">I. GitHub Actions là gì?
+&lt;h2 id="github-actions-là-gì">GitHub Actions là gì?
 &lt;/h2>&lt;p>GitHub Actions là nền tảng CI/CD được tích hợp trực tiếp trong GitHub, cho phép bạn &lt;strong>tự động hóa workflow&lt;/strong> phát triển phần mềm ngay trong repository.&lt;/p>
-&lt;h3 id="1-các-khái-niệm-cơ-bản">1. Các khái niệm cơ bản
+&lt;h3 id="các-khái-niệm-cơ-bản">Các khái niệm cơ bản
 &lt;/h3>&lt;table>
 &lt;thead>
 &lt;tr>
@@ -39,7 +39,7 @@
 &lt;/tr>
 &lt;/tbody>
 &lt;/table>
-&lt;h3 id="2-cấu-trúc-thư-mục">2. Cấu trúc thư mục
+&lt;h3 id="cấu-trúc-thư-mục">Cấu trúc thư mục
 &lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -61,7 +61,7 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;hr>
-&lt;h2 id="ii-docker-official-actions">II. Docker Official Actions
+&lt;h2 id="docker-official-actions">Docker Official Actions
 &lt;/h2>&lt;p>Docker cung cấp bộ Actions chính thức giúp bạn build và push image một cách chuẩn hóa:&lt;/p>
 &lt;table>
 &lt;thead>
@@ -94,8 +94,8 @@
 &lt;/tbody>
 &lt;/table>
 &lt;hr>
-&lt;h2 id="iii-workflow-cơ-bản--build-và-push-lên-docker-hub">III. Workflow cơ bản — Build và Push lên Docker Hub
-&lt;/h2>&lt;h3 id="1-chuẩn-bị-secrets">1. Chuẩn bị secrets
+&lt;h2 id="workflow-cơ-bản--build-và-push-lên-docker-hub">Workflow cơ bản — Build và Push lên Docker Hub
+&lt;/h2>&lt;h3 id="chuẩn-bị-secrets">Chuẩn bị secrets
 &lt;/h3>&lt;p>Trước khi tạo workflow, bạn cần thêm secrets trong repo GitHub:&lt;/p>
 &lt;ol>
 &lt;li>Vào &lt;strong>Settings → Secrets and variables → Actions&lt;/strong>&lt;/li>
@@ -107,7 +107,7 @@
 &lt;/ul>
 &lt;/li>
 &lt;/ol>
-&lt;h3 id="2-tạo-workflow-file">2. Tạo workflow file
+&lt;h3 id="tạo-workflow-file">Tạo workflow file
 &lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
@@ -178,7 +178,7 @@
 &lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">tags&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">${{ secrets.DOCKERHUB_USERNAME }}/myapp:latest&lt;/span>&lt;span class="w">
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
-&lt;/div>&lt;h3 id="3-giải-thích-từng-phần">3. Giải thích từng phần
+&lt;/div>&lt;h3 id="giải-thích-từng-phần">Giải thích từng phần
 &lt;/h3>&lt;table>
 &lt;thead>
 &lt;tr>
@@ -218,7 +218,7 @@
 &lt;/tbody>
 &lt;/table>
 &lt;hr>
-&lt;h2 id="iv-push-lên-github-container-registry-ghcr">IV. Push lên GitHub Container Registry (GHCR)
+&lt;h2 id="push-lên-github-container-registry-ghcr">Push lên GitHub Container Registry (GHCR)
 &lt;/h2>&lt;p>Ngoài Docker Hub, bạn có thể push image lên &lt;strong>GHCR&lt;/strong> — registry miễn phí của GitHub, tiện lợi vì không cần tạo tài khoản bên ngoài.&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -355,7 +355,7 @@
 &lt;/tbody>
 &lt;/table>
 &lt;hr>
-&lt;h2 id="v-tự-động-tạo-tags-với-metadata-action">V. Tự động tạo tags với Metadata Action
+&lt;h2 id="tự-động-tạo-tags-với-metadata-action">Tự động tạo tags với Metadata Action
 &lt;/h2>&lt;p>Thay vì đặt tag thủ công (&lt;code>latest&lt;/code>, &lt;code>v1.0&lt;/code>), bạn có thể dùng &lt;code>docker/metadata-action&lt;/code> để &lt;strong>tự động tạo tags&lt;/strong> dựa trên Git events:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -423,9 +423,9 @@
 &lt;/tbody>
 &lt;/table>
 &lt;hr>
-&lt;h2 id="vi-tối-ưu-build-với-cache">VI. Tối ưu build với Cache
+&lt;h2 id="tối-ưu-build-với-cache">Tối ưu build với Cache
 &lt;/h2>&lt;p>Mỗi lần workflow chạy, Docker phải build lại từ đầu. Để &lt;strong>tăng tốc đáng kể&lt;/strong>, hãy sử dụng cache.&lt;/p>
-&lt;h3 id="1-github-actions-cache-khuyến-nghị">1. GitHub Actions Cache (Khuyến nghị)
+&lt;h3 id="github-actions-cache-khuyến-nghị">GitHub Actions Cache (Khuyến nghị)
 &lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -449,7 +449,7 @@
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>&lt;strong>Ưu điểm:&lt;/strong> Đơn giản nhất, sử dụng GitHub Cache API, không cần cấu hình thêm.&lt;/p>
-&lt;h3 id="2-registry-cache">2. Registry Cache
+&lt;h3 id="registry-cache">Registry Cache
 &lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
 &lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
@@ -501,7 +501,7 @@
 &lt;/tbody>
 &lt;/table>
 &lt;hr>
-&lt;h2 id="vii-ví-dụ-thực-tế--workflow-hoàn-chỉnh">VII. Ví dụ thực tế — Workflow hoàn chỉnh
+&lt;h2 id="ví-dụ-thực-tế--workflow-hoàn-chỉnh">Ví dụ thực tế — Workflow hoàn chỉnh
 &lt;/h2>&lt;p>Dưới đây là workflow hoàn chỉnh kết hợp tất cả best practices:&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -659,8 +659,8 @@
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;hr>
-&lt;h2 id="viii-troubleshooting-phổ-biến">VIII. Troubleshooting phổ biến
-&lt;/h2>&lt;h3 id="1-lỗi-authentication">1. Lỗi authentication
+&lt;h2 id="troubleshooting-phổ-biến">Troubleshooting phổ biến
+&lt;/h2>&lt;h3 id="lỗi-authentication">Lỗi authentication
 &lt;/h3>&lt;p>&lt;strong>Lỗi:&lt;/strong>&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
@@ -678,7 +678,7 @@
 &lt;li>Với Docker Hub: tạo lại Access Token tại &lt;a class="link" href="https://hub.docker.com/settings/security" target="_blank" rel="noopener"
 >hub.docker.com&lt;/a>&lt;/li>
 &lt;/ul>
-&lt;h3 id="2-build-chậm">2. Build chậm
+&lt;h3 id="build-chậm">Build chậm
 &lt;/h3>&lt;p>&lt;strong>Nguyên nhân:&lt;/strong> Không sử dụng cache hoặc Dockerfile chưa tối ưu layer.&lt;/p>
 &lt;p>&lt;strong>Giải pháp:&lt;/strong>&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
@@ -694,7 +694,7 @@
 &lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
 &lt;/div>
 &lt;/div>&lt;p>Và đảm bảo Dockerfile tận dụng layer caching (copy &lt;code>package.json&lt;/code> trước, &lt;code>COPY . .&lt;/code> sau).&lt;/p>
-&lt;h3 id="3-lỗi-permission-khi-push-lên-ghcr">3. Lỗi permission khi push lên GHCR
+&lt;h3 id="lỗi-permission-khi-push-lên-ghcr">Lỗi permission khi push lên GHCR
 &lt;/h3>&lt;p>&lt;strong>Lỗi:&lt;/strong>&lt;/p>
 &lt;div class="highlight">&lt;div class="chroma">
 &lt;table class="lntable">&lt;tr>&lt;td class="lntd">
