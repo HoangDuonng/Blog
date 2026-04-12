@@ -1,4 +1,410 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/posts/</link><description>Recent content in Posts on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 05 Apr 2026 20:00:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker Build Cache &amp; Layering</title><link>https://tech.nguuyen.io.vn/en/posts/docker/docker-build-cache-layering/</link><pubDate>Sun, 22 Mar 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/docker/docker-build-cache-layering/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker/docker-build-cache-layering.webp" alt="Featured image of post Docker Build Cache &amp; Layering" />&lt;h2 id="docker-build-cache--layering">Docker Build Cache &amp;amp; Layering
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/posts/</link><description>Recent content in Posts on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 12 Apr 2026 00:00:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Install Docker with a Bash Script – One Command Setup 🐳</title><link>https://tech.nguuyen.io.vn/en/posts/installation-guides/install-docker-bash-script/</link><pubDate>Sun, 12 Apr 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/installation-guides/install-docker-bash-script/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/installation-guides/docker-installation-ubuntu.webp" alt="Featured image of post Install Docker with a Bash Script – One Command Setup 🐳" />&lt;h2 id="-why-use-a-bash-script-to-install-docker">🐳 Why Use a Bash Script to Install Docker?
+&lt;/h2>&lt;p>Installing Docker manually works fine for a single server, but when you need to set up &lt;strong>multiple machines&lt;/strong> or want a &lt;strong>repeatable, error-free process&lt;/strong>, a bash script is the way to go.&lt;/p>
+&lt;p>&lt;strong>Benefits of scripted installation:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>⚡ &lt;strong>Speed&lt;/strong>: Install Docker in one command instead of running multiple steps&lt;/li>
+&lt;li>🔄 &lt;strong>Consistency&lt;/strong>: Every server gets the exact same setup&lt;/li>
+&lt;li>🚀 &lt;strong>Automation&lt;/strong>: Perfect for provisioning new servers in CI/CD pipelines&lt;/li>
+&lt;li>📋 &lt;strong>Documentation&lt;/strong>: The script itself serves as documentation of your setup process&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-prerequisites">✅ Prerequisites
+&lt;/h2>&lt;p>Before running the script, make sure you have:&lt;/p>
+&lt;ul>
+&lt;li>🖥️ &lt;strong>Ubuntu 20.04, 22.04, or 24.04&lt;/strong> server&lt;/li>
+&lt;li>🔐 &lt;strong>Sudo privileges&lt;/strong> to execute administrative commands&lt;/li>
+&lt;li>🌐 &lt;strong>Internet connection&lt;/strong> to download packages&lt;/li>
+&lt;li>⏱️ &lt;strong>Time&lt;/strong>: The script takes approximately 2-5 minutes to complete&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="the-installation-script">The Installation Script
+&lt;/h2>&lt;p>Below is a complete bash script that handles the entire Docker installation process, including cleanup of old versions, repository setup, installation, and user permission configuration.&lt;/p>
+&lt;p>&lt;strong>Create the script file:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">nano install-docker.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Paste the following content:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;span class="lnt">48
+&lt;/span>&lt;span class="lnt">49
+&lt;/span>&lt;span class="lnt">50
+&lt;/span>&lt;span class="lnt">51
+&lt;/span>&lt;span class="lnt">52
+&lt;/span>&lt;span class="lnt">53
+&lt;/span>&lt;span class="lnt">54
+&lt;/span>&lt;span class="lnt">55
+&lt;/span>&lt;span class="lnt">56
+&lt;/span>&lt;span class="lnt">57
+&lt;/span>&lt;span class="lnt">58
+&lt;/span>&lt;span class="lnt">59
+&lt;/span>&lt;span class="lnt">60
+&lt;/span>&lt;span class="lnt">61
+&lt;/span>&lt;span class="lnt">62
+&lt;/span>&lt;span class="lnt">63
+&lt;/span>&lt;span class="lnt">64
+&lt;/span>&lt;span class="lnt">65
+&lt;/span>&lt;span class="lnt">66
+&lt;/span>&lt;span class="lnt">67
+&lt;/span>&lt;span class="lnt">68
+&lt;/span>&lt;span class="lnt">69
+&lt;/span>&lt;span class="lnt">70
+&lt;/span>&lt;span class="lnt">71
+&lt;/span>&lt;span class="lnt">72
+&lt;/span>&lt;span class="lnt">73
+&lt;/span>&lt;span class="lnt">74
+&lt;/span>&lt;span class="lnt">75
+&lt;/span>&lt;span class="lnt">76
+&lt;/span>&lt;span class="lnt">77
+&lt;/span>&lt;span class="lnt">78
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span> -e
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">GREEN&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;\033[0;32m&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">RED&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;\033[0;31m&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">YELLOW&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;\033[1;33m&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">NC&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s1">&amp;#39;\033[0m&amp;#39;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">GREEN&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">========================================&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">GREEN&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> Docker Installation Script for Ubuntu &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">GREEN&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">========================================&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Check if running as root or with sudo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$EUID&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> -ne &lt;span class="m">0&lt;/span> &lt;span class="o">]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">RED&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">[ERROR] Please run this script with sudo or as root.&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Detect Ubuntu version&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">UBUNTU_VERSION&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>lsb_release -cs&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">YELLOW&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">[INFO] Detected Ubuntu version: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">UBUNTU_VERSION&lt;/span>&lt;span class="si">}${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Step 1: Remove old Docker versions&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">YELLOW&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">[1/6] Removing old Docker versions (if any)...&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apt-get remove -y docker docker-engine docker.io containerd runc 2&amp;gt;/dev/null &lt;span class="o">||&lt;/span> &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Step 2: Update system and install dependencies&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">YELLOW&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">[2/6] Updating system and installing dependencies...&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apt-get update -y
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apt-get install -y &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> apt-transport-https &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> ca-certificates &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> curl &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> gnupg &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> lsb-release &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> software-properties-common
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Step 3: Add Docker&amp;#39;s official GPG key&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">YELLOW&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">[3/6] Adding Docker GPG key...&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">install -m &lt;span class="m">0755&lt;/span> -d /etc/apt/keyrings
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">curl -fsSL https://download.docker.com/linux/ubuntu/gpg &lt;span class="p">|&lt;/span> gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chmod a+r /etc/apt/keyrings/docker.gpg
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Step 4: Add Docker repository&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">YELLOW&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">[4/6] Adding Docker repository...&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="s2">&amp;#34;deb [arch=&lt;/span>&lt;span class="k">$(&lt;/span>dpkg --print-architecture&lt;span class="k">)&lt;/span>&lt;span class="s2"> signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">UBUNTU_VERSION&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> stable&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Step 5: Install Docker Engine&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">YELLOW&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">[5/6] Installing Docker Engine...&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apt-get update -y
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Step 6: Enable and start Docker&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">YELLOW&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">[6/6] Enabling and starting Docker service...&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">systemctl &lt;span class="nb">enable&lt;/span> docker
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">systemctl start docker
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Add current user to docker group (if run via sudo)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[&lt;/span> -n &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$SUDO_USER&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> usermod -aG docker &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$SUDO_USER&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">GREEN&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">[INFO] User &amp;#39;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SUDO_USER&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#39; added to the docker group.&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">YELLOW&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">[NOTE] Log out and back in for group changes to take effect.&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Verify installation&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">GREEN&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">========================================&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">GREEN&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> Installation Complete! 🎉 &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">GREEN&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">========================================&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker --version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker compose version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">GREEN&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">[SUCCESS] Docker is installed and running.&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">YELLOW&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">[TIP] Run &amp;#39;docker run hello-world&amp;#39; to verify.&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">NC&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="how-to-use-the-script">How to Use the Script
+&lt;/h2>&lt;h3 id="run-directly">Run Directly
+&lt;/h3>&lt;p>Make the script executable and run it:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chmod +x install-docker.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo ./install-docker.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="run-without-downloading">Run Without Downloading
+&lt;/h3>&lt;p>You can also run the script directly from a URL using &lt;code>curl&lt;/code> (useful for remote server provisioning):&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">curl -fsSL https://your-server.com/install-docker.sh &lt;span class="p">|&lt;/span> sudo bash
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>⚠️ Security Note:&lt;/strong> Always review scripts before piping them to &lt;code>bash&lt;/code>. Only use this method with scripts you trust or host yourself.&lt;/p>
+&lt;hr>
+&lt;h2 id="what-the-script-does">What the Script Does
+&lt;/h2>&lt;p>Here&amp;rsquo;s a breakdown of each step:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Step&lt;/th>
+&lt;th>Action&lt;/th>
+&lt;th>Purpose&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>1&lt;/strong>&lt;/td>
+&lt;td>Remove old Docker versions&lt;/td>
+&lt;td>Prevents conflicts with previous installations&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>2&lt;/strong>&lt;/td>
+&lt;td>Update system &amp;amp; install dependencies&lt;/td>
+&lt;td>Ensures required packages are available&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>3&lt;/strong>&lt;/td>
+&lt;td>Add Docker GPG key&lt;/td>
+&lt;td>Authenticates packages from Docker&amp;rsquo;s repository&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>4&lt;/strong>&lt;/td>
+&lt;td>Add Docker repository&lt;/td>
+&lt;td>Configures APT to pull packages from Docker&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>5&lt;/strong>&lt;/td>
+&lt;td>Install Docker Engine&lt;/td>
+&lt;td>Installs Docker CE, CLI, containerd, Buildx, and Compose&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>6&lt;/strong>&lt;/td>
+&lt;td>Enable &amp;amp; start Docker&lt;/td>
+&lt;td>Ensures Docker runs now and on every boot&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="verifying-the-installation">Verifying the Installation
+&lt;/h2>&lt;p>After the script completes, verify everything is working:&lt;/p>
+&lt;p>&lt;strong>Check Docker version:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker --version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Check Docker Compose version:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker compose version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Run the test container:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker run hello-world
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If you see the &amp;ldquo;Hello from Docker!&amp;rdquo; message, the installation was successful! 🎉&lt;/p>
+&lt;p>&lt;strong>Check Docker service status:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo systemctl status docker
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>You should see &lt;code>active (running)&lt;/code> in the output.&lt;/p>
+&lt;hr>
+&lt;h2 id="customizing-the-script">Customizing the Script
+&lt;/h2>&lt;p>You can extend the script to fit your needs:&lt;/p>
+&lt;h3 id="add-docker-compose-standalone">Add Docker Compose Standalone
+&lt;/h3>&lt;p>If you need the standalone &lt;code>docker-compose&lt;/code> command (v1 syntax):&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Add this to the end of the script&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">COMPOSE_VERSION&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$(&lt;/span>curl -s https://api.github.com/repos/docker/compose/releases/latest &lt;span class="p">|&lt;/span> grep tag_name &lt;span class="p">|&lt;/span> cut -d &lt;span class="s1">&amp;#39;&amp;#34;&amp;#39;&lt;/span> -f 4&lt;span class="k">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">curl -L &lt;span class="s2">&amp;#34;https://github.com/docker/compose/releases/download/&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">COMPOSE_VERSION&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/docker-compose-&lt;/span>&lt;span class="k">$(&lt;/span>uname -s&lt;span class="k">)&lt;/span>&lt;span class="s2">-&lt;/span>&lt;span class="k">$(&lt;/span>uname -m&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> -o /usr/local/bin/docker-compose
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chmod +x /usr/local/bin/docker-compose
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="add-automatic-cleanup">Add Automatic Cleanup
+&lt;/h3>&lt;p>Add a cleanup step to remove unnecessary packages after installation:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Add this before the final success message&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apt-get autoremove -y
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">apt-get clean
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-troubleshooting">🔧 Troubleshooting
+&lt;/h2>&lt;h3 id="script-fails-with-permission-denied">Script fails with &amp;ldquo;Permission denied&amp;rdquo;
+&lt;/h3>&lt;p>&lt;strong>Cause:&lt;/strong> The script was not run with &lt;code>sudo&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Solution:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo ./install-docker.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="script-fails-at-gpg-key-step">Script fails at GPG key step
+&lt;/h3>&lt;p>&lt;strong>Cause:&lt;/strong> Network issues or DNS resolution problems.&lt;/p>
+&lt;p>&lt;strong>Solution:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Check internet connectivity&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ping -c &lt;span class="m">3&lt;/span> download.docker.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># If DNS fails, try using Google&amp;#39;s DNS&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;nameserver 8.8.8.8&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> sudo tee /etc/resolv.conf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="docker-commands-require-sudo-after-script">Docker commands require sudo after script
+&lt;/h3>&lt;p>&lt;strong>Cause:&lt;/strong> Group changes haven&amp;rsquo;t taken effect yet.&lt;/p>
+&lt;p>&lt;strong>Solution:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Log out and log back in, or run:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">newgrp docker
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Verify group membership&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">groups
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-conclusion">🎯 Conclusion
+&lt;/h2>&lt;p>Using a bash script to install Docker saves time and eliminates manual errors. Whether you&amp;rsquo;re setting up a single development machine or provisioning a fleet of production servers, this script provides a reliable and repeatable process. 🚀&lt;/p>
+&lt;p>&lt;strong>Key takeaways:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>📜 &lt;strong>One command&lt;/strong> to install Docker completely&lt;/li>
+&lt;li>🔄 &lt;strong>Idempotent&lt;/strong> — safe to run multiple times&lt;/li>
+&lt;li>🛠️ &lt;strong>Customizable&lt;/strong> — extend the script for your specific needs&lt;/li>
+&lt;li>🚀 &lt;strong>Production-ready&lt;/strong> — includes Docker Compose plugin and Buildx&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>📖 References:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener"
+>Official Docker Installation Guide&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/engine/install/linux-postinstall/" target="_blank" rel="noopener"
+>Docker Post-Installation Steps&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/compose/install/linux/" target="_blank" rel="noopener"
+>Docker Compose Plugin&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>Happy automating! 🚀😊&lt;/p></description></item><item><title>Docker Build Cache &amp; Layering</title><link>https://tech.nguuyen.io.vn/en/posts/docker/docker-build-cache-layering/</link><pubDate>Sun, 22 Mar 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/docker/docker-build-cache-layering/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker/docker-build-cache-layering.webp" alt="Featured image of post Docker Build Cache &amp; Layering" />&lt;h2 id="docker-build-cache--layering">Docker Build Cache &amp;amp; Layering
 &lt;/h2>&lt;p>Have you ever wondered why the &lt;strong>first build&lt;/strong> takes 5–10 minutes, but the &lt;strong>second build&lt;/strong> finishes in just a few seconds? That&amp;rsquo;s thanks to &lt;strong>Build Cache&lt;/strong>. But sometimes, changing just one line of code causes Docker to rebuild everything — that&amp;rsquo;s because you don&amp;rsquo;t yet understand how &lt;strong>Layering&lt;/strong> works. 🧱&lt;/p>
 &lt;p>In this article, I&amp;rsquo;ll explain in detail how Layers and Build Cache work, how Docker decides when to use cache versus rebuild, and techniques to optimize for faster builds.&lt;/p>
 &lt;hr>
