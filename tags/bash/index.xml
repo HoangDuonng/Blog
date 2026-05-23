@@ -1,619 +1,1128 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bash on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/bash/</link><description>Recent content in Bash on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sat, 11 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/bash/index.xml" rel="self" type="application/rss+xml"/><item><title>Cài đặt Docker và Docker Compose tự động bằng Bash Script</title><link>https://tech.nguuyen.io.vn/posts/docker/install-docker-bash-script/</link><pubDate>Sat, 11 Apr 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/docker/install-docker-bash-script/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker/install-docker-bash-script.webp" alt="Featured image of post Cài đặt Docker và Docker Compose tự động bằng Bash Script" />&lt;h2 id="tự-động-hóa-cài-đặt-docker-bằng-bash-script">Tự động hóa cài đặt Docker bằng Bash Script
-&lt;/h2>&lt;p>Khi làm việc với nhiều server, việc cài đặt Docker thủ công từng bước trên mỗi máy là tốn thời gian và dễ sai sót. Giải pháp đơn giản nhất là viết một &lt;strong>Bash Script&lt;/strong> tự động hóa toàn bộ quá trình — từ cài đặt dependencies, thêm Docker repository, đến cài đặt Docker Engine và Docker Compose.&lt;/p>
-&lt;p>Trong bài viết này, tôi sẽ hướng dẫn bạn viết script cài đặt Docker theo đúng &lt;a class="link" href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener"
->tài liệu chính thức của Docker&lt;/a>, đảm bảo luôn lấy phiên bản mới nhất từ repository chính thức.&lt;/p>
-&lt;hr>
-&lt;h2 id="yêu-cầu-hệ-thống">Yêu cầu hệ thống
-&lt;/h2>&lt;p>Trước khi bắt đầu, hãy đảm bảo server của bạn đáp ứng các điều kiện sau:&lt;/p>
-&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th>Yêu cầu&lt;/th>
-&lt;th>Chi tiết&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td>&lt;strong>Hệ điều hành&lt;/strong>&lt;/td>
-&lt;td>Ubuntu 22.04 (Jammy), 24.04 (Noble), 25.10 (Questing), 26.04 (Resolute)&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>&lt;strong>Kiến trúc&lt;/strong>&lt;/td>
-&lt;td>x86_64 (amd64), arm64, armhf, s390x, ppc64le&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>&lt;strong>Quyền&lt;/strong>&lt;/td>
-&lt;td>Tài khoản có quyền &lt;code>sudo&lt;/code>&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>&lt;strong>Kết nối mạng&lt;/strong>&lt;/td>
-&lt;td>Có kết nối Internet để tải packages&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table>
-&lt;hr>
-&lt;h2 id="gỡ-cài-đặt-phiên-bản-docker-cũ-nếu-có">Gỡ cài đặt phiên bản Docker cũ (nếu có)
-&lt;/h2>&lt;p>Theo &lt;a class="link" href="https://docs.docker.com/engine/install/ubuntu/#uninstall-old-versions" target="_blank" rel="noopener"
->tài liệu chính thức của Docker&lt;/a>, trước khi cài đặt Docker Engine, bạn cần gỡ bỏ các package xung đột có thể đã được cài sẵn bởi hệ điều hành:&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt remove docker.io docker-compose docker-compose-v2 docker-doc podman-docker containerd runc
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;blockquote>
-&lt;p>&lt;strong>Lưu ý:&lt;/strong> Lệnh trên có thể báo rằng không có package nào được cài — điều này hoàn toàn bình thường trên server mới.&lt;/p>&lt;/blockquote>
-&lt;hr>
-&lt;h2 id="viết-bash-script-cài-đặt-docker">Viết Bash Script cài đặt Docker
-&lt;/h2>&lt;h3 id="tạo-file-script">Tạo file script
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">vi install-docker.sh
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="nội-dung-script">Nội dung script
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;span class="lnt">18
-&lt;/span>&lt;span class="lnt">19
-&lt;/span>&lt;span class="lnt">20
-&lt;/span>&lt;span class="lnt">21
-&lt;/span>&lt;span class="lnt">22
-&lt;/span>&lt;span class="lnt">23
-&lt;/span>&lt;span class="lnt">24
-&lt;/span>&lt;span class="lnt">25
-&lt;/span>&lt;span class="lnt">26
-&lt;/span>&lt;span class="lnt">27
-&lt;/span>&lt;span class="lnt">28
-&lt;/span>&lt;span class="lnt">29
-&lt;/span>&lt;span class="lnt">30
-&lt;/span>&lt;span class="lnt">31
-&lt;/span>&lt;span class="lnt">32
-&lt;/span>&lt;span class="lnt">33
-&lt;/span>&lt;span class="lnt">34
-&lt;/span>&lt;span class="lnt">35
-&lt;/span>&lt;span class="lnt">36
-&lt;/span>&lt;span class="lnt">37
-&lt;/span>&lt;span class="lnt">38
-&lt;/span>&lt;span class="lnt">39
-&lt;/span>&lt;span class="lnt">40
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/bash
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -e
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;==========================================&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34; Cài đặt Docker Engine &amp;amp; Docker Compose &amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;==========================================&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Bước 1: Cài đặt các packages cần thiết&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;[1/5] Cài đặt dependencies...&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt update -y
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt install -y ca-certificates curl gnupg
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Bước 2: Thêm Docker GPG key&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;[2/5] Thêm Docker GPG key...&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo install -m &lt;span class="m">0755&lt;/span> -d /etc/apt/keyrings
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">curl -fsSL https://download.docker.com/linux/ubuntu/gpg &lt;span class="p">|&lt;/span> sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo chmod a+r /etc/apt/keyrings/docker.gpg
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Bước 3: Thêm Docker repository vào apt sources&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;[3/5] Thêm Docker repository...&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="se">\
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="s2">&amp;#34;deb [arch=&lt;/span>&lt;span class="k">$(&lt;/span>dpkg --print-architecture&lt;span class="k">)&lt;/span>&lt;span class="s2"> signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> &lt;/span>&lt;span class="k">$(&lt;/span>. /etc/os-release &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$VERSION_CODENAME&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">)&lt;/span>&lt;span class="s2"> stable&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="se">\
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> sudo tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Bước 4: Cài đặt Docker Engine và Docker Compose plugin&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;[4/5] Cài đặt Docker Engine...&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt update -y
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Bước 5: Khởi động và enable Docker service&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;[5/5] Khởi động Docker service...&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo systemctl start docker
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo systemctl &lt;span class="nb">enable&lt;/span> docker
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;==========================================&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34; Cài đặt hoàn tất!&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;==========================================&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker --version
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker compose version
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>&lt;strong>Giải thích từng bước trong script:&lt;/strong>&lt;/p>
-&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th>Bước&lt;/th>
-&lt;th>Lệnh&lt;/th>
-&lt;th>Mục đích&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td>1&lt;/td>
-&lt;td>&lt;code>apt install ca-certificates curl gnupg&lt;/code>&lt;/td>
-&lt;td>Cài các package cần thiết để xác thực GPG key và tải file qua HTTPS&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>2&lt;/td>
-&lt;td>&lt;code>curl ... | gpg --dearmor&lt;/code>&lt;/td>
-&lt;td>Tải và chuyển đổi GPG key của Docker sang định dạng binary để &lt;code>apt&lt;/code> xác thực package&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>3&lt;/td>
-&lt;td>&lt;code>tee /etc/apt/sources.list.d/docker.list&lt;/code>&lt;/td>
-&lt;td>Thêm Docker repository vào danh sách sources của &lt;code>apt&lt;/code>, tự động detect kiến trúc và codename&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>4&lt;/td>
-&lt;td>&lt;code>apt install docker-ce ...&lt;/code>&lt;/td>
-&lt;td>Cài đặt Docker Engine, CLI, containerd, Buildx plugin và Compose plugin&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>5&lt;/td>
-&lt;td>&lt;code>systemctl start/enable docker&lt;/code>&lt;/td>
-&lt;td>Khởi động Docker daemon và cấu hình tự khởi động cùng hệ thống&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table>
-&lt;blockquote>
-&lt;p>&lt;strong>Lưu ý quan trọng:&lt;/strong> Script sử dụng &lt;code>docker-compose-plugin&lt;/code> (Compose V2) thay vì &lt;code>docker-compose&lt;/code> standalone (V1). Compose V2 được tích hợp trực tiếp vào Docker CLI với lệnh &lt;code>docker compose&lt;/code> (không có dấu gạch ngang). Docker đã &lt;a class="link" href="https://docs.docker.com/compose/releases/migrate/" target="_blank" rel="noopener"
->ngừng hỗ trợ Compose V1&lt;/a> từ tháng 7/2023.&lt;/p>&lt;/blockquote>
-&lt;hr>
-&lt;h2 id="cấp-quyền-và-chạy-script">Cấp quyền và chạy script
-&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Cấp quyền thực thi&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chmod +x install-docker.sh
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Chạy script&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo bash install-docker.sh
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h2 id="xác-nhận-kết-quả-cài-đặt">Xác nhận kết quả cài đặt
-&lt;/h2>&lt;p>Sau khi script chạy xong, bạn sẽ thấy output tương tự:&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ docker --version
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Docker version 28.1.1, build 4eba377
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ docker compose version
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Docker Compose version v2.35.1
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>Để kiểm tra Docker hoạt động chính xác, chạy container thử nghiệm:&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo docker run hello-world
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>Nếu thấy thông báo &lt;code>Hello from Docker!&lt;/code>, quá trình cài đặt đã thành công.&lt;/p>
-&lt;hr>
-&lt;h2 id="cấu-hình-sau-cài-đặt-post-installation">Cấu hình sau cài đặt (Post-installation)
-&lt;/h2>&lt;h3 id="cho-phép-user-thường-chạy-docker-không-cần-sudo">Cho phép user thường chạy Docker (không cần sudo)
-&lt;/h3>&lt;p>Theo mặc định, lệnh &lt;code>docker&lt;/code> yêu cầu quyền &lt;code>root&lt;/code>. Để user thường có thể sử dụng Docker:&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;span class="lnt">5
-&lt;/span>&lt;span class="lnt">6
-&lt;/span>&lt;span class="lnt">7
-&lt;/span>&lt;span class="lnt">8
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Thêm user hiện tại vào group docker&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo usermod -aG docker &lt;span class="nv">$USER&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Áp dụng thay đổi group (cần logout/login lại hoặc chạy lệnh sau)&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">newgrp docker
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Xác nhận — không cần sudo nữa&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker run hello-world
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="cấu-hình-docker-khởi-động-cùng-hệ-thống">Cấu hình Docker khởi động cùng hệ thống
-&lt;/h3>&lt;p>Script đã thực hiện bước này với &lt;code>systemctl enable docker&lt;/code>. Để xác nhận:&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo systemctl is-enabled docker
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Output: enabled&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h2 id="ghi-chú-triển-khai">Ghi chú triển khai
-&lt;/h2>&lt;ul>
-&lt;li>&lt;strong>Khi áp dụng vào dự án của bạn&lt;/strong>, hãy lưu ý:
-&lt;ul>
-&lt;li>Script chỉ hỗ trợ &lt;strong>Ubuntu&lt;/strong>. Với Debian, CentOS, hoặc Fedora, cần thay đổi URL repository và lệnh package manager tương ứng&lt;/li>
-&lt;li>Luôn kiểm tra &lt;a class="link" href="https://docs.docker.com/engine/install/" target="_blank" rel="noopener"
->tài liệu chính thức&lt;/a> để đảm bảo các bước cài đặt chưa thay đổi&lt;/li>
-&lt;li>&lt;code>set -e&lt;/code> ở đầu script đảm bảo script dừng ngay khi có lệnh bị lỗi, tránh cài đặt không đầy đủ&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>Best practices:&lt;/strong>
-&lt;ul>
-&lt;li>Sử dụng &lt;code>docker compose&lt;/code> (V2) thay vì &lt;code>docker-compose&lt;/code> (V1) — V1 đã ngừng hỗ trợ&lt;/li>
-&lt;li>Không chạy container bằng user &lt;code>root&lt;/code> trong production — cấu hình user thường với group &lt;code>docker&lt;/code>&lt;/li>
-&lt;li>Sau khi cài đặt, cấu hình &lt;a class="link" href="https://docs.docker.com/reference/cli/dockerd/" target="_blank" rel="noopener"
->Docker daemon&lt;/a> phù hợp với môi trường (log driver, storage driver, v.v.)&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;li>&lt;strong>Troubleshooting:&lt;/strong>
-&lt;ul>
-&lt;li>Lỗi &lt;code>Permission denied&lt;/code> khi chạy &lt;code>docker&lt;/code>? → Đảm bảo user đã được thêm vào group &lt;code>docker&lt;/code> và đã logout/login lại&lt;/li>
-&lt;li>Lỗi &lt;code>Cannot connect to the Docker daemon&lt;/code>? → Kiểm tra Docker service: &lt;code>sudo systemctl status docker&lt;/code>&lt;/li>
-&lt;li>GPG key bị lỗi khi &lt;code>apt update&lt;/code>? → Xóa key cũ và chạy lại bước thêm GPG key: &lt;code>sudo rm /etc/apt/keyrings/docker.gpg&lt;/code>&lt;/li>
-&lt;/ul>
-&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-lời-kết">🎯 Lời kết
-&lt;/h2>&lt;p>Với Bash Script trên, bạn có thể cài đặt Docker Engine và Docker Compose trên bất kỳ server Ubuntu nào chỉ với một lệnh duy nhất. Script sử dụng phương pháp cài đặt chính thức từ Docker repository, đảm bảo:&lt;/p>
-&lt;ul>
-&lt;li>Luôn lấy &lt;strong>phiên bản mới nhất&lt;/strong> từ repository chính thức&lt;/li>
-&lt;li>Cài đặt đầy đủ: Docker Engine, CLI, containerd, Buildx, và Compose V2&lt;/li>
-&lt;li>Tự động khởi động và enable Docker service&lt;/li>
-&lt;/ul>
-&lt;p>Bạn có thể lưu script này vào hệ thống quản lý cấu hình (Ansible, Terraform) hoặc đơn giản clone từ repository để sử dụng trên nhiều server. 🚀&lt;/p>
-&lt;hr>
-&lt;h2 id="tài-liệu-tham-khảo">Tài liệu tham khảo
-&lt;/h2>&lt;ul>
-&lt;li>&lt;a class="link" href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener"
->Docker Official - Install Docker Engine on Ubuntu&lt;/a> — Hướng dẫn chính thức cài đặt Docker trên Ubuntu&lt;/li>
-&lt;li>&lt;a class="link" href="https://docs.docker.com/engine/install/linux-postinstall/" target="_blank" rel="noopener"
->Docker Official - Post-installation steps for Linux&lt;/a> — Cấu hình sau cài đặt&lt;/li>
-&lt;li>&lt;a class="link" href="https://docs.docker.com/compose/releases/migrate/" target="_blank" rel="noopener"
->Docker Compose - Migrate to Compose V2&lt;/a> — Hướng dẫn chuyển từ Compose V1 sang V2&lt;/li>
-&lt;/ul></description></item><item><title>Kiến thức về Terminal 📟</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-three/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-three/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-three.webp" alt="Featured image of post Kiến thức về Terminal 📟" />&lt;h2 id="-kiến-thức-về-terminal">🖥️ Kiến thức về Terminal
-&lt;/h2>&lt;p>Terminal là một giao diện văn bản giúp người dùng tương tác với hệ thống máy tính thông qua CLI (Command Line Interface - Giao diện dòng lệnh). Đây là công cụ quan trọng để quản lý hệ thống, thực thi lệnh, và tự động hóa các tác vụ.&lt;/p>
-&lt;h3 id="-tài-nguyên-miễn-phí">📚 Tài Nguyên Miễn Phí
-&lt;/h3>&lt;ul>
-&lt;li>&lt;a class="link" href="https://en.wikipedia.org/wiki/Command-line_interface" target="_blank" rel="noopener"
->📄 Bài viết: CLI là gì?&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://www.google.com/search?q=terminal%20knowledge%20guide%20for%20devops" target="_blank" rel="noopener"
->🔍 Tìm kiếm trên Google&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://www.youtube.com/results?search_query=terminal%20knowledge%20for%20devops" target="_blank" rel="noopener"
->▶️ Tìm kiếm trên YouTube&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;p>🔹 &lt;strong>Ví dụ:&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">ls -l &lt;span class="c1"># Liệt kê tệp trong thư mục hiện tại&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">pwd&lt;/span> &lt;span class="c1"># Hiển thị đường dẫn thư mục hiện tại&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h2 id="-giám-sát-tiến-trình-process-monitoring">📊 Giám Sát Tiến Trình (Process Monitoring)
-&lt;/h2>&lt;p>Giám sát tiến trình là quá trình quan sát và phân tích liên tục các tiến trình trong hệ thống IT để đảm bảo hiệu suất, hiệu quả và tuân thủ quy định. Nó giúp theo dõi các thông số quan trọng như tài nguyên sử dụng, hành vi của từng tiến trình hoặc ứng dụng đang chạy trong hệ thống.&lt;/p>
-&lt;h3 id="-công-cụ-được-đề-xuất">🏆 Công Cụ Được Đề Xuất
-&lt;/h3>&lt;ul>
-&lt;li>&lt;strong>🟣 lsof&lt;/strong> - Liệt kê thông tin về các tệp được mở bởi tiến trình.&lt;/li>
-&lt;/ul>
-&lt;h3 id="-tài-nguyên-miễn-phí-1">📚 Tài Nguyên Miễn Phí
-&lt;/h3>&lt;ul>
-&lt;li>&lt;a class="link" href="https://neverendingsecurity.wordpress.com/2015/04/13/lsof-commands-cheatsheet/" target="_blank" rel="noopener"
->📄 Lsof Cheat Sheet&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://man7.org/linux/man-pages/man8/lsof.8.html" target="_blank" rel="noopener"
->📖 Tài liệu lsof&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=n9nZ1ellaV0" target="_blank" rel="noopener"
->▶️ Video: Linux Crash Course - Lệnh lsof&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://app.daily.dev/tags/monitoring?ref=roadmapsh" target="_blank" rel="noopener"
->📝 Bài viết hay về Giám sát&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;p>🔹 &lt;strong>Ví dụ:&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">lsof -i :80 &lt;span class="c1"># Liệt kê tiến trình sử dụng cổng 80&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ps aux &lt;span class="c1"># Hiển thị tất cả tiến trình đang chạy&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h2 id="-giám-sát-hiệu-suất-performance-monitoring">🚀 Giám Sát Hiệu Suất (Performance Monitoring)
-&lt;/h2>&lt;p>Giám sát hiệu suất giúp thu thập, phân tích và báo cáo các chỉ số hiệu suất chính từ ứng dụng, mạng, máy chủ và cơ sở dữ liệu.&lt;/p>
-&lt;h3 id="-công-cụ-được-đề-xuất-1">🏆 Công Cụ Được Đề Xuất
-&lt;/h3>&lt;ul>
-&lt;li>&lt;strong>🟣 vmstat&lt;/strong> - Công cụ theo dõi bộ nhớ ảo và hiệu suất hệ thống.&lt;/li>
-&lt;/ul>
-&lt;h3 id="-tài-nguyên-miễn-phí-2">📚 Tài Nguyên Miễn Phí
-&lt;/h3>&lt;ul>
-&lt;li>&lt;a class="link" href="https://www.redhat.com/sysadmin/linux-commands-vmstat" target="_blank" rel="noopener"
->📖 Lệnh Linux: Khám phá bộ nhớ ảo với vmstat&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://man7.org/linux/man-pages/man8/vmstat.8.html" target="_blank" rel="noopener"
->📄 Tài liệu vmstat&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://phoenixnap.com/kb/vmstat-command" target="_blank" rel="noopener"
->▶️ Hướng dẫn vmstat&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://app.daily.dev/tags/monitoring?ref=roadmapsh" target="_blank" rel="noopener"
->📝 Bài viết hay về Giám sát&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;p>🔹 &lt;strong>Ví dụ:&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">vmstat &lt;span class="m">5&lt;/span> &lt;span class="m">10&lt;/span> &lt;span class="c1"># Cập nhật trạng thái hệ thống mỗi 5 giây trong 10 lần&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h2 id="-công-cụ-mạng-networking-tools">🌐 Công Cụ Mạng (Networking Tools)
-&lt;/h2>&lt;p>Các công cụ mạng hỗ trợ giám sát, phân tích, khắc phục sự cố và quản lý hệ thống mạng.&lt;/p>
-&lt;h3 id="-công-cụ-được-đề-xuất-2">🏆 Công Cụ Được Đề Xuất
-&lt;/h3>&lt;ul>
-&lt;li>&lt;strong>🟣 Wireshark&lt;/strong> - Phân tích gói tin sâu.&lt;/li>
-&lt;li>&lt;strong>🟣 Nmap&lt;/strong> - Quét mạng và kiểm tra bảo mật.&lt;/li>
-&lt;li>&lt;strong>Ping&lt;/strong> - Kiểm tra kết nối cơ bản.&lt;/li>
-&lt;li>&lt;strong>Traceroute&lt;/strong> - Xác định đường đi của gói tin trong mạng.&lt;/li>
-&lt;li>&lt;strong>Netstat&lt;/strong> - Hiển thị kết nối mạng.&lt;/li>
-&lt;li>&lt;strong>Tcpdump&lt;/strong> - Ghi và phân tích gói tin trên dòng lệnh.&lt;/li>
-&lt;li>&lt;strong>Iperf&lt;/strong> - Kiểm tra hiệu suất mạng.&lt;/li>
-&lt;li>&lt;strong>Netcat&lt;/strong> - Thực hiện nhiều tác vụ mạng khác nhau.&lt;/li>
-&lt;li>&lt;strong>Nslookup/Dig&lt;/strong> - Truy vấn DNS.&lt;/li>
-&lt;li>&lt;strong>PuTTY&lt;/strong> - Kết nối từ xa qua SSH hoặc Telnet.&lt;/li>
-&lt;/ul>
-&lt;p>🔹 &lt;strong>Ví dụ:&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">ping google.com &lt;span class="c1"># Kiểm tra kết nối đến Google&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nmap -sS 192.168.1.1 &lt;span class="c1"># Quét cổng máy chủ nội bộ&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h2 id="-xử-lý-văn-bản-text-manipulation">✂️ Xử Lý Văn Bản (Text Manipulation)
-&lt;/h2>&lt;p>Các công cụ hỗ trợ chỉnh sửa, xử lý và chuyển đổi dữ liệu văn bản.&lt;/p>
-&lt;h3 id="-công-cụ-được-đề-xuất-3">🏆 Công Cụ Được Đề Xuất
-&lt;/h3>&lt;ul>
-&lt;li>&lt;strong>🟣 sed&lt;/strong> - Chỉnh sửa luồng dữ liệu.&lt;/li>
-&lt;li>&lt;strong>🟣 awk&lt;/strong> - Quét mẫu và trích xuất dữ liệu.&lt;/li>
-&lt;li>&lt;strong>🟣 grep&lt;/strong> - Tìm kiếm văn bản bằng biểu thức chính quy.&lt;/li>
-&lt;li>&lt;strong>cut, sort, tr, uniq&lt;/strong> - Các lệnh hỗ trợ xử lý dữ liệu văn bản.&lt;/li>
-&lt;/ul>
-&lt;p>🔹 &lt;strong>Ví dụ:&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">grep &lt;span class="s2">&amp;#34;error&amp;#34;&lt;/span> logfile.txt &lt;span class="c1"># Tìm từ &amp;#34;error&amp;#34; trong logfile.txt&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;{print $1}&amp;#39;&lt;/span> data.txt &lt;span class="c1"># Lấy cột đầu tiên từ file data.txt&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h2 id="-bash-scripts">⚡ Bash Scripts
-&lt;/h2>&lt;p>Bash là một shell mạnh mẽ trên Unix/Linux, giúp thực hiện lệnh và tự động hóa tác vụ.&lt;/p>
-&lt;p>🔹 &lt;strong>Ví dụ:&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/bash
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Hello, World!&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h2 id="-trình-soạn-thảo-editors">✍️ Trình Soạn Thảo (Editors)
-&lt;/h2>&lt;p>Trình soạn thảo văn bản là công cụ quan trọng để chỉnh sửa và quản lý tệp văn bản.&lt;/p>
-&lt;h3 id="-công-cụ-được-đề-xuất-4">🏆 Công Cụ Được Đề Xuất
-&lt;/h3>&lt;ul>
-&lt;li>&lt;strong>🟣 Vim&lt;/strong> - Mạnh mẽ, tùy biến cao, phù hợp cho lập trình viên.&lt;/li>
-&lt;li>&lt;strong>🟣 Emacs&lt;/strong> - Linh hoạt, có nhiều plugin hỗ trợ.&lt;/li>
-&lt;li>&lt;strong>Sublime Text&lt;/strong> - Tốc độ cao, giao diện thân thiện.&lt;/li>
-&lt;li>&lt;strong>Visual Studio Code&lt;/strong> - Mã nguồn mở, hỗ trợ gỡ lỗi, mở rộng, tích hợp công cụ phát triển.&lt;/li>
-&lt;/ul>
-&lt;p>🔹 &lt;strong>Ví dụ:&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">vim myfile.txt &lt;span class="c1"># Mở tệp bằng Vim&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">nano myfile.txt &lt;span class="c1"># Mở tệp bằng Nano&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h2 id="-kết-luận">🔚 Kết Luận
-&lt;/h2>&lt;p>Hiểu và sử dụng thành thạo các công cụ trên giúp bạn làm việc hiệu quả hơn trong môi trường Linux và DevOps. Các công cụ &lt;em>&lt;strong>🟣 được đánh dấu&lt;/strong>&lt;/em> là những công cụ phổ biến và mạnh mẽ nhất, được nhiều chuyên gia khuyến nghị. Bạn có thể tìm hiểu sâu hơn thông qua các tài nguyên miễn phí đi kèm. Nếu có điều gì cần làm rõ hoặc bổ sung, hãy phản hồi để mình cập nhật nhé!&lt;/p>
-&lt;p>&lt;strong>👉 Bước tiếp theo:&lt;/strong> Nâng cao kiến thức về hệ thống quản lý phiên bản (&lt;em>&lt;strong>Version Control Systems&lt;/strong>&lt;/em>) để theo dõi, quản lý và cộng tác hiệu quả trên mã nguồn.&lt;/p></description></item><item><title>Học về Linux &amp; Hệ Điều Hành 🖥️</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-two/</link><pubDate>Sat, 22 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-two/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-two.webp" alt="Featured image of post Học về Linux &amp; Hệ Điều Hành 🖥️" />&lt;h2 id="-tại-sao-linux-quan-trọng-trong-devops">📌 Tại sao Linux quan trọng trong DevOps?
-&lt;/h2>&lt;p>Linux là nền tảng của hầu hết các hệ thống server, container (Docker, Kubernetes), và cloud. DevOps cần nắm vững Linux để:&lt;/p>
-&lt;ul>
-&lt;li>✅ Quản lý server hiệu quả.&lt;/li>
-&lt;li>✅ Viết script tự động hóa.&lt;/li>
-&lt;li>✅ Xử lý file, user, tiến trình.&lt;/li>
-&lt;li>✅ Tối ưu hệ thống và bảo mật.&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-hệ-điều-hành-là-gì">⚙️ Hệ điều hành là gì?
-&lt;/h2>&lt;p>Hệ điều hành (OS) là phần mềm quản lý tài nguyên phần cứng và phần mềm của máy tính, cung cấp dịch vụ chung cho các chương trình. Nó đóng vai trò trung gian giữa ứng dụng và phần cứng, xử lý các nhiệm vụ như:&lt;/p>
-&lt;ul>
-&lt;li>🔹 Quản lý bộ nhớ.&lt;/li>
-&lt;li>🔹 Lập lịch tiến trình.&lt;/li>
-&lt;li>🔹 Quản lý hệ thống file.&lt;/li>
-&lt;li>🔹 Kiểm soát thiết bị.&lt;/li>
-&lt;/ul>
-&lt;h3 id="-các-hệ-điều-hành-phổ-biến">🌍 Các hệ điều hành phổ biến:
-&lt;/h3>&lt;ul>
-&lt;li>💻 &lt;strong>Máy tính cá nhân&lt;/strong>: Windows, macOS, Linux (Ubuntu, Fedora,&amp;hellip;)&lt;/li>
-&lt;li>📱 &lt;strong>Thiết bị di động&lt;/strong>: iOS, Android&lt;/li>
-&lt;li>🖥️ &lt;strong>Máy chủ&lt;/strong>: Ubuntu Server, Red Hat Enterprise Linux, Windows Server&lt;/li>
-&lt;/ul>
-&lt;p>Mỗi hệ điều hành có đặc điểm, giao diện và khả năng tương thích khác nhau. Chúng đóng vai trò quan trọng trong bảo mật hệ thống, tối ưu hiệu suất và cung cấp trải nghiệm người dùng nhất quán.&lt;/p>
-&lt;hr>
-&lt;h2 id="-các-lệnh-linux-cơ-bản">🛠️ Các lệnh Linux cơ bản
-&lt;/h2>&lt;p>Dưới đây là một số lệnh Linux quan trọng:&lt;/p>
-&lt;h3 id="--kiểm-tra-hệ-thống">🔍 Kiểm tra hệ thống
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">uname -a &lt;span class="c1"># Hiển thị thông tin hệ điều hành&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">uptime &lt;span class="c1"># Thời gian hoạt động của hệ thống&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">free -m &lt;span class="c1"># Kiểm tra bộ nhớ RAM&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="--quản-lý-file--thư-mục">📂 Quản lý file &amp;amp; thư mục
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">ls -l &lt;span class="c1"># Liệt kê file với thông tin chi tiết&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkdir mydir &lt;span class="c1"># Tạo thư mục mới&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">rm -rf mydir &lt;span class="c1"># Xóa thư mục và nội dung bên trong&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="--quản-lý-tiến-trình">🚀 Quản lý tiến trình
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">top &lt;span class="c1"># Hiển thị tiến trình đang chạy&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ps aux &lt;span class="c1"># Liệt kê tất cả tiến trình&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">kill&lt;/span> -9 PID &lt;span class="c1"># Dừng tiến trình theo PID&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="--quản-lý-người-dùng">👤 Quản lý người dùng
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">whoami &lt;span class="c1"># Xem user hiện tại&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo useradd devops &lt;span class="c1"># Tạo user mới&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo passwd devops &lt;span class="c1"># Đặt mật khẩu cho user&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h2 id="-script-bash-kiểm-tra-tài-nguyên-hệ-thống">📜 Script Bash kiểm tra tài nguyên hệ thống
-&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/bash
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;==== Thông tin hệ thống ====&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">uname -a
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;==== Thời gian hoạt động ====&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">uptime
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;==== Bộ nhớ RAM ====&amp;#34;&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">free -m
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="-cách-chạy-script">▶️ &lt;strong>Cách chạy script:&lt;/strong>
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chmod +x system_check.sh &lt;span class="c1"># Cấp quyền thực thi cho script&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./system_check.sh &lt;span class="c1"># Chạy script trong terminal&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h2 id="-tài-nguyên-học-tập">📚 Tài nguyên học tập
-&lt;/h2>&lt;p>Dưới đây là một số tài nguyên miễn phí để tìm hiểu thêm về hệ điều hành:&lt;/p>
-&lt;ul>
-&lt;li>📖 &lt;a class="link" href="https://en.wikipedia.org/wiki/Operating_system" target="_blank" rel="noopener"
->Operating Systems - Wiki&lt;/a>&lt;/li>
-&lt;li>📖 &lt;a class="link" href="https://www.tpointtech.com/operating-system" target="_blank" rel="noopener"
->All you need to know about OS&lt;/a>&lt;/li>
-&lt;li>📖 &lt;a class="link" href="https://www.tutorialspoint.com/operating_system/os_overview.htm" target="_blank" rel="noopener"
->Learn Operating Systems&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=pVzRTmdd9j0" target="_blank" rel="noopener"
->What are Operating Systems?&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=vBURTt97EkA&amp;amp;list=PLBlnK6fEyqRiVhbXDGLXDk_OQAeuVcp2O" target="_blank" rel="noopener"
->Operating Systems&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-kết-luận">🎯 Kết luận
-&lt;/h2>&lt;ul>
-&lt;li>✅ Linux là kỹ năng bắt buộc trong DevOps.&lt;/li>
-&lt;li>✅ Học cách dùng terminal &amp;amp; Bash scripting.&lt;/li>
-&lt;/ul>
-&lt;p>&lt;strong>👉 Bước tiếp theo:&lt;/strong> Tìm hiểu sâu hơn về &lt;em>&lt;strong>terminal và cách sử dụng CLI&lt;/strong>&lt;/em> để làm việc hiệu quả với hệ thống.&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bash on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/bash/</link><description>Recent content in Bash on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sat, 23 May 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/bash/index.xml" rel="self" type="application/rss+xml"/><item><title>Cơ bản Bash Script trong DevOps</title><link>https://tech.nguuyen.io.vn/posts/bash/bash-step-one/</link><pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/bash/bash-step-one/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/bash/bash-step-one.webp" alt="Featured image of post Cơ bản Bash Script trong DevOps" /&gt;&lt;h2 id="cơ-bản-bash-script-trong-devops"&gt;Cơ bản Bash Script trong DevOps
+&lt;/h2&gt;&lt;p&gt;Trong công việc DevOps, có rất nhiều tác vụ lặp lại hằng ngày: kiểm tra dung lượng ổ đĩa, xem service còn chạy không, backup file cấu hình, gom log, hoặc chạy một chuỗi lệnh deploy đơn giản. Nếu làm thủ công từng bước, bạn rất dễ quên lệnh, gõ sai tham số hoặc mất thời gian khi phải thao tác trên nhiều server.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bash Script&lt;/strong&gt; giúp đóng gói các lệnh đó thành một file có thể chạy lại nhiều lần. Đây là kỹ năng nền tảng trước khi bạn đi sâu vào CI/CD, Docker, Kubernetes, Cloud CLI hay automation phức tạp hơn.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="bash-là-gì"&gt;Bash là gì?
+&lt;/h2&gt;&lt;p&gt;Bash là viết tắt của &lt;strong&gt;Bourne Again SHell&lt;/strong&gt; — một chương trình shell phổ biến trên Linux và macOS. Shell nhận lệnh từ người dùng, diễn giải lệnh đó, rồi yêu cầu hệ điều hành thực thi.&lt;/p&gt;
+&lt;p&gt;Khi bạn gõ lệnh trong terminal như:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ls -lah
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;df -h
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cat /etc/os-release
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;bạn đang tương tác với shell. Khi gom nhiều lệnh vào một file text, file đó trở thành &lt;strong&gt;shell script&lt;/strong&gt;. Theo tài liệu chính thức của GNU Bash, một shell script là file văn bản chứa các lệnh shell; khi được Bash chạy, Bash đọc và thực thi các lệnh trong file đó rồi thoát.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="vì-sao-devops-cần-biết-bash"&gt;Vì sao DevOps cần biết Bash?
+&lt;/h2&gt;&lt;p&gt;Bash không thay thế các công cụ như Ansible, Terraform hay Jenkins, nhưng nó là lớp keo rất hữu ích để nối các công cụ lại với nhau.&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Tình huống DevOps&lt;/th&gt;
+&lt;th&gt;Bash giúp gì?&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;Kiểm tra server nhanh&lt;/td&gt;
+&lt;td&gt;Gom &lt;code&gt;hostname&lt;/code&gt;, &lt;code&gt;df&lt;/code&gt;, &lt;code&gt;free&lt;/code&gt;, &lt;code&gt;uptime&lt;/code&gt; vào một script&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Deploy ứng dụng nhỏ&lt;/td&gt;
+&lt;td&gt;Chạy pull code, build, restart service theo đúng thứ tự&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Dọn log hoặc file tạm&lt;/td&gt;
+&lt;td&gt;Tự động tìm và xoá file cũ theo lịch&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;CI/CD pipeline&lt;/td&gt;
+&lt;td&gt;Viết step build/test/deploy có exit code rõ ràng&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Tích hợp tool&lt;/td&gt;
+&lt;td&gt;Gọi &lt;code&gt;docker&lt;/code&gt;, &lt;code&gt;kubectl&lt;/code&gt;, &lt;code&gt;aws&lt;/code&gt;, &lt;code&gt;curl&lt;/code&gt;, &lt;code&gt;jq&lt;/code&gt; từ một script&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Điểm mạnh của Bash là &lt;strong&gt;có sẵn trên hầu hết server Linux&lt;/strong&gt;, không cần cài runtime phức tạp. Với những tác vụ nhỏ, một script 20–50 dòng thường đủ nhanh, dễ đọc và dễ đưa vào pipeline.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="script-đầu-tiên-với-hellosh"&gt;Script đầu tiên với hello.sh
+&lt;/h2&gt;&lt;p&gt;Tạo file &lt;code&gt;hello.sh&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vi hello.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Thêm nội dung sau:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/usr/bin/env bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Hello DevOps!&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Script đang chạy trên máy: &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;hostname&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Chạy script bằng Bash:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;bash hello.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Hoặc cấp quyền thực thi rồi chạy trực tiếp:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod +x hello.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./hello.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="shebang-dùng-để-làm-gì"&gt;Shebang dùng để làm gì?
+&lt;/h3&gt;&lt;p&gt;Dòng đầu tiên:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/usr/bin/env bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;được gọi là &lt;strong&gt;shebang&lt;/strong&gt;. Nó cho hệ điều hành biết nên dùng chương trình nào để chạy file này. Cách viết &lt;code&gt;#!/usr/bin/env bash&lt;/code&gt; thường linh hoạt hơn &lt;code&gt;#!/bin/bash&lt;/code&gt; vì Bash có thể nằm ở vị trí khác nhau tuỳ hệ thống.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="làm-việc-với-biến"&gt;Làm việc với biến
+&lt;/h2&gt;&lt;p&gt;Biến giúp script lưu giá trị để tái sử dụng. Cú pháp gán biến trong Bash &lt;strong&gt;không có khoảng trắng&lt;/strong&gt; quanh dấu &lt;code&gt;=&lt;/code&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;APP_NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;manager-blog&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;ENVIRONMENT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;staging&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Ứng dụng: &lt;/span&gt;&lt;span class="nv"&gt;$APP_NAME&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Môi trường: &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;ENVIRONMENT&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Nên dùng &lt;code&gt;${VAR}&lt;/code&gt; khi ghép biến với chuỗi để tránh Bash hiểu nhầm tên biến:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;BACKUP_DIR&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;/backup&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;APP_NAME&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;manager-blog&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;File backup: &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;BACKUP_DIR&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;/&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;APP_NAME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;.tar.gz&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="một-số-biến-đặc-biệt-hay-gặp"&gt;Một số biến đặc biệt hay gặp
+&lt;/h3&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Biến&lt;/th&gt;
+&lt;th&gt;Ý nghĩa&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;$0&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Tên script đang chạy&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;$1&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Tham số đầu tiên truyền vào script&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;$#&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Tổng số tham số&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;$?&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Exit code của lệnh vừa chạy&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;code&gt;$$&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Process ID của shell hiện tại&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;Ví dụ script nhận tên môi trường:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/usr/bin/env bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;ENVIRONMENT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;1&lt;/span&gt;&lt;span class="k"&gt;:-&lt;/span&gt;&lt;span class="nv"&gt;dev&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Deploy tới môi trường: &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;ENVIRONMENT&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Chạy thử:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;bash deploy-message.sh staging
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Nếu không truyền tham số, &lt;code&gt;${1:-dev}&lt;/code&gt; sẽ dùng giá trị mặc định là &lt;code&gt;dev&lt;/code&gt;.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="một-số-lệnh-cơ-bản-thường-dùng"&gt;Một số lệnh cơ bản thường dùng
+&lt;/h2&gt;&lt;h3 id="echo"&gt;echo
+&lt;/h3&gt;&lt;p&gt;&lt;code&gt;echo&lt;/code&gt; in nội dung ra màn hình, rất hữu ích để hiển thị trạng thái trong script:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Bắt đầu kiểm tra hệ thống...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Hoàn tất.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="read"&gt;read
+&lt;/h3&gt;&lt;p&gt;&lt;code&gt;read&lt;/code&gt; đọc input từ người dùng:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/usr/bin/env bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;read&lt;/span&gt; -r -p &lt;span class="s2"&gt;&amp;#34;Nhập tên service cần kiểm tra: &amp;#34;&lt;/span&gt; SERVICE_NAME
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Bạn muốn kiểm tra service: &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;SERVICE_NAME&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Trong script, nên dùng &lt;code&gt;read -r&lt;/code&gt; để tránh việc dấu backslash bị diễn giải ngoài ý muốn.&lt;/p&gt;
+&lt;h3 id="cat"&gt;cat
+&lt;/h3&gt;&lt;p&gt;&lt;code&gt;cat&lt;/code&gt; thường dùng để xem nhanh nội dung file hoặc tạo file mẫu:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cat /etc/os-release
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Tạo file cấu hình bằng here-document:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;cat &amp;gt; app.env &lt;span class="s"&gt;&amp;lt;&amp;lt;&amp;#39;EOF&amp;#39;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;APP_ENV=staging
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;APP_PORT=8080
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s"&gt;EOF&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="ls"&gt;ls
+&lt;/h3&gt;&lt;p&gt;&lt;code&gt;ls&lt;/code&gt; liệt kê file/thư mục:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ls -lah /var/log
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Trong script production, nếu cần xử lý danh sách file phức tạp, bạn nên cẩn thận với tên file có khoảng trắng. Các bài sau về xử lý file sẽ đi sâu hơn vào chủ đề này.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="thực-hành-devops-check_systemsh"&gt;Thực hành DevOps: check_system.sh
+&lt;/h2&gt;&lt;p&gt;Ví dụ dưới đây tạo một script kiểm tra nhanh thông tin hệ thống: hostname, hệ điều hành, uptime, CPU load, RAM và dung lượng ổ đĩa root.&lt;/p&gt;
+&lt;p&gt;Tạo file:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vi check_system.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Nội dung script:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;span class="lnt"&gt;20
+&lt;/span&gt;&lt;span class="lnt"&gt;21
+&lt;/span&gt;&lt;span class="lnt"&gt;22
+&lt;/span&gt;&lt;span class="lnt"&gt;23
+&lt;/span&gt;&lt;span class="lnt"&gt;24
+&lt;/span&gt;&lt;span class="lnt"&gt;25
+&lt;/span&gt;&lt;span class="lnt"&gt;26
+&lt;/span&gt;&lt;span class="lnt"&gt;27
+&lt;/span&gt;&lt;span class="lnt"&gt;28
+&lt;/span&gt;&lt;span class="lnt"&gt;29
+&lt;/span&gt;&lt;span class="lnt"&gt;30
+&lt;/span&gt;&lt;span class="lnt"&gt;31
+&lt;/span&gt;&lt;span class="lnt"&gt;32
+&lt;/span&gt;&lt;span class="lnt"&gt;33
+&lt;/span&gt;&lt;span class="lnt"&gt;34
+&lt;/span&gt;&lt;span class="lnt"&gt;35
+&lt;/span&gt;&lt;span class="lnt"&gt;36
+&lt;/span&gt;&lt;span class="lnt"&gt;37
+&lt;/span&gt;&lt;span class="lnt"&gt;38
+&lt;/span&gt;&lt;span class="lnt"&gt;39
+&lt;/span&gt;&lt;span class="lnt"&gt;40
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/usr/bin/env bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;set&lt;/span&gt; -euo pipefail
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;========================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34; System quick check&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;========================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;HOSTNAME_VALUE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;hostname&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;KERNEL_VALUE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;uname -sr&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;UPTIME_VALUE&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;uptime -p 2&amp;gt;/dev/null &lt;span class="o"&gt;||&lt;/span&gt; uptime&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;DISK_USAGE_PERCENT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;df -P / &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;NR==2 {gsub(&amp;#34;%&amp;#34;, &amp;#34;&amp;#34;, $5); print $5}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;[[&lt;/span&gt; -r /proc/loadavg &lt;span class="o"&gt;]]&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;LOAD_1M&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;awk &lt;span class="s1"&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt; /proc/loadavg&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nv"&gt;LOAD_1M&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;uptime &lt;span class="p"&gt;|&lt;/span&gt; awk -F&lt;span class="s1"&gt;&amp;#39;load average: &amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{print $2}&amp;#39;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; awk -F&lt;span class="s1"&gt;&amp;#39;,&amp;#39;&lt;/span&gt; &lt;span class="s1"&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Hostname : &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;HOSTNAME_VALUE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Kernel : &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;KERNEL_VALUE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Uptime : &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;UPTIME_VALUE&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Load 1m : &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;LOAD_1M&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Disk / : &lt;/span&gt;&lt;span class="si"&gt;${&lt;/span&gt;&lt;span class="nv"&gt;DISK_USAGE_PERCENT&lt;/span&gt;&lt;span class="si"&gt;}&lt;/span&gt;&lt;span class="s2"&gt;%&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="nb"&gt;command&lt;/span&gt; -v free &amp;gt;/dev/null 2&amp;gt;&lt;span class="p"&gt;&amp;amp;&lt;/span&gt;1&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;echo&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Memory:&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; free -h
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;echo&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Memory: command &amp;#39;free&amp;#39; không có trên hệ thống này.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;if&lt;/span&gt; &lt;span class="o"&gt;((&lt;/span&gt; DISK_USAGE_PERCENT &amp;gt;&lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="m"&gt;80&lt;/span&gt; &lt;span class="o"&gt;))&lt;/span&gt;&lt;span class="p"&gt;;&lt;/span&gt; &lt;span class="k"&gt;then&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;WARNING: Dung lượng ổ đĩa / đã vượt ngưỡng 80%.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;exit&lt;/span&gt; &lt;span class="m"&gt;1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;else&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;OK: Dung lượng ổ đĩa / vẫn trong ngưỡng an toàn.&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="k"&gt;fi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Cấp quyền và chạy:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod +x check_system.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./check_system.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Output có thể tương tự:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;========================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; System quick &lt;span class="nv"&gt;check&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="o"&gt;========================================&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Hostname : webserver-01
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Kernel : Linux 6.8.0-31-generic
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Uptime : up &lt;span class="m"&gt;3&lt;/span&gt; days, &lt;span class="m"&gt;4&lt;/span&gt; hours, &lt;span class="m"&gt;12&lt;/span&gt; minutes
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Load 1m : 0.21
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Disk / : 42%
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Memory:
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; total used free shared buff/cache available
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Mem: 3.8Gi 1.1Gi 720Mi 32Mi 2.0Gi 2.4Gi
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Swap: 2.0Gi 0B 2.0Gi
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;OK: Dung lượng ổ đĩa / vẫn trong ngưỡng an toàn.
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Điểm đáng chú ý trong script:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;set -euo pipefail&lt;/code&gt; giúp script dừng khi gặp lỗi, khi dùng biến chưa khai báo, hoặc khi một lệnh trong pipeline bị lỗi.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;df -P /&lt;/code&gt; dùng định dạng POSIX để output ổn định hơn khi parse bằng &lt;code&gt;awk&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;command -v free&lt;/code&gt; kiểm tra lệnh &lt;code&gt;free&lt;/code&gt; có tồn tại trước khi gọi.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;exit 1&lt;/code&gt; khi disk vượt ngưỡng giúp CI/CD hoặc cron job nhận biết script đang báo lỗi.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="debug-script-với-bash--n-và-bash--x"&gt;Debug script với bash -n và bash -x
+&lt;/h2&gt;&lt;p&gt;Khi script dài hơn, bạn cần kiểm tra lỗi cú pháp và xem Bash thực thi từng lệnh như thế nào.&lt;/p&gt;
+&lt;h3 id="kiểm-tra-cú-pháp-với-bash--n"&gt;Kiểm tra cú pháp với bash -n
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;bash -n check_system.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Tuỳ chọn &lt;code&gt;-n&lt;/code&gt; yêu cầu Bash đọc lệnh nhưng không thực thi. Nó hữu ích để phát hiện lỗi như thiếu &lt;code&gt;fi&lt;/code&gt;, thiếu dấu nháy, hoặc sai cú pháp vòng lặp.&lt;/p&gt;
+&lt;h3 id="trace-từng-lệnh-với-bash--x"&gt;Trace từng lệnh với bash -x
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;bash -x check_system.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Tuỳ chọn &lt;code&gt;-x&lt;/code&gt; in ra từng lệnh sau khi Bash đã expand biến và trước khi thực thi. Đây là cách rất nhanh để biết script đang nhận giá trị nào.&lt;/p&gt;
+&lt;p&gt;Bạn cũng có thể bật/tắt trace trong một đoạn cụ thể:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;set&lt;/span&gt; -x
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nv"&gt;DISK_USAGE_PERCENT&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;df -P / &lt;span class="p"&gt;|&lt;/span&gt; awk &lt;span class="s1"&gt;&amp;#39;NR==2 {gsub(&amp;#34;%&amp;#34;, &amp;#34;&amp;#34;, $5); print $5}&amp;#39;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;set&lt;/span&gt; +x
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Lưu ý bảo mật:&lt;/strong&gt; Không bật &lt;code&gt;set -x&lt;/code&gt; quanh đoạn xử lý secret/token vì giá trị nhạy cảm có thể bị in ra log.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="best-practice-khi-mới-viết-bash"&gt;Best practice khi mới viết Bash
+&lt;/h2&gt;&lt;p&gt;Một vài thói quen nhỏ sẽ giúp script dễ đọc và ít lỗi hơn:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Luôn quote biến:&lt;/strong&gt; dùng &lt;code&gt;&amp;quot;${VAR}&amp;quot;&lt;/code&gt; thay vì &lt;code&gt;$VAR&lt;/code&gt;, đặc biệt khi giá trị có khoảng trắng.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Đặt tên biến rõ nghĩa:&lt;/strong&gt; &lt;code&gt;DISK_USAGE_PERCENT&lt;/code&gt; dễ hiểu hơn &lt;code&gt;D&lt;/code&gt; hoặc &lt;code&gt;VALUE&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Dùng &lt;code&gt;set -euo pipefail&lt;/code&gt; có chủ đích:&lt;/strong&gt; tốt cho nhiều script automation, nhưng cần hiểu luồng lỗi trước khi dùng trong script phức tạp.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Kiểm tra command trước khi dùng:&lt;/strong&gt; &lt;code&gt;command -v docker&lt;/code&gt;, &lt;code&gt;command -v jq&lt;/code&gt;, &lt;code&gt;command -v kubectl&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Không hardcode thông tin nhạy cảm:&lt;/strong&gt; token, password, private key nên lấy từ environment variable hoặc secret manager.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Trả exit code rõ ràng:&lt;/strong&gt; &lt;code&gt;exit 0&lt;/code&gt; cho thành công, khác &lt;code&gt;0&lt;/code&gt; cho lỗi để cron/CI/CD nhận biết.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Chạy &lt;code&gt;bash -n&lt;/code&gt; trước khi deploy:&lt;/strong&gt; đây là bước kiểm tra nhanh nhưng rất hữu ích.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="ghi-chú-triển-khai"&gt;Ghi chú triển khai
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Khi áp dụng vào dự án của bạn&lt;/strong&gt;, hãy bắt đầu bằng các script nhỏ, rõ mục tiêu: &lt;code&gt;check_system.sh&lt;/code&gt;, &lt;code&gt;backup_config.sh&lt;/code&gt;, &lt;code&gt;restart_service.sh&lt;/code&gt;. Đừng cố viết một script quá lớn ngay từ đầu.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Best practices:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Đặt script trong thư mục riêng như &lt;code&gt;scripts/&lt;/code&gt; hoặc &lt;code&gt;ops/&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Thêm README ngắn mô tả cách chạy, tham số đầu vào và ví dụ output.&lt;/li&gt;
+&lt;li&gt;Với script chạy trong CI/CD, luôn kiểm tra exit code và log đủ thông tin để debug.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Troubleshooting:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Lỗi &lt;code&gt;Permission denied&lt;/code&gt;? → Chạy &lt;code&gt;chmod +x script.sh&lt;/code&gt; hoặc dùng &lt;code&gt;bash script.sh&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Lỗi &lt;code&gt;command not found&lt;/code&gt;? → Kiểm tra command đã cài chưa và biến &lt;code&gt;PATH&lt;/code&gt; có đúng không.&lt;/li&gt;
+&lt;li&gt;Script chạy khác giữa local và server? → Kiểm tra phiên bản Bash bằng &lt;code&gt;bash --version&lt;/code&gt; và hệ điều hành bằng &lt;code&gt;cat /etc/os-release&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-lời-kết"&gt;🎯 Lời kết
+&lt;/h2&gt;&lt;p&gt;Bash Script là kỹ năng nền tảng nhưng rất thực dụng trong DevOps. Chỉ với vài lệnh cơ bản như &lt;code&gt;echo&lt;/code&gt;, &lt;code&gt;read&lt;/code&gt;, &lt;code&gt;cat&lt;/code&gt;, &lt;code&gt;ls&lt;/code&gt;, kết hợp biến và kiểm tra exit code, bạn đã có thể tự động hóa nhiều tác vụ vận hành hằng ngày.&lt;/p&gt;
+&lt;p&gt;Ở bài tiếp theo, chúng ta sẽ đi vào &lt;strong&gt;điều kiện trong Bash&lt;/strong&gt; với &lt;code&gt;if/elif/else&lt;/code&gt;, toán tử so sánh, kiểm tra file và &lt;code&gt;case...esac&lt;/code&gt; — những thành phần giúp script bắt đầu có logic xử lý linh hoạt hơn. 🚀&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="tài-liệu-tham-khảo"&gt;Tài liệu tham khảo
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.gnu.org/software/bash/manual/bash.html" target="_blank" rel="noopener"
+&gt;GNU Bash Manual&lt;/a&gt; — Tài liệu chính thức về Bash, shell scripts, biến, builtins và các tuỳ chọn như &lt;code&gt;-n&lt;/code&gt;, &lt;code&gt;-x&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.gnu.org/software/bash/manual/bash.html#Shell-Scripts" target="_blank" rel="noopener"
+&gt;GNU Bash Reference Manual - Shell Scripts&lt;/a&gt; — Mô tả cách Bash đọc và thực thi shell script.&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin" target="_blank" rel="noopener"
+&gt;GNU Bash Reference Manual - The Set Builtin&lt;/a&gt; — Tham khảo các tuỳ chọn &lt;code&gt;set&lt;/code&gt;, bao gồm &lt;code&gt;-u&lt;/code&gt;, &lt;code&gt;-x&lt;/code&gt;, &lt;code&gt;-n&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Cài đặt Docker và Docker Compose tự động bằng Bash Script</title><link>https://tech.nguuyen.io.vn/posts/docker/install-docker-bash-script/</link><pubDate>Sat, 11 Apr 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/docker/install-docker-bash-script/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker/install-docker-bash-script.webp" alt="Featured image of post Cài đặt Docker và Docker Compose tự động bằng Bash Script" /&gt;&lt;h2 id="tự-động-hóa-cài-đặt-docker-bằng-bash-script"&gt;Tự động hóa cài đặt Docker bằng Bash Script
+&lt;/h2&gt;&lt;p&gt;Khi làm việc với nhiều server, việc cài đặt Docker thủ công từng bước trên mỗi máy là tốn thời gian và dễ sai sót. Giải pháp đơn giản nhất là viết một &lt;strong&gt;Bash Script&lt;/strong&gt; tự động hóa toàn bộ quá trình — từ cài đặt dependencies, thêm Docker repository, đến cài đặt Docker Engine và Docker Compose.&lt;/p&gt;
+&lt;p&gt;Trong bài viết này, tôi sẽ hướng dẫn bạn viết script cài đặt Docker theo đúng &lt;a class="link" href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener"
+&gt;tài liệu chính thức của Docker&lt;/a&gt;, đảm bảo luôn lấy phiên bản mới nhất từ repository chính thức.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="yêu-cầu-hệ-thống"&gt;Yêu cầu hệ thống
+&lt;/h2&gt;&lt;p&gt;Trước khi bắt đầu, hãy đảm bảo server của bạn đáp ứng các điều kiện sau:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Yêu cầu&lt;/th&gt;
+&lt;th&gt;Chi tiết&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Hệ điều hành&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Ubuntu 22.04 (Jammy), 24.04 (Noble), 25.10 (Questing), 26.04 (Resolute)&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Kiến trúc&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;x86_64 (amd64), arm64, armhf, s390x, ppc64le&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Quyền&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Tài khoản có quyền &lt;code&gt;sudo&lt;/code&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;&lt;strong&gt;Kết nối mạng&lt;/strong&gt;&lt;/td&gt;
+&lt;td&gt;Có kết nối Internet để tải packages&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;hr&gt;
+&lt;h2 id="gỡ-cài-đặt-phiên-bản-docker-cũ-nếu-có"&gt;Gỡ cài đặt phiên bản Docker cũ (nếu có)
+&lt;/h2&gt;&lt;p&gt;Theo &lt;a class="link" href="https://docs.docker.com/engine/install/ubuntu/#uninstall-old-versions" target="_blank" rel="noopener"
+&gt;tài liệu chính thức của Docker&lt;/a&gt;, trước khi cài đặt Docker Engine, bạn cần gỡ bỏ các package xung đột có thể đã được cài sẵn bởi hệ điều hành:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt remove docker.io docker-compose docker-compose-v2 docker-doc podman-docker containerd runc
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Lưu ý:&lt;/strong&gt; Lệnh trên có thể báo rằng không có package nào được cài — điều này hoàn toàn bình thường trên server mới.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="viết-bash-script-cài-đặt-docker"&gt;Viết Bash Script cài đặt Docker
+&lt;/h2&gt;&lt;h3 id="tạo-file-script"&gt;Tạo file script
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vi install-docker.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="nội-dung-script"&gt;Nội dung script
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;span class="lnt"&gt;18
+&lt;/span&gt;&lt;span class="lnt"&gt;19
+&lt;/span&gt;&lt;span class="lnt"&gt;20
+&lt;/span&gt;&lt;span class="lnt"&gt;21
+&lt;/span&gt;&lt;span class="lnt"&gt;22
+&lt;/span&gt;&lt;span class="lnt"&gt;23
+&lt;/span&gt;&lt;span class="lnt"&gt;24
+&lt;/span&gt;&lt;span class="lnt"&gt;25
+&lt;/span&gt;&lt;span class="lnt"&gt;26
+&lt;/span&gt;&lt;span class="lnt"&gt;27
+&lt;/span&gt;&lt;span class="lnt"&gt;28
+&lt;/span&gt;&lt;span class="lnt"&gt;29
+&lt;/span&gt;&lt;span class="lnt"&gt;30
+&lt;/span&gt;&lt;span class="lnt"&gt;31
+&lt;/span&gt;&lt;span class="lnt"&gt;32
+&lt;/span&gt;&lt;span class="lnt"&gt;33
+&lt;/span&gt;&lt;span class="lnt"&gt;34
+&lt;/span&gt;&lt;span class="lnt"&gt;35
+&lt;/span&gt;&lt;span class="lnt"&gt;36
+&lt;/span&gt;&lt;span class="lnt"&gt;37
+&lt;/span&gt;&lt;span class="lnt"&gt;38
+&lt;/span&gt;&lt;span class="lnt"&gt;39
+&lt;/span&gt;&lt;span class="lnt"&gt;40
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;set&lt;/span&gt; -e
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;==========================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34; Cài đặt Docker Engine &amp;amp; Docker Compose &amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;==========================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Bước 1: Cài đặt các packages cần thiết&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;[1/5] Cài đặt dependencies...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt update -y
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt install -y ca-certificates curl gnupg
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Bước 2: Thêm Docker GPG key&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;[2/5] Thêm Docker GPG key...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo install -m &lt;span class="m"&gt;0755&lt;/span&gt; -d /etc/apt/keyrings
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -fsSL https://download.docker.com/linux/ubuntu/gpg &lt;span class="p"&gt;|&lt;/span&gt; sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo chmod a+r /etc/apt/keyrings/docker.gpg
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Bước 3: Thêm Docker repository vào apt sources&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;[3/5] Thêm Docker repository...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;deb [arch=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;dpkg --print-architecture&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt; signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;. /etc/os-release &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$VERSION_CODENAME&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt; stable&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="se"&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; sudo tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Bước 4: Cài đặt Docker Engine và Docker Compose plugin&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;[4/5] Cài đặt Docker Engine...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt update -y
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Bước 5: Khởi động và enable Docker service&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;[5/5] Khởi động Docker service...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl start docker
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; docker
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;==========================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34; Cài đặt hoàn tất!&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;==========================================&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker --version
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker compose version
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Giải thích từng bước trong script:&lt;/strong&gt;&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Bước&lt;/th&gt;
+&lt;th&gt;Lệnh&lt;/th&gt;
+&lt;th&gt;Mục đích&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;1&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;apt install ca-certificates curl gnupg&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Cài các package cần thiết để xác thực GPG key và tải file qua HTTPS&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;2&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;curl ... | gpg --dearmor&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Tải và chuyển đổi GPG key của Docker sang định dạng binary để &lt;code&gt;apt&lt;/code&gt; xác thực package&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;3&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;tee /etc/apt/sources.list.d/docker.list&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Thêm Docker repository vào danh sách sources của &lt;code&gt;apt&lt;/code&gt;, tự động detect kiến trúc và codename&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;4&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;apt install docker-ce ...&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Cài đặt Docker Engine, CLI, containerd, Buildx plugin và Compose plugin&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;5&lt;/td&gt;
+&lt;td&gt;&lt;code&gt;systemctl start/enable docker&lt;/code&gt;&lt;/td&gt;
+&lt;td&gt;Khởi động Docker daemon và cấu hình tự khởi động cùng hệ thống&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Lưu ý quan trọng:&lt;/strong&gt; Script sử dụng &lt;code&gt;docker-compose-plugin&lt;/code&gt; (Compose V2) thay vì &lt;code&gt;docker-compose&lt;/code&gt; standalone (V1). Compose V2 được tích hợp trực tiếp vào Docker CLI với lệnh &lt;code&gt;docker compose&lt;/code&gt; (không có dấu gạch ngang). Docker đã &lt;a class="link" href="https://docs.docker.com/compose/releases/migrate/" target="_blank" rel="noopener"
+&gt;ngừng hỗ trợ Compose V1&lt;/a&gt; từ tháng 7/2023.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;hr&gt;
+&lt;h2 id="cấp-quyền-và-chạy-script"&gt;Cấp quyền và chạy script
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Cấp quyền thực thi&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod +x install-docker.sh
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Chạy script&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo bash install-docker.sh
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="xác-nhận-kết-quả-cài-đặt"&gt;Xác nhận kết quả cài đặt
+&lt;/h2&gt;&lt;p&gt;Sau khi script chạy xong, bạn sẽ thấy output tương tự:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ docker --version
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Docker version 28.1.1, build 4eba377
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ docker compose version
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Docker Compose version v2.35.1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Để kiểm tra Docker hoạt động chính xác, chạy container thử nghiệm:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo docker run hello-world
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Nếu thấy thông báo &lt;code&gt;Hello from Docker!&lt;/code&gt;, quá trình cài đặt đã thành công.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="cấu-hình-sau-cài-đặt-post-installation"&gt;Cấu hình sau cài đặt (Post-installation)
+&lt;/h2&gt;&lt;h3 id="cho-phép-user-thường-chạy-docker-không-cần-sudo"&gt;Cho phép user thường chạy Docker (không cần sudo)
+&lt;/h3&gt;&lt;p&gt;Theo mặc định, lệnh &lt;code&gt;docker&lt;/code&gt; yêu cầu quyền &lt;code&gt;root&lt;/code&gt;. Để user thường có thể sử dụng Docker:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;span class="lnt"&gt;5
+&lt;/span&gt;&lt;span class="lnt"&gt;6
+&lt;/span&gt;&lt;span class="lnt"&gt;7
+&lt;/span&gt;&lt;span class="lnt"&gt;8
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Thêm user hiện tại vào group docker&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo usermod -aG docker &lt;span class="nv"&gt;$USER&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Áp dụng thay đổi group (cần logout/login lại hoặc chạy lệnh sau)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;newgrp docker
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Xác nhận — không cần sudo nữa&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker run hello-world
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="cấu-hình-docker-khởi-động-cùng-hệ-thống"&gt;Cấu hình Docker khởi động cùng hệ thống
+&lt;/h3&gt;&lt;p&gt;Script đã thực hiện bước này với &lt;code&gt;systemctl enable docker&lt;/code&gt;. Để xác nhận:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl is-enabled docker
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Output: enabled&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="ghi-chú-triển-khai"&gt;Ghi chú triển khai
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Khi áp dụng vào dự án của bạn&lt;/strong&gt;, hãy lưu ý:
+&lt;ul&gt;
+&lt;li&gt;Script chỉ hỗ trợ &lt;strong&gt;Ubuntu&lt;/strong&gt;. Với Debian, CentOS, hoặc Fedora, cần thay đổi URL repository và lệnh package manager tương ứng&lt;/li&gt;
+&lt;li&gt;Luôn kiểm tra &lt;a class="link" href="https://docs.docker.com/engine/install/" target="_blank" rel="noopener"
+&gt;tài liệu chính thức&lt;/a&gt; để đảm bảo các bước cài đặt chưa thay đổi&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;set -e&lt;/code&gt; ở đầu script đảm bảo script dừng ngay khi có lệnh bị lỗi, tránh cài đặt không đầy đủ&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Best practices:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Sử dụng &lt;code&gt;docker compose&lt;/code&gt; (V2) thay vì &lt;code&gt;docker-compose&lt;/code&gt; (V1) — V1 đã ngừng hỗ trợ&lt;/li&gt;
+&lt;li&gt;Không chạy container bằng user &lt;code&gt;root&lt;/code&gt; trong production — cấu hình user thường với group &lt;code&gt;docker&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Sau khi cài đặt, cấu hình &lt;a class="link" href="https://docs.docker.com/reference/cli/dockerd/" target="_blank" rel="noopener"
+&gt;Docker daemon&lt;/a&gt; phù hợp với môi trường (log driver, storage driver, v.v.)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Troubleshooting:&lt;/strong&gt;
+&lt;ul&gt;
+&lt;li&gt;Lỗi &lt;code&gt;Permission denied&lt;/code&gt; khi chạy &lt;code&gt;docker&lt;/code&gt;? → Đảm bảo user đã được thêm vào group &lt;code&gt;docker&lt;/code&gt; và đã logout/login lại&lt;/li&gt;
+&lt;li&gt;Lỗi &lt;code&gt;Cannot connect to the Docker daemon&lt;/code&gt;? → Kiểm tra Docker service: &lt;code&gt;sudo systemctl status docker&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;GPG key bị lỗi khi &lt;code&gt;apt update&lt;/code&gt;? → Xóa key cũ và chạy lại bước thêm GPG key: &lt;code&gt;sudo rm /etc/apt/keyrings/docker.gpg&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-lời-kết"&gt;🎯 Lời kết
+&lt;/h2&gt;&lt;p&gt;Với Bash Script trên, bạn có thể cài đặt Docker Engine và Docker Compose trên bất kỳ server Ubuntu nào chỉ với một lệnh duy nhất. Script sử dụng phương pháp cài đặt chính thức từ Docker repository, đảm bảo:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Luôn lấy &lt;strong&gt;phiên bản mới nhất&lt;/strong&gt; từ repository chính thức&lt;/li&gt;
+&lt;li&gt;Cài đặt đầy đủ: Docker Engine, CLI, containerd, Buildx, và Compose V2&lt;/li&gt;
+&lt;li&gt;Tự động khởi động và enable Docker service&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Bạn có thể lưu script này vào hệ thống quản lý cấu hình (Ansible, Terraform) hoặc đơn giản clone từ repository để sử dụng trên nhiều server. 🚀&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="tài-liệu-tham-khảo"&gt;Tài liệu tham khảo
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener"
+&gt;Docker Official - Install Docker Engine on Ubuntu&lt;/a&gt; — Hướng dẫn chính thức cài đặt Docker trên Ubuntu&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://docs.docker.com/engine/install/linux-postinstall/" target="_blank" rel="noopener"
+&gt;Docker Official - Post-installation steps for Linux&lt;/a&gt; — Cấu hình sau cài đặt&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://docs.docker.com/compose/releases/migrate/" target="_blank" rel="noopener"
+&gt;Docker Compose - Migrate to Compose V2&lt;/a&gt; — Hướng dẫn chuyển từ Compose V1 sang V2&lt;/li&gt;
+&lt;/ul&gt;</description></item><item><title>Kiến thức về Terminal 📟</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-three/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-three/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-three.webp" alt="Featured image of post Kiến thức về Terminal 📟" /&gt;&lt;h2 id="-kiến-thức-về-terminal"&gt;🖥️ Kiến thức về Terminal
+&lt;/h2&gt;&lt;p&gt;Terminal là một giao diện văn bản giúp người dùng tương tác với hệ thống máy tính thông qua CLI (Command Line Interface - Giao diện dòng lệnh). Đây là công cụ quan trọng để quản lý hệ thống, thực thi lệnh, và tự động hóa các tác vụ.&lt;/p&gt;
+&lt;h3 id="-tài-nguyên-miễn-phí"&gt;📚 Tài Nguyên Miễn Phí
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://en.wikipedia.org/wiki/Command-line_interface" target="_blank" rel="noopener"
+&gt;📄 Bài viết: CLI là gì?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.google.com/search?q=terminal%20knowledge%20guide%20for%20devops" target="_blank" rel="noopener"
+&gt;🔍 Tìm kiếm trên Google&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/results?search_query=terminal%20knowledge%20for%20devops" target="_blank" rel="noopener"
+&gt;▶️ Tìm kiếm trên YouTube&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Ví dụ:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ls -l &lt;span class="c1"&gt;# Liệt kê tệp trong thư mục hiện tại&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;pwd&lt;/span&gt; &lt;span class="c1"&gt;# Hiển thị đường dẫn thư mục hiện tại&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-giám-sát-tiến-trình-process-monitoring"&gt;📊 Giám Sát Tiến Trình (Process Monitoring)
+&lt;/h2&gt;&lt;p&gt;Giám sát tiến trình là quá trình quan sát và phân tích liên tục các tiến trình trong hệ thống IT để đảm bảo hiệu suất, hiệu quả và tuân thủ quy định. Nó giúp theo dõi các thông số quan trọng như tài nguyên sử dụng, hành vi của từng tiến trình hoặc ứng dụng đang chạy trong hệ thống.&lt;/p&gt;
+&lt;h3 id="-công-cụ-được-đề-xuất"&gt;🏆 Công Cụ Được Đề Xuất
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🟣 lsof&lt;/strong&gt; - Liệt kê thông tin về các tệp được mở bởi tiến trình.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-tài-nguyên-miễn-phí-1"&gt;📚 Tài Nguyên Miễn Phí
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://neverendingsecurity.wordpress.com/2015/04/13/lsof-commands-cheatsheet/" target="_blank" rel="noopener"
+&gt;📄 Lsof Cheat Sheet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://man7.org/linux/man-pages/man8/lsof.8.html" target="_blank" rel="noopener"
+&gt;📖 Tài liệu lsof&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=n9nZ1ellaV0" target="_blank" rel="noopener"
+&gt;▶️ Video: Linux Crash Course - Lệnh lsof&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://app.daily.dev/tags/monitoring?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;📝 Bài viết hay về Giám sát&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Ví dụ:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;lsof -i :80 &lt;span class="c1"&gt;# Liệt kê tiến trình sử dụng cổng 80&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ps aux &lt;span class="c1"&gt;# Hiển thị tất cả tiến trình đang chạy&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-giám-sát-hiệu-suất-performance-monitoring"&gt;🚀 Giám Sát Hiệu Suất (Performance Monitoring)
+&lt;/h2&gt;&lt;p&gt;Giám sát hiệu suất giúp thu thập, phân tích và báo cáo các chỉ số hiệu suất chính từ ứng dụng, mạng, máy chủ và cơ sở dữ liệu.&lt;/p&gt;
+&lt;h3 id="-công-cụ-được-đề-xuất-1"&gt;🏆 Công Cụ Được Đề Xuất
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🟣 vmstat&lt;/strong&gt; - Công cụ theo dõi bộ nhớ ảo và hiệu suất hệ thống.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-tài-nguyên-miễn-phí-2"&gt;📚 Tài Nguyên Miễn Phí
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.redhat.com/sysadmin/linux-commands-vmstat" target="_blank" rel="noopener"
+&gt;📖 Lệnh Linux: Khám phá bộ nhớ ảo với vmstat&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://man7.org/linux/man-pages/man8/vmstat.8.html" target="_blank" rel="noopener"
+&gt;📄 Tài liệu vmstat&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://phoenixnap.com/kb/vmstat-command" target="_blank" rel="noopener"
+&gt;▶️ Hướng dẫn vmstat&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://app.daily.dev/tags/monitoring?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;📝 Bài viết hay về Giám sát&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Ví dụ:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vmstat &lt;span class="m"&gt;5&lt;/span&gt; &lt;span class="m"&gt;10&lt;/span&gt; &lt;span class="c1"&gt;# Cập nhật trạng thái hệ thống mỗi 5 giây trong 10 lần&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-công-cụ-mạng-networking-tools"&gt;🌐 Công Cụ Mạng (Networking Tools)
+&lt;/h2&gt;&lt;p&gt;Các công cụ mạng hỗ trợ giám sát, phân tích, khắc phục sự cố và quản lý hệ thống mạng.&lt;/p&gt;
+&lt;h3 id="-công-cụ-được-đề-xuất-2"&gt;🏆 Công Cụ Được Đề Xuất
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🟣 Wireshark&lt;/strong&gt; - Phân tích gói tin sâu.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🟣 Nmap&lt;/strong&gt; - Quét mạng và kiểm tra bảo mật.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ping&lt;/strong&gt; - Kiểm tra kết nối cơ bản.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Traceroute&lt;/strong&gt; - Xác định đường đi của gói tin trong mạng.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Netstat&lt;/strong&gt; - Hiển thị kết nối mạng.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tcpdump&lt;/strong&gt; - Ghi và phân tích gói tin trên dòng lệnh.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Iperf&lt;/strong&gt; - Kiểm tra hiệu suất mạng.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Netcat&lt;/strong&gt; - Thực hiện nhiều tác vụ mạng khác nhau.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Nslookup/Dig&lt;/strong&gt; - Truy vấn DNS.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;PuTTY&lt;/strong&gt; - Kết nối từ xa qua SSH hoặc Telnet.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Ví dụ:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ping google.com &lt;span class="c1"&gt;# Kiểm tra kết nối đến Google&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nmap -sS 192.168.1.1 &lt;span class="c1"&gt;# Quét cổng máy chủ nội bộ&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-xử-lý-văn-bản-text-manipulation"&gt;✂️ Xử Lý Văn Bản (Text Manipulation)
+&lt;/h2&gt;&lt;p&gt;Các công cụ hỗ trợ chỉnh sửa, xử lý và chuyển đổi dữ liệu văn bản.&lt;/p&gt;
+&lt;h3 id="-công-cụ-được-đề-xuất-3"&gt;🏆 Công Cụ Được Đề Xuất
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🟣 sed&lt;/strong&gt; - Chỉnh sửa luồng dữ liệu.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🟣 awk&lt;/strong&gt; - Quét mẫu và trích xuất dữ liệu.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🟣 grep&lt;/strong&gt; - Tìm kiếm văn bản bằng biểu thức chính quy.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;cut, sort, tr, uniq&lt;/strong&gt; - Các lệnh hỗ trợ xử lý dữ liệu văn bản.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Ví dụ:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;grep &lt;span class="s2"&gt;&amp;#34;error&amp;#34;&lt;/span&gt; logfile.txt &lt;span class="c1"&gt;# Tìm từ &amp;#34;error&amp;#34; trong logfile.txt&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;awk &lt;span class="s1"&gt;&amp;#39;{print $1}&amp;#39;&lt;/span&gt; data.txt &lt;span class="c1"&gt;# Lấy cột đầu tiên từ file data.txt&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-bash-scripts"&gt;⚡ Bash Scripts
+&lt;/h2&gt;&lt;p&gt;Bash là một shell mạnh mẽ trên Unix/Linux, giúp thực hiện lệnh và tự động hóa tác vụ.&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Ví dụ:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;Hello, World!&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-trình-soạn-thảo-editors"&gt;✍️ Trình Soạn Thảo (Editors)
+&lt;/h2&gt;&lt;p&gt;Trình soạn thảo văn bản là công cụ quan trọng để chỉnh sửa và quản lý tệp văn bản.&lt;/p&gt;
+&lt;h3 id="-công-cụ-được-đề-xuất-4"&gt;🏆 Công Cụ Được Đề Xuất
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;🟣 Vim&lt;/strong&gt; - Mạnh mẽ, tùy biến cao, phù hợp cho lập trình viên.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;🟣 Emacs&lt;/strong&gt; - Linh hoạt, có nhiều plugin hỗ trợ.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Sublime Text&lt;/strong&gt; - Tốc độ cao, giao diện thân thiện.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Visual Studio Code&lt;/strong&gt; - Mã nguồn mở, hỗ trợ gỡ lỗi, mở rộng, tích hợp công cụ phát triển.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Ví dụ:&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vim myfile.txt &lt;span class="c1"&gt;# Mở tệp bằng Vim&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;nano myfile.txt &lt;span class="c1"&gt;# Mở tệp bằng Nano&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-kết-luận"&gt;🔚 Kết Luận
+&lt;/h2&gt;&lt;p&gt;Hiểu và sử dụng thành thạo các công cụ trên giúp bạn làm việc hiệu quả hơn trong môi trường Linux và DevOps. Các công cụ &lt;em&gt;&lt;strong&gt;🟣 được đánh dấu&lt;/strong&gt;&lt;/em&gt; là những công cụ phổ biến và mạnh mẽ nhất, được nhiều chuyên gia khuyến nghị. Bạn có thể tìm hiểu sâu hơn thông qua các tài nguyên miễn phí đi kèm. Nếu có điều gì cần làm rõ hoặc bổ sung, hãy phản hồi để mình cập nhật nhé!&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;👉 Bước tiếp theo:&lt;/strong&gt; Nâng cao kiến thức về hệ thống quản lý phiên bản (&lt;em&gt;&lt;strong&gt;Version Control Systems&lt;/strong&gt;&lt;/em&gt;) để theo dõi, quản lý và cộng tác hiệu quả trên mã nguồn.&lt;/p&gt;</description></item><item><title>Học về Linux &amp; Hệ Điều Hành 🖥️</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-two/</link><pubDate>Sat, 22 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-two/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-two.webp" alt="Featured image of post Học về Linux &amp; Hệ Điều Hành 🖥️" /&gt;&lt;h2 id="-tại-sao-linux-quan-trọng-trong-devops"&gt;📌 Tại sao Linux quan trọng trong DevOps?
+&lt;/h2&gt;&lt;p&gt;Linux là nền tảng của hầu hết các hệ thống server, container (Docker, Kubernetes), và cloud. DevOps cần nắm vững Linux để:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;✅ Quản lý server hiệu quả.&lt;/li&gt;
+&lt;li&gt;✅ Viết script tự động hóa.&lt;/li&gt;
+&lt;li&gt;✅ Xử lý file, user, tiến trình.&lt;/li&gt;
+&lt;li&gt;✅ Tối ưu hệ thống và bảo mật.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-hệ-điều-hành-là-gì"&gt;⚙️ Hệ điều hành là gì?
+&lt;/h2&gt;&lt;p&gt;Hệ điều hành (OS) là phần mềm quản lý tài nguyên phần cứng và phần mềm của máy tính, cung cấp dịch vụ chung cho các chương trình. Nó đóng vai trò trung gian giữa ứng dụng và phần cứng, xử lý các nhiệm vụ như:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔹 Quản lý bộ nhớ.&lt;/li&gt;
+&lt;li&gt;🔹 Lập lịch tiến trình.&lt;/li&gt;
+&lt;li&gt;🔹 Quản lý hệ thống file.&lt;/li&gt;
+&lt;li&gt;🔹 Kiểm soát thiết bị.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id="-các-hệ-điều-hành-phổ-biến"&gt;🌍 Các hệ điều hành phổ biến:
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;💻 &lt;strong&gt;Máy tính cá nhân&lt;/strong&gt;: Windows, macOS, Linux (Ubuntu, Fedora,&amp;hellip;)&lt;/li&gt;
+&lt;li&gt;📱 &lt;strong&gt;Thiết bị di động&lt;/strong&gt;: iOS, Android&lt;/li&gt;
+&lt;li&gt;🖥️ &lt;strong&gt;Máy chủ&lt;/strong&gt;: Ubuntu Server, Red Hat Enterprise Linux, Windows Server&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Mỗi hệ điều hành có đặc điểm, giao diện và khả năng tương thích khác nhau. Chúng đóng vai trò quan trọng trong bảo mật hệ thống, tối ưu hiệu suất và cung cấp trải nghiệm người dùng nhất quán.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-các-lệnh-linux-cơ-bản"&gt;🛠️ Các lệnh Linux cơ bản
+&lt;/h2&gt;&lt;p&gt;Dưới đây là một số lệnh Linux quan trọng:&lt;/p&gt;
+&lt;h3 id="--kiểm-tra-hệ-thống"&gt;🔍 Kiểm tra hệ thống
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uname -a &lt;span class="c1"&gt;# Hiển thị thông tin hệ điều hành&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uptime &lt;span class="c1"&gt;# Thời gian hoạt động của hệ thống&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;free -m &lt;span class="c1"&gt;# Kiểm tra bộ nhớ RAM&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="--quản-lý-file--thư-mục"&gt;📂 Quản lý file &amp;amp; thư mục
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ls -l &lt;span class="c1"&gt;# Liệt kê file với thông tin chi tiết&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;mkdir mydir &lt;span class="c1"&gt;# Tạo thư mục mới&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;rm -rf mydir &lt;span class="c1"&gt;# Xóa thư mục và nội dung bên trong&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="--quản-lý-tiến-trình"&gt;🚀 Quản lý tiến trình
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;top &lt;span class="c1"&gt;# Hiển thị tiến trình đang chạy&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;ps aux &lt;span class="c1"&gt;# Liệt kê tất cả tiến trình&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;kill&lt;/span&gt; -9 PID &lt;span class="c1"&gt;# Dừng tiến trình theo PID&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="--quản-lý-người-dùng"&gt;👤 Quản lý người dùng
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;whoami &lt;span class="c1"&gt;# Xem user hiện tại&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo useradd devops &lt;span class="c1"&gt;# Tạo user mới&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo passwd devops &lt;span class="c1"&gt;# Đặt mật khẩu cho user&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-script-bash-kiểm-tra-tài-nguyên-hệ-thống"&gt;📜 Script Bash kiểm tra tài nguyên hệ thống
+&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/bin/bash
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;==== Thông tin hệ thống ====&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uname -a
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;==== Thời gian hoạt động ====&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;uptime
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;==== Bộ nhớ RAM ====&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;free -m
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="-cách-chạy-script"&gt;▶️ &lt;strong&gt;Cách chạy script:&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod +x system_check.sh &lt;span class="c1"&gt;# Cấp quyền thực thi cho script&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;./system_check.sh &lt;span class="c1"&gt;# Chạy script trong terminal&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-tài-nguyên-học-tập"&gt;📚 Tài nguyên học tập
+&lt;/h2&gt;&lt;p&gt;Dưới đây là một số tài nguyên miễn phí để tìm hiểu thêm về hệ điều hành:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://en.wikipedia.org/wiki/Operating_system" target="_blank" rel="noopener"
+&gt;Operating Systems - Wiki&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://www.tpointtech.com/operating-system" target="_blank" rel="noopener"
+&gt;All you need to know about OS&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://www.tutorialspoint.com/operating_system/os_overview.htm" target="_blank" rel="noopener"
+&gt;Learn Operating Systems&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=pVzRTmdd9j0" target="_blank" rel="noopener"
+&gt;What are Operating Systems?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=vBURTt97EkA&amp;amp;list=PLBlnK6fEyqRiVhbXDGLXDk_OQAeuVcp2O" target="_blank" rel="noopener"
+&gt;Operating Systems&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-kết-luận"&gt;🎯 Kết luận
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;✅ Linux là kỹ năng bắt buộc trong DevOps.&lt;/li&gt;
+&lt;li&gt;✅ Học cách dùng terminal &amp;amp; Bash scripting.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;👉 Bước tiếp theo:&lt;/strong&gt; Tìm hiểu sâu hơn về &lt;em&gt;&lt;strong&gt;terminal và cách sử dụng CLI&lt;/strong&gt;&lt;/em&gt; để làm việc hiệu quả với hệ thống.&lt;/p&gt;</description></item></channel></rss>
