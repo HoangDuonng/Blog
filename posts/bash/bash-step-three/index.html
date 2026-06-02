@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="vi" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Hướng dẫn dùng vòng lặp for, while, until, break và continue trong Bash. Kèm ví dụ DevOps thực tế: lặp danh sách server, đọc log theo dòng và retry lệnh thất bại.">
+<title>Vòng lặp trong Bash: for, while, until cho tự động hóa DevOps</title>
+
+<link rel='canonical' href='https://tech.nguuyen.io.vn/posts/bash/bash-step-three/'>
+
+<link rel="stylesheet" href="/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css"><meta property='og:title' content="Vòng lặp trong Bash: for, while, until cho tự động hóa DevOps">
+<meta property='og:description' content="Hướng dẫn dùng vòng lặp for, while, until, break và continue trong Bash. Kèm ví dụ DevOps thực tế: lặp danh sách server, đọc log theo dòng và retry lệnh thất bại.">
+<meta property='og:url' content='https://tech.nguuyen.io.vn/posts/bash/bash-step-three/'>
+<meta property='og:site_name' content='Hoàng Dương'>
+<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='bash' /><meta property='article:tag' content='shell-script' /><meta property='article:tag' content='devops' /><meta property='article:tag' content='automation' /><meta property='article:tag' content='linux' /><meta property='article:published_time' content='2026-06-02T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-06-02T00:00:00&#43;07:00'/><meta property='og:image' content='https://tech.nguuyen.io.vn/images/bash/bash-step-three.webp' />
+<meta name="twitter:title" content="Vòng lặp trong Bash: for, while, until cho tự động hóa DevOps">
+<meta name="twitter:description" content="Hướng dẫn dùng vòng lặp for, while, until, break và continue trong Bash. Kèm ví dụ DevOps thực tế: lặp danh sách server, đọc log theo dòng và retry lệnh thất bại."><meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content='https://tech.nguuyen.io.vn/images/bash/bash-step-three.webp' />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<style>
+     
+    :root {
+        --article-font-family: "Roboto", var(--base-font-family);
+    }
+</style>
+
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap";
+    
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+    
+        document.head.appendChild(customFont);
+    }());
+</script>
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Hiển thị Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/hoang_hu_f5b001d7581bed29.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+                    <span class="emoji">🍥</span>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Hoàng Dương</a></h1>
+            <h2 class="site-description">And, when you want something, all the universe conspires in helping you to achieve it.</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/HoangDuonng'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+                        
+                    </a>
+                </li>
+            
+                <li>
+                    <a 
+                        href='https://www.instagram.com/ngu_uuen/'
+                        target="_blank"
+                        title="Instagram"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="3" y="3" width="18" height="18" rx="3" />
+  <circle cx="12" cy="12" r="4" />
+  <path d="M16.5 7.5h.01" />
+</svg>
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Trang chủ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/gi%E1%BB%9Bi-thi%E1%BB%87u/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>Về tôi</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Lưu trữ</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Tìm kiếm</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/li%C3%AAn-k%E1%BA%BFt/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Liên kết</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+                    
+                        <li id="i18n-switch">  
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M4 5h7" />
+  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
+  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
+  <path d="M12 20l4 -9l4 9" />
+  <path d="M19.1 18h-6.2" />
+</svg>
+
+
+
+                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
+                                
+                                    <option value="https://tech.nguuyen.io.vn/" selected>Tiếng Việt</option>
+                                
+                                    <option value="https://tech.nguuyen.io.vn/en/" >English</option>
+                                
+                            </select>
+                        </li>
+                    
+                
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Chế độ tối</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        
+        <h2 class="widget-title section-title">Mục lục</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#vòng-lặp-trong-bash-cho-devops">Vòng lặp trong Bash cho DevOps</a></li>
+    <li><a href="#for-in--lặp-qua-danh-sách">for in — lặp qua danh sách</a></li>
+    <li><a href="#for-kiểu-c--lặp-theo-bộ-đếm">for kiểu C — lặp theo bộ đếm</a></li>
+    <li><a href="#while--lặp-khi-điều-kiện-còn-đúng">while — lặp khi điều kiện còn đúng</a></li>
+    <li><a href="#until--lặp-cho-đến-khi-điều-kiện-đúng">until — lặp cho đến khi điều kiện đúng</a></li>
+    <li><a href="#break-và-continue">break và continue</a></li>
+    <li><a href="#thực-hành-devops-lặp-qua-danh-sách-server-ssh">Thực hành DevOps: lặp qua danh sách server SSH</a></li>
+    <li><a href="#thực-hành-devops-retry-lệnh-thất-bại">Thực hành DevOps: retry lệnh thất bại</a></li>
+    <li><a href="#sai-sót-thường-gặp">Sai sót thường gặp</a></li>
+    <li><a href="#ghi-chú-triển-khai">Ghi chú triển khai</a></li>
+    <li><a href="#-lời-kết">🎯 Lời kết</a></li>
+    <li><a href="#tài-liệu-tham-khảo">Tài liệu tham khảo</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="has-image main-article">
+    <header class="article-header">
+        <div class="article-image">
+            <a href="/posts/bash/bash-step-three/">
+                
+                    <img src="/images/bash/bash-step-three.webp" loading="lazy" alt="Featured image of post Vòng lặp trong Bash: for, while, until cho tự động hóa DevOps" />
+                
+            </a>
+        </div>
+    
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/devops/" style="background-color: #2a9d8f; color: #fff;">
+                DevOps
+            </a>
+        
+            <a href="/categories/bash/" style="background-color: #2a9d8f; color: #fff;">
+                Bash
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/bash/bash-step-three/">Vòng lặp trong Bash: for, while, until cho tự động hóa DevOps</a>
+        </h2>
+    
+        
+        <h3 class="article-subtitle">
+            Hướng dẫn dùng vòng lặp for, while, until, break và continue trong Bash. Kèm ví dụ DevOps thực tế: lặp danh sách server, đọc log theo dòng và retry lệnh thất bại.
+        </h3>
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">02/06/2026</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    9 phút đọc
+                </time>
+            </div>
+        
+
+        
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                    <span class="article-author--name">
+                        Hoàng Dương
+                    </span>
+                </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h2 id="vòng-lặp-trong-bash-cho-devops">Vòng lặp trong Bash cho DevOps
+</h2><p>Ở <a class="link" href="/posts/bash/bash-step-two/" >bài trước</a> chúng ta đã dùng điều kiện để script biết rẽ nhánh theo trạng thái hệ thống. Nhưng trong công việc DevOps, rất nhiều tác vụ không chỉ chạy một lần: kiểm tra nhiều server, đọc từng dòng log, retry một lệnh có thể lỗi tạm thời, hoặc xử lý hàng loạt file cấu hình.</p>
+<p><strong>Vòng lặp trong Bash</strong> giúp bạn lặp lại một khối lệnh theo danh sách, theo điều kiện, hoặc cho đến khi một điều kiện được thoả mãn. Bài này đi qua <code>for</code>, <code>while</code>, <code>until</code>, <code>break</code>, <code>continue</code> và các ví dụ thực hành gần với vận hành hằng ngày.</p>
+<hr>
+<h2 id="for-in--lặp-qua-danh-sách">for in — lặp qua danh sách
+</h2><p>Theo GNU Bash Manual, dạng <code>for name in words; do ...; done</code> sẽ mở rộng danh sách <code>words</code>, rồi chạy khối lệnh một lần cho từng phần tử. Ở mỗi lượt lặp, biến <code>name</code> nhận giá trị hiện tại.</p>
+<p>Cú pháp phổ biến:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">for</span> item in item1 item2 item3<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Đang xử lý: </span><span class="si">${</span><span class="nv">item</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Ví dụ — kiểm tra nhanh nhiều host bằng <code>ping</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -euo pipefail
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">HOSTS</span><span class="o">=(</span><span class="s2">&#34;web-01&#34;</span> <span class="s2">&#34;web-02&#34;</span> <span class="s2">&#34;db-01&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> HOST in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOSTS</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Checking </span><span class="si">${</span><span class="nv">HOST</span><span class="si">}</span><span class="s2">...&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> ping -c <span class="m">1</span> -W <span class="m">2</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">HOST</span><span class="si">}</span><span class="s2">&#34;</span> &gt;/dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;OK: </span><span class="si">${</span><span class="nv">HOST</span><span class="si">}</span><span class="s2"> reachable&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;WARN: </span><span class="si">${</span><span class="nv">HOST</span><span class="si">}</span><span class="s2"> unreachable&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Điểm quan trọng là dùng <code>&quot;${HOSTS[@]}&quot;</code> thay vì <code>${HOSTS[@]}</code> trần. Cách quote này giữ nguyên từng phần tử array, kể cả khi giá trị có khoảng trắng.</p>
+<hr>
+<h2 id="for-kiểu-c--lặp-theo-bộ-đếm">for kiểu C — lặp theo bộ đếm
+</h2><p>Bash cũng hỗ trợ dạng <code>for (( expr1; expr2; expr3 ))</code>, tương tự ngôn ngữ C. Dạng này phù hợp khi bạn cần bộ đếm rõ ràng: chạy đúng N lần, đánh số retry, hoặc tạo tên file theo index.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -euo pipefail
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span> <span class="nv">i</span> <span class="o">=</span> 1<span class="p">;</span> i &lt;<span class="o">=</span> 5<span class="p">;</span> i++ <span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Attempt </span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">/5&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Ví dụ — tạo 3 file log giả lập cho môi trường test:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -euo pipefail
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">LOG_DIR</span><span class="o">=</span><span class="s2">&#34;/tmp/bash-loop-demo&#34;</span>
+</span></span><span class="line"><span class="cl">mkdir -p <span class="s2">&#34;</span><span class="si">${</span><span class="nv">LOG_DIR</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span> <span class="nv">i</span> <span class="o">=</span> 1<span class="p">;</span> i &lt;<span class="o">=</span> 3<span class="p">;</span> i++ <span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">LOG_FILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">LOG_DIR</span><span class="si">}</span><span class="s2">/app-</span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">.log&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;</span><span class="k">$(</span>date -Is<span class="k">)</span><span class="s2"> demo log </span><span class="si">${</span><span class="nv">i</span><span class="si">}</span><span class="s2">&#34;</span> &gt; <span class="s2">&#34;</span><span class="si">${</span><span class="nv">LOG_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Created </span><span class="si">${</span><span class="nv">LOG_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Trong <code>(( ... ))</code>, bạn có thể dùng toán tử số học quen thuộc như <code>&lt;=</code>, <code>++</code>, <code>+=</code>. Tên biến không bắt buộc có <code>$</code> ở phía trước.</p>
+<hr>
+<h2 id="while--lặp-khi-điều-kiện-còn-đúng">while — lặp khi điều kiện còn đúng
+</h2><p><code>while</code> chạy khối lệnh miễn là lệnh kiểm tra trả exit code <code>0</code>. Đây là lựa chọn tốt khi số lần lặp chưa biết trước: đọc file đến hết, chờ service sẵn sàng, hoặc polling một endpoint.</p>
+<p>Cú pháp:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">while</span> &lt;lệnh_kiểm_tra&gt;<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  &lt;lệnh_cần_lặp&gt;
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Ví dụ — đọc file log theo từng dòng và lọc dòng lỗi:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -euo pipefail
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">LOG_FILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="p">/var/log/app/app.log</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> ! -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">LOG_FILE</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;ERROR: Không đọc được log file: </span><span class="si">${</span><span class="nv">LOG_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="nv">IFS</span><span class="o">=</span> <span class="nb">read</span> -r LINE<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">LINE</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">==</span> *<span class="s2">&#34;ERROR&#34;</span>* <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Found error: </span><span class="si">${</span><span class="nv">LINE</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span> &lt; <span class="s2">&#34;</span><span class="si">${</span><span class="nv">LOG_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>IFS= read -r LINE</code> là pattern nên dùng khi đọc từng dòng:</p>
+<ul>
+<li><code>IFS=</code> tránh việc Bash tự cắt khoảng trắng đầu/cuối dòng.</li>
+<li><code>read -r</code> giữ nguyên dấu <code>\</code>, không coi nó là ký tự escape.</li>
+<li><code>done &lt; &quot;${LOG_FILE}&quot;</code> đưa file vào stdin của vòng lặp, tránh cần gọi <code>cat</code> không cần thiết.</li>
+</ul>
+<hr>
+<h2 id="until--lặp-cho-đến-khi-điều-kiện-đúng">until — lặp cho đến khi điều kiện đúng
+</h2><p><code>until</code> gần giống <code>while</code>, nhưng logic ngược lại: nó chạy khối lệnh miễn là lệnh kiểm tra trả non-zero, và dừng khi điều kiện trả <code>0</code>.</p>
+<p>Cú pháp:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">until</span> &lt;lệnh_kiểm_tra&gt;<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  &lt;lệnh_cần_lặp&gt;
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Ví dụ — chờ một endpoint healthcheck sẵn sàng:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -euo pipefail
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">HEALTH_URL</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">http</span><span class="p">://localhost:</span><span class="nv">8080</span><span class="p">/health</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MAX_WAIT_SECONDS</span><span class="o">=</span><span class="s2">&#34;30&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">WAITED</span><span class="o">=</span><span class="s2">&#34;0&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">until</span> curl -fsS <span class="s2">&#34;</span><span class="si">${</span><span class="nv">HEALTH_URL</span><span class="si">}</span><span class="s2">&#34;</span> &gt;/dev/null<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">((</span> WAITED &gt;<span class="o">=</span> MAX_WAIT_SECONDS <span class="o">))</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;ERROR: Service is not healthy after </span><span class="si">${</span><span class="nv">MAX_WAIT_SECONDS</span><span class="si">}</span><span class="s2">s&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Waiting for service healthcheck... (</span><span class="si">${</span><span class="nv">WAITED</span><span class="si">}</span><span class="s2">s)&#34;</span>
+</span></span><span class="line"><span class="cl">  sleep <span class="m">2</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">WAITED</span><span class="o">=</span><span class="k">$((</span> WAITED <span class="o">+</span> <span class="m">2</span> <span class="k">))</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;OK: Service is healthy&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p><code>until</code> đọc rất tự nhiên trong các tình huống &ldquo;lặp cho tới khi thành công&rdquo;. Nếu team của bạn thấy <code>while ! command; do ...</code> dễ hiểu hơn, dùng <code>while</code> cũng hoàn toàn ổn.</p>
+<hr>
+<h2 id="break-và-continue">break và continue
+</h2><p><code>break</code> thoát khỏi vòng lặp hiện tại. <code>continue</code> bỏ qua phần còn lại của lượt lặp hiện tại và chuyển sang lượt tiếp theo. Theo GNU Bash Manual, cả hai đều dùng được trong <code>for</code>, <code>while</code>, <code>until</code> và <code>select</code>.</p>
+<p>Ví dụ — bỏ qua file không phải <code>.log</code>, dừng khi gặp log quá lớn:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -euo pipefail
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> FILE in /var/log/*.log<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="o">[[</span> -e <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FILE</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]]</span> <span class="o">||</span> <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FILE</span><span class="si">}</span><span class="s2">&#34;</span> !<span class="o">=</span> *.log <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nv">SIZE_MB</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>du -m <span class="s2">&#34;</span><span class="si">${</span><span class="nv">FILE</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">|</span> awk <span class="s1">&#39;{print $1}&#39;</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">((</span> SIZE_MB &gt; <span class="m">1024</span> <span class="o">))</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Stop: </span><span class="si">${</span><span class="nv">FILE</span><span class="si">}</span><span class="s2"> is larger than 1GB&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">break</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Process </span><span class="si">${</span><span class="nv">FILE</span><span class="si">}</span><span class="s2"> (</span><span class="si">${</span><span class="nv">SIZE_MB</span><span class="si">}</span><span class="s2">MB)&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Dòng <code>[[ -e &quot;${FILE}&quot; ]] || continue</code> xử lý trường hợp glob <code>/var/log/*.log</code> không match file nào. Nếu không có file, Bash có thể giữ nguyên pattern thành chuỗi literal, nên cần kiểm tra tồn tại trước khi xử lý.</p>
+<hr>
+<h2 id="thực-hành-devops-lặp-qua-danh-sách-server-ssh">Thực hành DevOps: lặp qua danh sách server SSH
+</h2><p>Ví dụ này đọc danh sách server từ file, SSH vào từng host và chạy một lệnh kiểm tra ngắn. Tên server, user và command đều dùng placeholder chung, không phụ thuộc môi trường thật.</p>
+<p>Tạo file <code>servers.txt</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">webserver-01
+</span></span><span class="line"><span class="cl">webserver-02
+</span></span><span class="line"><span class="cl">worker-01
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Tạo script <code>check_servers.sh</code>:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -euo pipefail
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">SERVER_FILE</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">servers</span><span class="p">.txt</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">SSH_USER</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">SSH_USER</span><span class="k">:-</span><span class="nv">deploy</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">REMOTE_COMMAND</span><span class="o">=</span><span class="s2">&#34;uptime&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> ! -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SERVER_FILE</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;ERROR: Cannot read server file: </span><span class="si">${</span><span class="nv">SERVER_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">while</span> <span class="nv">IFS</span><span class="o">=</span> <span class="nb">read</span> -r SERVER<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="o">[[</span> -n <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]]</span> <span class="o">||</span> <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">  <span class="o">[[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="se">\#</span>* <span class="o">]]</span> <span class="o">||</span> <span class="k">continue</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;===== </span><span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span><span class="s2"> =====&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> ssh -o <span class="nv">BatchMode</span><span class="o">=</span>yes -o <span class="nv">ConnectTimeout</span><span class="o">=</span><span class="m">5</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SSH_USER</span><span class="si">}</span><span class="s2">@</span><span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">REMOTE_COMMAND</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;OK: </span><span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;WARN: command failed on </span><span class="si">${</span><span class="nv">SERVER</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span> &lt; <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SERVER_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Chạy thử:</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod +x check_servers.sh
+</span></span><span class="line"><span class="cl">./check_servers.sh servers.txt
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Một vài điểm đáng chú ý:</p>
+<ul>
+<li><code>BatchMode=yes</code> giúp SSH không hỏi password/passphrase trong automation. Nếu key chưa sẵn sàng, lệnh sẽ fail thay vì treo script.</li>
+<li><code>ConnectTimeout=5</code> tránh chờ quá lâu khi một host không phản hồi.</li>
+<li>Dòng rỗng và dòng comment bắt đầu bằng <code>#</code> được bỏ qua bằng <code>continue</code>.</li>
+<li>Không hardcode user nhạy cảm: script lấy <code>SSH_USER</code> từ biến môi trường, mặc định là <code>deploy</code>.</li>
+</ul>
+<hr>
+<h2 id="thực-hành-devops-retry-lệnh-thất-bại">Thực hành DevOps: retry lệnh thất bại
+</h2><p>Trong vận hành, có những lỗi chỉ tạm thời: network chập chờn, registry chưa phản hồi, endpoint vừa restart xong. Vòng lặp giúp bạn retry có kiểm soát thay vì chạy lại thủ công.</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -euo pipefail
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">URL</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">https</span><span class="p">://example.com/health</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">MAX_RETRIES</span><span class="o">=</span><span class="s2">&#34;5&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">SLEEP_SECONDS</span><span class="o">=</span><span class="s2">&#34;3&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> <span class="o">((</span> <span class="nv">attempt</span> <span class="o">=</span> 1<span class="p">;</span> attempt &lt;<span class="o">=</span> MAX_RETRIES<span class="p">;</span> attempt++ <span class="o">))</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Attempt </span><span class="si">${</span><span class="nv">attempt</span><span class="si">}</span><span class="s2">/</span><span class="si">${</span><span class="nv">MAX_RETRIES</span><span class="si">}</span><span class="s2">: </span><span class="si">${</span><span class="nv">URL</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> curl -fsS <span class="s2">&#34;</span><span class="si">${</span><span class="nv">URL</span><span class="si">}</span><span class="s2">&#34;</span> &gt;/dev/null<span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;OK: endpoint is reachable&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">0</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">((</span> <span class="nv">attempt</span> <span class="o">==</span> MAX_RETRIES <span class="o">))</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;ERROR: endpoint is still unreachable after </span><span class="si">${</span><span class="nv">MAX_RETRIES</span><span class="si">}</span><span class="s2"> attempts&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
+</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  sleep <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SLEEP_SECONDS</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>Ở đây, <code>curl -f</code> trả lỗi nếu HTTP status là 4xx/5xx, <code>-sS</code> giữ output gọn nhưng vẫn in lỗi khi thất bại. Exit code cuối cùng giúp pipeline biết nên tiếp tục hay dừng.</p>
+<hr>
+<h2 id="sai-sót-thường-gặp">Sai sót thường gặp
+</h2><ul>
+<li><strong>Lặp qua output của <code>ls</code>:</strong> <code>for FILE in $(ls)</code> dễ vỡ khi tên file có khoảng trắng hoặc ký tự đặc biệt. Hãy dùng glob (<code>for FILE in *.log</code>) hoặc <code>find ... -print0</code> cho case phức tạp.</li>
+<li><strong>Quên quote biến:</strong> Luôn dùng <code>&quot;${VAR}&quot;</code>, đặc biệt khi biến là đường dẫn, hostname hoặc dữ liệu đọc từ file.</li>
+<li><strong>Dùng pipe làm mất biến ngoài vòng lặp:</strong> <code>cat file | while read ...</code> thường chạy vòng lặp trong subshell, thay đổi biến bên trong có thể không còn sau vòng lặp. Ưu tiên <code>while ...; done &lt; file</code>.</li>
+<li><strong>Vòng lặp vô hạn không có điều kiện dừng:</strong> Khi dùng <code>while true</code>, luôn có <code>break</code>, timeout, hoặc giới hạn số lần thử.</li>
+<li><strong>Không xử lý dòng rỗng/comment:</strong> Khi đọc danh sách server hoặc config, nên bỏ qua dòng rỗng và comment để script bền hơn.</li>
+</ul>
+<hr>
+<h2 id="ghi-chú-triển-khai">Ghi chú triển khai
+</h2><ul>
+<li><strong>Khi áp dụng vào dự án của bạn</strong>, hãy xác định rõ vòng lặp đang lặp theo danh sách hay theo trạng thái:
+<ul>
+<li>Có danh sách sẵn → thường dùng <code>for</code>.</li>
+<li>Đọc từng dòng hoặc chờ điều kiện còn đúng → thường dùng <code>while</code>.</li>
+<li>Chờ cho đến khi lệnh thành công → cân nhắc <code>until</code>.</li>
+</ul>
+</li>
+<li><strong>Best practices:</strong>
+<ul>
+<li>Dùng <code>IFS= read -r</code> khi đọc file theo dòng.</li>
+<li>Quote array bằng <code>&quot;${ARRAY[@]}&quot;</code> khi lặp qua danh sách.</li>
+<li>Với retry, luôn có <code>MAX_RETRIES</code> và <code>SLEEP_SECONDS</code> rõ ràng.</li>
+<li>Với SSH automation, thêm timeout và tránh prompt tương tác.</li>
+</ul>
+</li>
+<li><strong>Troubleshooting:</strong>
+<ul>
+<li>Vòng lặp không chạy? → Kiểm tra danh sách đầu vào có rỗng không, glob có match file không.</li>
+<li>Script dừng giữa chừng khi dùng <code>set -e</code>? → Một lệnh trong vòng lặp trả non-zero nhưng chưa được bọc bằng <code>if</code>, <code>||</code>, hoặc xử lý exit code.</li>
+<li>Đọc file bị mất khoảng trắng? → Đảm bảo dùng <code>IFS= read -r LINE</code>.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="-lời-kết">🎯 Lời kết
+</h2><p>Vòng lặp là nền tảng để Bash chuyển từ các script chạy một lần sang automation thật sự: xử lý nhiều server, nhiều file, nhiều dòng log và nhiều lần retry. Khi kết hợp <code>for</code>, <code>while</code>, <code>until</code> với điều kiện ở bài trước, bạn đã có thể viết các script DevOps nhỏ nhưng rất hữu dụng cho kiểm tra, triển khai và vận hành hằng ngày.</p>
+<p>Ở bài tiếp theo, chúng ta sẽ đi vào <strong>xử lý file trong Bash</strong>: đọc, ghi, redirect output, dùng <code>tee</code>, <code>find</code>, <code>xargs</code> và các pattern quản lý log/config an toàn hơn. 🚀</p>
+<hr>
+<h2 id="tài-liệu-tham-khảo">Tài liệu tham khảo
+</h2><ul>
+<li><a class="link" href="https://www.gnu.org/software/bash/manual/bash.html#Looping-Constructs"  target="_blank" rel="noopener"
+    >GNU Bash Manual — Looping Constructs</a> — Tài liệu chính thức về <code>for</code>, <code>while</code>, <code>until</code>.</li>
+<li><a class="link" href="https://www.gnu.org/software/bash/manual/bash.html#Bourne-Shell-Builtins"  target="_blank" rel="noopener"
+    >GNU Bash Manual — Bourne Shell Builtins</a> — Tài liệu chính thức về <code>break</code> và <code>continue</code>.</li>
+<li><a class="link" href="https://www.gnu.org/software/bash/manual/bash.html#Bash-Builtin-Commands"  target="_blank" rel="noopener"
+    >GNU Bash Manual — Bash Builtin Commands</a> — Tài liệu chính thức về <code>read</code>, <code>mapfile</code> và các builtin khác.</li>
+<li><a class="link" href="https://www.shellcheck.net/wiki/SC2045"  target="_blank" rel="noopener"
+    >ShellCheck Wiki — SC2045</a> — Vì sao không nên lặp qua output của <code>ls</code>.</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/bash/">Bash</a>
+        
+            <a href="/tags/shell-script/">Shell-Script</a>
+        
+            <a href="/tags/devops/">Devops</a>
+        
+            <a href="/tags/automation/">Automation</a>
+        
+            <a href="/tags/linux/">Linux</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Cập nhật lần cuối 00:00 02/06/2026
+        </span>
+    </section></footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Bài viết liên quan</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/posts/bash/bash-step-two/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/bash/bash-step-two.webp" loading="lazy" data-key="" data-hash="/images/bash/bash-step-two.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Điều kiện trong Bash: if, case và xử lý logic cho DevOps</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/bash/bash-step-one/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/bash/bash-step-one.webp" loading="lazy" data-key="" data-hash="/images/bash/bash-step-one.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Cơ bản Bash Script trong DevOps</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-two/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops/devops-step-two.webp" loading="lazy" data-key="" data-hash="/images/devops/devops-step-two.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Học về Linux &amp; Hệ Điều Hành 🖥️</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/devops/devops-step-three/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/devops/devops-step-three.webp" loading="lazy" data-key="" data-hash="/images/devops/devops-step-three.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Kiến thức về Terminal 📟</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="has-image">
+    <a href="/posts/docker/install-docker-bash-script/">
+        
+        
+            <div class="article-image">
+                
+                    <img src="/images/docker/install-docker-bash-script.webp" loading="lazy" data-key="" data-hash="/images/docker/install-docker-bash-script.webp"/>
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Cài đặt Docker và Docker Compose tự động bằng Bash Script</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    <script src="https://utteranc.es/client.js" 
+        repo="hoangduonng/blog_comments"
+        issue-term="pathname"
+        
+        label="comments"
+        
+        theme="icy-dark"
+        crossorigin="anonymous"
+        async
+        >
+</script>
+
+<style>
+    .utterances {
+        max-width: unset;
+    }
+</style>
+
+<script>
+    let utterancesLoaded = false;
+
+    function setUtterancesTheme(theme) {
+        let utterances = document.querySelector('.utterances iframe');
+        if (utterances) {
+            utterances.contentWindow.postMessage(
+                {
+                    type: 'set-theme',
+                    theme: `github-${theme}`
+                },
+                'https://utteranc.es'
+            );
+        }
+    }
+
+    addEventListener('message', event => {
+        if (event.origin !== 'https://utteranc.es') return;
+
+        
+        utterancesLoaded = true;
+        setUtterancesTheme(document.documentElement.dataset.scheme)
+    });
+
+    window.addEventListener('onColorSchemeChange', (e) => {
+        if (!utterancesLoaded) return;
+        setUtterancesTheme(e.detail)
+    })
+</script>
+
+
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2025 - 
+        
+        2026 Hoàng Dương
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/" target="_blank" rel="noopener">Ngữ Uyển ❤️</a> <br />
+        Theme <no value> thiết kế bởi Jimmy
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
