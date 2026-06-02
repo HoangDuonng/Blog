@@ -1,4 +1,607 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/posts/</link><description>Recent content in Posts on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sat, 23 May 2026 00:00:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Bash Script Basics for DevOps</title><link>https://tech.nguuyen.io.vn/en/posts/bash/bash-step-one/</link><pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/bash/bash-step-one/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/bash/bash-step-one.webp" alt="Featured image of post Bash Script Basics for DevOps" />&lt;h2 id="bash-script-basics-for-devops">Bash Script Basics for DevOps
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Posts on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/posts/</link><description>Recent content in Posts on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 24 May 2026 00:00:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/posts/index.xml" rel="self" type="application/rss+xml"/><item><title>Bash Conditionals: if, case, and DevOps Logic Handling</title><link>https://tech.nguuyen.io.vn/en/posts/bash/bash-step-two/</link><pubDate>Sun, 24 May 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/bash/bash-step-two/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/bash/bash-step-two.webp" alt="Featured image of post Bash Conditionals: if, case, and DevOps Logic Handling" />&lt;h2 id="bash-conditionals-for-devops">Bash Conditionals for DevOps
+&lt;/h2>&lt;p>In the &lt;a class="link" href="https://tech.nguuyen.io.vn/posts/bash/bash-step-one/" >first article&lt;/a> we wrote linear scripts — commands that run from top to bottom. In real operations, scripts often need to &lt;strong>make decisions&lt;/strong>: skip work if a service is already running, raise an alert if disk usage crosses a threshold, or require confirmation before deploying to &lt;code>production&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Bash conditionals&lt;/strong> are what make a script react to the current system state. This article walks through &lt;code>if/elif/else&lt;/code>, comparison operators, file checks, and &lt;code>case…esac&lt;/code> — with DevOps examples you can reuse immediately.&lt;/p>
+&lt;hr>
+&lt;h2 id="if--elif--else">if / elif / else
+&lt;/h2>&lt;p>Basic syntax:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> &amp;lt;condition&amp;gt; &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;&lt;span class="nb">command&lt;/span> when true&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">elif&lt;/span> &lt;span class="o">[[&lt;/span> &amp;lt;another_condition&amp;gt; &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;&lt;span class="nb">command&lt;/span> when the other condition is true&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;&lt;span class="nb">command&lt;/span> when all conditions are false&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>A few notes:&lt;/p>
+&lt;ul>
+&lt;li>In modern Bash, prefer &lt;code>[[ ... ]]&lt;/code> over &lt;code>[ ... ]&lt;/code>. &lt;code>[[ ]]&lt;/code> is Bash&amp;rsquo;s &lt;strong>conditional expression&lt;/strong> syntax. It supports extra features such as pattern matching and is safer when variables contain spaces.&lt;/li>
+&lt;li>Every &lt;code>if&lt;/code> block must end with &lt;code>fi&lt;/code>. If you forget it, &lt;code>bash -n script.sh&lt;/code> will report a syntax error.&lt;/li>
+&lt;li>Indent the commands inside the block, commonly with 2 spaces, to keep the script readable.&lt;/li>
+&lt;/ul>
+&lt;p>A tiny example — check whether the script is running as root:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">EUID&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> -eq &lt;span class="m">0&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Running as root.&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Not root, some commands may be denied.&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>EUID&lt;/code> is a Bash built-in variable that stores the effective user ID. The root user always has &lt;code>EUID=0&lt;/code>.&lt;/p>
+&lt;hr>
+&lt;h2 id="numeric-comparisons">Numeric comparisons
+&lt;/h2>&lt;p>When comparing &lt;strong>integers&lt;/strong>, use operators such as &lt;code>-eq&lt;/code>, &lt;code>-ne&lt;/code>, and &lt;code>-gt&lt;/code>.&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Operator&lt;/th>
+&lt;th>Meaning&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>-eq&lt;/code>&lt;/td>
+&lt;td>equal&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-ne&lt;/code>&lt;/td>
+&lt;td>not equal&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-gt&lt;/code>&lt;/td>
+&lt;td>greater than&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-ge&lt;/code>&lt;/td>
+&lt;td>greater than or equal&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-lt&lt;/code>&lt;/td>
+&lt;td>less than&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-le&lt;/code>&lt;/td>
+&lt;td>less than or equal&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>Example — check disk usage for &lt;code>/&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">DISK_USAGE_PERCENT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>df -P / &lt;span class="p">|&lt;/span> awk &lt;span class="s1">&amp;#39;NR==2 {gsub(&amp;#34;%&amp;#34;, &amp;#34;&amp;#34;, $5); print $5}&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DISK_USAGE_PERCENT&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> -ge &lt;span class="m">90&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;CRITICAL: Disk / is &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DISK_USAGE_PERCENT&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">% used&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">elif&lt;/span> &lt;span class="o">[[&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DISK_USAGE_PERCENT&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> -ge &lt;span class="m">80&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;WARNING: Disk / is &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DISK_USAGE_PERCENT&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">% used&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;OK: Disk / is at &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DISK_USAGE_PERCENT&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">%&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The script returns exit codes &lt;code>0/1/2&lt;/code> for &lt;code>OK/WARN/CRIT&lt;/code>. This is a familiar convention in monitoring systems such as Nagios/Icinga, and it is also easy to use from cron or CI/CD pipelines.&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;strong>Tip:&lt;/strong> You can use &lt;code>(( ... ))&lt;/code> for arithmetic expressions, for example &lt;code>if (( DISK_USAGE_PERCENT &amp;gt;= 80 )); then&lt;/code>. Inside &lt;code>(( ))&lt;/code>, you do not need &lt;code>$&lt;/code> before variable names and can use familiar operators such as &lt;code>&amp;gt;=&lt;/code>, &lt;code>&amp;lt;=&lt;/code>, and &lt;code>==&lt;/code>.&lt;/p>&lt;/blockquote>
+&lt;hr>
+&lt;h2 id="string-comparisons">String comparisons
+&lt;/h2>&lt;p>For &lt;strong>strings&lt;/strong>, use a different set of operators:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Operator&lt;/th>
+&lt;th>Meaning&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>=&lt;/code> / &lt;code>==&lt;/code>&lt;/td>
+&lt;td>equal&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>!=&lt;/code>&lt;/td>
+&lt;td>not equal&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-z STR&lt;/code>&lt;/td>
+&lt;td>string is empty&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-n STR&lt;/code>&lt;/td>
+&lt;td>string is not empty&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>&amp;lt;&lt;/code> / &lt;code>&amp;gt;&lt;/code>&lt;/td>
+&lt;td>lexical ordering, only inside &lt;code>[[ ]]&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>Example — gate an environment before deployment:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">ENVIRONMENT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> -z &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENVIRONMENT&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Usage: &lt;/span>&lt;span class="nv">$0&lt;/span>&lt;span class="s2"> &amp;lt;dev|staging|production&amp;gt;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENVIRONMENT&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">==&lt;/span> &lt;span class="s2">&amp;#34;production&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">read&lt;/span> -r -p &lt;span class="s2">&amp;#34;Are you sure you want to deploy to PRODUCTION? (yes/no): &amp;#34;&lt;/span> CONFIRM
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">CONFIRM&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> !&lt;span class="o">=&lt;/span> &lt;span class="s2">&amp;#34;yes&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Deployment cancelled.&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Starting deployment to &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENVIRONMENT&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">...&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Important note: &lt;strong>always quote variables&lt;/strong> (&lt;code>&amp;quot;${ENVIRONMENT}&amp;quot;&lt;/code>). If you leave &lt;code>$ENVIRONMENT&lt;/code> unquoted and the variable is empty, &lt;code>[[ $ENVIRONMENT == &amp;quot;production&amp;quot; ]]&lt;/code> still works, but similar scripts using &lt;code>[ ... ]&lt;/code> may fail with syntax errors.&lt;/p>
+&lt;hr>
+&lt;h2 id="file-and-directory-checks">File and directory checks
+&lt;/h2>&lt;p>Bash provides built-in operators for checking file state:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Operator&lt;/th>
+&lt;th>Meaning&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>-e&lt;/code>&lt;/td>
+&lt;td>exists, file or directory&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-f&lt;/code>&lt;/td>
+&lt;td>exists and is a regular file&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-d&lt;/code>&lt;/td>
+&lt;td>exists and is a directory&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-r&lt;/code>&lt;/td>
+&lt;td>readable&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-w&lt;/code>&lt;/td>
+&lt;td>writable&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-x&lt;/code>&lt;/td>
+&lt;td>executable&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-s&lt;/code>&lt;/td>
+&lt;td>file exists and has size &amp;gt; 0&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>-L&lt;/code>&lt;/td>
+&lt;td>is a symbolic link&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;p>Example — ensure the log directory exists and the config file is valid before starting an app:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">APP_NAME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;manager-blog&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">CONFIG_FILE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/etc/&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">APP_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/app.env&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOG_DIR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/var/log/&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">APP_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! -f &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">CONFIG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: Config file not found: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">CONFIG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! -r &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">CONFIG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: No read permission for &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">CONFIG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! -d &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_DIR&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Creating log directory: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_DIR&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> mkdir -p &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_DIR&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Pre-check OK, ready to start &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">APP_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">.&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The &lt;code>!&lt;/code> at the beginning of an expression is negation — &lt;code>[[ ! -f ... ]]&lt;/code> reads as &amp;ldquo;if the file does not exist&amp;rdquo;.&lt;/p>
+&lt;hr>
+&lt;h2 id="combining-multiple-conditions-and--or">Combining multiple conditions (AND / OR)
+&lt;/h2>&lt;p>There are two common ways to combine conditions.&lt;/p>
+&lt;p>&lt;strong>Option 1 — combine inside one &lt;code>[[ ]]&lt;/code>&lt;/strong> with &lt;code>&amp;amp;&amp;amp;&lt;/code> and &lt;code>||&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> -f &lt;span class="s2">&amp;#34;/etc/nginx/nginx.conf&amp;#34;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> -r &lt;span class="s2">&amp;#34;/etc/nginx/nginx.conf&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Nginx config exists and is readable.&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Option 2 — chain two separate test commands&lt;/strong> with shell-level &lt;code>&amp;amp;&amp;amp;&lt;/code> / &lt;code>||&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">command&lt;/span> -v docker &amp;gt;/dev/null 2&amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Docker is installed&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">command&lt;/span> -v docker &amp;gt;/dev/null 2&amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">1&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Docker is not installed&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>In automation scripts, option 1 is easier to read when the conditions belong to the same decision. Option 2 is useful when you want &amp;ldquo;run this command, and only if it succeeds, run the next one&amp;rdquo;, for example:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">mkdir -p /backup/db &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> tar -czf /backup/db/dump.tar.gz /var/lib/db
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If &lt;code>mkdir&lt;/code> fails, &lt;code>tar&lt;/code> will not run.&lt;/p>
+&lt;hr>
+&lt;h2 id="caseesac--when-ifelif-gets-too-long">case…esac — when if/elif gets too long
+&lt;/h2>&lt;p>When you need to match a variable against many possible values, &lt;code>case&lt;/code> is usually shorter and easier to read than a long &lt;code>if/elif&lt;/code> chain.&lt;/p>
+&lt;p>Syntax:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="k">case&lt;/span> &amp;lt;variable&amp;gt; in
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;pattern1&amp;gt;&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;command&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">;;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;pattern2&amp;gt;&lt;span class="p">|&lt;/span>&amp;lt;pattern3&amp;gt;&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;command&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">;;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> *&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;default_command&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">;;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">esac&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Example — route service operations from one script:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">ACTION&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;nginx&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">case&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ACTION&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> in
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> start&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Starting &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">...&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> sudo systemctl start &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">;;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> stop&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Stopping &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">...&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> sudo systemctl stop &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">;;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> restart&lt;span class="p">|&lt;/span>reload&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Restarting &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">...&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> sudo systemctl restart &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">;;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> status&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> sudo systemctl status &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> --no-pager
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">;;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> *&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Usage: &lt;/span>&lt;span class="nv">$0&lt;/span>&lt;span class="s2"> {start|stop|restart|reload|status}&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">;;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">esac&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>case&lt;/code> supports glob-style patterns, so you can write &lt;code>dev*)&lt;/code>, &lt;code>*.log)&lt;/code>, &lt;code>[0-9]*)&lt;/code>, and similar branches. This is convenient when branching by environment name or file type.&lt;/p>
+&lt;hr>
+&lt;h2 id="devops-practice-check_servicesh">DevOps practice: check_service.sh
+&lt;/h2>&lt;p>Now combine the concepts above into a practical script that checks a service and disk usage.&lt;/p>
+&lt;p>Create &lt;code>check_service.sh&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;span class="lnt">43
+&lt;/span>&lt;span class="lnt">44
+&lt;/span>&lt;span class="lnt">45
+&lt;/span>&lt;span class="lnt">46
+&lt;/span>&lt;span class="lnt">47
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="nv">nginx&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">DISK_THRESHOLD&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">2&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="nv">80&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;========================================&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34; Service &amp;amp; Disk Check&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34; Service : &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34; Threshold : &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DISK_THRESHOLD&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">%&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;========================================&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 1) Check whether systemctl is available&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> ! &lt;span class="nb">command&lt;/span> -v systemctl &amp;gt;/dev/null 2&amp;gt;&lt;span class="p">&amp;amp;&lt;/span>1&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: systemctl is not available on this system, stopping.&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 2) Check whether the service is running&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> systemctl is-active --quiet &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;OK: Service &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> is running.&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;WARN: Service &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> is not running. Trying to restart...&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> sudo systemctl restart &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;OK: Restarted &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">.&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: Failed to restart &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVICE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">.&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># 3) Check disk usage against the provided threshold&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">DISK_USAGE_PERCENT&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>df -P / &lt;span class="p">|&lt;/span> awk &lt;span class="s1">&amp;#39;NR==2 {gsub(&amp;#34;%&amp;#34;, &amp;#34;&amp;#34;, $5); print $5}&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">case&lt;/span> &lt;span class="m">1&lt;/span> in
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">$((&lt;/span> DISK_USAGE_PERCENT &amp;gt;&lt;span class="o">=&lt;/span> &lt;span class="m">90&lt;/span> &lt;span class="k">))&lt;/span> &lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;CRITICAL: Disk / is &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DISK_USAGE_PERCENT&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">% used.&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">;;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">$((&lt;/span> DISK_USAGE_PERCENT &amp;gt;&lt;span class="o">=&lt;/span> DISK_THRESHOLD &lt;span class="k">))&lt;/span> &lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;WARNING: Disk / is &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DISK_USAGE_PERCENT&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">% used (threshold &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DISK_THRESHOLD&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">%).&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">;;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> *&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;OK: Disk / is at &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DISK_USAGE_PERCENT&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">%.&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="p">;;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">esac&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Try it:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chmod +x check_service.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./check_service.sh nginx &lt;span class="m">80&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Notable points:&lt;/p>
+&lt;ul>
+&lt;li>Use &lt;code>systemctl is-active --quiet&lt;/code> for status checks — this is cleaner than parsing command output with &lt;code>grep&lt;/code>.&lt;/li>
+&lt;li>Return meaningful exit codes (&lt;code>0/1/2&lt;/code>) so cron, alertmanager, or CI/CD pipelines can understand severity.&lt;/li>
+&lt;li>The &lt;code>case 1 in $(( ... )) )&lt;/code> pattern is a small trick: an arithmetic expression returns &lt;code>1&lt;/code> when the condition is true and &lt;code>0&lt;/code> when it is false, so the branch matching &lt;code>1&lt;/code> runs. If you find this hard to read, use &lt;code>if/elif/else&lt;/code> instead for clarity.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="common-mistakes">Common mistakes
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>Missing spaces in &lt;code>[[ ]]&lt;/code>:&lt;/strong> Bash requires spaces around &lt;code>[[&lt;/code>, &lt;code>]]&lt;/code>, and operators. &lt;code>[[$A == &amp;quot;x&amp;quot;]]&lt;/code> is a syntax error.&lt;/li>
+&lt;li>&lt;strong>Using &lt;code>=&lt;/code> for integers:&lt;/strong> &lt;code>[[ &amp;quot;${COUNT}&amp;quot; = 1 ]]&lt;/code> performs a string comparison. For numbers, use &lt;code>-eq&lt;/code> or move the expression into &lt;code>(( ))&lt;/code>.&lt;/li>
+&lt;li>&lt;strong>Not quoting variables:&lt;/strong> If a variable is empty, Bash may parse the expression incorrectly in &lt;code>[ ]&lt;/code> (POSIX test). &lt;code>[[ ]]&lt;/code> is safer, but keeping the habit of &lt;code>&amp;quot;${VAR}&amp;quot;&lt;/code> is still recommended.&lt;/li>
+&lt;li>&lt;strong>Forgetting &lt;code>;;&lt;/code> in &lt;code>case&lt;/code>:&lt;/strong> Each &lt;code>case&lt;/code> branch must end with &lt;code>;;&lt;/code>. Without it, Bash continues parsing into the next branch after a match.&lt;/li>
+&lt;li>&lt;strong>Confusing &lt;code>&amp;amp;&amp;amp;&lt;/code> / &lt;code>||&lt;/code> with pipelines:&lt;/strong> &lt;code>cmd1 &amp;amp;&amp;amp; cmd2&lt;/code> runs &lt;code>cmd2&lt;/code> only when &lt;code>cmd1&lt;/code> succeeds with exit code &lt;code>0&lt;/code>. Do not confuse this with the pipe &lt;code>|&lt;/code>, which passes stdout from one command to another.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="implementation-notes">Implementation notes
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>When applying this to your own project&lt;/strong>, think about exit codes before writing the logic: when should the script return &lt;code>0&lt;/code>, and when should it return non-zero? This directly affects cron jobs and pipelines.&lt;/li>
+&lt;li>&lt;strong>Best practices:&lt;/strong>
+&lt;ul>
+&lt;li>Prefer &lt;code>[[ ]]&lt;/code> over &lt;code>[ ]&lt;/code> in Bash-only scripts.&lt;/li>
+&lt;li>Always include a default &lt;code>*)&lt;/code> branch in &lt;code>case&lt;/code> to catch invalid values and print usage.&lt;/li>
+&lt;li>When a condition grows beyond 4–5 &lt;code>if/elif&lt;/code> branches, consider switching to &lt;code>case&lt;/code> or extracting logic into a function.&lt;/li>
+&lt;li>Put threshold variables near the top of the file or accept them from CLI arguments — do not scatter hardcoded values throughout the script.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Troubleshooting:&lt;/strong>
+&lt;ul>
+&lt;li>Script enters the wrong branch? → Run it with &lt;code>bash -x script.sh&lt;/code> to inspect expanded variable values.&lt;/li>
+&lt;li>Seeing &lt;code>unary operator expected&lt;/code>? → This is often caused by an empty variable in &lt;code>[ -f $FILE ]&lt;/code>. Use &lt;code>[[ -f &amp;quot;${FILE}&amp;quot; ]]&lt;/code> instead.&lt;/li>
+&lt;li>&lt;code>case&lt;/code> does not match? → Check whether your pattern needs quoting. In &lt;code>case&lt;/code>, entries after &lt;code>in&lt;/code> are patterns (globs), not plain strings.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-conclusion">🎯 Conclusion
+&lt;/h2>&lt;p>Conditionals are the first step that make your Bash scripts &amp;ldquo;think&amp;rdquo; — reacting to state instead of running blindly. With &lt;code>if/elif/else&lt;/code>, &lt;code>case…esac&lt;/code>, numeric comparisons, string checks, and file tests, you now have enough tools to write practical operations scripts such as health checks, deployment gates, and service dispatchers.&lt;/p>
+&lt;p>In the next article, we will cover &lt;strong>loops in Bash&lt;/strong> with &lt;code>for&lt;/code>, &lt;code>while&lt;/code>, and &lt;code>until&lt;/code>, including automation examples for iterating over server lists and reading log files line by line. 🚀&lt;/p>
+&lt;hr>
+&lt;h2 id="references">References
+&lt;/h2>&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.gnu.org/software/bash/manual/bash.html#Conditional-Constructs" target="_blank" rel="noopener"
+>GNU Bash Manual — Conditional Constructs&lt;/a> — Official documentation for &lt;code>if&lt;/code>, &lt;code>case&lt;/code>, and &lt;code>select&lt;/code>.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.gnu.org/software/bash/manual/bash.html#Bash-Conditional-Expressions" target="_blank" rel="noopener"
+>GNU Bash Manual — Bash Conditional Expressions&lt;/a> — Complete list of file, string, and numeric operators used by &lt;code>[[ ]]&lt;/code> and &lt;code>test&lt;/code>.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.gnu.org/software/bash/manual/bash.html#Shell-Arithmetic" target="_blank" rel="noopener"
+>GNU Bash Manual — Shell Arithmetic&lt;/a> — Syntax for &lt;code>(( ... ))&lt;/code> arithmetic expressions.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.shellcheck.net/" target="_blank" rel="noopener"
+>ShellCheck&lt;/a> — A linting tool that catches quoting and comparison issues before scripts reach production.&lt;/li>
+&lt;/ul></description></item><item><title>Bash Script Basics for DevOps</title><link>https://tech.nguuyen.io.vn/en/posts/bash/bash-step-one/</link><pubDate>Sat, 23 May 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/bash/bash-step-one/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/bash/bash-step-one.webp" alt="Featured image of post Bash Script Basics for DevOps" />&lt;h2 id="bash-script-basics-for-devops">Bash Script Basics for DevOps
 &lt;/h2>&lt;p>In DevOps work, many daily tasks are repetitive: checking disk usage, verifying whether a service is still running, backing up configuration files, collecting logs, or running a simple deploy sequence. If you do everything manually step by step, it is easy to forget commands, mistype options, or lose time when you need to repeat the same work across multiple servers.&lt;/p>
 &lt;p>&lt;strong>Bash Script&lt;/strong> helps package those commands into a file that can be run again and again. This is a foundational skill before going deeper into CI/CD, Docker, Kubernetes, Cloud CLI, or more complex automation.&lt;/p>
 &lt;hr>
