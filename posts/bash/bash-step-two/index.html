@@ -1,1369 +1,355 @@
-<!DOCTYPE html>
-<html lang="vi" dir="ltr">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Hướng dẫn dùng if/elif/else, case…esac, toán tử so sánh số, chuỗi và kiểm tra file trong Bash. Kèm ví dụ DevOps thực tế: kiểm tra service, ngưỡng disk và quyết định deploy.">
-<title>Điều kiện trong Bash: if, case và xử lý logic cho DevOps</title>
-
-<link rel='canonical' href='https://tech.nguuyen.io.vn/posts/bash/bash-step-two/'>
-
-<link rel="stylesheet" href="/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css"><meta property='og:title' content="Điều kiện trong Bash: if, case và xử lý logic cho DevOps">
-<meta property='og:description' content="Hướng dẫn dùng if/elif/else, case…esac, toán tử so sánh số, chuỗi và kiểm tra file trong Bash. Kèm ví dụ DevOps thực tế: kiểm tra service, ngưỡng disk và quyết định deploy.">
-<meta property='og:url' content='https://tech.nguuyen.io.vn/posts/bash/bash-step-two/'>
-<meta property='og:site_name' content='Hoàng Dương'>
-<meta property='og:type' content='article'><meta property='article:section' content='Posts' /><meta property='article:tag' content='bash' /><meta property='article:tag' content='shell-script' /><meta property='article:tag' content='devops' /><meta property='article:tag' content='automation' /><meta property='article:tag' content='linux' /><meta property='article:published_time' content='2026-05-24T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-05-24T00:00:00&#43;07:00'/><meta property='og:image' content='https://tech.nguuyen.io.vn/images/bash/bash-step-two.webp' />
-<meta name="twitter:title" content="Điều kiện trong Bash: if, case và xử lý logic cho DevOps">
-<meta name="twitter:description" content="Hướng dẫn dùng if/elif/else, case…esac, toán tử so sánh số, chuỗi và kiểm tra file trong Bash. Kèm ví dụ DevOps thực tế: kiểm tra service, ngưỡng disk và quyết định deploy."><meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:image" content='https://tech.nguuyen.io.vn/images/bash/bash-step-two.webp' />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-<style>
-     
-    :root {
-        --article-font-family: "Roboto", var(--base-font-family);
-    }
-</style>
-
-<script>
-    (function () {
-        const customFont = document.createElement('link');
-        customFont.href = "https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap";
-    
-        customFont.type = "text/css";
-        customFont.rel = "stylesheet";
-    
-        document.head.appendChild(customFont);
-    }());
-</script>
-    </head>
-    <body class="
-    article-page
-    ">
-    <script>
-        (function() {
-            const colorSchemeKey = 'StackColorScheme';
-            if(!localStorage.getItem(colorSchemeKey)){
-                localStorage.setItem(colorSchemeKey, "auto");
-            }
-        })();
-    </script><script>
-    (function() {
-        const colorSchemeKey = 'StackColorScheme';
-        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
-        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
-
-        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
-            
-
-            document.documentElement.dataset.scheme = 'dark';
-        } else {
-            document.documentElement.dataset.scheme = 'light';
-        }
-    })();
-</script>
-<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Hiển thị Menu">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
-
-    <header>
-        
-            
-            <figure class="site-avatar">
-                <a href="/">
-                
-                    
-                    
-                    
-                        
-                        <img src="/img/hoang_hu_f5b001d7581bed29.png" width="300"
-                            height="300" class="site-logo" loading="lazy" alt="Avatar">
-                    
-                
-                </a>
-                
-                    <span class="emoji">🍥</span>
-                
-            </figure>
-            
-        
-        
-        <div class="site-meta">
-            <h1 class="site-name"><a href="/">Hoàng Dương</a></h1>
-            <h2 class="site-description">And, when you want something, all the universe conspires in helping you to achieve it.</h2>
-        </div>
-    </header><ol class="menu-social">
-            
-                <li>
-                    <a 
-                        href='https://github.com/HoangDuonng'
-                        target="_blank"
-                        title="GitHub"
-                        rel="me"
-                    >
-                        
-                        
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
-</svg>
-                        
-                    </a>
-                </li>
-            
-                <li>
-                    <a 
-                        href='https://www.instagram.com/ngu_uuen/'
-                        target="_blank"
-                        title="Instagram"
-                        rel="me"
-                    >
-                        
-                        
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <rect x="3" y="3" width="18" height="18" rx="3" />
-  <circle cx="12" cy="12" r="4" />
-  <path d="M16.5 7.5h.01" />
-</svg>
-
-                        
-                    </a>
-                </li>
-            
-        </ol><ol class="menu" id="main-menu">
-        
-        
-        
-        <li >
-            <a href='/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="5 12 3 12 12 3 21 12 19 12" />
-  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
-</svg>
-
-
-
-                
-                <span>Trang chủ</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/gi%E1%BB%9Bi-thi%E1%BB%87u/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="7" r="4" />
-  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-</svg>
-
-
-
-                
-                <span>Về tôi</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/archives/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <rect x="3" y="4" width="18" height="4" rx="2" />
-  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
-  <line x1="10" y1="12" x2="14" y2="12" />
-</svg>
-
-
-
-                
-                <span>Lưu trữ</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/search/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="10" cy="10" r="7" />
-  <line x1="21" y1="21" x2="15" y2="15" />
-</svg>
-
-
-
-                
-                <span>Tìm kiếm</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/li%C3%AAn-k%E1%BA%BFt/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
-  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
-</svg>
-
-
-
-                
-                <span>Liên kết</span>
-            </a>
-        </li>
-        
-        <li class="menu-bottom-section">
-            <ol class="menu">
-                    
-                        <li id="i18n-switch">  
-                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M4 5h7" />
-  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
-  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
-  <path d="M12 20l4 -9l4 9" />
-  <path d="M19.1 18h-6.2" />
-</svg>
-
-
-
-                            <select name="language" title="language" onchange="window.location.href = this.selectedOptions[0].value">
-                                
-                                    <option value="https://tech.nguuyen.io.vn/" selected>Tiếng Việt</option>
-                                
-                                    <option value="https://tech.nguuyen.io.vn/en/" >English</option>
-                                
-                            </select>
-                        </li>
-                    
-                
-
-                
-                    <li id="dark-mode-toggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="8" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="16" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
-</svg>
-
-
-
-                        <span>Chế độ tối</span>
-                    </li>
-                
-            </ol>
-        </li>
-    </ol>
-</aside>
-
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        
-        <h2 class="widget-title section-title">Mục lục</h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ol>
-    <li><a href="#điều-kiện-trong-bash-cho-devops">Điều kiện trong Bash cho DevOps</a></li>
-    <li><a href="#if--elif--else">if / elif / else</a></li>
-    <li><a href="#toán-tử-so-sánh-số">Toán tử so sánh số</a></li>
-    <li><a href="#toán-tử-so-sánh-chuỗi">Toán tử so sánh chuỗi</a></li>
-    <li><a href="#kiểm-tra-file-và-thư-mục">Kiểm tra file và thư mục</a></li>
-    <li><a href="#kết-hợp-nhiều-điều-kiện-and--or">Kết hợp nhiều điều kiện (AND / OR)</a></li>
-    <li><a href="#caseesac--khi-ifelif-quá-dài">case…esac — khi if/elif quá dài</a></li>
-    <li><a href="#thực-hành-devops-check_servicesh">Thực hành DevOps: check_service.sh</a></li>
-    <li><a href="#sai-sót-thường-gặp">Sai sót thường gặp</a></li>
-    <li><a href="#ghi-chú-triển-khai">Ghi chú triển khai</a></li>
-    <li><a href="#-lời-kết">🎯 Lời kết</a></li>
-    <li><a href="#tài-liệu-tham-khảo">Tài liệu tham khảo</a></li>
-  </ol>
-</nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
-            <main class="main full-width">
-    <article class="has-image main-article">
-    <header class="article-header">
-        <div class="article-image">
-            <a href="/posts/bash/bash-step-two/">
-                
-                    <img src="/images/bash/bash-step-two.webp" loading="lazy" alt="Featured image of post Điều kiện trong Bash: if, case và xử lý logic cho DevOps" />
-                
-            </a>
-        </div>
-    
-
-    <div class="article-details">
-    
-    <header class="article-category">
-        
-            <a href="/categories/devops/" style="background-color: #2a9d8f; color: #fff;">
-                DevOps
-            </a>
-        
-            <a href="/categories/bash/" style="background-color: #2a9d8f; color: #fff;">
-                Bash
-            </a>
-        
-    </header>
-    
-
-    <div class="article-title-wrapper">
-        <h2 class="article-title">
-            <a href="/posts/bash/bash-step-two/">Điều kiện trong Bash: if, case và xử lý logic cho DevOps</a>
-        </h2>
-    
-        
-        <h3 class="article-subtitle">
-            Hướng dẫn dùng if/elif/else, case…esac, toán tử so sánh số, chuỗi và kiểm tra file trong Bash. Kèm ví dụ DevOps thực tế: kiểm tra service, ngưỡng disk và quyết định deploy.
-        </h3>
-        
-    </div>
-
-    
-    
-    
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">24/05/2026</time>
-            </div>
-        
-
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-                <time class="article-time--reading">
-                    10 phút đọc
-                </time>
-            </div>
-        
-
-        
-                <div>
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="7" r="4" />
-  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-</svg>
-
-
-
-                    <span class="article-author--name">
-                        Hoàng Dương
-                    </span>
-                </div>
-        
-    </footer>
-    
-
-    
-        <footer class="article-translations">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-  <path d="M4 5h7" />
-  <path d="M9 3v2c0 4.418 -2.239 8 -5 8" />
-  <path d="M5 9c-.003 2.144 2.952 3.908 6.7 4" />
-  <path d="M12 20l4 -9l4 9" />
-  <path d="M19.1 18h-6.2" />
-</svg>
-
-
-
-            <div>
-                
-                    <a href="https://tech.nguuyen.io.vn/en/posts/bash/bash-step-two/" class="link">English</a>
-                
-            </div>
-        </footer>
-    
-</div>
-
-</header>
-
-    <section class="article-content">
-    
-    
-    <h2 id="điều-kiện-trong-bash-cho-devops">Điều kiện trong Bash cho DevOps
-</h2><p>Ở <a class="link" href="/posts/bash/bash-step-one/" >bài đầu tiên</a> chúng ta đã viết script tuyến tính — chạy lần lượt từ trên xuống dưới. Trong thực tế vận hành, script thường phải <strong>ra quyết định</strong>: nếu service đã chạy thì bỏ qua, nếu disk vượt ngưỡng thì cảnh báo, nếu môi trường là <code>production</code> thì cần xác nhận trước khi deploy.</p>
-<p><strong>Điều kiện trong Bash</strong> chính là công cụ giúp script phản ứng linh hoạt với trạng thái hệ thống. Bài này sẽ đi qua <code>if/elif/else</code>, các toán tử so sánh, kiểm tra file và <code>case…esac</code> — kèm các ví dụ DevOps mà bạn có thể đem dùng ngay.</p>
-<hr>
-<h2 id="if--elif--else">if / elif / else
-</h2><p>Cú pháp cơ bản:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> &lt;điều_kiện&gt; <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  &lt;lệnh khi đúng&gt;
-</span></span><span class="line"><span class="cl"><span class="k">elif</span> <span class="o">[[</span> &lt;điều_kiện_khác&gt; <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  &lt;lệnh khi điều kiện khác đúng&gt;
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">  &lt;lệnh khi tất cả đều sai&gt;
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Một vài lưu ý:</p>
-<ul>
-<li>Trong Bash hiện đại, ưu tiên dùng <code>[[ ... ]]</code> thay cho <code>[ ... ]</code>. <code>[[ ]]</code> là <strong>conditional expression</strong> của Bash, hỗ trợ thêm pattern matching và an toàn hơn với biến chứa khoảng trắng.</li>
-<li>Mỗi <code>if</code> phải kết thúc bằng <code>fi</code>. Nếu quên, <code>bash -n script.sh</code> sẽ báo lỗi cú pháp ngay.</li>
-<li>Khối lệnh thường thụt vào 2 khoảng trắng để dễ đọc.</li>
-</ul>
-<p>Ví dụ rất nhỏ — kiểm tra script có được chạy với quyền root hay không:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">EUID</span><span class="si">}</span><span class="s2">&#34;</span> -eq <span class="m">0</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Đang chạy với quyền root.&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Không phải root, một số lệnh có thể bị từ chối.&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><code>EUID</code> là biến built-in của Bash, chứa effective user ID. User root luôn có <code>EUID=0</code>.</p>
-<hr>
-<h2 id="toán-tử-so-sánh-số">Toán tử so sánh số
-</h2><p>Khi so sánh <strong>số nguyên</strong>, dùng các toán tử dạng <code>-eq</code>, <code>-ne</code>, <code>-gt</code>…</p>
-<div class="table-wrapper"><table>
-  <thead>
-      <tr>
-          <th>Toán tử</th>
-          <th>Ý nghĩa</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>-eq</code></td>
-          <td>bằng (<code>equal</code>)</td>
-      </tr>
-      <tr>
-          <td><code>-ne</code></td>
-          <td>khác (<code>not equal</code>)</td>
-      </tr>
-      <tr>
-          <td><code>-gt</code></td>
-          <td>lớn hơn (<code>greater</code>)</td>
-      </tr>
-      <tr>
-          <td><code>-ge</code></td>
-          <td>lớn hơn hoặc bằng</td>
-      </tr>
-      <tr>
-          <td><code>-lt</code></td>
-          <td>nhỏ hơn (<code>less</code>)</td>
-      </tr>
-      <tr>
-          <td><code>-le</code></td>
-          <td>nhỏ hơn hoặc bằng</td>
-      </tr>
-  </tbody>
-</table></div>
-<p>Ví dụ kiểm tra dung lượng ổ đĩa <code>/</code>:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -euo pipefail
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nv">DISK_USAGE_PERCENT</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>df -P / <span class="p">|</span> awk <span class="s1">&#39;NR==2 {gsub(&#34;%&#34;, &#34;&#34;, $5); print $5}&#39;</span><span class="k">)</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">DISK_USAGE_PERCENT</span><span class="si">}</span><span class="s2">&#34;</span> -ge <span class="m">90</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;CRITICAL: Disk / đã dùng </span><span class="si">${</span><span class="nv">DISK_USAGE_PERCENT</span><span class="si">}</span><span class="s2">%&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">exit</span> <span class="m">2</span>
-</span></span><span class="line"><span class="cl"><span class="k">elif</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">DISK_USAGE_PERCENT</span><span class="si">}</span><span class="s2">&#34;</span> -ge <span class="m">80</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;WARNING: Disk / đã dùng </span><span class="si">${</span><span class="nv">DISK_USAGE_PERCENT</span><span class="si">}</span><span class="s2">%&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;OK: Disk / ở mức </span><span class="si">${</span><span class="nv">DISK_USAGE_PERCENT</span><span class="si">}</span><span class="s2">%&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Script trả exit code <code>0/1/2</code> tương ứng <code>OK/WARN/CRIT</code>. Đây là quy ước rất quen với các hệ giám sát như Nagios/Icinga và cũng dễ dùng trong cron hoặc pipeline CI/CD.</p>
-<blockquote>
-<p><strong>Mẹo:</strong> Bạn có thể dùng cú pháp <code>(( ... ))</code> cho số học, ví dụ <code>if (( DISK_USAGE_PERCENT &gt;= 80 )); then</code>. Khi nằm trong <code>(( ))</code>, bạn không cần <code>$</code> trước tên biến và có thể dùng <code>&gt;=</code>, <code>&lt;=</code>, <code>==</code> quen thuộc.</p></blockquote>
-<hr>
-<h2 id="toán-tử-so-sánh-chuỗi">Toán tử so sánh chuỗi
-</h2><p>Với <strong>chuỗi</strong>, dùng các toán tử khác:</p>
-<div class="table-wrapper"><table>
-  <thead>
-      <tr>
-          <th>Toán tử</th>
-          <th>Ý nghĩa</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>=</code> / <code>==</code></td>
-          <td>bằng</td>
-      </tr>
-      <tr>
-          <td><code>!=</code></td>
-          <td>khác</td>
-      </tr>
-      <tr>
-          <td><code>-z STR</code></td>
-          <td>chuỗi rỗng</td>
-      </tr>
-      <tr>
-          <td><code>-n STR</code></td>
-          <td>chuỗi không rỗng</td>
-      </tr>
-      <tr>
-          <td><code>&lt;</code> / <code>&gt;</code></td>
-          <td>so sánh thứ tự (chỉ trong <code>[[ ]]</code>)</td>
-      </tr>
-  </tbody>
-</table></div>
-<p>Ví dụ — gate môi trường trước khi deploy:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -euo pipefail
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nv">ENVIRONMENT</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> -z <span class="s2">&#34;</span><span class="si">${</span><span class="nv">ENVIRONMENT</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Usage: </span><span class="nv">$0</span><span class="s2"> &lt;dev|staging|production&gt;&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">ENVIRONMENT</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">==</span> <span class="s2">&#34;production&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">read</span> -r -p <span class="s2">&#34;Bạn chắc chắn deploy lên PRODUCTION? (yes/no): &#34;</span> CONFIRM
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> <span class="o">[[</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">CONFIRM</span><span class="si">}</span><span class="s2">&#34;</span> !<span class="o">=</span> <span class="s2">&#34;yes&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Đã huỷ deploy.&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Bắt đầu deploy lên </span><span class="si">${</span><span class="nv">ENVIRONMENT</span><span class="si">}</span><span class="s2">...&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Lưu ý quan trọng: <strong>luôn quote biến</strong> (<code>&quot;${ENVIRONMENT}&quot;</code>). Nếu để <code>$ENVIRONMENT</code> trần và biến rỗng, biểu thức <code>[[ $ENVIRONMENT == &quot;production&quot; ]]</code> vẫn chạy được, nhưng các script tương tự với <code>[ ... ]</code> có thể lỗi cú pháp khi biến rỗng.</p>
-<hr>
-<h2 id="kiểm-tra-file-và-thư-mục">Kiểm tra file và thư mục
-</h2><p>Bash có sẵn các toán tử dùng để kiểm tra trạng thái file:</p>
-<div class="table-wrapper"><table>
-  <thead>
-      <tr>
-          <th>Toán tử</th>
-          <th>Ý nghĩa</th>
-      </tr>
-  </thead>
-  <tbody>
-      <tr>
-          <td><code>-e</code></td>
-          <td>tồn tại (file hoặc thư mục)</td>
-      </tr>
-      <tr>
-          <td><code>-f</code></td>
-          <td>tồn tại và là file thường</td>
-      </tr>
-      <tr>
-          <td><code>-d</code></td>
-          <td>tồn tại và là thư mục</td>
-      </tr>
-      <tr>
-          <td><code>-r</code></td>
-          <td>đọc được</td>
-      </tr>
-      <tr>
-          <td><code>-w</code></td>
-          <td>ghi được</td>
-      </tr>
-      <tr>
-          <td><code>-x</code></td>
-          <td>thực thi được</td>
-      </tr>
-      <tr>
-          <td><code>-s</code></td>
-          <td>file tồn tại và có kích thước &gt; 0</td>
-      </tr>
-      <tr>
-          <td><code>-L</code></td>
-          <td>là symbolic link</td>
-      </tr>
-  </tbody>
-</table></div>
-<p>Ví dụ — script đảm bảo thư mục log tồn tại và file cấu hình hợp lệ trước khi chạy app:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -euo pipefail
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nv">APP_NAME</span><span class="o">=</span><span class="s2">&#34;manager-blog&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">CONFIG_FILE</span><span class="o">=</span><span class="s2">&#34;/etc/</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2">/app.env&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">LOG_DIR</span><span class="o">=</span><span class="s2">&#34;/var/log/</span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> ! -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">CONFIG_FILE</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;ERROR: Không tìm thấy file cấu hình </span><span class="si">${</span><span class="nv">CONFIG_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> ! -r <span class="s2">&#34;</span><span class="si">${</span><span class="nv">CONFIG_FILE</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;ERROR: Không có quyền đọc </span><span class="si">${</span><span class="nv">CONFIG_FILE</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> ! -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">LOG_DIR</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Tạo thư mục log: </span><span class="si">${</span><span class="nv">LOG_DIR</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">  mkdir -p <span class="s2">&#34;</span><span class="si">${</span><span class="nv">LOG_DIR</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Tiền kiểm tra OK, sẵn sàng start </span><span class="si">${</span><span class="nv">APP_NAME</span><span class="si">}</span><span class="s2">.&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Dấu <code>!</code> ở đầu biểu thức là phép phủ định — <code>[[ ! -f ... ]]</code> đọc là &ldquo;nếu file không tồn tại&rdquo;.</p>
-<hr>
-<h2 id="kết-hợp-nhiều-điều-kiện-and--or">Kết hợp nhiều điều kiện (AND / OR)
-</h2><p>Có hai cách phổ biến để ghép điều kiện:</p>
-<p><strong>Cách 1 — ghép trong cùng <code>[[ ]]</code></strong> bằng <code>&amp;&amp;</code> và <code>||</code>:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[[</span> -f <span class="s2">&#34;/etc/nginx/nginx.conf&#34;</span> <span class="o">&amp;&amp;</span> -r <span class="s2">&#34;/etc/nginx/nginx.conf&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;Cấu hình Nginx tồn tại và đọc được.&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><strong>Cách 2 — nối hai lệnh test riêng</strong> bằng <code>&amp;&amp;</code>/<code>||</code> ở mức shell:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">command</span> -v docker &gt;/dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="o">&amp;&amp;</span> <span class="nb">echo</span> <span class="s2">&#34;Docker đã được cài&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">command</span> -v docker &gt;/dev/null 2&gt;<span class="p">&amp;</span><span class="m">1</span> <span class="o">||</span> <span class="nb">echo</span> <span class="s2">&#34;Docker chưa được cài&#34;</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Trong script automation, cách 1 dễ đọc hơn khi điều kiện liên quan chặt với nhau. Cách 2 phù hợp khi bạn muốn &ldquo;nếu lệnh này thành công thì làm tiếp&rdquo;, ví dụ:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir -p /backup/db <span class="o">&amp;&amp;</span> tar -czf /backup/db/dump.tar.gz /var/lib/db
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Nếu <code>mkdir</code> thất bại, lệnh <code>tar</code> sẽ không chạy.</p>
-<hr>
-<h2 id="caseesac--khi-ifelif-quá-dài">case…esac — khi if/elif quá dài
-</h2><p>Khi cần so khớp biến với nhiều giá trị khác nhau, <code>case</code> thường gọn và dễ đọc hơn chuỗi <code>if/elif</code>.</p>
-<p>Cú pháp:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">case</span> &lt;biến&gt; in
-</span></span><span class="line"><span class="cl">  &lt;pattern1&gt;<span class="o">)</span>
-</span></span><span class="line"><span class="cl">    &lt;lệnh&gt;
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">  &lt;pattern2&gt;<span class="p">|</span>&lt;pattern3&gt;<span class="o">)</span>
-</span></span><span class="line"><span class="cl">    &lt;lệnh&gt;
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">  *<span class="o">)</span>
-</span></span><span class="line"><span class="cl">    &lt;lệnh mặc định&gt;
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl"><span class="k">esac</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Ví dụ — script điều phối thao tác cho một service:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -euo pipefail
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nv">ACTION</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">SERVICE_NAME</span><span class="o">=</span><span class="s2">&#34;nginx&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">ACTION</span><span class="si">}</span><span class="s2">&#34;</span> in
-</span></span><span class="line"><span class="cl">  start<span class="o">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Khởi động </span><span class="si">${</span><span class="nv">SERVICE_NAME</span><span class="si">}</span><span class="s2">...&#34;</span>
-</span></span><span class="line"><span class="cl">    sudo systemctl start <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SERVICE_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">  stop<span class="o">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Dừng </span><span class="si">${</span><span class="nv">SERVICE_NAME</span><span class="si">}</span><span class="s2">...&#34;</span>
-</span></span><span class="line"><span class="cl">    sudo systemctl stop <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SERVICE_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">  restart<span class="p">|</span>reload<span class="o">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Khởi động lại </span><span class="si">${</span><span class="nv">SERVICE_NAME</span><span class="si">}</span><span class="s2">...&#34;</span>
-</span></span><span class="line"><span class="cl">    sudo systemctl restart <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SERVICE_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">  status<span class="o">)</span>
-</span></span><span class="line"><span class="cl">    sudo systemctl status <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SERVICE_NAME</span><span class="si">}</span><span class="s2">&#34;</span> --no-pager
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">  *<span class="o">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Usage: </span><span class="nv">$0</span><span class="s2"> {start|stop|restart|reload|status}&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl"><span class="k">esac</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p><code>case</code> hỗ trợ pattern theo kiểu glob, nên bạn có thể viết <code>dev*)</code>, <code>*.log)</code>, <code>[0-9]*)</code> … rất tiện cho việc phân nhánh theo môi trường hoặc loại file.</p>
-<hr>
-<h2 id="thực-hành-devops-check_servicesh">Thực hành DevOps: check_service.sh
-</h2><p>Ghép các kiến thức ở trên thành một script kiểm tra service và disk thực tế.</p>
-<p>Tạo file <code>check_service.sh</code>:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span><span class="lnt">13
-</span><span class="lnt">14
-</span><span class="lnt">15
-</span><span class="lnt">16
-</span><span class="lnt">17
-</span><span class="lnt">18
-</span><span class="lnt">19
-</span><span class="lnt">20
-</span><span class="lnt">21
-</span><span class="lnt">22
-</span><span class="lnt">23
-</span><span class="lnt">24
-</span><span class="lnt">25
-</span><span class="lnt">26
-</span><span class="lnt">27
-</span><span class="lnt">28
-</span><span class="lnt">29
-</span><span class="lnt">30
-</span><span class="lnt">31
-</span><span class="lnt">32
-</span><span class="lnt">33
-</span><span class="lnt">34
-</span><span class="lnt">35
-</span><span class="lnt">36
-</span><span class="lnt">37
-</span><span class="lnt">38
-</span><span class="lnt">39
-</span><span class="lnt">40
-</span><span class="lnt">41
-</span><span class="lnt">42
-</span><span class="lnt">43
-</span><span class="lnt">44
-</span><span class="lnt">45
-</span><span class="lnt">46
-</span><span class="lnt">47
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/usr/bin/env bash
-</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nb">set</span> -euo pipefail
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nv">SERVICE_NAME</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">1</span><span class="k">:-</span><span class="nv">nginx</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nv">DISK_THRESHOLD</span><span class="o">=</span><span class="s2">&#34;</span><span class="si">${</span><span class="nv">2</span><span class="k">:-</span><span class="nv">80</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;========================================&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;  Service &amp; Disk Check&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;  Service   : </span><span class="si">${</span><span class="nv">SERVICE_NAME</span><span class="si">}</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;  Threshold : </span><span class="si">${</span><span class="nv">DISK_THRESHOLD</span><span class="si">}</span><span class="s2">%&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;========================================&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 1) Kiểm tra systemctl có sẵn không</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> ! <span class="nb">command</span> -v systemctl &gt;/dev/null 2&gt;<span class="p">&amp;</span>1<span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;ERROR: Hệ thống không có systemctl, script dừng.&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 2) Kiểm tra service đang chạy hay không</span>
-</span></span><span class="line"><span class="cl"><span class="k">if</span> systemctl is-active --quiet <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SERVICE_NAME</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;OK: Service </span><span class="si">${</span><span class="nv">SERVICE_NAME</span><span class="si">}</span><span class="s2"> đang chạy.&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="k">else</span>
-</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;WARN: Service </span><span class="si">${</span><span class="nv">SERVICE_NAME</span><span class="si">}</span><span class="s2"> không chạy. Đang thử restart...&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">if</span> sudo systemctl restart <span class="s2">&#34;</span><span class="si">${</span><span class="nv">SERVICE_NAME</span><span class="si">}</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">then</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;OK: Đã restart </span><span class="si">${</span><span class="nv">SERVICE_NAME</span><span class="si">}</span><span class="s2">.&#34;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">else</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;ERROR: Restart </span><span class="si">${</span><span class="nv">SERVICE_NAME</span><span class="si">}</span><span class="s2"> thất bại.&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">2</span>
-</span></span><span class="line"><span class="cl">  <span class="k">fi</span>
-</span></span><span class="line"><span class="cl"><span class="k">fi</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># 3) Kiểm tra dung lượng disk theo ngưỡng truyền vào</span>
-</span></span><span class="line"><span class="cl"><span class="nv">DISK_USAGE_PERCENT</span><span class="o">=</span><span class="s2">&#34;</span><span class="k">$(</span>df -P / <span class="p">|</span> awk <span class="s1">&#39;NR==2 {gsub(&#34;%&#34;, &#34;&#34;, $5); print $5}&#39;</span><span class="k">)</span><span class="s2">&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">case</span> <span class="m">1</span> in
-</span></span><span class="line"><span class="cl">  <span class="k">$((</span> DISK_USAGE_PERCENT &gt;<span class="o">=</span> <span class="m">90</span> <span class="k">))</span> <span class="o">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;CRITICAL: Disk / đã dùng </span><span class="si">${</span><span class="nv">DISK_USAGE_PERCENT</span><span class="si">}</span><span class="s2">%.&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">2</span>
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">  <span class="k">$((</span> DISK_USAGE_PERCENT &gt;<span class="o">=</span> DISK_THRESHOLD <span class="k">))</span> <span class="o">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;WARNING: Disk / đã dùng </span><span class="si">${</span><span class="nv">DISK_USAGE_PERCENT</span><span class="si">}</span><span class="s2">% (ngưỡng </span><span class="si">${</span><span class="nv">DISK_THRESHOLD</span><span class="si">}</span><span class="s2">%).&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">exit</span> <span class="m">1</span>
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl">  *<span class="o">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;OK: Disk / ở mức </span><span class="si">${</span><span class="nv">DISK_USAGE_PERCENT</span><span class="si">}</span><span class="s2">%.&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="p">;;</span>
-</span></span><span class="line"><span class="cl"><span class="k">esac</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Chạy thử:</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chmod +x check_service.sh
-</span></span><span class="line"><span class="cl">./check_service.sh nginx <span class="m">80</span>
-</span></span></code></pre></td></tr></table>
-</div>
-</div><p>Điểm đáng chú ý:</p>
-<ul>
-<li>Dùng <code>systemctl is-active --quiet</code> để kiểm tra trạng thái — đây là cách &ldquo;đúng chuẩn&rdquo; thay vì parse output bằng <code>grep</code>.</li>
-<li>Trả exit code có ý nghĩa (<code>0/1/2</code>) để cron, alertmanager hoặc pipeline CI/CD nhận biết mức độ.</li>
-<li>Pattern <code>case 1 in $(( ... )) )</code> là một kỹ thuật nhỏ: biểu thức số học trả về <code>1</code> khi điều kiện đúng, <code>0</code> khi sai — vì vậy nhánh nào &ldquo;khớp&rdquo; số <code>1</code> sẽ chạy. Nếu thấy khó đọc, bạn hoàn toàn có thể quay về <code>if/elif/else</code> cho rõ ràng.</li>
-</ul>
-<hr>
-<h2 id="sai-sót-thường-gặp">Sai sót thường gặp
-</h2><ul>
-<li><strong>Quên dấu cách trong <code>[[ ]]</code>:</strong> Bash yêu cầu khoảng trắng quanh dấu <code>[[</code>, <code>]]</code> và quanh toán tử. <code>[[$A == &quot;x&quot;]]</code> sẽ lỗi cú pháp.</li>
-<li><strong>Dùng <code>=</code> cho số nguyên:</strong> <code>[[ &quot;${COUNT}&quot; = 1 ]]</code> so sánh dạng chuỗi. Khi cần so sánh số, dùng <code>-eq</code> hoặc đưa vào <code>(( ))</code>.</li>
-<li><strong>Không quote biến:</strong> Nếu biến rỗng, biểu thức có thể bị Bash phân tích sai trong <code>[ ]</code> (POSIX). <code>[[ ]]</code> an toàn hơn, nhưng vẫn nên giữ thói quen <code>&quot;${VAR}&quot;</code>.</li>
-<li><strong>Quên <code>;;</code> trong <code>case</code>:</strong> Mỗi nhánh <code>case</code> phải kết thúc bằng <code>;;</code>. Quên là Bash sẽ tiếp tục chạy sang nhánh sau khi nhánh đó match.</li>
-<li><strong>Lẫn lộn <code>&amp;&amp;</code>/<code>||</code> với pipeline:</strong> <code>cmd1 &amp;&amp; cmd2</code> chỉ chạy <code>cmd2</code> khi <code>cmd1</code> thành công (exit 0). Đừng nhầm với pipe <code>|</code> dùng để chuyển stdout.</li>
-</ul>
-<hr>
-<h2 id="ghi-chú-triển-khai">Ghi chú triển khai
-</h2><ul>
-<li><strong>Khi áp dụng vào dự án của bạn</strong>, hãy nghĩ về exit code trước khi viết logic: script này khi nào trả <code>0</code>, khi nào trả khác <code>0</code>? Điều này ảnh hưởng trực tiếp tới cron và pipeline.</li>
-<li><strong>Best practices:</strong>
-<ul>
-<li>Ưu tiên <code>[[ ]]</code> thay cho <code>[ ]</code> trong script Bash thuần.</li>
-<li>Luôn có nhánh <code>*)</code> mặc định trong <code>case</code> để bắt giá trị không hợp lệ và in usage.</li>
-<li>Khi điều kiện vượt quá 4–5 nhánh <code>if/elif</code>, cân nhắc chuyển sang <code>case</code> hoặc tách thành function.</li>
-<li>Đặt biến ngưỡng (threshold) lên đầu file hoặc nhận từ tham số CLI — không hardcode rải rác trong code.</li>
-</ul>
-</li>
-<li><strong>Troubleshooting:</strong>
-<ul>
-<li>Script không vào đúng nhánh? → Chạy với <code>bash -x script.sh</code> để xem giá trị biến sau khi expand.</li>
-<li>Báo lỗi <code>unary operator expected</code>? → Thường do biến rỗng trong <code>[ -f $FILE ]</code>. Đổi sang <code>[[ -f &quot;${FILE}&quot; ]]</code>.</li>
-<li><code>case</code> không match? → Kiểm tra pattern có cần quote không. Trong <code>case</code>, phía bên phải <code>in</code> là pattern (glob), không phải chuỗi đơn thuần.</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h2 id="-lời-kết">🎯 Lời kết
-</h2><p>Điều kiện là bước đầu tiên giúp script Bash của bạn &ldquo;có não&rdquo; — biết phản ứng theo trạng thái thay vì chạy mù. Với <code>if/elif/else</code>, <code>case…esac</code>, các toán tử so sánh số, chuỗi và kiểm tra file, bạn đã đủ công cụ để viết những script vận hành thực tế như healthcheck, gate deploy, hay điều phối service.</p>
-<p>Ở bài tiếp theo, chúng ta sẽ đi vào <strong>vòng lặp trong Bash</strong> với <code>for</code>, <code>while</code>, <code>until</code>, kèm các ví dụ tự động hoá lặp qua danh sách server và đọc file log theo dòng. 🚀</p>
-<hr>
-<h2 id="tài-liệu-tham-khảo">Tài liệu tham khảo
-</h2><ul>
-<li><a class="link" href="https://www.gnu.org/software/bash/manual/bash.html#Conditional-Constructs"  target="_blank" rel="noopener"
-    >GNU Bash Manual — Conditional Constructs</a> — Tài liệu chính thức về <code>if</code>, <code>case</code>, <code>select</code>.</li>
-<li><a class="link" href="https://www.gnu.org/software/bash/manual/bash.html#Bash-Conditional-Expressions"  target="_blank" rel="noopener"
-    >GNU Bash Manual — Bash Conditional Expressions</a> — Đầy đủ các toán tử file, chuỗi, số dùng trong <code>[[ ]]</code> và <code>test</code>.</li>
-<li><a class="link" href="https://www.gnu.org/software/bash/manual/bash.html#Shell-Arithmetic"  target="_blank" rel="noopener"
-    >GNU Bash Manual — Shell Arithmetic</a> — Cú pháp <code>(( ... ))</code> cho biểu thức số học.</li>
-<li><a class="link" href="https://www.shellcheck.net/"  target="_blank" rel="noopener"
-    >ShellCheck</a> — Công cụ lint giúp phát hiện các lỗi quote, so sánh sai kiểu trước khi đưa script vào production.</li>
-</ul>
-
-</section>
-
-
-    <footer class="article-footer">
-    
-    <section class="article-tags">
-        
-            <a href="/tags/bash/">Bash</a>
-        
-            <a href="/tags/shell-script/">Shell-Script</a>
-        
-            <a href="/tags/devops/">Devops</a>
-        
-            <a href="/tags/automation/">Automation</a>
-        
-            <a href="/tags/linux/">Linux</a>
-        
-    </section>
-
-
-    
-    <section class="article-copyright">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
-</svg>
-
-
-
-        <span>Licensed under CC BY-NC-SA 4.0</span>
-    </section>
-    <section class="article-lastmod">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <polyline points="12 7 12 12 15 15" />
-</svg>
-
-
-
-        <span>
-            Cập nhật lần cuối 00:00 24/05/2026
-        </span>
-    </section></footer>
-
-
-    
-</article>
-
-    
-
-    
-
-<aside class="related-content--wrapper">
-    <h2 class="section-title">Bài viết liên quan</h2>
-    <div class="related-content">
-        <div class="flex article-list--tile">
-            
-                
-<article class="has-image">
-    <a href="/posts/bash/bash-step-three/">
-        
-        
-            <div class="article-image">
-                
-                    <img src="/images/bash/bash-step-three.webp" loading="lazy" data-key="" data-hash="/images/bash/bash-step-three.webp"/>
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Vòng lặp trong Bash: for, while, until cho tự động hóa DevOps</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/posts/bash/bash-step-one/">
-        
-        
-            <div class="article-image">
-                
-                    <img src="/images/bash/bash-step-one.webp" loading="lazy" data-key="" data-hash="/images/bash/bash-step-one.webp"/>
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Cơ bản Bash Script trong DevOps</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/posts/devops/devops-step-two/">
-        
-        
-            <div class="article-image">
-                
-                    <img src="/images/devops/devops-step-two.webp" loading="lazy" data-key="" data-hash="/images/devops/devops-step-two.webp"/>
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Học về Linux &amp; Hệ Điều Hành 🖥️</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/posts/devops/devops-step-three/">
-        
-        
-            <div class="article-image">
-                
-                    <img src="/images/devops/devops-step-three.webp" loading="lazy" data-key="" data-hash="/images/devops/devops-step-three.webp"/>
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Kiến thức về Terminal 📟</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="has-image">
-    <a href="/posts/docker/install-docker-bash-script/">
-        
-        
-            <div class="article-image">
-                
-                    <img src="/images/docker/install-docker-bash-script.webp" loading="lazy" data-key="" data-hash="/images/docker/install-docker-bash-script.webp"/>
-                
-            </div>
-        
-
-        <div class="article-details">
-            <h2 class="article-title">Cài đặt Docker và Docker Compose tự động bằng Bash Script</h2>
-        </div>
-    </a>
-</article>
-
-            
-        </div>
-    </div>
-</aside>
-
-     
-    
-        
-    <script src="https://utteranc.es/client.js" 
-        repo="hoangduonng/blog_comments"
-        issue-term="pathname"
-        
-        label="comments"
-        
-        theme="icy-dark"
-        crossorigin="anonymous"
-        async
-        >
-</script>
-
-<style>
-    .utterances {
-        max-width: unset;
-    }
-</style>
-
-<script>
-    let utterancesLoaded = false;
-
-    function setUtterancesTheme(theme) {
-        let utterances = document.querySelector('.utterances iframe');
-        if (utterances) {
-            utterances.contentWindow.postMessage(
-                {
-                    type: 'set-theme',
-                    theme: `github-${theme}`
-                },
-                'https://utteranc.es'
-            );
-        }
-    }
-
-    addEventListener('message', event => {
-        if (event.origin !== 'https://utteranc.es') return;
-
-        
-        utterancesLoaded = true;
-        setUtterancesTheme(document.documentElement.dataset.scheme)
-    });
-
-    window.addEventListener('onColorSchemeChange', (e) => {
-        if (!utterancesLoaded) return;
-        setUtterancesTheme(e.detail)
-    })
-</script>
-
-
-    
-
-    <footer class="site-footer">
-    <section class="copyright">
-        &copy; 
-        
-            2025 - 
-        
-        2026 Hoàng Dương
-    </section>
-    
-    <section class="powerby">
-        Built with <a href="https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/" target="_blank" rel="noopener">Ngữ Uyển ❤️</a> <br />
-        Theme <no value> thiết kế bởi Jimmy
-    </section>
-</footer>
-
-
-    
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    
-    <div class="pswp__bg"></div>
-
-    
-    <div class="pswp__scroll-wrap">
-
-        
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                
-                
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
-                defer
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
-                defer
-                >
-            </script><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
-            ><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
-            >
-
-            </main>
-        </div>
-        <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
-                
-                >
-            </script><script type="text/javascript" src="/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js" defer></script>
-<script>
-    (function () {
-        const customFont = document.createElement('link');
-        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
-
-        customFont.type = "text/css";
-        customFont.rel = "stylesheet";
-
-        document.head.appendChild(customFont);
-    }());
-</script>
-
-    </body>
-</html>
+<!doctype html><html lang=vi dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Hướng dẫn dùng if/elif/else, case…esac, toán tử so sánh số, chuỗi và kiểm tra file trong Bash. Kèm ví dụ DevOps thực tế: kiểm tra service, ngưỡng disk và quyết định deploy."><title>Điều kiện trong Bash: if, case và xử lý logic cho DevOps</title>
+<link rel=canonical href=https://tech.nguuyen.io.vn/posts/bash/bash-step-two/><link rel=stylesheet href=/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css><meta property='og:title' content="Điều kiện trong Bash: if, case và xử lý logic cho DevOps"><meta property='og:description' content="Hướng dẫn dùng if/elif/else, case…esac, toán tử so sánh số, chuỗi và kiểm tra file trong Bash. Kèm ví dụ DevOps thực tế: kiểm tra service, ngưỡng disk và quyết định deploy."><meta property='og:url' content='https://tech.nguuyen.io.vn/posts/bash/bash-step-two/'><meta property='og:site_name' content='Hoàng Dương'><meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:tag' content='bash'><meta property='article:tag' content='shell-script'><meta property='article:tag' content='devops'><meta property='article:tag' content='automation'><meta property='article:tag' content='linux'><meta property='article:published_time' content='2026-05-24T00:00:00+00:00'><meta property='article:modified_time' content='2026-05-24T00:00:00+07:00'><meta property='og:image' content='https://tech.nguuyen.io.vn/images/bash/bash-step-two.webp'><meta name=twitter:title content="Điều kiện trong Bash: if, case và xử lý logic cho DevOps"><meta name=twitter:description content="Hướng dẫn dùng if/elif/else, case…esac, toán tử so sánh số, chuỗi và kiểm tra file trong Bash. Kèm ví dụ DevOps thực tế: kiểm tra service, ngưỡng disk và quyết định deploy."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://tech.nguuyen.io.vn/images/bash/bash-step-two.webp'><link rel=icon type=image/x-icon href=/favicon.ico><style>:root{--article-font-family:"Roboto", var(--base-font-family)}</style><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Hiển thị Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/hoang_hu_f5b001d7581bed29.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Hoàng Dương</a></h1><h2 class=site-description>And, when you want something, all the universe conspires in helping you to achieve it.</h2></div></header><ol class=menu-social><li><a href=https://github.com/HoangDuonng target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.instagram.com/ngu_uuen/ target=_blank title=Instagram rel=me><svg class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="4"/><path d="M16.5 7.5h.01"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Trang chủ</span></a></li><li><a href=/gi%E1%BB%9Bi-thi%E1%BB%87u/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>Về tôi</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Lưu trữ</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Tìm kiếm</span></a></li><li><a href=/li%C3%AAn-k%E1%BA%BFt/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Liên kết</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://tech.nguuyen.io.vn/ selected>Tiếng Việt</option><option value=https://tech.nguuyen.io.vn/en/>English</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Chế độ tối</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><h2 class="widget-title section-title">Mục lục</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#điều-kiện-trong-bash-cho-devops>Điều kiện trong Bash cho DevOps</a></li><li><a href=#if--elif--else>if / elif / else</a></li><li><a href=#toán-tử-so-sánh-số>Toán tử so sánh số</a></li><li><a href=#toán-tử-so-sánh-chuỗi>Toán tử so sánh chuỗi</a></li><li><a href=#kiểm-tra-file-và-thư-mục>Kiểm tra file và thư mục</a></li><li><a href=#kết-hợp-nhiều-điều-kiện-and--or>Kết hợp nhiều điều kiện (AND / OR)</a></li><li><a href=#caseesac--khi-ifelif-quá-dài>case…esac — khi if/elif quá dài</a></li><li><a href=#thực-hành-devops-check_servicesh>Thực hành DevOps: check_service.sh</a></li><li><a href=#sai-sót-thường-gặp>Sai sót thường gặp</a></li><li><a href=#ghi-chú-triển-khai>Ghi chú triển khai</a></li><li><a href=#-lời-kết>🎯 Lời kết</a></li><li><a href=#tài-liệu-tham-khảo>Tài liệu tham khảo</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/posts/bash/bash-step-two/><img src=/images/bash/bash-step-two.webp loading=lazy alt="Featured image of post Điều kiện trong Bash: if, case và xử lý logic cho DevOps"></a></div><div class=article-details><header class=article-category><a href=/categories/devops/ style=background-color:#2a9d8f;color:#fff>DevOps
+</a><a href=/categories/bash/ style=background-color:#2a9d8f;color:#fff>Bash</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/bash/bash-step-two/>Điều kiện trong Bash: if, case và xử lý logic cho DevOps</a></h2><h3 class=article-subtitle>Hướng dẫn dùng if/elif/else, case…esac, toán tử so sánh số, chuỗi và kiểm tra file trong Bash. Kèm ví dụ DevOps thực tế: kiểm tra service, ngưỡng disk và quyết định deploy.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>24/05/2026</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>10 phút đọc</time></div><div><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span class=article-author--name>Hoàng Dương</span></div></footer><footer class=article-translations><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg><div><a href=https://tech.nguuyen.io.vn/en/posts/bash/bash-step-two/ class=link>English</a></div></footer></div></header><section class=article-content><h2 id=điều-kiện-trong-bash-cho-devops>Điều kiện trong Bash cho DevOps</h2><p>Ở <a class=link href=/posts/bash/bash-step-one/>bài đầu tiên</a> chúng ta đã viết script tuyến tính — chạy lần lượt từ trên xuống dưới. Trong thực tế vận hành, script thường phải <strong>ra quyết định</strong>: nếu service đã chạy thì bỏ qua, nếu disk vượt ngưỡng thì cảnh báo, nếu môi trường là <code>production</code> thì cần xác nhận trước khi deploy.</p><p><strong>Điều kiện trong Bash</strong> chính là công cụ giúp script phản ứng linh hoạt với trạng thái hệ thống. Bài này sẽ đi qua <code>if/elif/else</code>, các toán tử so sánh, kiểm tra file và <code>case…esac</code> — kèm các ví dụ DevOps mà bạn có thể đem dùng ngay.</p><hr><h2 id=if--elif--else>if / elif / else</h2><p>Cú pháp cơ bản:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> &lt;điều_kiện&gt; <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  &lt;lệnh khi đúng&gt;
+</span></span><span class=line><span class=cl><span class=k>elif</span> <span class=o>[[</span> &lt;điều_kiện_khác&gt; <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  &lt;lệnh khi điều kiện khác đúng&gt;
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>  &lt;lệnh khi tất cả đều sai&gt;
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span></code></pre></td></tr></table></div></div><p>Một vài lưu ý:</p><ul><li>Trong Bash hiện đại, ưu tiên dùng <code>[[ ... ]]</code> thay cho <code>[ ... ]</code>. <code>[[ ]]</code> là <strong>conditional expression</strong> của Bash, hỗ trợ thêm pattern matching và an toàn hơn với biến chứa khoảng trắng.</li><li>Mỗi <code>if</code> phải kết thúc bằng <code>fi</code>. Nếu quên, <code>bash -n script.sh</code> sẽ báo lỗi cú pháp ngay.</li><li>Khối lệnh thường thụt vào 2 khoảng trắng để dễ đọc.</li></ul><p>Ví dụ rất nhỏ — kiểm tra script có được chạy với quyền root hay không:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>EUID</span><span class=si>}</span><span class=s2>&#34;</span> -eq <span class=m>0</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Đang chạy với quyền root.&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Không phải root, một số lệnh có thể bị từ chối.&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>EUID</code> là biến built-in của Bash, chứa effective user ID. User root luôn có <code>EUID=0</code>.</p><hr><h2 id=toán-tử-so-sánh-số>Toán tử so sánh số</h2><p>Khi so sánh <strong>số nguyên</strong>, dùng các toán tử dạng <code>-eq</code>, <code>-ne</code>, <code>-gt</code>…</p><div class=table-wrapper><table><thead><tr><th>Toán tử</th><th>Ý nghĩa</th></tr></thead><tbody><tr><td><code>-eq</code></td><td>bằng (<code>equal</code>)</td></tr><tr><td><code>-ne</code></td><td>khác (<code>not equal</code>)</td></tr><tr><td><code>-gt</code></td><td>lớn hơn (<code>greater</code>)</td></tr><tr><td><code>-ge</code></td><td>lớn hơn hoặc bằng</td></tr><tr><td><code>-lt</code></td><td>nhỏ hơn (<code>less</code>)</td></tr><tr><td><code>-le</code></td><td>nhỏ hơn hoặc bằng</td></tr></tbody></table></div><p>Ví dụ kiểm tra dung lượng ổ đĩa <code>/</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>DISK_USAGE_PERCENT</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>df -P / <span class=p>|</span> awk <span class=s1>&#39;NR==2 {gsub(&#34;%&#34;, &#34;&#34;, $5); print $5}&#39;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>DISK_USAGE_PERCENT</span><span class=si>}</span><span class=s2>&#34;</span> -ge <span class=m>90</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;CRITICAL: Disk / đã dùng </span><span class=si>${</span><span class=nv>DISK_USAGE_PERCENT</span><span class=si>}</span><span class=s2>%&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>2</span>
+</span></span><span class=line><span class=cl><span class=k>elif</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>DISK_USAGE_PERCENT</span><span class=si>}</span><span class=s2>&#34;</span> -ge <span class=m>80</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;WARNING: Disk / đã dùng </span><span class=si>${</span><span class=nv>DISK_USAGE_PERCENT</span><span class=si>}</span><span class=s2>%&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;OK: Disk / ở mức </span><span class=si>${</span><span class=nv>DISK_USAGE_PERCENT</span><span class=si>}</span><span class=s2>%&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span></code></pre></td></tr></table></div></div><p>Script trả exit code <code>0/1/2</code> tương ứng <code>OK/WARN/CRIT</code>. Đây là quy ước rất quen với các hệ giám sát như Nagios/Icinga và cũng dễ dùng trong cron hoặc pipeline CI/CD.</p><blockquote><p><strong>Mẹo:</strong> Bạn có thể dùng cú pháp <code>(( ... ))</code> cho số học, ví dụ <code>if (( DISK_USAGE_PERCENT >= 80 )); then</code>. Khi nằm trong <code>(( ))</code>, bạn không cần <code>$</code> trước tên biến và có thể dùng <code>>=</code>, <code>&lt;=</code>, <code>==</code> quen thuộc.</p></blockquote><hr><h2 id=toán-tử-so-sánh-chuỗi>Toán tử so sánh chuỗi</h2><p>Với <strong>chuỗi</strong>, dùng các toán tử khác:</p><div class=table-wrapper><table><thead><tr><th>Toán tử</th><th>Ý nghĩa</th></tr></thead><tbody><tr><td><code>=</code> / <code>==</code></td><td>bằng</td></tr><tr><td><code>!=</code></td><td>khác</td></tr><tr><td><code>-z STR</code></td><td>chuỗi rỗng</td></tr><tr><td><code>-n STR</code></td><td>chuỗi không rỗng</td></tr><tr><td><code>&lt;</code> / <code>></code></td><td>so sánh thứ tự (chỉ trong <code>[[ ]]</code>)</td></tr></tbody></table></div><p>Ví dụ — gate môi trường trước khi deploy:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>ENVIRONMENT</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>1</span><span class=k>:-</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> -z <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ENVIRONMENT</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Usage: </span><span class=nv>$0</span><span class=s2> &lt;dev|staging|production&gt;&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ENVIRONMENT</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;production&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>read</span> -r -p <span class=s2>&#34;Bạn chắc chắn deploy lên PRODUCTION? (yes/no): &#34;</span> CONFIRM
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIRM</span><span class=si>}</span><span class=s2>&#34;</span> !<span class=o>=</span> <span class=s2>&#34;yes&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;Đã huỷ deploy.&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl>  <span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Bắt đầu deploy lên </span><span class=si>${</span><span class=nv>ENVIRONMENT</span><span class=si>}</span><span class=s2>...&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Lưu ý quan trọng: <strong>luôn quote biến</strong> (<code>"${ENVIRONMENT}"</code>). Nếu để <code>$ENVIRONMENT</code> trần và biến rỗng, biểu thức <code>[[ $ENVIRONMENT == "production" ]]</code> vẫn chạy được, nhưng các script tương tự với <code>[ ... ]</code> có thể lỗi cú pháp khi biến rỗng.</p><hr><h2 id=kiểm-tra-file-và-thư-mục>Kiểm tra file và thư mục</h2><p>Bash có sẵn các toán tử dùng để kiểm tra trạng thái file:</p><div class=table-wrapper><table><thead><tr><th>Toán tử</th><th>Ý nghĩa</th></tr></thead><tbody><tr><td><code>-e</code></td><td>tồn tại (file hoặc thư mục)</td></tr><tr><td><code>-f</code></td><td>tồn tại và là file thường</td></tr><tr><td><code>-d</code></td><td>tồn tại và là thư mục</td></tr><tr><td><code>-r</code></td><td>đọc được</td></tr><tr><td><code>-w</code></td><td>ghi được</td></tr><tr><td><code>-x</code></td><td>thực thi được</td></tr><tr><td><code>-s</code></td><td>file tồn tại và có kích thước > 0</td></tr><tr><td><code>-L</code></td><td>là symbolic link</td></tr></tbody></table></div><p>Ví dụ — script đảm bảo thư mục log tồn tại và file cấu hình hợp lệ trước khi chạy app:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>APP_NAME</span><span class=o>=</span><span class=s2>&#34;manager-blog&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>CONFIG_FILE</span><span class=o>=</span><span class=s2>&#34;/etc/</span><span class=si>${</span><span class=nv>APP_NAME</span><span class=si>}</span><span class=s2>/app.env&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>LOG_DIR</span><span class=o>=</span><span class=s2>&#34;/var/log/</span><span class=si>${</span><span class=nv>APP_NAME</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> ! -f <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;ERROR: Không tìm thấy file cấu hình </span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> ! -r <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;ERROR: Không có quyền đọc </span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> ! -d <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Tạo thư mục log: </span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  mkdir -p <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Tiền kiểm tra OK, sẵn sàng start </span><span class=si>${</span><span class=nv>APP_NAME</span><span class=si>}</span><span class=s2>.&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Dấu <code>!</code> ở đầu biểu thức là phép phủ định — <code>[[ ! -f ... ]]</code> đọc là &ldquo;nếu file không tồn tại&rdquo;.</p><hr><h2 id=kết-hợp-nhiều-điều-kiện-and--or>Kết hợp nhiều điều kiện (AND / OR)</h2><p>Có hai cách phổ biến để ghép điều kiện:</p><p><strong>Cách 1 — ghép trong cùng <code>[[ ]]</code></strong> bằng <code>&&</code> và <code>||</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> -f <span class=s2>&#34;/etc/nginx/nginx.conf&#34;</span> <span class=o>&amp;&amp;</span> -r <span class=s2>&#34;/etc/nginx/nginx.conf&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Cấu hình Nginx tồn tại và đọc được.&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span></code></pre></td></tr></table></div></div><p><strong>Cách 2 — nối hai lệnh test riêng</strong> bằng <code>&&</code>/<code>||</code> ở mức shell:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>command</span> -v docker &gt;/dev/null 2&gt;<span class=p>&amp;</span><span class=m>1</span> <span class=o>&amp;&amp;</span> <span class=nb>echo</span> <span class=s2>&#34;Docker đã được cài&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> -v docker &gt;/dev/null 2&gt;<span class=p>&amp;</span><span class=m>1</span> <span class=o>||</span> <span class=nb>echo</span> <span class=s2>&#34;Docker chưa được cài&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Trong script automation, cách 1 dễ đọc hơn khi điều kiện liên quan chặt với nhau. Cách 2 phù hợp khi bạn muốn &ldquo;nếu lệnh này thành công thì làm tiếp&rdquo;, ví dụ:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>mkdir -p /backup/db <span class=o>&amp;&amp;</span> tar -czf /backup/db/dump.tar.gz /var/lib/db
+</span></span></code></pre></td></tr></table></div></div><p>Nếu <code>mkdir</code> thất bại, lệnh <code>tar</code> sẽ không chạy.</p><hr><h2 id=caseesac--khi-ifelif-quá-dài>case…esac — khi if/elif quá dài</h2><p>Khi cần so khớp biến với nhiều giá trị khác nhau, <code>case</code> thường gọn và dễ đọc hơn chuỗi <code>if/elif</code>.</p><p>Cú pháp:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>case</span> &lt;biến&gt; in
+</span></span><span class=line><span class=cl>  &lt;pattern1&gt;<span class=o>)</span>
+</span></span><span class=line><span class=cl>    &lt;lệnh&gt;
+</span></span><span class=line><span class=cl>    <span class=p>;;</span>
+</span></span><span class=line><span class=cl>  &lt;pattern2&gt;<span class=p>|</span>&lt;pattern3&gt;<span class=o>)</span>
+</span></span><span class=line><span class=cl>    &lt;lệnh&gt;
+</span></span><span class=line><span class=cl>    <span class=p>;;</span>
+</span></span><span class=line><span class=cl>  *<span class=o>)</span>
+</span></span><span class=line><span class=cl>    &lt;lệnh mặc định&gt;
+</span></span><span class=line><span class=cl>    <span class=p>;;</span>
+</span></span><span class=line><span class=cl><span class=k>esac</span>
+</span></span></code></pre></td></tr></table></div></div><p>Ví dụ — script điều phối thao tác cho một service:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>ACTION</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>1</span><span class=k>:-</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>SERVICE_NAME</span><span class=o>=</span><span class=s2>&#34;nginx&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>case</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ACTION</span><span class=si>}</span><span class=s2>&#34;</span> in
+</span></span><span class=line><span class=cl>  start<span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;Khởi động </span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>...&#34;</span>
+</span></span><span class=line><span class=cl>    sudo systemctl start <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>;;</span>
+</span></span><span class=line><span class=cl>  stop<span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;Dừng </span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>...&#34;</span>
+</span></span><span class=line><span class=cl>    sudo systemctl stop <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>;;</span>
+</span></span><span class=line><span class=cl>  restart<span class=p>|</span>reload<span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;Khởi động lại </span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>...&#34;</span>
+</span></span><span class=line><span class=cl>    sudo systemctl restart <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>;;</span>
+</span></span><span class=line><span class=cl>  status<span class=o>)</span>
+</span></span><span class=line><span class=cl>    sudo systemctl status <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>&#34;</span> --no-pager
+</span></span><span class=line><span class=cl>    <span class=p>;;</span>
+</span></span><span class=line><span class=cl>  *<span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;Usage: </span><span class=nv>$0</span><span class=s2> {start|stop|restart|reload|status}&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl>    <span class=p>;;</span>
+</span></span><span class=line><span class=cl><span class=k>esac</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>case</code> hỗ trợ pattern theo kiểu glob, nên bạn có thể viết <code>dev*)</code>, <code>*.log)</code>, <code>[0-9]*)</code> … rất tiện cho việc phân nhánh theo môi trường hoặc loại file.</p><hr><h2 id=thực-hành-devops-check_servicesh>Thực hành DevOps: check_service.sh</h2><p>Ghép các kiến thức ở trên thành một script kiểm tra service và disk thực tế.</p><p>Tạo file <code>check_service.sh</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>SERVICE_NAME</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>1</span><span class=k>:-</span><span class=nv>nginx</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>DISK_THRESHOLD</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>2</span><span class=k>:-</span><span class=nv>80</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;========================================&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;  Service &amp; Disk Check&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;  Service   : </span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;  Threshold : </span><span class=si>${</span><span class=nv>DISK_THRESHOLD</span><span class=si>}</span><span class=s2>%&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;========================================&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 1) Kiểm tra systemctl có sẵn không</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> ! <span class=nb>command</span> -v systemctl &gt;/dev/null 2&gt;<span class=p>&amp;</span>1<span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;ERROR: Hệ thống không có systemctl, script dừng.&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 2) Kiểm tra service đang chạy hay không</span>
+</span></span><span class=line><span class=cl><span class=k>if</span> systemctl is-active --quiet <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;OK: Service </span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2> đang chạy.&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;WARN: Service </span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2> không chạy. Đang thử restart...&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> sudo systemctl restart <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;OK: Đã restart </span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>.&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=k>else</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;ERROR: Restart </span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2> thất bại.&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=nb>exit</span> <span class=m>2</span>
+</span></span><span class=line><span class=cl>  <span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=c1># 3) Kiểm tra dung lượng disk theo ngưỡng truyền vào</span>
+</span></span><span class=line><span class=cl><span class=nv>DISK_USAGE_PERCENT</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>df -P / <span class=p>|</span> awk <span class=s1>&#39;NR==2 {gsub(&#34;%&#34;, &#34;&#34;, $5); print $5}&#39;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>case</span> <span class=m>1</span> in
+</span></span><span class=line><span class=cl>  <span class=k>$((</span> DISK_USAGE_PERCENT &gt;<span class=o>=</span> <span class=m>90</span> <span class=k>))</span> <span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;CRITICAL: Disk / đã dùng </span><span class=si>${</span><span class=nv>DISK_USAGE_PERCENT</span><span class=si>}</span><span class=s2>%.&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=nb>exit</span> <span class=m>2</span>
+</span></span><span class=line><span class=cl>    <span class=p>;;</span>
+</span></span><span class=line><span class=cl>  <span class=k>$((</span> DISK_USAGE_PERCENT &gt;<span class=o>=</span> DISK_THRESHOLD <span class=k>))</span> <span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;WARNING: Disk / đã dùng </span><span class=si>${</span><span class=nv>DISK_USAGE_PERCENT</span><span class=si>}</span><span class=s2>% (ngưỡng </span><span class=si>${</span><span class=nv>DISK_THRESHOLD</span><span class=si>}</span><span class=s2>%).&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl>    <span class=p>;;</span>
+</span></span><span class=line><span class=cl>  *<span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;OK: Disk / ở mức </span><span class=si>${</span><span class=nv>DISK_USAGE_PERCENT</span><span class=si>}</span><span class=s2>%.&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=p>;;</span>
+</span></span><span class=line><span class=cl><span class=k>esac</span>
+</span></span></code></pre></td></tr></table></div></div><p>Chạy thử:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>chmod +x check_service.sh
+</span></span><span class=line><span class=cl>./check_service.sh nginx <span class=m>80</span>
+</span></span></code></pre></td></tr></table></div></div><p>Điểm đáng chú ý:</p><ul><li>Dùng <code>systemctl is-active --quiet</code> để kiểm tra trạng thái — đây là cách &ldquo;đúng chuẩn&rdquo; thay vì parse output bằng <code>grep</code>.</li><li>Trả exit code có ý nghĩa (<code>0/1/2</code>) để cron, alertmanager hoặc pipeline CI/CD nhận biết mức độ.</li><li>Pattern <code>case 1 in $(( ... )) )</code> là một kỹ thuật nhỏ: biểu thức số học trả về <code>1</code> khi điều kiện đúng, <code>0</code> khi sai — vì vậy nhánh nào &ldquo;khớp&rdquo; số <code>1</code> sẽ chạy. Nếu thấy khó đọc, bạn hoàn toàn có thể quay về <code>if/elif/else</code> cho rõ ràng.</li></ul><hr><h2 id=sai-sót-thường-gặp>Sai sót thường gặp</h2><ul><li><strong>Quên dấu cách trong <code>[[ ]]</code>:</strong> Bash yêu cầu khoảng trắng quanh dấu <code>[[</code>, <code>]]</code> và quanh toán tử. <code>[[$A == "x"]]</code> sẽ lỗi cú pháp.</li><li><strong>Dùng <code>=</code> cho số nguyên:</strong> <code>[[ "${COUNT}" = 1 ]]</code> so sánh dạng chuỗi. Khi cần so sánh số, dùng <code>-eq</code> hoặc đưa vào <code>(( ))</code>.</li><li><strong>Không quote biến:</strong> Nếu biến rỗng, biểu thức có thể bị Bash phân tích sai trong <code>[ ]</code> (POSIX). <code>[[ ]]</code> an toàn hơn, nhưng vẫn nên giữ thói quen <code>"${VAR}"</code>.</li><li><strong>Quên <code>;;</code> trong <code>case</code>:</strong> Mỗi nhánh <code>case</code> phải kết thúc bằng <code>;;</code>. Quên là Bash sẽ tiếp tục chạy sang nhánh sau khi nhánh đó match.</li><li><strong>Lẫn lộn <code>&&</code>/<code>||</code> với pipeline:</strong> <code>cmd1 && cmd2</code> chỉ chạy <code>cmd2</code> khi <code>cmd1</code> thành công (exit 0). Đừng nhầm với pipe <code>|</code> dùng để chuyển stdout.</li></ul><hr><h2 id=ghi-chú-triển-khai>Ghi chú triển khai</h2><ul><li><strong>Khi áp dụng vào dự án của bạn</strong>, hãy nghĩ về exit code trước khi viết logic: script này khi nào trả <code>0</code>, khi nào trả khác <code>0</code>? Điều này ảnh hưởng trực tiếp tới cron và pipeline.</li><li><strong>Best practices:</strong><ul><li>Ưu tiên <code>[[ ]]</code> thay cho <code>[ ]</code> trong script Bash thuần.</li><li>Luôn có nhánh <code>*)</code> mặc định trong <code>case</code> để bắt giá trị không hợp lệ và in usage.</li><li>Khi điều kiện vượt quá 4–5 nhánh <code>if/elif</code>, cân nhắc chuyển sang <code>case</code> hoặc tách thành function.</li><li>Đặt biến ngưỡng (threshold) lên đầu file hoặc nhận từ tham số CLI — không hardcode rải rác trong code.</li></ul></li><li><strong>Troubleshooting:</strong><ul><li>Script không vào đúng nhánh? → Chạy với <code>bash -x script.sh</code> để xem giá trị biến sau khi expand.</li><li>Báo lỗi <code>unary operator expected</code>? → Thường do biến rỗng trong <code>[ -f $FILE ]</code>. Đổi sang <code>[[ -f "${FILE}" ]]</code>.</li><li><code>case</code> không match? → Kiểm tra pattern có cần quote không. Trong <code>case</code>, phía bên phải <code>in</code> là pattern (glob), không phải chuỗi đơn thuần.</li></ul></li></ul><hr><h2 id=-lời-kết>🎯 Lời kết</h2><p>Điều kiện là bước đầu tiên giúp script Bash của bạn &ldquo;có não&rdquo; — biết phản ứng theo trạng thái thay vì chạy mù. Với <code>if/elif/else</code>, <code>case…esac</code>, các toán tử so sánh số, chuỗi và kiểm tra file, bạn đã đủ công cụ để viết những script vận hành thực tế như healthcheck, gate deploy, hay điều phối service.</p><p>Ở bài tiếp theo, chúng ta sẽ đi vào <strong>vòng lặp trong Bash</strong> với <code>for</code>, <code>while</code>, <code>until</code>, kèm các ví dụ tự động hoá lặp qua danh sách server và đọc file log theo dòng. 🚀</p><hr><h2 id=tài-liệu-tham-khảo>Tài liệu tham khảo</h2><ul><li><a class=link href=https://www.gnu.org/software/bash/manual/bash.html#Conditional-Constructs target=_blank rel=noopener>GNU Bash Manual — Conditional Constructs</a> — Tài liệu chính thức về <code>if</code>, <code>case</code>, <code>select</code>.</li><li><a class=link href=https://www.gnu.org/software/bash/manual/bash.html#Bash-Conditional-Expressions target=_blank rel=noopener>GNU Bash Manual — Bash Conditional Expressions</a> — Đầy đủ các toán tử file, chuỗi, số dùng trong <code>[[ ]]</code> và <code>test</code>.</li><li><a class=link href=https://www.gnu.org/software/bash/manual/bash.html#Shell-Arithmetic target=_blank rel=noopener>GNU Bash Manual — Shell Arithmetic</a> — Cú pháp <code>(( ... ))</code> cho biểu thức số học.</li><li><a class=link href=https://www.shellcheck.net/ target=_blank rel=noopener>ShellCheck</a> — Công cụ lint giúp phát hiện các lỗi quote, so sánh sai kiểu trước khi đưa script vào production.</li></ul></section><footer class=article-footer><section class=article-tags><a href=/tags/bash/>Bash</a>
+<a href=/tags/shell-script/>Shell-Script</a>
+<a href=/tags/devops/>Devops</a>
+<a href=/tags/automation/>Automation</a>
+<a href=/tags/linux/>Linux</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section><section class=article-lastmod><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<span>Cập nhật lần cuối 00:00 24/05/2026</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Bài viết liên quan</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/posts/bash/bash-step-three/><div class=article-image><img src=/images/bash/bash-step-three.webp loading=lazy data-key data-hash=/images/bash/bash-step-three.webp></div><div class=article-details><h2 class=article-title>Vòng lặp trong Bash: for, while, until cho tự động hóa DevOps</h2></div></a></article><article class=has-image><a href=/posts/bash/bash-step-one/><div class=article-image><img src=/images/bash/bash-step-one.webp loading=lazy data-key data-hash=/images/bash/bash-step-one.webp></div><div class=article-details><h2 class=article-title>Cơ bản Bash Script trong DevOps</h2></div></a></article><article class=has-image><a href=/posts/devops/devops-step-two/><div class=article-image><img src=/images/devops/devops-step-two.webp loading=lazy data-key data-hash=/images/devops/devops-step-two.webp></div><div class=article-details><h2 class=article-title>Học về Linux & Hệ Điều Hành 🖥️</h2></div></a></article><article class=has-image><a href=/posts/devops/devops-step-three/><div class=article-image><img src=/images/devops/devops-step-three.webp loading=lazy data-key data-hash=/images/devops/devops-step-three.webp></div><div class=article-details><h2 class=article-title>Kiến thức về Terminal 📟</h2></div></a></article><article class=has-image><a href=/posts/docker/install-docker-bash-script/><div class=article-image><img src=/images/docker/install-docker-bash-script.webp loading=lazy data-key data-hash=/images/docker/install-docker-bash-script.webp></div><div class=article-details><h2 class=article-title>Cài đặt Docker và Docker Compose tự động bằng Bash Script</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=hoangduonng/blog_comments issue-term=pathname label=comments theme=icy-dark crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2025 -
+2026 Hoàng Dương</section><section class=powerby>Built with <a href=https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/ target=_blank rel=noopener>Ngữ Uyển ❤️</a><br>Theme <no value>thiết kế bởi Jimmy</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
