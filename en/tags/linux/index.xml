@@ -1,4 +1,471 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/linux/</link><description>Recent content in Linux on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Sun, 24 May 2026 00:00:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Bash Conditionals: if, case, and DevOps Logic Handling</title><link>https://tech.nguuyen.io.vn/en/posts/bash/bash-step-two/</link><pubDate>Sun, 24 May 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/bash/bash-step-two/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/bash/bash-step-two.webp" alt="Featured image of post Bash Conditionals: if, case, and DevOps Logic Handling" />&lt;h2 id="bash-conditionals-for-devops">Bash Conditionals for DevOps
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Linux on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/linux/</link><description>Recent content in Linux on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Wed, 03 Jun 2026 00:00:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/linux/index.xml" rel="self" type="application/rss+xml"/><item><title>Loops in Bash: for, while, and until for DevOps Automation</title><link>https://tech.nguuyen.io.vn/en/posts/bash/bash-step-three/</link><pubDate>Tue, 02 Jun 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/bash/bash-step-three/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/bash/bash-step-three.webp" alt="Featured image of post Loops in Bash: for, while, and until for DevOps Automation" />&lt;h2 id="bash-loops-for-devops">Bash Loops for DevOps
+&lt;/h2>&lt;p>In the &lt;a class="link" href="https://tech.nguuyen.io.vn/posts/bash/bash-step-two/" >previous article&lt;/a> we used conditionals so scripts could branch based on system state. In DevOps work, many tasks do not run only once: checking multiple servers, reading logs line by line, retrying a command that may fail temporarily, or processing batches of configuration files.&lt;/p>
+&lt;p>&lt;strong>Loops in Bash&lt;/strong> let you repeat a block of commands over a list, while a condition is true, or until a condition becomes true. This article covers &lt;code>for&lt;/code>, &lt;code>while&lt;/code>, &lt;code>until&lt;/code>, &lt;code>break&lt;/code>, &lt;code>continue&lt;/code>, and practical examples that are close to daily operations work.&lt;/p>
+&lt;hr>
+&lt;h2 id="for-in--iterate-over-a-list">for in — iterate over a list
+&lt;/h2>&lt;p>According to the GNU Bash Manual, the &lt;code>for name in words; do ...; done&lt;/code> form expands the list of &lt;code>words&lt;/code>, then runs the command block once for each item. On each iteration, the variable &lt;code>name&lt;/code> receives the current value.&lt;/p>
+&lt;p>Common syntax:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> item in item1 item2 item3&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Processing: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">item&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Example — quickly check multiple hosts with &lt;code>ping&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">HOSTS&lt;/span>&lt;span class="o">=(&lt;/span>&lt;span class="s2">&amp;#34;web-01&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;web-02&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;db-01&amp;#34;&lt;/span>&lt;span class="o">)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> HOST in &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">HOSTS&lt;/span>&lt;span class="p">[@]&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Checking &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">HOST&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">...&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> ping -c &lt;span class="m">1&lt;/span> -W &lt;span class="m">2&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">HOST&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &amp;gt;/dev/null 2&amp;gt;&lt;span class="p">&amp;amp;&lt;/span>1&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;OK: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">HOST&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> reachable&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;WARN: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">HOST&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> unreachable&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The important part is using &lt;code>&amp;quot;${HOSTS[@]}&amp;quot;&lt;/code> instead of bare &lt;code>${HOSTS[@]}&lt;/code>. This quoting keeps each array element intact, even when a value contains spaces.&lt;/p>
+&lt;hr>
+&lt;h2 id="c-style-for--loop-with-a-counter">C-style for — loop with a counter
+&lt;/h2>&lt;p>Bash also supports &lt;code>for (( expr1; expr2; expr3 ))&lt;/code>, similar to the C language. This form is useful when you need an explicit counter: run exactly N times, number retry attempts, or generate filenames by index.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="o">((&lt;/span> &lt;span class="nv">i&lt;/span> &lt;span class="o">=&lt;/span> 1&lt;span class="p">;&lt;/span> i &amp;lt;&lt;span class="o">=&lt;/span> 5&lt;span class="p">;&lt;/span> i++ &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Attempt &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">i&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/5&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Example — create 3 demo log files for a test environment:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOG_DIR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/tmp/bash-loop-demo&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkdir -p &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_DIR&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="o">((&lt;/span> &lt;span class="nv">i&lt;/span> &lt;span class="o">=&lt;/span> 1&lt;span class="p">;&lt;/span> i &amp;lt;&lt;span class="o">=&lt;/span> 3&lt;span class="p">;&lt;/span> i++ &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_DIR&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/app-&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">i&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">.log&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>date -Is&lt;span class="k">)&lt;/span>&lt;span class="s2"> demo log &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">i&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Created &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Inside &lt;code>(( ... ))&lt;/code>, you can use familiar arithmetic operators such as &lt;code>&amp;lt;=&lt;/code>, &lt;code>++&lt;/code>, and &lt;code>+=&lt;/code>. Variable names do not need a leading &lt;code>$&lt;/code> there.&lt;/p>
+&lt;hr>
+&lt;h2 id="while--loop-while-a-condition-is-true">while — loop while a condition is true
+&lt;/h2>&lt;p>&lt;code>while&lt;/code> runs a command block as long as the test command returns exit code &lt;code>0&lt;/code>. It is a good choice when you do not know the number of iterations in advance: reading a file to the end, waiting for a service to become ready, or polling an endpoint.&lt;/p>
+&lt;p>Syntax:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="k">while&lt;/span> &amp;lt;test_command&amp;gt;&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;commands_to_repeat&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Example — read a log file line by line and filter error lines:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="p">/var/log/app/app.log&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! -r &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: Cannot read log file: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">while&lt;/span> &lt;span class="nv">IFS&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="nb">read&lt;/span> -r LINE&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LINE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">==&lt;/span> *&lt;span class="s2">&amp;#34;ERROR&amp;#34;&lt;/span>* &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Found error: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LINE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span> &amp;lt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>IFS= read -r LINE&lt;/code> is the recommended pattern when reading lines:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>IFS=&lt;/code> prevents Bash from trimming leading or trailing whitespace.&lt;/li>
+&lt;li>&lt;code>read -r&lt;/code> preserves &lt;code>\&lt;/code> characters instead of treating them as escapes.&lt;/li>
+&lt;li>&lt;code>done &amp;lt; &amp;quot;${LOG_FILE}&amp;quot;&lt;/code> feeds the file into the loop&amp;rsquo;s stdin, avoiding an unnecessary &lt;code>cat&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="until--loop-until-a-condition-becomes-true">until — loop until a condition becomes true
+&lt;/h2>&lt;p>&lt;code>until&lt;/code> is close to &lt;code>while&lt;/code>, but the logic is reversed: it runs the command block while the test command returns non-zero, and stops when the condition returns &lt;code>0&lt;/code>.&lt;/p>
+&lt;p>Syntax:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="k">until&lt;/span> &amp;lt;test_command&amp;gt;&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &amp;lt;commands_to_repeat&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Example — wait for a healthcheck endpoint to become ready:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">HEALTH_URL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="nv">http&lt;/span>&lt;span class="p">://localhost:&lt;/span>&lt;span class="nv">8080&lt;/span>&lt;span class="p">/health&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">MAX_WAIT_SECONDS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;30&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">WAITED&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;0&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">until&lt;/span> curl -fsS &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">HEALTH_URL&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &amp;gt;/dev/null&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">((&lt;/span> WAITED &amp;gt;&lt;span class="o">=&lt;/span> MAX_WAIT_SECONDS &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: Service is not healthy after &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">MAX_WAIT_SECONDS&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">s&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Waiting for service healthcheck... (&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">WAITED&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">s)&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> sleep &lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">WAITED&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="k">$((&lt;/span> WAITED &lt;span class="o">+&lt;/span> &lt;span class="m">2&lt;/span> &lt;span class="k">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;OK: Service is healthy&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>until&lt;/code> reads naturally in &amp;ldquo;repeat until success&amp;rdquo; situations. If your team finds &lt;code>while ! command; do ...&lt;/code> easier to understand, using &lt;code>while&lt;/code> is also completely fine.&lt;/p>
+&lt;hr>
+&lt;h2 id="break-and-continue">break and continue
+&lt;/h2>&lt;p>&lt;code>break&lt;/code> exits the current loop. &lt;code>continue&lt;/code> skips the rest of the current iteration and moves to the next one. According to the GNU Bash Manual, both can be used in &lt;code>for&lt;/code>, &lt;code>while&lt;/code>, &lt;code>until&lt;/code>, and &lt;code>select&lt;/code>.&lt;/p>
+&lt;p>Example — skip non-&lt;code>.log&lt;/code> files and stop when a log is too large:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> FILE in /var/log/*.log&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">[[&lt;/span> -e &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="k">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> !&lt;span class="o">=&lt;/span> *.log &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nv">SIZE_MB&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>du -m &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> awk &lt;span class="s1">&amp;#39;{print $1}&amp;#39;&lt;/span>&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">((&lt;/span> SIZE_MB &amp;gt; &lt;span class="m">1024&lt;/span> &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Stop: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> is larger than 1GB&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">break&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Process &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> (&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SIZE_MB&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">MB)&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>The line &lt;code>[[ -e &amp;quot;${FILE}&amp;quot; ]] || continue&lt;/code> handles the case where the glob &lt;code>/var/log/*.log&lt;/code> matches no files. Without it, Bash may keep the pattern as a literal string, so you should check that the file exists before processing it.&lt;/p>
+&lt;hr>
+&lt;h2 id="devops-practice-iterate-over-an-ssh-server-list">DevOps practice: iterate over an SSH server list
+&lt;/h2>&lt;p>This example reads a server list from a file, connects to each host with SSH, and runs a short check command. The server names, user, and command use generic placeholders and are not tied to a real environment.&lt;/p>
+&lt;p>Create &lt;code>servers.txt&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">webserver-01
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">webserver-02
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">worker-01
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Create &lt;code>check_servers.sh&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">SERVER_FILE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="nv">servers&lt;/span>&lt;span class="p">.txt&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">SSH_USER&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SSH_USER&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="nv">deploy&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">REMOTE_COMMAND&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;uptime&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! -r &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVER_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: Cannot read server file: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVER_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">while&lt;/span> &lt;span class="nv">IFS&lt;/span>&lt;span class="o">=&lt;/span> &lt;span class="nb">read&lt;/span> -r SERVER&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">[[&lt;/span> -n &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVER&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="k">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">[[&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVER&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> !&lt;span class="o">=&lt;/span> &lt;span class="se">\#&lt;/span>* &lt;span class="o">]]&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="k">continue&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;===== &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVER&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> =====&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> ssh -o &lt;span class="nv">BatchMode&lt;/span>&lt;span class="o">=&lt;/span>yes -o &lt;span class="nv">ConnectTimeout&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">5&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SSH_USER&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">@&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVER&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">REMOTE_COMMAND&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;OK: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVER&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">else&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;WARN: command failed on &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVER&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span> &amp;lt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SERVER_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Try it:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">chmod +x check_servers.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">./check_servers.sh servers.txt
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>A few notable points:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>BatchMode=yes&lt;/code> prevents SSH from asking for a password or passphrase in automation. If the key is not ready, the command fails instead of hanging the script.&lt;/li>
+&lt;li>&lt;code>ConnectTimeout=5&lt;/code> avoids waiting too long when a host does not respond.&lt;/li>
+&lt;li>Blank lines and comment lines starting with &lt;code>#&lt;/code> are skipped with &lt;code>continue&lt;/code>.&lt;/li>
+&lt;li>Do not hardcode sensitive users: the script reads &lt;code>SSH_USER&lt;/code> from an environment variable and defaults to &lt;code>deploy&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="devops-practice-retry-a-failed-command">DevOps practice: retry a failed command
+&lt;/h2>&lt;p>In operations, some failures are temporary: unstable network, an unresponsive registry, or an endpoint that has just restarted. Loops let you retry in a controlled way instead of rerunning commands manually.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">URL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="nv">https&lt;/span>&lt;span class="p">://example.com/health&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">MAX_RETRIES&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;5&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">SLEEP_SECONDS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;3&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">for&lt;/span> &lt;span class="o">((&lt;/span> &lt;span class="nv">attempt&lt;/span> &lt;span class="o">=&lt;/span> 1&lt;span class="p">;&lt;/span> attempt &amp;lt;&lt;span class="o">=&lt;/span> MAX_RETRIES&lt;span class="p">;&lt;/span> attempt++ &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Attempt &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">attempt&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">MAX_RETRIES&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">URL&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> curl -fsS &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">URL&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &amp;gt;/dev/null&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;OK: endpoint is reachable&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">((&lt;/span> &lt;span class="nv">attempt&lt;/span> &lt;span class="o">==&lt;/span> MAX_RETRIES &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: endpoint is still unreachable after &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">MAX_RETRIES&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> attempts&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> sleep &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SLEEP_SECONDS&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Here, &lt;code>curl -f&lt;/code> returns an error for HTTP status codes 4xx/5xx, while &lt;code>-sS&lt;/code> keeps output quiet but still prints errors on failure. The final exit code tells a pipeline whether it should continue or stop.&lt;/p>
+&lt;hr>
+&lt;h2 id="common-mistakes">Common mistakes
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>Looping over &lt;code>ls&lt;/code> output:&lt;/strong> &lt;code>for FILE in $(ls)&lt;/code> breaks easily when filenames contain spaces or special characters. Use a glob (&lt;code>for FILE in *.log&lt;/code>) or &lt;code>find ... -print0&lt;/code> for more complex cases.&lt;/li>
+&lt;li>&lt;strong>Forgetting to quote variables:&lt;/strong> Always use &lt;code>&amp;quot;${VAR}&amp;quot;&lt;/code>, especially for paths, hostnames, or data read from files.&lt;/li>
+&lt;li>&lt;strong>Using a pipe that loses variables outside the loop:&lt;/strong> &lt;code>cat file | while read ...&lt;/code> often runs the loop in a subshell, so variable changes inside it may disappear after the loop. Prefer &lt;code>while ...; done &amp;lt; file&lt;/code>.&lt;/li>
+&lt;li>&lt;strong>Infinite loops without a stopping condition:&lt;/strong> When using &lt;code>while true&lt;/code>, always include &lt;code>break&lt;/code>, a timeout, or a maximum attempt count.&lt;/li>
+&lt;li>&lt;strong>Not handling blank lines or comments:&lt;/strong> When reading server lists or config files, skip blank lines and comments to make scripts more robust.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="implementation-notes">Implementation notes
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>When applying this to your own project&lt;/strong>, first identify whether the loop is driven by a list or by state:
+&lt;ul>
+&lt;li>Existing list → usually use &lt;code>for&lt;/code>.&lt;/li>
+&lt;li>Read line by line or wait while a condition remains true → usually use &lt;code>while&lt;/code>.&lt;/li>
+&lt;li>Wait until a command succeeds → consider &lt;code>until&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Best practices:&lt;/strong>
+&lt;ul>
+&lt;li>Use &lt;code>IFS= read -r&lt;/code> when reading files line by line.&lt;/li>
+&lt;li>Quote arrays as &lt;code>&amp;quot;${ARRAY[@]}&amp;quot;&lt;/code> when iterating over lists.&lt;/li>
+&lt;li>For retry logic, always define clear &lt;code>MAX_RETRIES&lt;/code> and &lt;code>SLEEP_SECONDS&lt;/code> values.&lt;/li>
+&lt;li>For SSH automation, add timeouts and avoid interactive prompts.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Troubleshooting:&lt;/strong>
+&lt;ul>
+&lt;li>Loop does not run? → Check whether the input list is empty or whether the glob matches any files.&lt;/li>
+&lt;li>Script stops halfway with &lt;code>set -e&lt;/code>? → A command inside the loop returned non-zero without being wrapped in &lt;code>if&lt;/code>, &lt;code>||&lt;/code>, or explicit exit-code handling.&lt;/li>
+&lt;li>Reading a file loses whitespace? → Make sure you use &lt;code>IFS= read -r LINE&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-conclusion">🎯 Conclusion
+&lt;/h2>&lt;p>Loops are the foundation that moves Bash from one-off scripts to real automation: handling many servers, many files, many log lines, and multiple retry attempts. When you combine &lt;code>for&lt;/code>, &lt;code>while&lt;/code>, and &lt;code>until&lt;/code> with the conditionals from the previous article, you can already write small but useful DevOps scripts for checks, deployments, and daily operations.&lt;/p>
+&lt;p>In the next article, we will cover &lt;strong>file handling in Bash&lt;/strong>: reading, writing, redirecting output, using &lt;code>tee&lt;/code>, &lt;code>find&lt;/code>, &lt;code>xargs&lt;/code>, and safer patterns for managing logs and configuration files. 🚀&lt;/p>
+&lt;hr>
+&lt;h2 id="references">References
+&lt;/h2>&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.gnu.org/software/bash/manual/bash.html#Looping-Constructs" target="_blank" rel="noopener"
+>GNU Bash Manual — Looping Constructs&lt;/a> — Official documentation for &lt;code>for&lt;/code>, &lt;code>while&lt;/code>, and &lt;code>until&lt;/code>.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.gnu.org/software/bash/manual/bash.html#Bourne-Shell-Builtins" target="_blank" rel="noopener"
+>GNU Bash Manual — Bourne Shell Builtins&lt;/a> — Official documentation for &lt;code>break&lt;/code> and &lt;code>continue&lt;/code>.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.gnu.org/software/bash/manual/bash.html#Bash-Builtin-Commands" target="_blank" rel="noopener"
+>GNU Bash Manual — Bash Builtin Commands&lt;/a> — Official documentation for &lt;code>read&lt;/code>, &lt;code>mapfile&lt;/code>, and other builtins.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.shellcheck.net/wiki/SC2045" target="_blank" rel="noopener"
+>ShellCheck Wiki — SC2045&lt;/a> — Why you should not loop over &lt;code>ls&lt;/code> output.&lt;/li>
+&lt;/ul></description></item><item><title>Bash Conditionals: if, case, and DevOps Logic Handling</title><link>https://tech.nguuyen.io.vn/en/posts/bash/bash-step-two/</link><pubDate>Sun, 24 May 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/bash/bash-step-two/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/bash/bash-step-two.webp" alt="Featured image of post Bash Conditionals: if, case, and DevOps Logic Handling" />&lt;h2 id="bash-conditionals-for-devops">Bash Conditionals for DevOps
 &lt;/h2>&lt;p>In the &lt;a class="link" href="https://tech.nguuyen.io.vn/posts/bash/bash-step-one/" >first article&lt;/a> we wrote linear scripts — commands that run from top to bottom. In real operations, scripts often need to &lt;strong>make decisions&lt;/strong>: skip work if a service is already running, raise an alert if disk usage crosses a threshold, or require confirmation before deploying to &lt;code>production&lt;/code>.&lt;/p>
 &lt;p>&lt;strong>Bash conditionals&lt;/strong> are what make a script react to the current system state. This article walks through &lt;code>if/elif/else&lt;/code>, comparison operators, file checks, and &lt;code>case…esac&lt;/code> — with DevOps examples you can reuse immediately.&lt;/p>
 &lt;hr>
