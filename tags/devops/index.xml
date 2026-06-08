@@ -1,4 +1,511 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Devops on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/devops/</link><description>Recent content in Devops on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Mon, 08 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Xử lý file trong Bash: đọc, ghi và quản lý an toàn cho DevOps</title><link>https://tech.nguuyen.io.vn/posts/bash/bash-step-four/</link><pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/bash/bash-step-four/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/bash/bash-step-four.webp" alt="Featured image of post Xử lý file trong Bash: đọc, ghi và quản lý an toàn cho DevOps" />&lt;h2 id="xử-lý-file-trong-bash-cho-devops">Xử lý file trong Bash cho DevOps
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Devops on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/devops/</link><description>Recent content in Devops on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Mon, 08 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/devops/index.xml" rel="self" type="application/rss+xml"/><item><title>Text Processing trong Bash: grep, awk, sed cho DevOps</title><link>https://tech.nguuyen.io.vn/posts/bash/bash-step-five/</link><pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/bash/bash-step-five/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/bash/bash-step-five.webp" alt="Featured image of post Text Processing trong Bash: grep, awk, sed cho DevOps" />&lt;h2 id="text-processing-trong-bash-cho-devops">Text processing trong Bash cho DevOps
+&lt;/h2>&lt;p>Ở &lt;a class="link" href="https://tech.nguuyen.io.vn/posts/bash/bash-step-four/" >bài trước&lt;/a> chúng ta đã xử lý file: đọc, ghi, redirect, &lt;code>tee&lt;/code>, &lt;code>find&lt;/code> và &lt;code>xargs&lt;/code>. Nhưng file text chỉ thật sự hữu ích khi bạn biết &lt;strong>lọc, trích xuất và biến đổi dữ liệu&lt;/strong> trong đó.&lt;/p>
+&lt;p>Trong DevOps, &lt;code>grep&lt;/code>, &lt;code>awk&lt;/code> và &lt;code>sed&lt;/code> xuất hiện ở khắp nơi: lọc log lỗi, lấy status code từ access log, đếm IP truy cập nhiều nhất, thay đổi config trước khi deploy, hoặc tạo report nhanh từ output của command. Bài này đi qua ba công cụ theo hướng thực dụng, có ví dụ gần với vận hành hằng ngày.&lt;/p>
+&lt;hr>
+&lt;h2 id="grep-tìm-dòng-khớp-pattern">grep: tìm dòng khớp pattern
+&lt;/h2>&lt;p>&lt;code>grep&lt;/code> đọc input và in ra những dòng khớp pattern. Đây thường là bước đầu tiên khi bạn cần tìm nhanh thông tin trong log hoặc config.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">grep &lt;span class="s2">&amp;#34;ERROR&amp;#34;&lt;/span> app.log
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep &lt;span class="s2">&amp;#34;server_name&amp;#34;&lt;/span> /etc/nginx/conf.d/*.conf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Một số option hay dùng:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">grep -n &lt;span class="s2">&amp;#34;ERROR&amp;#34;&lt;/span> app.log &lt;span class="c1"># in kèm line number&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -i &lt;span class="s2">&amp;#34;timeout&amp;#34;&lt;/span> app.log &lt;span class="c1"># ignore case&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -v &lt;span class="s2">&amp;#34;healthcheck&amp;#34;&lt;/span> app.log &lt;span class="c1"># loại trừ dòng khớp&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -r &lt;span class="s2">&amp;#34;DATABASE_URL&amp;#34;&lt;/span> ./config &lt;span class="c1"># tìm đệ quy trong thư mục&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -E &lt;span class="s2">&amp;#34;ERROR|WARN&amp;#34;&lt;/span> app.log &lt;span class="c1"># extended regex&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -F &lt;span class="s2">&amp;#34;[literal]&amp;#34;&lt;/span> app.log &lt;span class="c1"># fixed string, không coi là regex&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Theo GNU grep, &lt;code>-E&lt;/code> dùng extended regular expression, còn &lt;code>-F&lt;/code> dùng fixed strings. Khi pattern là chuỗi literal đơn giản, &lt;code>grep -F&lt;/code> giúp tránh lỗi do ký tự như &lt;code>.&lt;/code>, &lt;code>[&lt;/code>, &lt;code>*&lt;/code> bị hiểu là regex.&lt;/p>
+&lt;hr>
+&lt;h2 id="grep-context-xem-dòng-trước-và-sau-lỗi">grep context: xem dòng trước và sau lỗi
+&lt;/h2>&lt;p>Khi debug log, chỉ một dòng lỗi thường chưa đủ. GNU grep hỗ trợ context:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">grep -A &lt;span class="m">3&lt;/span> &lt;span class="s2">&amp;#34;ERROR&amp;#34;&lt;/span> app.log &lt;span class="c1"># 3 dòng sau match&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -B &lt;span class="m">3&lt;/span> &lt;span class="s2">&amp;#34;ERROR&amp;#34;&lt;/span> app.log &lt;span class="c1"># 3 dòng trước match&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -C &lt;span class="m">3&lt;/span> &lt;span class="s2">&amp;#34;ERROR&amp;#34;&lt;/span> app.log &lt;span class="c1"># 3 dòng trước và sau match&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Ví dụ xem lỗi deploy kèm ngữ cảnh:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">grep -n -C &lt;span class="m">5&lt;/span> &lt;span class="s2">&amp;#34;deploy failed&amp;#34;&lt;/span> ./logs/deploy.log
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Khi có nhiều nhóm match cách xa nhau, &lt;code>grep&lt;/code> mặc định chèn dòng &lt;code>--&lt;/code> để phân tách context group. Điều này hữu ích khi đọc terminal, nhưng nếu output đưa vào script khác, bạn nên nhớ dòng separator này có thể xuất hiện.&lt;/p>
+&lt;hr>
+&lt;h2 id="grep-trong-pipeline-devops">grep trong pipeline DevOps
+&lt;/h2>&lt;p>Ví dụ lọc log ứng dụng, bỏ healthcheck và chỉ xem lỗi nghiêm trọng:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="p">./logs/app.log&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! -r &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: Cannot read log file: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -E &lt;span class="s2">&amp;#34;ERROR|FATAL&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> grep -v &lt;span class="s2">&amp;#34;healthcheck&amp;#34;&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Vì &lt;code>grep&lt;/code> trả exit code &lt;code>1&lt;/code> khi không có match, pipeline có thể làm script dừng nếu đang dùng &lt;code>set -e&lt;/code>. Trong tình huống “không có lỗi” là bình thường, thêm &lt;code>|| true&lt;/code> ở cuối pipeline là chấp nhận được. Với pipeline quan trọng hơn, hãy xử lý exit code rõ ràng bằng &lt;code>if grep ...; then ... fi&lt;/code>.&lt;/p>
+&lt;hr>
+&lt;h2 id="awk-xử-lý-theo-dòng-và-theo-cột">awk: xử lý theo dòng và theo cột
+&lt;/h2>&lt;p>&lt;code>awk&lt;/code> đọc input theo record, mặc định mỗi dòng là một record. Mỗi dòng được tách thành field: &lt;code>$1&lt;/code>, &lt;code>$2&lt;/code>, &lt;code>$3&lt;/code>… Toàn bộ dòng là &lt;code>$0&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;{ print $1 }&amp;#39;&lt;/span> access.log
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;{ print $1, $9 }&amp;#39;&lt;/span> access.log
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Một số biến built-in quan trọng:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>NR&lt;/code>: số record đã đọc từ đầu input.&lt;/li>
+&lt;li>&lt;code>NF&lt;/code>: số field của record hiện tại.&lt;/li>
+&lt;li>&lt;code>$0&lt;/code>: toàn bộ dòng hiện tại.&lt;/li>
+&lt;li>&lt;code>$1&lt;/code>, &lt;code>$2&lt;/code>, &amp;hellip;: field thứ nhất, thứ hai, &amp;hellip;&lt;/li>
+&lt;li>&lt;code>FS&lt;/code>: field separator input.&lt;/li>
+&lt;li>&lt;code>OFS&lt;/code>: output field separator.&lt;/li>
+&lt;/ul>
+&lt;p>Ví dụ in số dòng và số field:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;{ print NR, NF, $0 }&amp;#39;&lt;/span> app.log
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Theo GNU awk manual, &lt;code>NR&lt;/code> tăng mỗi khi awk đọc record mới, còn &lt;code>NF&lt;/code> là số field của record hiện tại. Đây là hai biến rất hữu ích khi cần validate dữ liệu text nhanh.&lt;/p>
+&lt;hr>
+&lt;h2 id="awk-begin-end-và-điều-kiện">awk BEGIN, END và điều kiện
+&lt;/h2>&lt;p>&lt;code>BEGIN&lt;/code> chạy trước khi đọc input. &lt;code>END&lt;/code> chạy sau khi đọc hết input. Phần giữa là rule áp dụng cho từng dòng.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;BEGIN { print &amp;#34;status,count&amp;#34; } { count[$9]++ } END { for (code in count) print code &amp;#34;,&amp;#34; count[code] }&amp;#39;&lt;/span> access.log
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Ví dụ dễ đọc hơn, đếm HTTP status code từ Nginx access log dạng phổ biến:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> BEGIN {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> print &amp;#34;status,count&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> status[$9]++
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> END {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> for (code in status) {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> print code &amp;#34;,&amp;#34; status[code]
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">&amp;#39;&lt;/span> access.log
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Trong access log phổ biến, &lt;code>$1&lt;/code> thường là IP client, &lt;code>$7&lt;/code> là path và &lt;code>$9&lt;/code> là HTTP status. Tuy nhiên format log có thể khác theo cấu hình Nginx/Apache, nên hãy kiểm tra vài dòng mẫu trước khi hardcode vị trí field.&lt;/p>
+&lt;hr>
+&lt;h2 id="awk-với-delimiter-tùy-chỉnh">awk với delimiter tùy chỉnh
+&lt;/h2>&lt;p>Mặc định awk tách field theo whitespace. Với file dạng key-value hoặc CSV đơn giản, dùng &lt;code>-F&lt;/code> để chọn delimiter.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk -F&lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;{ print $1, $2 }&amp;#39;&lt;/span> app.env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">awk -F: &lt;span class="s1">&amp;#39;{ print $1, $7 }&amp;#39;&lt;/span> /etc/passwd
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Ví dụ đọc file &lt;code>.env&lt;/code> và bỏ comment/dòng rỗng:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk -F&lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> /^[[:space:]]*#/ { next }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> NF &amp;lt; 2 { next }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> print &amp;#34;key=&amp;#34; $1
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">&amp;#39;&lt;/span> .env
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Với CSV phức tạp có quote, comma bên trong field hoặc escape, &lt;code>awk -F,&lt;/code> không đủ an toàn. Khi đó nên dùng parser CSV đúng nghĩa bằng Python, Go hoặc công cụ chuyên dụng.&lt;/p>
+&lt;hr>
+&lt;h2 id="sed-thay-thế-và-chỉnh-text-theo-dòng">sed: thay thế và chỉnh text theo dòng
+&lt;/h2>&lt;p>&lt;code>sed&lt;/code> là stream editor: đọc input, áp dụng script, rồi ghi output. Lệnh nổi tiếng nhất là substitute:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sed &lt;span class="s1">&amp;#39;s/old/new/&amp;#39;&lt;/span> file.txt &lt;span class="c1"># thay match đầu tiên mỗi dòng&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sed &lt;span class="s1">&amp;#39;s/old/new/g&amp;#39;&lt;/span> file.txt &lt;span class="c1"># thay tất cả match trên mỗi dòng&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Theo GNU sed manual, cú pháp cơ bản là &lt;code>s/regexp/replacement/flags&lt;/code>. Flag &lt;code>g&lt;/code> thay tất cả match trong dòng thay vì chỉ match đầu tiên.&lt;/p>
+&lt;p>Ví dụ đổi endpoint trong file config và ghi ra file mới:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sed &lt;span class="s1">&amp;#39;s|http://localhost:8080|https://api.example.com|g&amp;#39;&lt;/span> app.conf &amp;gt; app.conf.new
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Ở đây dùng delimiter &lt;code>|&lt;/code> thay vì &lt;code>/&lt;/code> để tránh phải escape nhiều dấu &lt;code>/&lt;/code> trong URL.&lt;/p>
+&lt;hr>
+&lt;h2 id="sed-theo-address-và-in-place-edit">sed theo address và in-place edit
+&lt;/h2>&lt;p>Bạn có thể giới hạn &lt;code>sed&lt;/code> chỉ tác động trên dòng khớp pattern hoặc range.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sed &lt;span class="s1">&amp;#39;/^LOG_LEVEL=/s/=.*$/=debug/&amp;#39;&lt;/span> app.env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sed &lt;span class="s1">&amp;#39;10,20s/enabled=false/enabled=true/&amp;#39;&lt;/span> feature.conf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>GNU sed hỗ trợ &lt;code>-i&lt;/code> để chỉnh file tại chỗ. Nếu truyền suffix, sed tạo backup trước khi rename file tạm thành file gốc:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sed -i.bak &lt;span class="s1">&amp;#39;s/^LOG_LEVEL=.*/LOG_LEVEL=info/&amp;#39;&lt;/span> app.env
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Cẩn thận với &lt;code>sed -i&lt;/code>:&lt;/p>
+&lt;ul>
+&lt;li>Luôn test không &lt;code>-i&lt;/code> trước để xem output.&lt;/li>
+&lt;li>Dùng suffix như &lt;code>.bak&lt;/code> khi chỉnh file quan trọng.&lt;/li>
+&lt;li>Khác biệt cú pháp &lt;code>sed -i&lt;/code> giữa GNU sed và BSD/macOS sed có thể làm script kém portable.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="thực-hành-devops-parse-nginx-log">Thực hành DevOps: parse Nginx log
+&lt;/h2>&lt;p>Giả sử access log có format phổ biến:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">203.0.113.10 - - [08/Jun/2026:10:12:01 +0700] &amp;#34;GET /api/health HTTP/1.1&amp;#34; 200 12
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">198.51.100.23 - - [08/Jun/2026:10:12:02 +0700] &amp;#34;POST /api/login HTTP/1.1&amp;#34; 401 64
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">203.0.113.10 - - [08/Jun/2026:10:12:03 +0700] &amp;#34;GET /api/users HTTP/1.1&amp;#34; 200 532
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Lọc lỗi 4xx/5xx bằng &lt;code>awk&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;$9 ~ /^[45][0-9][0-9]$/ { print $1, $7, $9 }&amp;#39;&lt;/span> access.log
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Đếm top IP truy cập nhiều nhất:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;{ count[$1]++ } END { for (ip in count) print count[ip], ip }&amp;#39;&lt;/span> access.log &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> sort -nr &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> head -n &lt;span class="m">10&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Đếm status code:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;{ status[$9]++ } END { for (code in status) print code, status[code] }&amp;#39;&lt;/span> access.log &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> sort -n
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Nếu bạn muốn bỏ các request healthcheck khỏi thống kê:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">grep -v &lt;span class="s1">&amp;#39;&amp;#34;GET /api/health &amp;#39;&lt;/span> access.log &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> awk &lt;span class="s1">&amp;#39;{ status[$9]++ } END { for (code in status) print code, status[code] }&amp;#39;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> sort -n
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="thực-hành-devops-đổi-config-trước-khi-deploy">Thực hành DevOps: đổi config trước khi deploy
+&lt;/h2>&lt;p>Ví dụ script cập nhật &lt;code>LOG_LEVEL&lt;/code> và &lt;code>FEATURE_FLAG&lt;/code> trong file &lt;code>.env&lt;/code>, có backup trước khi sửa.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="p">./app.env&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOG_LEVEL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_LEVEL&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="nv">info&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">FEATURE_FLAG&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">FEATURE_FLAG&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="nv">false&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! -f &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: env file not found: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! -w &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: env file is not writable: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cp -- &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">.bak.&lt;/span>&lt;span class="k">$(&lt;/span>date +%Y%m%d%H%M%S&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sed -i.bak &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -e &lt;span class="s2">&amp;#34;s/^LOG_LEVEL=.*/LOG_LEVEL=&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_LEVEL&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -e &lt;span class="s2">&amp;#34;s/^FEATURE_FLAG=.*/FEATURE_FLAG=&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">FEATURE_FLAG&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> ! grep -q &lt;span class="s1">&amp;#39;^LOG_LEVEL=&amp;#39;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;LOG_LEVEL=&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_LEVEL&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &amp;gt;&amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> ! grep -q &lt;span class="s1">&amp;#39;^FEATURE_FLAG=&amp;#39;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;FEATURE_FLAG=&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">FEATURE_FLAG&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &amp;gt;&amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Script này minh họa cách phối hợp công cụ:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>cp&lt;/code> tạo backup rõ ràng trước khi chỉnh.&lt;/li>
+&lt;li>&lt;code>sed&lt;/code> thay giá trị nếu key đã tồn tại.&lt;/li>
+&lt;li>&lt;code>grep -q&lt;/code> kiểm tra key có tồn tại chưa.&lt;/li>
+&lt;li>&lt;code>&amp;gt;&amp;gt;&lt;/code> append key còn thiếu.&lt;/li>
+&lt;/ul>
+&lt;p>Lưu ý: không đưa secret thật vào ví dụ hoặc commit. Với secret, ưu tiên biến môi trường, secret manager hoặc CI/CD secret store.&lt;/p>
+&lt;hr>
+&lt;h2 id="thực-hành-devops-report-lỗi-từ-log">Thực hành DevOps: report lỗi từ log
+&lt;/h2>&lt;p>Ví dụ tạo report ngắn gồm tổng số lỗi và top endpoint trả 5xx:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">ACCESS_LOG&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="p">./access.log&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">REPORT_FILE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">2&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="p">./error-report.txt&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! -r &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ACCESS_LOG&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: Cannot read access log: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ACCESS_LOG&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Error report generated at &lt;/span>&lt;span class="k">$(&lt;/span>date -Is&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Total 5xx responses:&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> awk &lt;span class="s1">&amp;#39;$9 ~ /^5[0-9][0-9]$/ { total++ } END { print total + 0 }&amp;#39;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ACCESS_LOG&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Top 5 endpoints with 5xx:&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> awk &lt;span class="s1">&amp;#39;$9 ~ /^5[0-9][0-9]$/ { count[$7]++ } END { for (path in count) print count[path], path }&amp;#39;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ACCESS_LOG&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> sort -nr &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> head -n &lt;span class="m">5&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span> &amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">REPORT_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Wrote &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">REPORT_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Đây là dạng script rất hữu ích để chạy từ cron hoặc CI job sau test load, miễn là bạn hiểu rõ format log đầu vào.&lt;/p>
+&lt;hr>
+&lt;h2 id="sai-sót-thường-gặp">Sai sót thường gặp
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>Dùng regex khi chỉ cần literal:&lt;/strong> Nếu pattern có ký tự đặc biệt như &lt;code>[&lt;/code>, &lt;code>.&lt;/code>, &lt;code>*&lt;/code>, cân nhắc &lt;code>grep -F&lt;/code>.&lt;/li>
+&lt;li>&lt;strong>Quên grep exit code:&lt;/strong> Không có match là exit code &lt;code>1&lt;/code>, không nhất thiết là lỗi nghiệp vụ.&lt;/li>
+&lt;li>&lt;strong>Hardcode field log mà không kiểm tra format:&lt;/strong> &lt;code>$9&lt;/code> là status code với format phổ biến, nhưng không phải mọi log đều như vậy.&lt;/li>
+&lt;li>&lt;strong>Dùng &lt;code>awk -F,&lt;/code> cho CSV phức tạp:&lt;/strong> CSV có quote/comma bên trong field cần parser đúng nghĩa.&lt;/li>
+&lt;li>&lt;strong>Chạy &lt;code>sed -i&lt;/code> ngay trên file quan trọng:&lt;/strong> Test output trước, dùng backup suffix hoặc copy file trước khi sửa.&lt;/li>
+&lt;li>&lt;strong>Không quote biến trong script:&lt;/strong> Khi truyền file path vào &lt;code>grep&lt;/code>, &lt;code>awk&lt;/code>, &lt;code>sed&lt;/code>, luôn quote &lt;code>&amp;quot;${FILE}&amp;quot;&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="ghi-chú-triển-khai">Ghi chú triển khai
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>Khi áp dụng vào dự án của bạn&lt;/strong>, chọn công cụ theo mục tiêu:
+&lt;ul>
+&lt;li>Tìm/lọc dòng → &lt;code>grep&lt;/code>.&lt;/li>
+&lt;li>Trích cột, tính tổng, đếm nhóm → &lt;code>awk&lt;/code>.&lt;/li>
+&lt;li>Thay thế text theo dòng/pattern → &lt;code>sed&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Best practices:&lt;/strong>
+&lt;ul>
+&lt;li>Dùng &lt;code>grep -n&lt;/code> khi debug để biết line number.&lt;/li>
+&lt;li>Dùng &lt;code>grep -C&lt;/code> khi cần context quanh lỗi.&lt;/li>
+&lt;li>Dùng &lt;code>awk&lt;/code> với &lt;code>BEGIN&lt;/code>/&lt;code>END&lt;/code> để tạo report có header/footer.&lt;/li>
+&lt;li>Dùng delimiter khác trong &lt;code>sed&lt;/code> khi xử lý URL/path, ví dụ &lt;code>s|old|new|g&lt;/code>.&lt;/li>
+&lt;li>Với chỉnh sửa config, backup trước và verify sau bằng &lt;code>grep&lt;/code> hoặc test config của service.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Troubleshooting:&lt;/strong>
+&lt;ul>
+&lt;li>Pipeline dừng vì &lt;code>grep&lt;/code> không match? → Xử lý exit code bằng &lt;code>if grep ...&lt;/code> hoặc &lt;code>|| true&lt;/code> khi hợp lý.&lt;/li>
+&lt;li>&lt;code>awk&lt;/code> in sai cột? → In thử &lt;code>awk '{ print NR, NF, $0 }'&lt;/code> để kiểm tra field.&lt;/li>
+&lt;li>&lt;code>sed&lt;/code> không thay gì? → Kiểm tra pattern có anchor đúng không, delimiter có cần escape không.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-lời-kết">🎯 Lời kết
+&lt;/h2>&lt;p>&lt;code>grep&lt;/code>, &lt;code>awk&lt;/code> và &lt;code>sed&lt;/code> là bộ ba nền tảng để biến Bash thành công cụ xử lý log/config cực nhanh. &lt;code>grep&lt;/code> giúp tìm đúng dòng, &lt;code>awk&lt;/code> giúp phân tích theo cột và tổng hợp số liệu, còn &lt;code>sed&lt;/code> giúp chỉnh sửa text có kiểm soát. Khi kết hợp với kỹ năng xử lý file ở bài trước, bạn đã có thể tạo nhiều script DevOps nhỏ nhưng rất hữu ích.&lt;/p>
+&lt;p>Ở bài tiếp theo, chúng ta sẽ đi vào &lt;strong>function trong Bash&lt;/strong>: tách logic thành hàm, truyền tham số, dùng &lt;code>local&lt;/code>, xử lý return code và xây dựng thư viện logging nhỏ để tái sử dụng. 🚀&lt;/p>
+&lt;hr>
+&lt;h2 id="tài-liệu-tham-khảo">Tài liệu tham khảo
+&lt;/h2>&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.gnu.org/software/grep/manual/grep.html" target="_blank" rel="noopener"
+>GNU Grep Manual&lt;/a> — Tài liệu chính thức về &lt;code>grep&lt;/code>, regex, &lt;code>-E&lt;/code>, &lt;code>-F&lt;/code>, &lt;code>-n&lt;/code>, &lt;code>-A&lt;/code>, &lt;code>-B&lt;/code>, &lt;code>-C&lt;/code>.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.gnu.org/software/gawk/manual/gawk.html" target="_blank" rel="noopener"
+>GNU Awk Manual&lt;/a> — Tài liệu chính thức về field, &lt;code>NR&lt;/code>, &lt;code>NF&lt;/code>, &lt;code>BEGIN&lt;/code>, &lt;code>END&lt;/code> và awk program.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.gnu.org/software/sed/manual/sed.html" target="_blank" rel="noopener"
+>GNU Sed Manual&lt;/a> — Tài liệu chính thức về &lt;code>s/regexp/replacement/flags&lt;/code>, address và &lt;code>-i&lt;/code>.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.gnu.org/software/coreutils/manual/html_node/sort-invocation.html" target="_blank" rel="noopener"
+>GNU Coreutils Manual — sort&lt;/a> — Tham khảo thêm cho các pipeline thống kê với &lt;code>sort&lt;/code>.&lt;/li>
+&lt;/ul></description></item><item><title>Xử lý file trong Bash: đọc, ghi và quản lý an toàn cho DevOps</title><link>https://tech.nguuyen.io.vn/posts/bash/bash-step-four/</link><pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/bash/bash-step-four/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/bash/bash-step-four.webp" alt="Featured image of post Xử lý file trong Bash: đọc, ghi và quản lý an toàn cho DevOps" />&lt;h2 id="xử-lý-file-trong-bash-cho-devops">Xử lý file trong Bash cho DevOps
 &lt;/h2>&lt;p>Ở &lt;a class="link" href="https://tech.nguuyen.io.vn/posts/bash/bash-step-three/" >bài trước&lt;/a> chúng ta đã dùng vòng lặp để xử lý nhiều server, nhiều dòng log và retry các lệnh có thể lỗi tạm thời. Bước tiếp theo rất tự nhiên là &lt;strong>xử lý file&lt;/strong>: đọc log, ghi report, append output, tạo file cấu hình, tìm file cũ và truyền danh sách file cho lệnh khác.&lt;/p>
 &lt;p>Trong DevOps, phần lớn automation nhỏ đều chạm tới file: log của service, file &lt;code>.env&lt;/code>, config Nginx, manifest YAML, danh sách host, artifact build hoặc backup. Bài này tập trung vào các pattern Bash thực dụng: &lt;code>cat&lt;/code>, &lt;code>head&lt;/code>, &lt;code>tail&lt;/code>, redirect, here-doc, &lt;code>tee&lt;/code>, đọc từng dòng, kiểm tra file, &lt;code>find&lt;/code>, &lt;code>xargs&lt;/code> và hai ví dụ thực hành.&lt;/p>
 &lt;hr>
