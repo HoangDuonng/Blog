@@ -1,0 +1,348 @@
+<!doctype html><html lang=vi dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Hướng dẫn xử lý file trong Bash: cat, head, tail, redirect, here-doc, tee, đọc từng dòng, kiểm tra quyền, find và xargs. Kèm ví dụ DevOps về rotate log thủ công và backup config."><title>Xử lý file trong Bash: đọc, ghi và quản lý an toàn cho DevOps</title>
+<link rel=canonical href=https://tech.nguuyen.io.vn/posts/bash/bash-step-four/><link rel=stylesheet href=/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css><meta property='og:title' content="Xử lý file trong Bash: đọc, ghi và quản lý an toàn cho DevOps"><meta property='og:description' content="Hướng dẫn xử lý file trong Bash: cat, head, tail, redirect, here-doc, tee, đọc từng dòng, kiểm tra quyền, find và xargs. Kèm ví dụ DevOps về rotate log thủ công và backup config."><meta property='og:url' content='https://tech.nguuyen.io.vn/posts/bash/bash-step-four/'><meta property='og:site_name' content='Hoàng Dương'><meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:tag' content='bash'><meta property='article:tag' content='shell-script'><meta property='article:tag' content='devops'><meta property='article:tag' content='automation'><meta property='article:tag' content='linux'><meta property='article:published_time' content='2026-06-08T00:00:00+00:00'><meta property='article:modified_time' content='2026-06-08T00:00:00+00:00'><meta property='og:image' content='https://tech.nguuyen.io.vn/images/bash/bash-step-four.webp'><meta name=twitter:title content="Xử lý file trong Bash: đọc, ghi và quản lý an toàn cho DevOps"><meta name=twitter:description content="Hướng dẫn xử lý file trong Bash: cat, head, tail, redirect, here-doc, tee, đọc từng dòng, kiểm tra quyền, find và xargs. Kèm ví dụ DevOps về rotate log thủ công và backup config."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://tech.nguuyen.io.vn/images/bash/bash-step-four.webp'><link rel=icon type=image/x-icon href=/favicon.ico><style>:root{--article-font-family:"Roboto", var(--base-font-family)}</style><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Hiển thị Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/hoang_hu_f5b001d7581bed29.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Hoàng Dương</a></h1><h2 class=site-description>And, when you want something, all the universe conspires in helping you to achieve it.</h2></div></header><ol class=menu-social><li><a href=https://github.com/HoangDuonng target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.instagram.com/ngu_uuen/ target=_blank title=Instagram rel=me><svg class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="4"/><path d="M16.5 7.5h.01"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Trang chủ</span></a></li><li><a href=/gi%E1%BB%9Bi-thi%E1%BB%87u/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>Về tôi</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Lưu trữ</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Tìm kiếm</span></a></li><li><a href=/li%C3%AAn-k%E1%BA%BFt/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Liên kết</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://tech.nguuyen.io.vn/ selected>Tiếng Việt</option><option value=https://tech.nguuyen.io.vn/en/>English</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Chế độ tối</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><h2 class="widget-title section-title">Mục lục</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#xử-lý-file-trong-bash-cho-devops>Xử lý file trong Bash cho DevOps</a></li><li><a href=#đọc-nhanh-nội-dung-file-với-cat-tac-head-tail>Đọc nhanh nội dung file với cat, tac, head, tail</a></li><li><a href=#redirect-output-ghi-mới-append-và-tách-stdoutstderr>Redirect output: ghi mới, append và tách stdout/stderr</a></li><li><a href=#here-doc-tạo-file-cấu-hình-từ-script>Here-doc: tạo file cấu hình từ script</a></li><li><a href=#tee-vừa-hiển-thị-vừa-lưu-file>tee: vừa hiển thị vừa lưu file</a></li><li><a href=#đọc-file-theo-từng-dòng>Đọc file theo từng dòng</a></li><li><a href=#kiểm-tra-file-thư-mục-và-quyền-trước-khi-thao-tác>Kiểm tra file, thư mục và quyền trước khi thao tác</a></li><li><a href=#find-tìm-file-theo-điều-kiện>find: tìm file theo điều kiện</a></li><li><a href=#xargs-truyền-danh-sách-file-cho-lệnh-khác>xargs: truyền danh sách file cho lệnh khác</a></li><li><a href=#thực-hành-devops-rotate-log-thủ-công>Thực hành DevOps: rotate log thủ công</a></li><li><a href=#thực-hành-devops-backup-config-trước-khi-deploy>Thực hành DevOps: backup config trước khi deploy</a></li><li><a href=#sai-sót-thường-gặp>Sai sót thường gặp</a></li><li><a href=#ghi-chú-triển-khai>Ghi chú triển khai</a></li><li><a href=#-lời-kết>🎯 Lời kết</a></li><li><a href=#tài-liệu-tham-khảo>Tài liệu tham khảo</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/posts/bash/bash-step-four/><img src=/images/bash/bash-step-four.webp loading=lazy alt="Featured image of post Xử lý file trong Bash: đọc, ghi và quản lý an toàn cho DevOps"></a></div><div class=article-details><header class=article-category><a href=/categories/devops/ style=background-color:#2a9d8f;color:#fff>DevOps
+</a><a href=/categories/bash/ style=background-color:#2a9d8f;color:#fff>Bash</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/bash/bash-step-four/>Xử lý file trong Bash: đọc, ghi và quản lý an toàn cho DevOps</a></h2><h3 class=article-subtitle>Hướng dẫn xử lý file trong Bash: cat, head, tail, redirect, here-doc, tee, đọc từng dòng, kiểm tra quyền, find và xargs. Kèm ví dụ DevOps về rotate log thủ công và backup config.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>08/06/2026</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>11 phút đọc</time></div><div><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span class=article-author--name>Hoàng Dương</span></div></footer></div></header><section class=article-content><h2 id=xử-lý-file-trong-bash-cho-devops>Xử lý file trong Bash cho DevOps</h2><p>Ở <a class=link href=/posts/bash/bash-step-three/>bài trước</a> chúng ta đã dùng vòng lặp để xử lý nhiều server, nhiều dòng log và retry các lệnh có thể lỗi tạm thời. Bước tiếp theo rất tự nhiên là <strong>xử lý file</strong>: đọc log, ghi report, append output, tạo file cấu hình, tìm file cũ và truyền danh sách file cho lệnh khác.</p><p>Trong DevOps, phần lớn automation nhỏ đều chạm tới file: log của service, file <code>.env</code>, config Nginx, manifest YAML, danh sách host, artifact build hoặc backup. Bài này tập trung vào các pattern Bash thực dụng: <code>cat</code>, <code>head</code>, <code>tail</code>, redirect, here-doc, <code>tee</code>, đọc từng dòng, kiểm tra file, <code>find</code>, <code>xargs</code> và hai ví dụ thực hành.</p><hr><h2 id=đọc-nhanh-nội-dung-file-với-cat-tac-head-tail>Đọc nhanh nội dung file với cat, tac, head, tail</h2><p><code>cat</code> đọc một hoặc nhiều file rồi ghi ra standard output. Theo GNU Coreutils, nếu không truyền file, <code>cat</code> đọc từ standard input.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat /etc/os-release
+</span></span><span class=line><span class=cl>cat app.log deploy.log
+</span></span></code></pre></td></tr></table></div></div><p>Một vài lệnh hay dùng khi xem log hoặc config:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>head -n <span class=m>20</span> app.log        <span class=c1># 20 dòng đầu</span>
+</span></span><span class=line><span class=cl>head -c 1K app.log        <span class=c1># 1 KiB đầu tiên</span>
+</span></span><span class=line><span class=cl>tail -n <span class=m>50</span> app.log        <span class=c1># 50 dòng cuối</span>
+</span></span><span class=line><span class=cl>tail -f app.log           <span class=c1># theo dõi log đang tăng</span>
+</span></span><span class=line><span class=cl>tail -F app.log           <span class=c1># phù hợp hơn khi log có thể bị rotate</span>
+</span></span><span class=line><span class=cl>tac app.log <span class=p>|</span> head -n <span class=m>20</span>  <span class=c1># xem 20 dòng cuối theo thứ tự đảo ngược</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>tail -f</code> theo dõi file descriptor hiện tại. Khi log bị rotate, file cũ có thể bị rename và app mở file mới. GNU <code>tail -F</code> tương đương <code>--follow=name --retry</code>, thường tiện hơn cho log vận hành vì nó cố mở lại file theo tên.</p><hr><h2 id=redirect-output-ghi-mới-append-và-tách-stdoutstderr>Redirect output: ghi mới, append và tách stdout/stderr</h2><p>Bash xử lý redirect từ trái sang phải. Một số dạng phổ biến:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>command</span> &gt; output.log        <span class=c1># ghi stdout, overwrite file</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> &gt;&gt; output.log       <span class=c1># append stdout</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> 2&gt; error.log        <span class=c1># ghi stderr</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> &gt; output.log 2&gt;<span class=p>&amp;</span><span class=m>1</span>   <span class=c1># ghi stdout + stderr vào cùng file</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> <span class=p>&amp;</span>&gt; output.log       <span class=c1># Bash shorthand cho stdout + stderr</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> <span class=p>&amp;</span>&gt;&gt; output.log      <span class=c1># append stdout + stderr</span>
+</span></span></code></pre></td></tr></table></div></div><p>Ví dụ ghi log cho một bước deploy:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>LOG_DIR</span><span class=o>=</span><span class=s2>&#34;./logs&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>LOG_FILE</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>/deploy.log&#34;</span>
+</span></span><span class=line><span class=cl>mkdir -p <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;===== Deploy started at </span><span class=k>$(</span>date -Is<span class=k>)</span><span class=s2> =====&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Running migration...&#34;</span>
+</span></span><span class=line><span class=cl>  ./migrate.sh
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Restarting service...&#34;</span>
+</span></span><span class=line><span class=cl>  ./restart-service.sh
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;===== Deploy finished at </span><span class=k>$(</span>date -Is<span class=k>)</span><span class=s2> =====&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span> &gt;&gt; <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> 2&gt;<span class=p>&amp;</span><span class=m>1</span>
+</span></span></code></pre></td></tr></table></div></div><p>Dùng block <code>{ ...; } >> "${LOG_FILE}" 2>&amp;1</code> giúp gom log của nhiều lệnh vào cùng một file mà không phải lặp redirect ở từng dòng.</p><p>Lưu ý: <code>></code> sẽ ghi đè file. Nếu muốn giảm rủi ro overwrite nhầm trong shell hiện tại, có thể bật <code>set -o noclobber</code>; khi cần ghi đè có chủ đích, dùng <code>>| file</code>.</p><hr><h2 id=here-doc-tạo-file-cấu-hình-từ-script>Here-doc: tạo file cấu hình từ script</h2><p>Here-doc (<code>&lt;&lt;EOF</code>) đưa nhiều dòng text vào stdin của một lệnh. Nó rất hữu ích khi cần tạo config mẫu, unit file, hoặc payload JSON nhỏ.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat &gt; app.env <span class=s>&lt;&lt;EOF
+</span></span></span><span class=line><span class=cl><span class=s>APP_ENV=production
+</span></span></span><span class=line><span class=cl><span class=s>APP_PORT=8080
+</span></span></span><span class=line><span class=cl><span class=s>LOG_LEVEL=info
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><p>Nếu delimiter không được quote, Bash sẽ expand biến bên trong here-doc:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>APP_PORT</span><span class=o>=</span><span class=s2>&#34;8080&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>cat &gt; app.env <span class=s>&lt;&lt;EOF
+</span></span></span><span class=line><span class=cl><span class=s>APP_PORT=${APP_PORT}
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><p>Nếu muốn giữ nguyên <code>$</code>, backtick hoặc <code>${VAR}</code> trong file output, quote delimiter:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat &gt; template.env <span class=s>&lt;&lt;&#39;EOF&#39;
+</span></span></span><span class=line><span class=cl><span class=s>APP_PORT=${APP_PORT}
+</span></span></span><span class=line><span class=cl><span class=s>DATABASE_URL=${DATABASE_URL}
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><p>Theo Bash Manual, khi dùng <code>&lt;&lt;-EOF</code>, Bash sẽ bỏ các tab ở đầu dòng trong here-doc. Cách này giúp script dễ đọc hơn, nhưng chỉ strip <strong>tab</strong>, không strip space.</p><hr><h2 id=tee-vừa-hiển-thị-vừa-lưu-file>tee: vừa hiển thị vừa lưu file</h2><p>Redirect <code>></code> sẽ đưa output vào file và thường không còn hiển thị trên terminal. <code>tee</code> copy standard input ra standard output và đồng thời ghi vào file.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>./healthcheck.sh <span class=p>|</span> tee healthcheck.log
+</span></span><span class=line><span class=cl>./healthcheck.sh <span class=p>|</span> tee -a healthcheck.log
+</span></span></code></pre></td></tr></table></div></div><p>Theo GNU Coreutils, <code>tee</code> sẽ overwrite file nếu không dùng <code>-a</code>; <code>tee -a</code> append vào file.</p><p>Ví dụ vừa xem log build vừa lưu lại artifact log:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>LOG_DIR</span><span class=o>=</span><span class=s2>&#34;./logs&#34;</span>
+</span></span><span class=line><span class=cl>mkdir -p <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>./build.sh 2&gt;<span class=p>&amp;</span><span class=m>1</span> <span class=p>|</span> tee -a <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>/build.log&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Ở đây <code>2>&amp;1</code> đặt trước pipe để stderr cũng đi qua <code>tee</code>. Nếu chỉ viết <code>./build.sh | tee ...</code>, nhiều lỗi trên stderr vẫn hiện ra terminal nhưng không được lưu vào file log.</p><hr><h2 id=đọc-file-theo-từng-dòng>Đọc file theo từng dòng</h2><p>Pattern an toàn khi đọc file line-by-line là <code>while IFS= read -r LINE; do ...; done &lt; file</code>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>SERVER_FILE</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>1</span><span class=k>:-</span><span class=nv>servers</span><span class=p>.txt</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> ! -r <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVER_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;ERROR: Cannot read </span><span class=si>${</span><span class=nv>SERVER_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>while</span> <span class=nv>IFS</span><span class=o>=</span> <span class=nb>read</span> -r SERVER<span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>  <span class=o>[[</span> -n <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVER</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span> <span class=o>||</span> <span class=k>continue</span>
+</span></span><span class=line><span class=cl>  <span class=o>[[</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVER</span><span class=si>}</span><span class=s2>&#34;</span> !<span class=o>=</span> <span class=se>\#</span>* <span class=o>]]</span> <span class=o>||</span> <span class=k>continue</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Checking </span><span class=si>${</span><span class=nv>SERVER</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>done</span> &lt; <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVER_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Giải thích nhanh:</p><ul><li><code>IFS=</code> giữ nguyên khoảng trắng đầu/cuối dòng.</li><li><code>read -r</code> không coi <code>\</code> là escape character.</li><li><code>done &lt; "${SERVER_FILE}"</code> tránh pattern <code>cat file | while ...</code>, vốn có thể làm vòng lặp chạy trong subshell ở một số shell và làm mất biến sau vòng lặp.</li><li>Quote <code>"${SERVER_FILE}"</code> để đường dẫn có khoảng trắng vẫn hoạt động.</li></ul><hr><h2 id=kiểm-tra-file-thư-mục-và-quyền-trước-khi-thao-tác>Kiểm tra file, thư mục và quyền trước khi thao tác</h2><p>Trước khi đọc/ghi/xóa file trong automation, hãy kiểm tra điều kiện rõ ràng. Một số test hay dùng trong <code>[[ ... ]]</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[[</span> -e <span class=s2>&#34;</span><span class=si>${</span><span class=nv>PATH_NAME</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>  <span class=c1># tồn tại</span>
+</span></span><span class=line><span class=cl><span class=o>[[</span> -f <span class=s2>&#34;</span><span class=si>${</span><span class=nv>PATH_NAME</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>  <span class=c1># regular file</span>
+</span></span><span class=line><span class=cl><span class=o>[[</span> -d <span class=s2>&#34;</span><span class=si>${</span><span class=nv>PATH_NAME</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>  <span class=c1># directory</span>
+</span></span><span class=line><span class=cl><span class=o>[[</span> -r <span class=s2>&#34;</span><span class=si>${</span><span class=nv>PATH_NAME</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>  <span class=c1># readable</span>
+</span></span><span class=line><span class=cl><span class=o>[[</span> -w <span class=s2>&#34;</span><span class=si>${</span><span class=nv>PATH_NAME</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>  <span class=c1># writable</span>
+</span></span><span class=line><span class=cl><span class=o>[[</span> -x <span class=s2>&#34;</span><span class=si>${</span><span class=nv>PATH_NAME</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>  <span class=c1># executable/searchable</span>
+</span></span><span class=line><span class=cl><span class=o>[[</span> -s <span class=s2>&#34;</span><span class=si>${</span><span class=nv>PATH_NAME</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>  <span class=c1># tồn tại và size &gt; 0</span>
+</span></span></code></pre></td></tr></table></div></div><p>Ví dụ backup config chỉ khi file tồn tại và đọc được:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>CONFIG_FILE</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>1</span><span class=k>:-</span><span class=p>/etc/example/app.conf</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>BACKUP_DIR</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_DIR</span><span class=k>:-</span><span class=p>./backup</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> ! -f <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;ERROR: Not a regular file: </span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> ! -r <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;ERROR: Cannot read: </span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>mkdir -p <span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_DIR</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>cp -- <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_DIR</span><span class=si>}</span><span class=s2>/</span><span class=k>$(</span>basename <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>.</span><span class=k>$(</span>date +%Y%m%d%H%M%S<span class=k>)</span><span class=s2>.bak&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Dấu <code>--</code> sau <code>cp</code> giúp kết thúc danh sách option. Đây là thói quen tốt khi biến có thể bắt đầu bằng <code>-</code>.</p><hr><h2 id=find-tìm-file-theo-điều-kiện>find: tìm file theo điều kiện</h2><p><code>find</code> phù hợp khi cần tìm file theo tên, loại, thời gian, kích thước hoặc thư mục con.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>find /var/log -type f -name <span class=s2>&#34;*.log&#34;</span>
+</span></span><span class=line><span class=cl>find /var/log -type f -name <span class=s2>&#34;*.log&#34;</span> -mtime +7
+</span></span><span class=line><span class=cl>find ./backup -type f -name <span class=s2>&#34;*.bak&#34;</span> -size +100M
+</span></span></code></pre></td></tr></table></div></div><p>Một số điều kiện thường gặp:</p><ul><li><code>-type f</code>: chỉ file thường.</li><li><code>-type d</code>: chỉ thư mục.</li><li><code>-name "*.log"</code>: match theo tên.</li><li><code>-mtime +7</code>: file có modification time hơn 7 ngày.</li><li><code>-size +100M</code>: file lớn hơn 100 MiB theo cú pháp GNU find.</li><li><code>-maxdepth 1</code>: không đi quá sâu khỏi thư mục hiện tại.</li></ul><p>Ví dụ xem log cũ hơn 14 ngày nhưng chưa xóa:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>find /var/log/my-app -type f -name <span class=s2>&#34;*.log&#34;</span> -mtime +14 -print
+</span></span></code></pre></td></tr></table></div></div><p>Khi viết script cleanup, nên chạy <code>-print</code> trước để review danh sách, sau đó mới đổi sang hành động xóa hoặc archive.</p><hr><h2 id=xargs-truyền-danh-sách-file-cho-lệnh-khác>xargs: truyền danh sách file cho lệnh khác</h2><p><code>xargs</code> đọc dữ liệu từ stdin, gom thành argument và chạy command. Nó hữu ích khi danh sách file dài hoặc cần truyền kết quả của <code>find</code> cho lệnh khác.</p><p>Không nên dùng dạng mặc định cho file name tùy ý:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>find ./logs -type f -name <span class=s2>&#34;*.log&#34;</span> <span class=p>|</span> xargs gzip
+</span></span></code></pre></td></tr></table></div></div><p>Mặc định <code>xargs</code> tách input theo whitespace, nên tên file có space, tab hoặc newline có thể bị hiểu sai. GNU findutils khuyến nghị dùng <code>find -print0</code> kết hợp <code>xargs -0</code> để phân tách bằng NUL character:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>find ./logs -type f -name <span class=s2>&#34;*.log&#34;</span> -print0 <span class=p>|</span> xargs -0 gzip
+</span></span></code></pre></td></tr></table></div></div><p>Nếu dùng GNU <code>xargs</code>, thêm <code>-r</code> để không chạy command khi input rỗng:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>find ./logs -type f -name <span class=s2>&#34;*.log&#34;</span> -print0 <span class=p>|</span> xargs -r -0 gzip
+</span></span></code></pre></td></tr></table></div></div><p>Một lựa chọn khác là dùng <code>find -exec ... {} +</code>, portable và tránh pipe:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>find ./logs -type f -name <span class=s2>&#34;*.log&#34;</span> -exec gzip -- <span class=o>{}</span> +
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=thực-hành-devops-rotate-log-thủ-công>Thực hành DevOps: rotate log thủ công</h2><p>Trong production, log rotation thường nên giao cho <code>logrotate</code> hoặc logging stack. Nhưng hiểu một script rotate nhỏ giúp bạn nắm rõ các thao tác file: kiểm tra size, rename, tạo file mới, compress và cleanup.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>LOG_FILE</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>1</span><span class=k>:-</span><span class=p>./logs/app.log</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>MAX_SIZE_MB</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>MAX_SIZE_MB</span><span class=k>:-</span><span class=nv>100</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>KEEP_DAYS</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>KEEP_DAYS</span><span class=k>:-</span><span class=nv>14</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> ! -f <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;ERROR: Log file not found: </span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>LOG_DIR</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>dirname <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>LOG_NAME</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>basename <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>SIZE_MB</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>du -m <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=p>|</span> awk <span class=s1>&#39;{print $1}&#39;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>((</span> SIZE_MB &lt; MAX_SIZE_MB <span class=o>))</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;OK: </span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2> is </span><span class=si>${</span><span class=nv>SIZE_MB</span><span class=si>}</span><span class=s2>MB, no rotation needed&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>TIMESTAMP</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>date +%Y%m%d%H%M%S<span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>ROTATED_FILE</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>/</span><span class=si>${</span><span class=nv>LOG_NAME</span><span class=si>}</span><span class=s2>.</span><span class=si>${</span><span class=nv>TIMESTAMP</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>mv -- <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ROTATED_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>: &gt; <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>gzip -- <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ROTATED_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>find <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>&#34;</span> -type f -name <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_NAME</span><span class=si>}</span><span class=s2>.*.gz&#34;</span> -mtime +<span class=s2>&#34;</span><span class=si>${</span><span class=nv>KEEP_DAYS</span><span class=si>}</span><span class=s2>&#34;</span> -print -delete
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Rotated </span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2> -&gt; </span><span class=si>${</span><span class=nv>ROTATED_FILE</span><span class=si>}</span><span class=s2>.gz&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Một vài lưu ý:</p><ul><li><code>: > "${LOG_FILE}"</code> tạo file rỗng mới bằng shell builtin <code>:</code> và redirect output rỗng.</li><li>Script này phù hợp để học hoặc dùng cho service nhỏ. Với app đang ghi log liên tục, rotate thủ công có thể cần signal/reopen log tùy ứng dụng.</li><li>Dùng <code>find ... -print -delete</code> để vừa thấy file nào bị xóa vừa cleanup.</li></ul><hr><h2 id=thực-hành-devops-backup-config-trước-khi-deploy>Thực hành DevOps: backup config trước khi deploy</h2><p>Trước khi deploy, một bước an toàn là backup các file config quan trọng vào thư mục riêng theo timestamp.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>BACKUP_ROOT</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_ROOT</span><span class=k>:-</span><span class=p>./config-backups</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>TIMESTAMP</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>date +%Y%m%d%H%M%S<span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>BACKUP_DIR</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_ROOT</span><span class=si>}</span><span class=s2>/</span><span class=si>${</span><span class=nv>TIMESTAMP</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>CONFIG_FILES</span><span class=o>=(</span>
+</span></span><span class=line><span class=cl>  <span class=s2>&#34;/etc/example/app.conf&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=s2>&#34;/etc/example/worker.conf&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=s2>&#34;/etc/nginx/conf.d/example.conf&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>mkdir -p <span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_DIR</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> CONFIG_FILE in <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILES</span><span class=p>[@]</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=o>[[</span> ! -r <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;WARN: Skip unreadable config: </span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>continue</span>
+</span></span><span class=line><span class=cl>  <span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nv>TARGET</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_DIR</span><span class=si>}${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  mkdir -p <span class=s2>&#34;</span><span class=k>$(</span>dirname <span class=s2>&#34;</span><span class=si>${</span><span class=nv>TARGET</span><span class=si>}</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  cp -p -- <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>TARGET</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Backed up </span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>find <span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_ROOT</span><span class=si>}</span><span class=s2>&#34;</span> -mindepth <span class=m>1</span> -maxdepth <span class=m>1</span> -type d -mtime +30 -print -exec rm -rf -- <span class=o>{}</span> +
+</span></span></code></pre></td></tr></table></div></div><p><code>cp -p</code> giữ lại mode, ownership và timestamp nếu quyền hệ thống cho phép. <code>TARGET="${BACKUP_DIR}${CONFIG_FILE}"</code> giữ nguyên cấu trúc đường dẫn gốc bên trong thư mục backup, giúp restore dễ hơn.</p><hr><h2 id=sai-sót-thường-gặp>Sai sót thường gặp</h2><ul><li><strong>Dùng <code>></code> khi muốn append:</strong> <code>></code> overwrite file; dùng <code>>></code> hoặc <code>tee -a</code> nếu muốn ghi nối tiếp.</li><li><strong>Đặt sai thứ tự redirect:</strong> <code>command 2>&amp;1 >file</code> khác <code>command >file 2>&amp;1</code>. Bash xử lý redirect từ trái sang phải.</li><li><strong>Quên quote đường dẫn:</strong> Luôn dùng <code>"${FILE}"</code>, đặc biệt với path đọc từ input.</li><li><strong>Dùng <code>xargs</code> mặc định với file name tùy ý:</strong> Ưu tiên <code>find -print0 | xargs -0</code> hoặc <code>find -exec ... {} +</code>.</li><li><strong>Xóa file ngay khi chưa review:</strong> Với cleanup, chạy <code>find ... -print</code> trước, sau đó mới thêm <code>-delete</code> hoặc <code>rm</code>.</li><li><strong>Tạo here-doc bị expand ngoài ý muốn:</strong> Quote delimiter (<code>&lt;&lt;'EOF'</code>) nếu muốn giữ nguyên <code>${VAR}</code> trong file output.</li></ul><hr><h2 id=ghi-chú-triển-khai>Ghi chú triển khai</h2><ul><li><strong>Khi áp dụng vào dự án của bạn</strong>, hãy phân biệt rõ thao tác:<ul><li>Xem nhanh file/log → <code>cat</code>, <code>head</code>, <code>tail</code>, <code>tail -F</code>.</li><li>Ghi log script → redirect block hoặc <code>tee -a</code>.</li><li>Tạo config nhiều dòng → here-doc, quote delimiter nếu cần template literal.</li><li>Tìm/xử lý nhiều file → <code>find</code>, <code>find -exec ... {} +</code>, hoặc <code>find -print0 | xargs -0</code>.</li></ul></li><li><strong>Best practices:</strong><ul><li>Bắt đầu script bằng <code>set -euo pipefail</code> khi phù hợp.</li><li>Kiểm tra <code>-r</code>, <code>-w</code>, <code>-f</code>, <code>-d</code> trước khi thao tác nguy hiểm.</li><li>Dùng <code>--</code> trước biến path trong các lệnh như <code>cp</code>, <code>mv</code>, <code>rm</code>, <code>gzip</code>.</li><li>Với cleanup, log lại file bị tác động bằng <code>-print</code> hoặc <code>echo</code>.</li></ul></li><li><strong>Troubleshooting:</strong><ul><li>File log không ghi đủ stderr? → Đảm bảo có <code>2>&amp;1</code> trước pipe hoặc redirect đúng thứ tự.</li><li><code>tail -f</code> không thấy log mới sau rotate? → Thử <code>tail -F</code>.</li><li>Script lỗi với tên file có space? → Kiểm tra quote biến và cách dùng <code>xargs</code>.</li></ul></li></ul><hr><h2 id=-lời-kết>🎯 Lời kết</h2><p>Xử lý file là kỹ năng cốt lõi khi viết Bash cho DevOps. Khi nắm chắc redirect, here-doc, <code>tee</code>, đọc từng dòng, kiểm tra quyền, <code>find</code> và <code>xargs</code>, bạn có thể viết các script nhỏ nhưng an toàn hơn cho log, config, backup và cleanup.</p><p>Ở bài tiếp theo, chúng ta sẽ đi vào <strong>text processing với grep, awk và sed</strong>: lọc log, trích cột, thay đổi config và đếm dữ liệu từ file text hiệu quả hơn. 🚀</p><hr><h2 id=tài-liệu-tham-khảo>Tài liệu tham khảo</h2><ul><li><a class=link href=https://www.gnu.org/software/bash/manual/bash.html#Redirections target=_blank rel=noopener>GNU Bash Manual — Redirections</a> — Tài liệu chính thức về redirect, file descriptor và here-doc.</li><li><a class=link href=https://www.gnu.org/software/coreutils/manual/html_node/cat-invocation.html target=_blank rel=noopener>GNU Coreutils Manual — cat</a> — Cách <code>cat</code> đọc và ghi file/stdin/stdout.</li><li><a class=link href=https://www.gnu.org/software/coreutils/manual/html_node/head-invocation.html target=_blank rel=noopener>GNU Coreutils Manual — head</a> — Tài liệu chính thức về <code>head -n</code>, <code>head -c</code>.</li><li><a class=link href=https://www.gnu.org/software/coreutils/manual/html_node/tail-invocation.html target=_blank rel=noopener>GNU Coreutils Manual — tail</a> — Tài liệu chính thức về <code>tail -f</code>, <code>tail -F</code>, <code>--follow=name</code>.</li><li><a class=link href=https://www.gnu.org/software/coreutils/manual/html_node/tee-invocation.html target=_blank rel=noopener>GNU Coreutils Manual — tee</a> — Tài liệu chính thức về <code>tee</code> và <code>tee -a</code>.</li><li><a class=link href=https://www.gnu.org/software/findutils/manual/html_mono/find.html target=_blank rel=noopener>GNU Findutils Manual</a> — Tài liệu chính thức về <code>find</code>, <code>xargs</code>, <code>-print0</code> và <code>xargs -0</code>.</li></ul></section><footer class=article-footer><section class=article-tags><a href=/tags/bash/>Bash</a>
+<a href=/tags/shell-script/>Shell-Script</a>
+<a href=/tags/devops/>Devops</a>
+<a href=/tags/automation/>Automation</a>
+<a href=/tags/linux/>Linux</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Bài viết liên quan</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/posts/bash/bash-step-three/><div class=article-image><img src=/images/bash/bash-step-three.webp loading=lazy data-key data-hash=/images/bash/bash-step-three.webp></div><div class=article-details><h2 class=article-title>Vòng lặp trong Bash: for, while, until cho tự động hóa DevOps</h2></div></a></article><article class=has-image><a href=/posts/bash/bash-step-two/><div class=article-image><img src=/images/bash/bash-step-two.webp loading=lazy data-key data-hash=/images/bash/bash-step-two.webp></div><div class=article-details><h2 class=article-title>Điều kiện trong Bash: if, case và xử lý logic cho DevOps</h2></div></a></article><article class=has-image><a href=/posts/bash/bash-step-one/><div class=article-image><img src=/images/bash/bash-step-one.webp loading=lazy data-key data-hash=/images/bash/bash-step-one.webp></div><div class=article-details><h2 class=article-title>Cơ bản Bash Script trong DevOps</h2></div></a></article><article class=has-image><a href=/posts/devops/devops-step-two/><div class=article-image><img src=/images/devops/devops-step-two.webp loading=lazy data-key data-hash=/images/devops/devops-step-two.webp></div><div class=article-details><h2 class=article-title>Học về Linux & Hệ Điều Hành 🖥️</h2></div></a></article><article class=has-image><a href=/posts/devops/devops-step-three/><div class=article-image><img src=/images/devops/devops-step-three.webp loading=lazy data-key data-hash=/images/devops/devops-step-three.webp></div><div class=article-details><h2 class=article-title>Kiến thức về Terminal 📟</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=hoangduonng/blog_comments issue-term=pathname label=comments theme=icy-dark crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2025 -
+2026 Hoàng Dương</section><section class=powerby>Built with <a href=https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/ target=_blank rel=noopener>Ngữ Uyển ❤️</a><br>Theme <no value>thiết kế bởi Jimmy</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
