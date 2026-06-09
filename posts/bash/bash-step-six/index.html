@@ -1,0 +1,479 @@
+<!doctype html><html lang=vi dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Hướng dẫn viết function trong Bash: cú pháp, tham số, biến local, return code, source file khác và xây dựng thư viện logging tái sử dụng cho script DevOps."><title>Function trong Bash: tái sử dụng code hiệu quả cho DevOps</title>
+<link rel=canonical href=https://tech.nguuyen.io.vn/posts/bash/bash-step-six/><link rel=stylesheet href=/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css><meta property='og:title' content="Function trong Bash: tái sử dụng code hiệu quả cho DevOps"><meta property='og:description' content="Hướng dẫn viết function trong Bash: cú pháp, tham số, biến local, return code, source file khác và xây dựng thư viện logging tái sử dụng cho script DevOps."><meta property='og:url' content='https://tech.nguuyen.io.vn/posts/bash/bash-step-six/'><meta property='og:site_name' content='Hoàng Dương'><meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:tag' content='bash'><meta property='article:tag' content='shell-script'><meta property='article:tag' content='devops'><meta property='article:tag' content='automation'><meta property='article:tag' content='linux'><meta property='article:tag' content='function'><meta property='article:published_time' content='2026-06-09T00:00:00+00:00'><meta property='article:modified_time' content='2026-06-09T00:00:00+00:00'><meta property='og:image' content='https://tech.nguuyen.io.vn/images/bash/bash-step-six.webp'><meta name=twitter:title content="Function trong Bash: tái sử dụng code hiệu quả cho DevOps"><meta name=twitter:description content="Hướng dẫn viết function trong Bash: cú pháp, tham số, biến local, return code, source file khác và xây dựng thư viện logging tái sử dụng cho script DevOps."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://tech.nguuyen.io.vn/images/bash/bash-step-six.webp'><link rel=icon type=image/x-icon href=/favicon.ico><style>:root{--article-font-family:"Roboto", var(--base-font-family)}</style><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Hiển thị Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/><img src=/img/hoang_hu_f5b001d7581bed29.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/>Hoàng Dương</a></h1><h2 class=site-description>And, when you want something, all the universe conspires in helping you to achieve it.</h2></div></header><ol class=menu-social><li><a href=https://github.com/HoangDuonng target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.instagram.com/ngu_uuen/ target=_blank title=Instagram rel=me><svg class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="4"/><path d="M16.5 7.5h.01"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Trang chủ</span></a></li><li><a href=/gi%E1%BB%9Bi-thi%E1%BB%87u/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>Về tôi</span></a></li><li><a href=/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Lưu trữ</span></a></li><li><a href=/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Tìm kiếm</span></a></li><li><a href=/li%C3%AAn-k%E1%BA%BFt/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Liên kết</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://tech.nguuyen.io.vn/ selected>Tiếng Việt</option><option value=https://tech.nguuyen.io.vn/en/>English</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Chế độ tối</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><h2 class="widget-title section-title">Mục lục</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#function-trong-bash-cho-devops>Function trong Bash cho DevOps</a></li><li><a href=#khai-báo-function-trong-bash>Khai báo function trong Bash</a></li><li><a href=#function-nhận-tham-số-bằng-1-->Function nhận tham số bằng <code>$1</code>, <code>$@</code>, <code>$#</code></a></li><li><a href=#validate-tham-số-đầu-vào>Validate tham số đầu vào</a></li><li><a href=#return-value-trong-bash-là-exit-code>Return value trong Bash là exit code</a></li><li><a href=#biến-local-để-tránh-side-effect>Biến local để tránh side effect</a></li><li><a href=#tách-function-vào-file-khác-với-source>Tách function vào file khác với <code>source</code></a></li><li><a href=#thực-hành-devops-thư-viện-logging-nhỏ>Thực hành DevOps: thư viện logging nhỏ</a></li><li><a href=#thực-hành-devops-retry-command-bằng-function>Thực hành DevOps: retry command bằng function</a></li><li><a href=#thực-hành-devops-deploy-script-có-function-rõ-ràng>Thực hành DevOps: deploy script có function rõ ràng</a></li><li><a href=#sai-sót-thường-gặp>Sai sót thường gặp</a></li><li><a href=#ghi-chú-triển-khai>Ghi chú triển khai</a></li><li><a href=#-lời-kết>🎯 Lời kết</a></li><li><a href=#tài-liệu-tham-khảo>Tài liệu tham khảo</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/posts/bash/bash-step-six/><img src=/images/bash/bash-step-six.webp loading=lazy alt="Featured image of post Function trong Bash: tái sử dụng code hiệu quả cho DevOps"></a></div><div class=article-details><header class=article-category><a href=/categories/devops/ style=background-color:#2a9d8f;color:#fff>DevOps
+</a><a href=/categories/bash/ style=background-color:#2a9d8f;color:#fff>Bash</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/posts/bash/bash-step-six/>Function trong Bash: tái sử dụng code hiệu quả cho DevOps</a></h2><h3 class=article-subtitle>Hướng dẫn viết function trong Bash: cú pháp, tham số, biến local, return code, source file khác và xây dựng thư viện logging tái sử dụng cho script DevOps.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>09/06/2026</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>9 phút đọc</time></div><div><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span class=article-author--name>Hoàng Dương</span></div></footer></div></header><section class=article-content><h2 id=function-trong-bash-cho-devops>Function trong Bash cho DevOps</h2><p>Ở <a class=link href=/posts/bash/bash-step-five/>bài trước</a> chúng ta đã dùng <code>grep</code>, <code>awk</code> và <code>sed</code> để xử lý log/config. Khi script bắt đầu dài hơn, bạn sẽ gặp một vấn đề mới: nhiều đoạn code bị lặp lại — kiểm tra file, ghi log, validate biến môi trường, retry command, tạo backup trước khi sửa config.</p><p>Function giúp gom một nhóm lệnh thành một khối có tên, có thể gọi lại nhiều lần. Với DevOps, đây là bước quan trọng để biến các script “chạy được” thành script <strong>dễ đọc, dễ test và dễ bảo trì</strong> hơn.</p><hr><h2 id=khai-báo-function-trong-bash>Khai báo function trong Bash</h2><p>Bash hỗ trợ hai kiểu khai báo phổ biến:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>log_info<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;INFO: </span><span class=nv>$1</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>function</span> log_error <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;ERROR: </span><span class=nv>$1</span><span class=s2>&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Trong thực tế, kiểu <code>name() { ...; }</code> thường được dùng nhiều vì ngắn gọn và portable hơn giữa các shell kiểu POSIX. Với bài này, chúng ta tập trung vào Bash nên cả hai đều chạy được.</p><p>Gọi function giống gọi command:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>log_info <span class=s2>&#34;Starting deploy&#34;</span>
+</span></span><span class=line><span class=cl>log_error <span class=s2>&#34;Deploy failed&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Lưu ý khoảng trắng và dấu <code>;</code> khi viết một dòng:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>say_hello<span class=o>()</span> <span class=o>{</span> <span class=nb>echo</span> <span class=s2>&#34;hello&#34;</span><span class=p>;</span> <span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Nếu viết nhiều dòng, dấu <code>;</code> trước <code>}</code> không cần thiết vì newline đã kết thúc command.</p><hr><h2 id=function-nhận-tham-số-bằng-1-->Function nhận tham số bằng <code>$1</code>, <code>$@</code>, <code>$#</code></h2><p>Trong function, Bash dùng các positional parameters giống script:</p><ul><li><code>$1</code>, <code>$2</code>, &mldr;: tham số thứ nhất, thứ hai, &mldr;</li><li><code>$@</code>: toàn bộ tham số, giữ từng argument riêng khi được quote thành <code>"$@"</code>.</li><li><code>$#</code>: số lượng tham số.</li><li><code>$0</code>: tên script, không phải tên function.</li></ul><p>Ví dụ function kiểm tra service:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>check_service<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> <span class=nv>service_name</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> systemctl is-active --quiet <span class=s2>&#34;</span><span class=si>${</span><span class=nv>service_name</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;OK: </span><span class=si>${</span><span class=nv>service_name</span><span class=si>}</span><span class=s2> is running&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=k>else</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;ERROR: </span><span class=si>${</span><span class=nv>service_name</span><span class=si>}</span><span class=s2> is not running&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl>  <span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>check_service <span class=s2>&#34;nginx&#34;</span>
+</span></span><span class=line><span class=cl>check_service <span class=s2>&#34;docker&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Khi cần truyền toàn bộ argument sang command khác, dùng <code>"$@"</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>run_cmd<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;+ </span><span class=nv>$*</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>run_cmd ls -lah /var/log
+</span></span></code></pre></td></tr></table></div></div><p><code>"$@"</code> giữ nguyên ranh giới argument. Đây là lựa chọn an toàn hơn so với <code>$*</code> khi tham số có khoảng trắng.</p><hr><h2 id=validate-tham-số-đầu-vào>Validate tham số đầu vào</h2><p>Function nên kiểm tra tham số bắt buộc ngay từ đầu để lỗi rõ ràng hơn.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>require_arg<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> <span class=nv>name</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> <span class=nv>value</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>2</span><span class=k>:-</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=o>[[</span> -z <span class=s2>&#34;</span><span class=si>${</span><span class=nv>value</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;ERROR: Missing required argument: </span><span class=si>${</span><span class=nv>name</span><span class=si>}</span><span class=s2>&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=m>2</span>
+</span></span><span class=line><span class=cl>  <span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>backup_file<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> <span class=nv>file_path</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>1</span><span class=k>:-</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  require_arg <span class=s2>&#34;file_path&#34;</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>file_path</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>||</span> <span class=k>return</span> <span class=nv>$?</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=o>[[</span> ! -f <span class=s2>&#34;</span><span class=si>${</span><span class=nv>file_path</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;ERROR: Not a regular file: </span><span class=si>${</span><span class=nv>file_path</span><span class=si>}</span><span class=s2>&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl>  <span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  cp -- <span class=s2>&#34;</span><span class=si>${</span><span class=nv>file_path</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>file_path</span><span class=si>}</span><span class=s2>.bak.</span><span class=k>$(</span>date +%Y%m%d%H%M%S<span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Dùng <code>${1:-}</code> giúp tránh lỗi “unbound variable” khi script bật <code>set -u</code> mà function được gọi thiếu tham số.</p><hr><h2 id=return-value-trong-bash-là-exit-code>Return value trong Bash là exit code</h2><p>Function Bash không <code>return</code> dữ liệu dạng string như nhiều ngôn ngữ lập trình. <code>return</code> trong Bash trả về <strong>exit code</strong> từ <code>0</code> đến <code>255</code>:</p><ul><li><code>0</code>: thành công.</li><li>Khác <code>0</code>: lỗi hoặc trạng thái đặc biệt.</li></ul><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>is_readable_file<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> <span class=nv>file_path</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=o>[[</span> -f <span class=s2>&#34;</span><span class=si>${</span><span class=nv>file_path</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>&amp;&amp;</span> -r <span class=s2>&#34;</span><span class=si>${</span><span class=nv>file_path</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> is_readable_file <span class=s2>&#34;./app.env&#34;</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;app.env is readable&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Cannot read app.env&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span></code></pre></td></tr></table></div></div><p>Ở ví dụ trên, function không cần viết <code>return</code> rõ ràng. Exit code của lệnh cuối cùng (<code>[[ ... ]]</code>) sẽ trở thành exit code của function.</p><p>Nếu muốn function “trả về dữ liệu”, hãy in ra stdout rồi dùng command substitution:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>get_timestamp<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  date +%Y%m%d%H%M%S
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>backup_name</span><span class=o>=</span><span class=s2>&#34;app.env.</span><span class=k>$(</span>get_timestamp<span class=k>)</span><span class=s2>.bak&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Nguyên tắc thực dụng: dùng exit code cho đúng/sai, dùng stdout cho dữ liệu.</p><hr><h2 id=biến-local-để-tránh-side-effect>Biến local để tránh side effect</h2><p>Theo mặc định, biến trong function Bash là global trong phạm vi shell hiện tại. Dùng <code>local</code> để giới hạn biến trong function.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>build_backup_path<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> <span class=nv>source_file</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> timestamp
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> base_name
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nv>timestamp</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>date +%Y%m%d%H%M%S<span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nv>base_name</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>basename <span class=s2>&#34;</span><span class=si>${</span><span class=nv>source_file</span><span class=si>}</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;./backup/</span><span class=si>${</span><span class=nv>base_name</span><span class=si>}</span><span class=s2>.</span><span class=si>${</span><span class=nv>timestamp</span><span class=si>}</span><span class=s2>.bak&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Không dùng <code>local</code>, các biến như <code>timestamp</code> hoặc <code>base_name</code> có thể vô tình ghi đè biến cùng tên ở nơi khác trong script. Đây là lỗi khó debug khi script lớn dần.</p><p>Một thói quen tốt là khai báo <code>local</code> gần nơi dùng và quote biến khi truyền vào command:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>local</span> <span class=nv>target_dir</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>1</span><span class=k>:-</span><span class=p>./backup</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>mkdir -p <span class=s2>&#34;</span><span class=si>${</span><span class=nv>target_dir</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=tách-function-vào-file-khác-với-source>Tách function vào file khác với <code>source</code></h2><p>Khi nhiều script cùng cần logging, validation hoặc retry, bạn có thể tách function vào file thư viện nhỏ.</p><p>Ví dụ cấu trúc:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-text data-lang=text><span class=line><span class=cl>scripts/
+</span></span><span class=line><span class=cl>├── deploy.sh
+</span></span><span class=line><span class=cl>└── lib/
+</span></span><span class=line><span class=cl>    └── log.sh
+</span></span></code></pre></td></tr></table></div></div><p>File <code>scripts/lib/log.sh</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl>log_info<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>printf</span> <span class=s1>&#39;[INFO] %s\n&#39;</span> <span class=s2>&#34;</span><span class=nv>$*</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>log_warn<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>printf</span> <span class=s1>&#39;[WARN] %s\n&#39;</span> <span class=s2>&#34;</span><span class=nv>$*</span><span class=s2>&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>log_error<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>printf</span> <span class=s1>&#39;[ERROR] %s\n&#39;</span> <span class=s2>&#34;</span><span class=nv>$*</span><span class=s2>&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>File <code>scripts/deploy.sh</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span><span class=lnt>8
+</span><span class=lnt>9
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>SCRIPT_DIR</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span><span class=nb>cd</span> -- <span class=s2>&#34;</span><span class=k>$(</span>dirname -- <span class=s2>&#34;</span><span class=si>${</span><span class=nv>BASH_SOURCE</span><span class=p>[0]</span><span class=si>}</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span> <span class=o>&amp;&amp;</span> <span class=nb>pwd</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>source</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SCRIPT_DIR</span><span class=si>}</span><span class=s2>/lib/log.sh&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>log_info <span class=s2>&#34;Starting deploy&#34;</span>
+</span></span><span class=line><span class=cl>log_warn <span class=s2>&#34;This is a warning message&#34;</span>
+</span></span><span class=line><span class=cl>log_error <span class=s2>&#34;This is an error message&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>source</code> chạy nội dung file trong shell hiện tại, nên các function trong <code>log.sh</code> sẽ có sẵn cho <code>deploy.sh</code>. Trong Bash, <code>${BASH_SOURCE[0]}</code> giúp xác định đường dẫn file script hiện tại tốt hơn <code>$0</code> khi file được source hoặc gọi từ thư mục khác.</p><hr><h2 id=thực-hành-devops-thư-viện-logging-nhỏ>Thực hành DevOps: thư viện logging nhỏ</h2><p>Một thư viện logging tối thiểu nên có timestamp, level và tách stdout/stderr hợp lý.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span>
+</span></span><span class=line><span class=cl>_log<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> <span class=nv>level</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>shift</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nb>printf</span> <span class=s1>&#39;%s [%s] %s\n&#39;</span> <span class=s2>&#34;</span><span class=k>$(</span>date -Is<span class=k>)</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>level</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=nv>$*</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>log_info<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  _log <span class=s2>&#34;INFO&#34;</span> <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>log_warn<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  _log <span class=s2>&#34;WARN&#34;</span> <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>log_error<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  _log <span class=s2>&#34;ERROR&#34;</span> <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span></code></pre></td></tr></table></div></div><p>Đặt function nội bộ tên <code>_log</code> là convention đơn giản để báo hiệu “không gọi trực tiếp từ bên ngoài”. Bash không có private function thật sự, nên đây chỉ là quy ước.</p><p>Dùng trong script healthcheck:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>SCRIPT_DIR</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span><span class=nb>cd</span> -- <span class=s2>&#34;</span><span class=k>$(</span>dirname -- <span class=s2>&#34;</span><span class=si>${</span><span class=nv>BASH_SOURCE</span><span class=p>[0]</span><span class=si>}</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span> <span class=o>&amp;&amp;</span> <span class=nb>pwd</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>source</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SCRIPT_DIR</span><span class=si>}</span><span class=s2>/lib/log.sh&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>check_url<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> <span class=nv>url</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> curl --fail --silent --show-error --max-time <span class=m>5</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>url</span><span class=si>}</span><span class=s2>&#34;</span> &gt; /dev/null<span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>    log_info <span class=s2>&#34;Healthcheck OK: </span><span class=si>${</span><span class=nv>url</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=k>else</span>
+</span></span><span class=line><span class=cl>    log_error <span class=s2>&#34;Healthcheck failed: </span><span class=si>${</span><span class=nv>url</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl>  <span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>check_url <span class=s2>&#34;https://example.com/health&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Ở đây <code>curl --fail</code> giúp HTTP 4xx/5xx được xem là lỗi, <code>--silent --show-error</code> giảm noise nhưng vẫn in lỗi cần thiết, và <code>--max-time</code> tránh script treo quá lâu.</p><hr><h2 id=thực-hành-devops-retry-command-bằng-function>Thực hành DevOps: retry command bằng function</h2><p>Retry là pattern rất thường gặp khi gọi API, pull image, kiểm tra service vừa restart hoặc chạy lệnh có thể lỗi tạm thời.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>retry<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> <span class=nv>max_attempts</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> <span class=nv>delay_seconds</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$2</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>shift</span> <span class=m>2</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> <span class=nv>attempt</span><span class=o>=</span><span class=m>1</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>while</span> <span class=o>((</span> attempt &lt;<span class=o>=</span> max_attempts <span class=o>))</span><span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl>    <span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;WARN: attempt </span><span class=si>${</span><span class=nv>attempt</span><span class=si>}</span><span class=s2>/</span><span class=si>${</span><span class=nv>max_attempts</span><span class=si>}</span><span class=s2> failed: </span><span class=nv>$*</span><span class=s2>&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    <span class=k>if</span> <span class=o>((</span> <span class=nv>attempt</span> <span class=o>==</span> max_attempts <span class=o>))</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>      <span class=k>return</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl>    <span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>    sleep <span class=s2>&#34;</span><span class=si>${</span><span class=nv>delay_seconds</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=o>((</span>attempt++<span class=o>))</span>
+</span></span><span class=line><span class=cl>  <span class=k>done</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>retry <span class=m>5</span> <span class=m>3</span> curl --fail --silent --show-error https://example.com/health
+</span></span></code></pre></td></tr></table></div></div><p>Điểm quan trọng:</p><ul><li><code>shift 2</code> bỏ hai tham số cấu hình để phần còn lại là command cần chạy.</li><li><code>"$@"</code> chạy command với argument được giữ nguyên.</li><li>Function trả <code>0</code> ngay khi command thành công, trả <code>1</code> sau khi hết số lần thử.</li></ul><p>Bạn có thể kết hợp với logging library:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>if</span> retry <span class=m>5</span> <span class=m>3</span> curl --fail --silent --show-error https://example.com/health<span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  log_info <span class=s2>&#34;Service is healthy&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>  log_error <span class=s2>&#34;Service is still unhealthy after retry&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=thực-hành-devops-deploy-script-có-function-rõ-ràng>Thực hành DevOps: deploy script có function rõ ràng</h2><p>Ví dụ script deploy nhỏ, tách từng bước thành function để dễ đọc hơn:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>APP_DIR</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>APP_DIR</span><span class=k>:-</span><span class=p>/opt/example-app</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>SERVICE_NAME</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=k>:-</span><span class=nv>example</span><span class=p>-app</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>log_info<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>printf</span> <span class=s1>&#39;%s [INFO] %s\n&#39;</span> <span class=s2>&#34;</span><span class=k>$(</span>date -Is<span class=k>)</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=nv>$*</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>log_error<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>printf</span> <span class=s1>&#39;%s [ERROR] %s\n&#39;</span> <span class=s2>&#34;</span><span class=k>$(</span>date -Is<span class=k>)</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=nv>$*</span><span class=s2>&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>require_dir<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> <span class=nv>dir_path</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=o>[[</span> ! -d <span class=s2>&#34;</span><span class=si>${</span><span class=nv>dir_path</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>    log_error <span class=s2>&#34;Directory not found: </span><span class=si>${</span><span class=nv>dir_path</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl>  <span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>pull_latest_code<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  git -C <span class=s2>&#34;</span><span class=si>${</span><span class=nv>APP_DIR</span><span class=si>}</span><span class=s2>&#34;</span> pull --ff-only
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>restart_service<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  sudo systemctl restart <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>verify_service<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  systemctl is-active --quiet <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>main<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  require_dir <span class=s2>&#34;</span><span class=si>${</span><span class=nv>APP_DIR</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  log_info <span class=s2>&#34;Pulling latest code&#34;</span>
+</span></span><span class=line><span class=cl>  pull_latest_code
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  log_info <span class=s2>&#34;Restarting </span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  restart_service
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  log_info <span class=s2>&#34;Verifying </span><span class=si>${</span><span class=nv>SERVICE_NAME</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> verify_service<span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>    log_info <span class=s2>&#34;Deploy completed&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=k>else</span>
+</span></span><span class=line><span class=cl>    log_error <span class=s2>&#34;Service is not active after restart&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl>  <span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>main <span class=s2>&#34;</span><span class=nv>$@</span><span class=s2>&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Pattern <code>main "$@"</code> giúp script có entrypoint rõ ràng. Các function phía trên định nghĩa hành vi, còn <code>main</code> mô tả luồng chạy chính.</p><hr><h2 id=sai-sót-thường-gặp>Sai sót thường gặp</h2><ul><li><strong>Quên <code>local</code>:</strong> Biến trong function có thể ghi đè biến global ngoài ý muốn.</li><li><strong>Dùng <code>return "text"</code>:</strong> <code>return</code> chỉ dành cho exit code số; muốn trả text thì <code>echo</code>/<code>printf</code> ra stdout.</li><li><strong>Không quote <code>"$@"</code>:</strong> Command wrapper dễ hỏng khi argument có khoảng trắng.</li><li><strong>Gọi function trước khi khai báo:</strong> Bash đọc và chạy từ trên xuống; function phải được định nghĩa trước khi gọi.</li><li><strong>Dùng <code>$1</code> trực tiếp khi bật <code>set -u</code>:</strong> Nếu thiếu tham số, script lỗi ngay. Dùng <code>${1:-}</code> rồi validate.</li><li><strong>Ghi log lỗi ra stdout:</strong> Error/warn nên đi stderr (<code>>&amp;2</code>) để stdout còn dùng cho dữ liệu/pipeline.</li></ul><hr><h2 id=ghi-chú-triển-khai>Ghi chú triển khai</h2><ul><li><strong>Khi áp dụng vào dự án của bạn</strong>, hãy bắt đầu bằng các function nhỏ cho phần lặp lại nhiều nhất:<ul><li><code>log_info</code>, <code>log_warn</code>, <code>log_error</code>.</li><li><code>require_file</code>, <code>require_dir</code>, <code>require_env</code>.</li><li><code>retry</code> cho lệnh có lỗi tạm thời.</li><li><code>backup_file</code> trước khi sửa config.</li></ul></li><li><strong>Best practices:</strong><ul><li>Dùng <code>local</code> cho biến trong function.</li><li>Dùng <code>return</code> cho trạng thái thành công/thất bại, stdout cho dữ liệu.</li><li>Dùng <code>"$@"</code> khi wrapper function gọi command khác.</li><li>Tách thư viện chung vào <code>scripts/lib/*.sh</code> và load bằng <code>source</code> với đường dẫn dựa trên <code>${BASH_SOURCE[0]}</code>.</li><li>Giữ function làm một việc rõ ràng; nếu function quá dài, tách tiếp.</li></ul></li><li><strong>Troubleshooting:</strong><ul><li>Function trả sai trạng thái? → In thử <code>$?</code> ngay sau khi gọi hoặc chạy <code>bash -x script.sh</code>.</li><li>Biến bị đổi bất ngờ? → Kiểm tra function thiếu <code>local</code>.</li><li><code>source</code> không tìm thấy file? → Kiểm tra <code>SCRIPT_DIR</code> và chạy script từ thư mục khác để test.</li></ul></li></ul><hr><h2 id=-lời-kết>🎯 Lời kết</h2><p>Function là bước nâng cấp tự nhiên khi bạn viết Bash cho DevOps nhiều hơn một vài dòng. Chúng giúp tái sử dụng logic, gom logging/validation/retry vào nơi chung, giảm copy-paste và làm luồng deploy/healthcheck rõ ràng hơn.</p><p>Ở bài tiếp theo, chúng ta sẽ đi vào <strong>quản lý biến và môi trường trong Bash</strong>: biến local vs <code>export</code>, <code>.env</code>, <code>getopts</code>, <code>$IFS</code> và các biến đặc biệt như <code>$?</code>, <code>$$</code>, <code>$!</code>. 🚀</p><hr><h2 id=tài-liệu-tham-khảo>Tài liệu tham khảo</h2><ul><li><a class=link href=https://www.gnu.org/software/bash/manual/bash.html#Shell-Functions target=_blank rel=noopener>GNU Bash Manual — Shell Functions</a> — Tài liệu chính thức về function, positional parameters và exit status.</li><li><a class=link href=https://www.gnu.org/software/bash/manual/bash.html#Bourne-Shell-Builtins target=_blank rel=noopener>GNU Bash Manual — Bourne Shell Builtins</a> — Tham khảo <code>return</code>, <code>shift</code> và các builtin liên quan.</li><li><a class=link href=https://www.gnu.org/software/bash/manual/bash.html#Bash-Variables target=_blank rel=noopener>GNU Bash Manual — Bash Variables</a> — Tham khảo <code>${BASH_SOURCE[@]}</code> và các biến Bash đặc biệt.</li><li><a class=link href=https://curl.se/docs/manpage.html target=_blank rel=noopener>curl Documentation</a> — Tham khảo <code>--fail</code>, <code>--silent</code>, <code>--show-error</code>, <code>--max-time</code> dùng trong ví dụ healthcheck.</li></ul></section><footer class=article-footer><section class=article-tags><a href=/tags/bash/>Bash</a>
+<a href=/tags/shell-script/>Shell-Script</a>
+<a href=/tags/devops/>Devops</a>
+<a href=/tags/automation/>Automation</a>
+<a href=/tags/linux/>Linux</a>
+<a href=/tags/function/>Function</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Bài viết liên quan</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/posts/bash/bash-step-five/><div class=article-image><img src=/images/bash/bash-step-five.webp loading=lazy data-key data-hash=/images/bash/bash-step-five.webp></div><div class=article-details><h2 class=article-title>Text Processing trong Bash: grep, awk, sed cho DevOps</h2></div></a></article><article class=has-image><a href=/posts/bash/bash-step-four/><div class=article-image><img src=/images/bash/bash-step-four.webp loading=lazy data-key data-hash=/images/bash/bash-step-four.webp></div><div class=article-details><h2 class=article-title>Xử lý file trong Bash: đọc, ghi và quản lý an toàn cho DevOps</h2></div></a></article><article class=has-image><a href=/posts/bash/bash-step-three/><div class=article-image><img src=/images/bash/bash-step-three.webp loading=lazy data-key data-hash=/images/bash/bash-step-three.webp></div><div class=article-details><h2 class=article-title>Vòng lặp trong Bash: for, while, until cho tự động hóa DevOps</h2></div></a></article><article class=has-image><a href=/posts/bash/bash-step-two/><div class=article-image><img src=/images/bash/bash-step-two.webp loading=lazy data-key data-hash=/images/bash/bash-step-two.webp></div><div class=article-details><h2 class=article-title>Điều kiện trong Bash: if, case và xử lý logic cho DevOps</h2></div></a></article><article class=has-image><a href=/posts/bash/bash-step-one/><div class=article-image><img src=/images/bash/bash-step-one.webp loading=lazy data-key data-hash=/images/bash/bash-step-one.webp></div><div class=article-details><h2 class=article-title>Cơ bản Bash Script trong DevOps</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=hoangduonng/blog_comments issue-term=pathname label=comments theme=icy-dark crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2025 -
+2026 Hoàng Dương</section><section class=powerby>Built with <a href=https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/ target=_blank rel=noopener>Ngữ Uyển ❤️</a><br>Theme <no value>thiết kế bởi Jimmy</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
