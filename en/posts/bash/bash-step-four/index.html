@@ -1,0 +1,348 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Learn file handling in Bash: cat, head, tail, redirection, here-doc, tee, line-by-line reading, permission checks, find, and xargs. Includes DevOps examples for manual log rotation and config backup."><title>File Handling in Bash: Read, Write, and Manage Files Safely for DevOps</title><link rel=canonical href=https://tech.nguuyen.io.vn/en/posts/bash/bash-step-four/><link rel=stylesheet href=/scss/style.min.008e990398a8bda07a1c08244e5228e1367c0d5878a70860ee0645df1783fec0.css><meta property='og:title' content="File Handling in Bash: Read, Write, and Manage Files Safely for DevOps"><meta property='og:description' content="Learn file handling in Bash: cat, head, tail, redirection, here-doc, tee, line-by-line reading, permission checks, find, and xargs. Includes DevOps examples for manual log rotation and config backup."><meta property='og:url' content='https://tech.nguuyen.io.vn/en/posts/bash/bash-step-four/'><meta property='og:site_name' content='Hoang Duong'><meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:tag' content='bash'><meta property='article:tag' content='shell-script'><meta property='article:tag' content='devops'><meta property='article:tag' content='automation'><meta property='article:tag' content='linux'><meta property='article:published_time' content='2026-06-08T00:00:00+00:00'><meta property='article:modified_time' content='2026-06-13T00:00:00+07:00'><meta property='og:image' content='https://tech.nguuyen.io.vn/images/bash/bash-step-four.webp'><meta name=twitter:title content="File Handling in Bash: Read, Write, and Manage Files Safely for DevOps"><meta name=twitter:description content="Learn file handling in Bash: cat, head, tail, redirection, here-doc, tee, line-by-line reading, permission checks, find, and xargs. Includes DevOps examples for manual log rotation and config backup."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://tech.nguuyen.io.vn/images/bash/bash-step-four.webp'><link rel=icon type=image/x-icon href=/favicon.ico><style>:root{--article-font-family:"Roboto", var(--base-font-family)}</style><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/en/><img src=/img/hoang_hu_9c3522a14c2c01cd.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/en>Hoang Duong</a></h1><h2 class=site-description>And, when you want something, all the universe conspires in helping you to achieve it.</h2></div></header><ol class=menu-social><li><a href=https://github.com/HoangDuonng target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.instagram.com/ngu_uuen/ target=_blank title=Instagram rel=me><svg class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="4"/><path d="M16.5 7.5h.01"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/en/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home page</span></a></li><li><a href=/en/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About me</span></a></li><li><a href=/en/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/en/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/en/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://tech.nguuyen.io.vn/>Tiếng Việt</option><option value=https://tech.nguuyen.io.vn/en/ selected>English</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#file-handling-in-bash-for-devops>File Handling in Bash for DevOps</a></li><li><a href=#quickly-reading-file-content-with-cat-tac-head-and-tail>Quickly reading file content with cat, tac, head, and tail</a></li><li><a href=#redirecting-output-overwrite-append-and-split-stdoutstderr>Redirecting output: overwrite, append, and split stdout/stderr</a></li><li><a href=#here-doc-create-configuration-files-from-a-script>Here-doc: create configuration files from a script</a></li><li><a href=#tee-show-output-and-save-it-at-the-same-time>tee: show output and save it at the same time</a></li><li><a href=#reading-a-file-line-by-line>Reading a file line by line</a></li><li><a href=#check-files-directories-and-permissions-before-operating>Check files, directories, and permissions before operating</a></li><li><a href=#find-search-for-files-by-condition>find: search for files by condition</a></li><li><a href=#xargs-pass-file-lists-to-another-command>xargs: pass file lists to another command</a></li><li><a href=#devops-practice-manual-log-rotation>DevOps practice: manual log rotation</a></li><li><a href=#devops-practice-back-up-config-before-deployment>DevOps practice: back up config before deployment</a></li><li><a href=#common-mistakes>Common mistakes</a></li><li><a href=#implementation-notes>Implementation notes</a></li><li><a href=#-final-thoughts>🎯 Final thoughts</a></li><li><a href=#references>References</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/en/posts/bash/bash-step-four/><img src=/images/bash/bash-step-four.webp loading=lazy alt="Featured image of post File Handling in Bash: Read, Write, and Manage Files Safely for DevOps"></a></div><div class=article-details><header class=article-category><a href=/en/categories/devops/ style=background-color:#2a9d8f;color:#fff>DevOps
+</a><a href=/en/categories/bash/>Bash</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/en/posts/bash/bash-step-four/>File Handling in Bash: Read, Write, and Manage Files Safely for DevOps</a></h2><h3 class=article-subtitle>Learn file handling in Bash: cat, head, tail, redirection, here-doc, tee, line-by-line reading, permission checks, find, and xargs. Includes DevOps examples for manual log rotation and config backup.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>08/06/2026</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>11 minute read</time></div><div><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span class=article-author--name>Hoàng Dương</span></div></footer><footer class=article-translations><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg><div><a href=https://tech.nguuyen.io.vn/posts/bash/bash-step-four/ class=link>Tiếng Việt</a></div></footer></div></header><section class=article-content><h2 id=file-handling-in-bash-for-devops>File Handling in Bash for DevOps</h2><p>In the <a class=link href=/posts/bash/bash-step-three/>previous article</a> we used loops to process multiple servers, many log lines, and retry commands that may fail temporarily. The next natural step is <strong>file handling</strong>: reading logs, writing reports, appending output, creating configuration files, finding old files, and passing file lists to other commands.</p><p>In DevOps, most small automation tasks touch files in one way or another: service logs, <code>.env</code> files, Nginx configs, YAML manifests, host lists, build artifacts, or backups. This article focuses on practical Bash patterns: <code>cat</code>, <code>head</code>, <code>tail</code>, redirection, here-doc, <code>tee</code>, line-by-line reading, file checks, <code>find</code>, <code>xargs</code>, and two hands-on examples.</p><hr><h2 id=quickly-reading-file-content-with-cat-tac-head-and-tail>Quickly reading file content with cat, tac, head, and tail</h2><p><code>cat</code> reads one or more files and writes the content to standard output. According to GNU Coreutils, if no file is provided, <code>cat</code> reads from standard input.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat /etc/os-release
+</span></span><span class=line><span class=cl>cat app.log deploy.log
+</span></span></code></pre></td></tr></table></div></div><p>A few commands you will often use when inspecting logs or config files:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>head -n <span class=m>20</span> app.log        <span class=c1># first 20 lines</span>
+</span></span><span class=line><span class=cl>head -c 1K app.log        <span class=c1># first 1 KiB</span>
+</span></span><span class=line><span class=cl>tail -n <span class=m>50</span> app.log        <span class=c1># last 50 lines</span>
+</span></span><span class=line><span class=cl>tail -f app.log           <span class=c1># follow a growing log file</span>
+</span></span><span class=line><span class=cl>tail -F app.log           <span class=c1># better when the log may be rotated</span>
+</span></span><span class=line><span class=cl>tac app.log <span class=p>|</span> head -n <span class=m>20</span>  <span class=c1># view the last 20 lines in reverse order</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>tail -f</code> follows the current file descriptor. When a log is rotated, the old file may be renamed and the application may open a new file. GNU <code>tail -F</code> is equivalent to <code>--follow=name --retry</code>, which is often more useful in operations because it keeps trying to reopen the file by name.</p><hr><h2 id=redirecting-output-overwrite-append-and-split-stdoutstderr>Redirecting output: overwrite, append, and split stdout/stderr</h2><p>Bash processes redirections from left to right. Common forms include:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>command</span> &gt; output.log        <span class=c1># write stdout, overwrite file</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> &gt;&gt; output.log       <span class=c1># append stdout</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> 2&gt; error.log        <span class=c1># write stderr</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> &gt; output.log 2&gt;<span class=p>&amp;</span><span class=m>1</span>   <span class=c1># write stdout + stderr to the same file</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> <span class=p>&amp;</span>&gt; output.log       <span class=c1># Bash shorthand for stdout + stderr</span>
+</span></span><span class=line><span class=cl><span class=nb>command</span> <span class=p>&amp;</span>&gt;&gt; output.log      <span class=c1># append stdout + stderr</span>
+</span></span></code></pre></td></tr></table></div></div><p>Example: write logs for a deploy step:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>LOG_DIR</span><span class=o>=</span><span class=s2>&#34;./logs&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>LOG_FILE</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>/deploy.log&#34;</span>
+</span></span><span class=line><span class=cl>mkdir -p <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;===== Deploy started at </span><span class=k>$(</span>date -Is<span class=k>)</span><span class=s2> =====&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Running migration...&#34;</span>
+</span></span><span class=line><span class=cl>  ./migrate.sh
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Restarting service...&#34;</span>
+</span></span><span class=line><span class=cl>  ./restart-service.sh
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;===== Deploy finished at </span><span class=k>$(</span>date -Is<span class=k>)</span><span class=s2> =====&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>}</span> &gt;&gt; <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> 2&gt;<span class=p>&amp;</span><span class=m>1</span>
+</span></span></code></pre></td></tr></table></div></div><p>Using a block like <code>{ ...; } >> "${LOG_FILE}" 2>&amp;1</code> lets you collect logs from many commands into the same file without repeating the redirection on every line.</p><p>Note: <code>></code> overwrites the file. If you want to reduce the risk of accidental overwrites in the current shell, you can enable <code>set -o noclobber</code>; when you intentionally need to overwrite, use <code>>| file</code>.</p><hr><h2 id=here-doc-create-configuration-files-from-a-script>Here-doc: create configuration files from a script</h2><p>A here-doc (<code>&lt;&lt;EOF</code>) sends multiple lines of text to a command&rsquo;s stdin. It is very useful for creating sample configs, unit files, or small JSON payloads.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat &gt; app.env <span class=s>&lt;&lt;EOF
+</span></span></span><span class=line><span class=cl><span class=s>APP_ENV=production
+</span></span></span><span class=line><span class=cl><span class=s>APP_PORT=8080
+</span></span></span><span class=line><span class=cl><span class=s>LOG_LEVEL=info
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><p>If the delimiter is not quoted, Bash expands variables inside the here-doc:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>APP_PORT</span><span class=o>=</span><span class=s2>&#34;8080&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>cat &gt; app.env <span class=s>&lt;&lt;EOF
+</span></span></span><span class=line><span class=cl><span class=s>APP_PORT=${APP_PORT}
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><p>If you want to keep <code>$</code>, backticks, or <code>${VAR}</code> literally in the output file, quote the delimiter:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>cat &gt; template.env <span class=s>&lt;&lt;&#39;EOF&#39;
+</span></span></span><span class=line><span class=cl><span class=s>APP_PORT=${APP_PORT}
+</span></span></span><span class=line><span class=cl><span class=s>DATABASE_URL=${DATABASE_URL}
+</span></span></span><span class=line><span class=cl><span class=s>EOF</span>
+</span></span></code></pre></td></tr></table></div></div><p>According to the Bash Manual, when using <code>&lt;&lt;-EOF</code>, Bash strips leading tabs from the here-doc. This can make a script easier to read, but it strips <strong>tabs</strong> only, not spaces.</p><hr><h2 id=tee-show-output-and-save-it-at-the-same-time>tee: show output and save it at the same time</h2><p>Redirection with <code>></code> sends output to a file and usually no longer shows it in the terminal. <code>tee</code> copies standard input to standard output and writes it to a file at the same time.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>./healthcheck.sh <span class=p>|</span> tee healthcheck.log
+</span></span><span class=line><span class=cl>./healthcheck.sh <span class=p>|</span> tee -a healthcheck.log
+</span></span></code></pre></td></tr></table></div></div><p>According to GNU Coreutils, <code>tee</code> overwrites the file unless you use <code>-a</code>; <code>tee -a</code> appends to the file.</p><p>Example: watch build logs while saving an artifact log:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>LOG_DIR</span><span class=o>=</span><span class=s2>&#34;./logs&#34;</span>
+</span></span><span class=line><span class=cl>mkdir -p <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>./build.sh 2&gt;<span class=p>&amp;</span><span class=m>1</span> <span class=p>|</span> tee -a <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>/build.log&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Here, <code>2>&amp;1</code> is placed before the pipe so stderr also flows through <code>tee</code>. If you write only <code>./build.sh | tee ...</code>, many errors printed to stderr will still appear in the terminal but will not be saved to the log file.</p><hr><h2 id=reading-a-file-line-by-line>Reading a file line by line</h2><p>A safe pattern for line-by-line reading is <code>while IFS= read -r LINE; do ...; done &lt; file</code>.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>SERVER_FILE</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>1</span><span class=k>:-</span><span class=nv>servers</span><span class=p>.txt</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> ! -r <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVER_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;ERROR: Cannot read </span><span class=si>${</span><span class=nv>SERVER_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>while</span> <span class=nv>IFS</span><span class=o>=</span> <span class=nb>read</span> -r SERVER<span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>  <span class=o>[[</span> -n <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVER</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span> <span class=o>||</span> <span class=k>continue</span>
+</span></span><span class=line><span class=cl>  <span class=o>[[</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVER</span><span class=si>}</span><span class=s2>&#34;</span> !<span class=o>=</span> <span class=se>\#</span>* <span class=o>]]</span> <span class=o>||</span> <span class=k>continue</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Checking </span><span class=si>${</span><span class=nv>SERVER</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>done</span> &lt; <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SERVER_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Quick explanation:</p><ul><li><code>IFS=</code> preserves leading and trailing whitespace.</li><li><code>read -r</code> prevents <code>\</code> from being treated as an escape character.</li><li><code>done &lt; "${SERVER_FILE}"</code> avoids the <code>cat file | while ...</code> pattern, which may run the loop in a subshell in some shells and lose variables after the loop.</li><li>Quote <code>"${SERVER_FILE}"</code> so paths containing spaces still work.</li></ul><hr><h2 id=check-files-directories-and-permissions-before-operating>Check files, directories, and permissions before operating</h2><p>Before reading, writing, or deleting files in automation, check the conditions explicitly. Some useful tests inside <code>[[ ... ]]</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span><span class=lnt>7
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=o>[[</span> -e <span class=s2>&#34;</span><span class=si>${</span><span class=nv>PATH_NAME</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>  <span class=c1># exists</span>
+</span></span><span class=line><span class=cl><span class=o>[[</span> -f <span class=s2>&#34;</span><span class=si>${</span><span class=nv>PATH_NAME</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>  <span class=c1># regular file</span>
+</span></span><span class=line><span class=cl><span class=o>[[</span> -d <span class=s2>&#34;</span><span class=si>${</span><span class=nv>PATH_NAME</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>  <span class=c1># directory</span>
+</span></span><span class=line><span class=cl><span class=o>[[</span> -r <span class=s2>&#34;</span><span class=si>${</span><span class=nv>PATH_NAME</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>  <span class=c1># readable</span>
+</span></span><span class=line><span class=cl><span class=o>[[</span> -w <span class=s2>&#34;</span><span class=si>${</span><span class=nv>PATH_NAME</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>  <span class=c1># writable</span>
+</span></span><span class=line><span class=cl><span class=o>[[</span> -x <span class=s2>&#34;</span><span class=si>${</span><span class=nv>PATH_NAME</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>  <span class=c1># executable/searchable</span>
+</span></span><span class=line><span class=cl><span class=o>[[</span> -s <span class=s2>&#34;</span><span class=si>${</span><span class=nv>PATH_NAME</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span>  <span class=c1># exists and size &gt; 0</span>
+</span></span></code></pre></td></tr></table></div></div><p>Example: back up a config only when the file exists and is readable:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>CONFIG_FILE</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>1</span><span class=k>:-</span><span class=p>/etc/example/app.conf</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>BACKUP_DIR</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_DIR</span><span class=k>:-</span><span class=p>./backup</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> ! -f <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;ERROR: Not a regular file: </span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> ! -r <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;ERROR: Cannot read: </span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>mkdir -p <span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_DIR</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>cp -- <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_DIR</span><span class=si>}</span><span class=s2>/</span><span class=k>$(</span>basename <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>.</span><span class=k>$(</span>date +%Y%m%d%H%M%S<span class=k>)</span><span class=s2>.bak&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>The <code>--</code> after <code>cp</code> ends the option list. This is a good habit when a variable may start with <code>-</code>.</p><hr><h2 id=find-search-for-files-by-condition>find: search for files by condition</h2><p><code>find</code> is useful when you need to search by name, type, time, size, or nested directories.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>find /var/log -type f -name <span class=s2>&#34;*.log&#34;</span>
+</span></span><span class=line><span class=cl>find /var/log -type f -name <span class=s2>&#34;*.log&#34;</span> -mtime +7
+</span></span><span class=line><span class=cl>find ./backup -type f -name <span class=s2>&#34;*.bak&#34;</span> -size +100M
+</span></span></code></pre></td></tr></table></div></div><p>Common predicates:</p><ul><li><code>-type f</code>: regular files only.</li><li><code>-type d</code>: directories only.</li><li><code>-name "*.log"</code>: match by file name.</li><li><code>-mtime +7</code>: files whose modification time is more than 7 days ago.</li><li><code>-size +100M</code>: files larger than 100 MiB, using GNU find syntax.</li><li><code>-maxdepth 1</code>: do not descend too far from the current directory.</li></ul><p>Example: review logs older than 14 days without deleting them yet:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>find /var/log/my-app -type f -name <span class=s2>&#34;*.log&#34;</span> -mtime +14 -print
+</span></span></code></pre></td></tr></table></div></div><p>When writing a cleanup script, run with <code>-print</code> first to review the list, then change it to a delete or archive action.</p><hr><h2 id=xargs-pass-file-lists-to-another-command>xargs: pass file lists to another command</h2><p><code>xargs</code> reads data from stdin, groups it into arguments, and runs a command. It is useful when the file list is long or when you need to pass <code>find</code> results to another command.</p><p>Avoid the default form for arbitrary file names:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>find ./logs -type f -name <span class=s2>&#34;*.log&#34;</span> <span class=p>|</span> xargs gzip
+</span></span></code></pre></td></tr></table></div></div><p>By default, <code>xargs</code> splits input on whitespace, so file names containing spaces, tabs, or newlines may be interpreted incorrectly. GNU findutils recommends using <code>find -print0</code> together with <code>xargs -0</code> to separate entries with the NUL character:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>find ./logs -type f -name <span class=s2>&#34;*.log&#34;</span> -print0 <span class=p>|</span> xargs -0 gzip
+</span></span></code></pre></td></tr></table></div></div><p>If you use GNU <code>xargs</code>, add <code>-r</code> so the command is not run when input is empty:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>find ./logs -type f -name <span class=s2>&#34;*.log&#34;</span> -print0 <span class=p>|</span> xargs -r -0 gzip
+</span></span></code></pre></td></tr></table></div></div><p>Another option is <code>find -exec ... {} +</code>, which is portable and avoids the pipe:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>find ./logs -type f -name <span class=s2>&#34;*.log&#34;</span> -exec gzip -- <span class=o>{}</span> +
+</span></span></code></pre></td></tr></table></div></div><hr><h2 id=devops-practice-manual-log-rotation>DevOps practice: manual log rotation</h2><p>In production, log rotation should usually be handled by <code>logrotate</code> or a logging stack. But understanding a small rotate script helps you grasp file operations clearly: check size, rename, create a new file, compress, and clean up.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>LOG_FILE</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>1</span><span class=k>:-</span><span class=p>./logs/app.log</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>MAX_SIZE_MB</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>MAX_SIZE_MB</span><span class=k>:-</span><span class=nv>100</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>KEEP_DAYS</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>KEEP_DAYS</span><span class=k>:-</span><span class=nv>14</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> ! -f <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;ERROR: Log file not found: </span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>LOG_DIR</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>dirname <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>LOG_NAME</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>basename <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>SIZE_MB</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>du -m <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=p>|</span> awk <span class=s1>&#39;{print $1}&#39;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>((</span> SIZE_MB &lt; MAX_SIZE_MB <span class=o>))</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;OK: </span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2> is </span><span class=si>${</span><span class=nv>SIZE_MB</span><span class=si>}</span><span class=s2>MB, no rotation needed&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>TIMESTAMP</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>date +%Y%m%d%H%M%S<span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>ROTATED_FILE</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>/</span><span class=si>${</span><span class=nv>LOG_NAME</span><span class=si>}</span><span class=s2>.</span><span class=si>${</span><span class=nv>TIMESTAMP</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>mv -- <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ROTATED_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>: &gt; <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>gzip -- <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ROTATED_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>find <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_DIR</span><span class=si>}</span><span class=s2>&#34;</span> -type f -name <span class=s2>&#34;</span><span class=si>${</span><span class=nv>LOG_NAME</span><span class=si>}</span><span class=s2>.*.gz&#34;</span> -mtime +<span class=s2>&#34;</span><span class=si>${</span><span class=nv>KEEP_DAYS</span><span class=si>}</span><span class=s2>&#34;</span> -print -delete
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Rotated </span><span class=si>${</span><span class=nv>LOG_FILE</span><span class=si>}</span><span class=s2> -&gt; </span><span class=si>${</span><span class=nv>ROTATED_FILE</span><span class=si>}</span><span class=s2>.gz&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>A few notes:</p><ul><li><code>: > "${LOG_FILE}"</code> creates a new empty file using the shell builtin <code>:</code> and an empty output redirection.</li><li>This script is suitable for learning or for a small service. With an app that writes logs continuously, manual rotation may require a signal or log reopen behavior depending on the application.</li><li>Use <code>find ... -print -delete</code> so you can see which files are removed while cleaning up.</li></ul><hr><h2 id=devops-practice-back-up-config-before-deployment>DevOps practice: back up config before deployment</h2><p>Before deployment, a safe step is backing up important config files into a timestamped directory.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>BACKUP_ROOT</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_ROOT</span><span class=k>:-</span><span class=p>./config-backups</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>TIMESTAMP</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span>date +%Y%m%d%H%M%S<span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>BACKUP_DIR</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_ROOT</span><span class=si>}</span><span class=s2>/</span><span class=si>${</span><span class=nv>TIMESTAMP</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>CONFIG_FILES</span><span class=o>=(</span>
+</span></span><span class=line><span class=cl>  <span class=s2>&#34;/etc/example/app.conf&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=s2>&#34;/etc/example/worker.conf&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=s2>&#34;/etc/nginx/conf.d/example.conf&#34;</span>
+</span></span><span class=line><span class=cl><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>mkdir -p <span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_DIR</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> CONFIG_FILE in <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILES</span><span class=p>[@]</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=o>[[</span> ! -r <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;WARN: Skip unreadable config: </span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>    <span class=k>continue</span>
+</span></span><span class=line><span class=cl>  <span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=nv>TARGET</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_DIR</span><span class=si>}${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  mkdir -p <span class=s2>&#34;</span><span class=k>$(</span>dirname <span class=s2>&#34;</span><span class=si>${</span><span class=nv>TARGET</span><span class=si>}</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  cp -p -- <span class=s2>&#34;</span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>TARGET</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Backed up </span><span class=si>${</span><span class=nv>CONFIG_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>find <span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_ROOT</span><span class=si>}</span><span class=s2>&#34;</span> -mindepth <span class=m>1</span> -maxdepth <span class=m>1</span> -type d -mtime +30 -print -exec rm -rf -- <span class=o>{}</span> +
+</span></span></code></pre></td></tr></table></div></div><p><code>cp -p</code> preserves mode, ownership, and timestamps when system permissions allow it. <code>TARGET="${BACKUP_DIR}${CONFIG_FILE}"</code> keeps the original path structure inside the backup directory, which makes restore easier.</p><hr><h2 id=common-mistakes>Common mistakes</h2><ul><li><strong>Using <code>></code> when you meant append:</strong> <code>></code> overwrites the file; use <code>>></code> or <code>tee -a</code> if you want to append.</li><li><strong>Putting redirections in the wrong order:</strong> <code>command 2>&amp;1 >file</code> is different from <code>command >file 2>&amp;1</code>. Bash processes redirections from left to right.</li><li><strong>Forgetting to quote paths:</strong> Always use <code>"${FILE}"</code>, especially with paths read from input.</li><li><strong>Using default <code>xargs</code> with arbitrary file names:</strong> Prefer <code>find -print0 | xargs -0</code> or <code>find -exec ... {} +</code>.</li><li><strong>Deleting files before reviewing:</strong> For cleanup, run <code>find ... -print</code> first, then add <code>-delete</code> or <code>rm</code>.</li><li><strong>Unexpected here-doc expansion:</strong> Quote the delimiter (<code>&lt;&lt;'EOF'</code>) if you want to keep <code>${VAR}</code> literally in the output file.</li></ul><hr><h2 id=implementation-notes>Implementation notes</h2><ul><li><strong>When applying this to your own project</strong>, clearly separate the operation type:<ul><li>Quick file/log viewing → <code>cat</code>, <code>head</code>, <code>tail</code>, <code>tail -F</code>.</li><li>Script logging → redirection block or <code>tee -a</code>.</li><li>Multi-line config creation → here-doc, with a quoted delimiter when you need literal templates.</li><li>Searching/processing many files → <code>find</code>, <code>find -exec ... {} +</code>, or <code>find -print0 | xargs -0</code>.</li></ul></li><li><strong>Best practices:</strong><ul><li>Start scripts with <code>set -euo pipefail</code> when appropriate.</li><li>Check <code>-r</code>, <code>-w</code>, <code>-f</code>, and <code>-d</code> before dangerous operations.</li><li>Use <code>--</code> before path variables in commands such as <code>cp</code>, <code>mv</code>, <code>rm</code>, and <code>gzip</code>.</li><li>For cleanup, log affected files with <code>-print</code> or <code>echo</code>.</li></ul></li><li><strong>Troubleshooting:</strong><ul><li>Log file does not capture stderr? → Make sure <code>2>&amp;1</code> appears before the pipe or that redirection order is correct.</li><li><code>tail -f</code> does not show new logs after rotation? → Try <code>tail -F</code>.</li><li>Script breaks with file names containing spaces? → Check variable quoting and how <code>xargs</code> is used.</li></ul></li></ul><hr><h2 id=-final-thoughts>🎯 Final thoughts</h2><p>File handling is a core skill when writing Bash for DevOps. Once you understand redirection, here-doc, <code>tee</code>, line-by-line reading, permission checks, <code>find</code>, and <code>xargs</code>, you can write small but safer scripts for logs, configs, backups, and cleanup.</p><p>In the next article, we will move into <strong>text processing with grep, awk, and sed</strong>: filtering logs, extracting columns, changing config, and counting data from text files more effectively. 🚀</p><hr><h2 id=references>References</h2><ul><li><a class=link href=https://www.gnu.org/software/bash/manual/bash.html#Redirections target=_blank rel=noopener>GNU Bash Manual — Redirections</a> — Official documentation for redirection, file descriptors, and here-docs.</li><li><a class=link href=https://www.gnu.org/software/coreutils/manual/html_node/cat-invocation.html target=_blank rel=noopener>GNU Coreutils Manual — cat</a> — How <code>cat</code> reads and writes files/stdin/stdout.</li><li><a class=link href=https://www.gnu.org/software/coreutils/manual/html_node/head-invocation.html target=_blank rel=noopener>GNU Coreutils Manual — head</a> — Official documentation for <code>head -n</code> and <code>head -c</code>.</li><li><a class=link href=https://www.gnu.org/software/coreutils/manual/html_node/tail-invocation.html target=_blank rel=noopener>GNU Coreutils Manual — tail</a> — Official documentation for <code>tail -f</code>, <code>tail -F</code>, and <code>--follow=name</code>.</li><li><a class=link href=https://www.gnu.org/software/coreutils/manual/html_node/tee-invocation.html target=_blank rel=noopener>GNU Coreutils Manual — tee</a> — Official documentation for <code>tee</code> and <code>tee -a</code>.</li><li><a class=link href=https://www.gnu.org/software/findutils/manual/html_mono/find.html target=_blank rel=noopener>GNU Findutils Manual</a> — Official documentation for <code>find</code>, <code>xargs</code>, <code>-print0</code>, and <code>xargs -0</code>.</li></ul></section><footer class=article-footer><section class=article-tags><a href=/en/tags/bash/>Bash</a>
+<a href=/en/tags/shell-script/>Shell-Script</a>
+<a href=/en/tags/devops/>Devops</a>
+<a href=/en/tags/automation/>Automation</a>
+<a href=/en/tags/linux/>Linux</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section><section class=article-lastmod><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<span>Last updated on 00:00 13/06/2026</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/en/posts/bash/bash-step-three/><div class=article-image><img src=/images/bash/bash-step-three.webp loading=lazy data-key data-hash=/images/bash/bash-step-three.webp></div><div class=article-details><h2 class=article-title>Loops in Bash: for, while, and until for DevOps Automation</h2></div></a></article><article class=has-image><a href=/en/posts/bash/bash-step-two/><div class=article-image><img src=/images/bash/bash-step-two.webp loading=lazy data-key data-hash=/images/bash/bash-step-two.webp></div><div class=article-details><h2 class=article-title>Bash Conditionals: if, case, and DevOps Logic Handling</h2></div></a></article><article class=has-image><a href=/en/posts/bash/bash-step-one/><div class=article-image><img src=/images/bash/bash-step-one.webp loading=lazy data-key data-hash=/images/bash/bash-step-one.webp></div><div class=article-details><h2 class=article-title>Bash Script Basics for DevOps</h2></div></a></article><article class=has-image><a href=/en/posts/devops/devops-step-two/><div class=article-image><img src=/images/devops/devops-step-two.webp loading=lazy data-key data-hash=/images/devops/devops-step-two.webp></div><div class=article-details><h2 class=article-title>Learning Linux & Operating Systems 🖥️</h2></div></a></article><article class=has-image><a href=/en/posts/devops/devops-step-three/><div class=article-image><img src=/images/devops/devops-step-three.webp loading=lazy data-key data-hash=/images/devops/devops-step-three.webp></div><div class=article-details><h2 class=article-title>Terminal Knowledge 📟</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=hoangduonng/blog_comments issue-term=pathname label=comments theme=icy-dark crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2025 -
+2026 Hoang Duong</section><section class=powerby>Built with <a href=https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/ target=_blank rel=noopener>Ngữ Uyển ❤️</a><br>Theme <no value>designed by Jimmy</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>

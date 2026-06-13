@@ -1,398 +1,398 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/git/</link><description>Recent content in Git on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Tue, 25 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>GitOps - Tự động hoá triển khai với Git 🌟</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty/</link><pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-twenty.webp" alt="Featured image of post GitOps - Tự động hoá triển khai với Git 🌟" />&lt;h2 id="giới-thiệu">Giới thiệu
-&lt;/h2>&lt;p>GitOps là một phương pháp quản lý hạ tầng và triển khai ứng dụng bằng cách sử dụng Git làm nguồn sự thật duy nhất (single source of truth). Phương pháp này giúp tự động hóa quy trình triển khai, đảm bảo tính nhất quán và tăng cường khả năng theo dõi các thay đổi.&lt;/p>
-&lt;p>GitOps mở rộng thực tiễn của DevOps bằng cách áp dụng các nguyên tắc của kiểm soát phiên bản (version control) và tích hợp liên tục (CI/CD) vào quản lý hạ tầng. Thay vì thực hiện thủ công, mọi thay đổi được thực hiện qua pull request và tự động đồng bộ với hệ thống thực tế.&lt;/p>
-&lt;h2 id="-lợi-ích-của-gitops">🚀 Lợi ích của GitOps
-&lt;/h2>&lt;p>✅ &lt;strong>Kiểm soát phiên bản&lt;/strong>: Tất cả các thay đổi được theo dõi trong Git, dễ dàng kiểm tra và quay lại trạng thái cũ khi cần.&lt;/p>
-&lt;p>✅ &lt;strong>Tự động hoá triển khai&lt;/strong>: Sử dụng các công cụ như ArgoCD hoặc FluxCD để tự động đồng bộ hệ thống.&lt;/p>
-&lt;p>✅ &lt;strong>Tăng cường bảo mật&lt;/strong>: Mọi thay đổi cần thông qua Git, giúp kiểm soát truy cập và hạn chế rủi ro thao tác trực tiếp.&lt;/p>
-&lt;p>✅ &lt;strong>Khả năng phục hồi cao&lt;/strong>: Hệ thống có thể nhanh chóng phục hồi trạng thái ban đầu khi gặp sự cố bằng cách áp dụng lại cấu hình từ Git.&lt;/p>
-&lt;p>✅ &lt;strong>Cải thiện hợp tác nhóm&lt;/strong>: Các thay đổi đều được ghi nhận và xem xét qua pull request, giúp các thành viên làm việc hiệu quả hơn.&lt;/p>
-&lt;h2 id="-các-công-cụ-gitops-phổ-biến">🛠️ Các công cụ GitOps phổ biến
-&lt;/h2>&lt;h3 id="argocd---triển-khai-liên-tục-mạnh-mẽ">ArgoCD - Triển khai liên tục mạnh mẽ
-&lt;/h3>&lt;p>ArgoCD là một công cụ triển khai liên tục (CD) dành cho Kubernetes, giúp tự động hóa quá trình triển khai bằng cách theo dõi trạng thái của ứng dụng trong Git và đồng bộ với môi trường thực tế.&lt;/p>
-&lt;p>🔹 &lt;strong>Tính năng nổi bật&lt;/strong>:&lt;/p>
-&lt;ul>
-&lt;li>Tự động đồng bộ trạng thái ứng dụng với Git.&lt;/li>
-&lt;li>Giao diện web trực quan để theo dõi trạng thái triển khai.&lt;/li>
-&lt;li>Hỗ trợ Helm, Kustomize, và các công cụ quản lý cấu hình khác.&lt;/li>
-&lt;/ul>
-&lt;p>&lt;strong>🔹Ví dụ triển khai ArgoCD&lt;/strong>&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;span class="lnt">11
-&lt;/span>&lt;span class="lnt">12
-&lt;/span>&lt;span class="lnt">13
-&lt;/span>&lt;span class="lnt">14
-&lt;/span>&lt;span class="lnt">15
-&lt;/span>&lt;span class="lnt">16
-&lt;/span>&lt;span class="lnt">17
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">apiVersion&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">argoproj.io/v1alpha1&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">Application&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">metadata&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">my-app&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">namespace&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">argocd&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">destination&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">namespace&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">default&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">server&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://kubernetes.default.svc&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">source&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">repoURL&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://github.com/my-org/my-repo.git&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">targetRevision&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">HEAD&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">path&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">manifests&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">syncPolicy&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">automated&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">selfHeal&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">prune&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="kc">true&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="fluxcd---quản-lý-triển-khai-tự-động">FluxCD - Quản lý triển khai tự động
-&lt;/h3>&lt;p>FluxCD là một công cụ GitOps giúp triển khai ứng dụng lên Kubernetes bằng cách theo dõi Git repository và tự động cập nhật hệ thống khi có thay đổi.&lt;/p>
-&lt;p>🔹 &lt;strong>Tính năng nổi bật&lt;/strong>:&lt;/p>
-&lt;ul>
-&lt;li>Theo dõi repository Git và triển khai ứng dụng tự động.&lt;/li>
-&lt;li>Hỗ trợ Helm, Kustomize, và nhiều hệ thống CI/CD khác.&lt;/li>
-&lt;li>Cung cấp khả năng cập nhật hình ảnh container tự động.&lt;/li>
-&lt;/ul>
-&lt;p>🔹 &lt;strong>Ví dụ triển khai FluxCD&lt;/strong>:&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
-&lt;/span>&lt;span class="lnt"> 2
-&lt;/span>&lt;span class="lnt"> 3
-&lt;/span>&lt;span class="lnt"> 4
-&lt;/span>&lt;span class="lnt"> 5
-&lt;/span>&lt;span class="lnt"> 6
-&lt;/span>&lt;span class="lnt"> 7
-&lt;/span>&lt;span class="lnt"> 8
-&lt;/span>&lt;span class="lnt"> 9
-&lt;/span>&lt;span class="lnt">10
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-yaml" data-lang="yaml">&lt;span class="line">&lt;span class="cl">&lt;span class="nt">apiVersion&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">source.toolkit.fluxcd.io/v1beta1&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">kind&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">GitRepository&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">metadata&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">name&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">my-app-repo&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">namespace&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">flux-system&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w">&lt;/span>&lt;span class="nt">spec&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">interval&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">1m0s&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">url&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">https://github.com/my-org/my-repo.git&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">ref&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="w"> &lt;/span>&lt;span class="nt">branch&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="w"> &lt;/span>&lt;span class="l">main&lt;/span>&lt;span class="w">
-&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h2 id="-so-sánh-argocd-và-fluxcd">🔥 So sánh ArgoCD và FluxCD
-&lt;/h2>&lt;table>
-&lt;thead>
-&lt;tr>
-&lt;th>Tính năng&lt;/th>
-&lt;th>ArgoCD&lt;/th>
-&lt;th>FluxCD&lt;/th>
-&lt;/tr>
-&lt;/thead>
-&lt;tbody>
-&lt;tr>
-&lt;td>UI trực quan&lt;/td>
-&lt;td>✅ Có&lt;/td>
-&lt;td>❌ Không&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Hỗ trợ Helm&lt;/td>
-&lt;td>✅ Có&lt;/td>
-&lt;td>✅ Có&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Cập nhật hình ảnh container tự động&lt;/td>
-&lt;td>❌ Không&lt;/td>
-&lt;td>✅ Có&lt;/td>
-&lt;/tr>
-&lt;tr>
-&lt;td>Triển khai Canary/Rollback&lt;/td>
-&lt;td>✅ Có&lt;/td>
-&lt;td>✅ Có&lt;/td>
-&lt;/tr>
-&lt;/tbody>
-&lt;/table>
-&lt;h2 id="-kết-luận">📌 Kết luận
-&lt;/h2>&lt;p>GitOps giúp đơn giản hóa quy trình triển khai ứng dụng bằng cách sử dụng Git làm trung tâm kiểm soát. Với các công cụ như ArgoCD và FluxCD, doanh nghiệp có thể dễ dàng tự động hóa triển khai, đảm bảo tính nhất quán và cải thiện khả năng phục hồi hệ thống.&lt;/p>
-&lt;p>🔗 &lt;strong>Tài liệu tham khảo&lt;/strong>:&lt;/p>
-&lt;ul>
-&lt;li>📖 &lt;a class="link" href="https://argo-cd.readthedocs.io/en/stable/" target="_blank" rel="noopener"
->Tài liệu ArgoCD&lt;/a>&lt;/li>
-&lt;li>📖 &lt;a class="link" href="https://docs.fluxcd.io/" target="_blank" rel="noopener"
->Tài liệu FluxCD&lt;/a>&lt;/li>
-&lt;li>📘 &lt;a class="link" href="https://www.weave.works/technologies/gitops/" target="_blank" rel="noopener"
->Hướng dẫn GitOps&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;p>Bạn đã thử áp dụng &lt;strong>GitOps&lt;/strong> vào dự án của mình chưa? Hãy chia sẻ trải nghiệm của bạn! 🚀&lt;/p>
-&lt;p>👉 &lt;strong>Bước tiếp theo:&lt;/strong> Tìm hiểu về &lt;em>&lt;strong>Service Mesh&lt;/strong>&lt;/em> một lớp hạ tầng phần mềm giúp quản lý giao tiếp giữa các dịch vụ trong hệ thống microservices. Nó cung cấp các tính năng như cân bằng tải, bảo mật, quan sát, kiểm soát lưu lượng và khắc phục lỗi, giúp dịch vụ giao tiếp với nhau một cách hiệu quả mà không cần thay đổi mã nguồn ứng dụng.&lt;/p></description></item><item><title>Dịch vụ lưu trữ mã nguồn 🐱</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-five/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-five/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-five.webp" alt="Featured image of post Dịch vụ lưu trữ mã nguồn 🐱" />&lt;h2 id="-dịch-vụ-lưu-trữ-mã-nguồn-repo-hosting-services">🌍 Dịch vụ lưu trữ mã nguồn (Repo Hosting Services)
-&lt;/h2>&lt;p>Khi làm việc nhóm, bạn cần một nơi lưu trữ mã nguồn từ xa để mọi người có thể truy cập, tạo nhánh riêng, cũng như tạo hoặc xem xét các pull request. Các dịch vụ này thường bao gồm theo dõi vấn đề (issue tracking), đánh giá mã (code review) và tích hợp liên tục (CI/CD). Một số lựa chọn phổ biến gồm GitHub, GitLab, Bitbucket và AWS CodeCommit.&lt;/p>
-&lt;p>📚 &lt;strong>Tài nguyên miễn phí để tìm hiểu thêm:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>🔗 &lt;a class="link" href="https://github.com" target="_blank" rel="noopener"
->GitHub&lt;/a>&lt;/li>
-&lt;li>🔗 &lt;a class="link" href="https://gitlab.com" target="_blank" rel="noopener"
->GitLab&lt;/a>&lt;/li>
-&lt;li>🔗 &lt;a class="link" href="https://bitbucket.org" target="_blank" rel="noopener"
->BitBucket&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=FQGXIIqziQg" target="_blank" rel="noopener"
->GitHub vs GitLab vs Bitbucket - Nên chọn cái nào?&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-github">🐙 GitHub
-&lt;/h2>&lt;p>GitHub là một nền tảng quản lý mã nguồn dựa trên Git, cung cấp dịch vụ lưu trữ kho mã trên nền tảng đám mây. Nó hỗ trợ các tính năng như theo dõi lỗi, quản lý nhiệm vụ, và wiki dự án. GitHub cho phép đánh giá mã qua pull request, theo dõi vấn đề và hỗ trợ lập trình cộng tác với các tính năng như fork và star.&lt;/p>
-&lt;p>GitHub hỗ trợ cả kho mã công khai và riêng tư, giúp nó trở thành lựa chọn phổ biến cho cả dự án mã nguồn mở và phát triển cá nhân. Hệ sinh thái GitHub bao gồm:&lt;/p>
-&lt;ul>
-&lt;li>🚀 &lt;strong>GitHub Actions&lt;/strong>: Tự động hóa quy trình làm việc.&lt;/li>
-&lt;li>📦 &lt;strong>GitHub Packages&lt;/strong>: Quản lý gói phần mềm.&lt;/li>
-&lt;li>🌐 &lt;strong>GitHub Pages&lt;/strong>: Lưu trữ trang web tĩnh miễn phí.&lt;/li>
-&lt;/ul>
-&lt;p>📚 &lt;strong>Tài nguyên miễn phí để tìm hiểu thêm:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>🗺️ &lt;a class="link" href="https://roadmap.sh/github" target="_blank" rel="noopener"
->Lộ trình Git &amp;amp; GitHub&lt;/a>&lt;/li>
-&lt;li>🔗 &lt;a class="link" href="https://github.com" target="_blank" rel="noopener"
->Trang chủ GitHub&lt;/a>&lt;/li>
-&lt;li>📖 &lt;a class="link" href="https://ooloo.io/project/github-flow" target="_blank" rel="noopener"
->Cách sử dụng Git trong nhóm phát triển chuyên nghiệp&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=pBy1zgt0XPc" target="_blank" rel="noopener"
->GitHub là gì?&lt;/a>&lt;/li>
-&lt;li>📰 &lt;a class="link" href="https://app.daily.dev/tags/github?ref=roadmapsh" target="_blank" rel="noopener"
->Bài viết hay về GitHub&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-gitlab">🦊 GitLab
-&lt;/h2>&lt;p>GitLab là một công cụ DevOps toàn diện, cung cấp quản lý kho mã Git kèm theo wiki, theo dõi vấn đề và các tính năng CI/CD tích hợp sẵn. Đây là một nền tảng DevOps hoàn chỉnh, bao gồm tất cả các giai đoạn từ lập kế hoạch, phát triển, kiểm thử đến triển khai và giám sát.&lt;/p>
-&lt;p>GitLab hỗ trợ cả phiên bản đám mây và tự lưu trữ, phù hợp với các tổ chức có yêu cầu bảo mật cao. Một số tính năng nổi bật của GitLab gồm:&lt;/p>
-&lt;ul>
-&lt;li>🔄 &lt;strong>Tích hợp CI/CD&lt;/strong>: Hỗ trợ kiểm thử và triển khai tự động.&lt;/li>
-&lt;li>📦 &lt;strong>Container &amp;amp; Package Registry&lt;/strong>: Quản lý và lưu trữ gói phần mềm.&lt;/li>
-&lt;li>🔎 &lt;strong>Quét bảo mật mã nguồn&lt;/strong>: Phát hiện lỗ hổng trong code.&lt;/li>
-&lt;/ul>
-&lt;p>📚 &lt;strong>Tài nguyên miễn phí để tìm hiểu thêm:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>🔗 &lt;a class="link" href="https://gitlab.com" target="_blank" rel="noopener"
->Trang chủ GitLab&lt;/a>&lt;/li>
-&lt;li>📖 &lt;a class="link" href="https://docs.gitlab.com" target="_blank" rel="noopener"
->Tài liệu chính thức của GitLab&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=bnF7f1zGpo4" target="_blank" rel="noopener"
->GitLab là gì và tại sao nên dùng?&lt;/a>&lt;/li>
-&lt;li>📰 &lt;a class="link" href="https://app.daily.dev/tags/gitlab?ref=roadmapsh" target="_blank" rel="noopener"
->Bài viết hay về GitLab&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-bitbucket">🏗️ Bitbucket
-&lt;/h2>&lt;p>Bitbucket là một dịch vụ lưu trữ kho mã nguồn của Atlassian, hỗ trợ cả Git và Mercurial. Nó tích hợp chặt chẽ với các công cụ Atlassian khác như Jira và Trello, giúp quản lý dự án dễ dàng hơn. Bitbucket cung cấp cả phiên bản đám mây và tự lưu trữ.&lt;/p>
-&lt;p>Một số tính năng đáng chú ý của Bitbucket:&lt;/p>
-&lt;ul>
-&lt;li>🔍 &lt;strong>Code Review &amp;amp; Pull Requests&lt;/strong>: Hỗ trợ đánh giá mã.&lt;/li>
-&lt;li>🔄 &lt;strong>Bitbucket Pipelines&lt;/strong>: CI/CD tích hợp sẵn.&lt;/li>
-&lt;li>📖 &lt;strong>Wiki &amp;amp; Issue Tracking&lt;/strong>: Quản lý tài liệu và theo dõi vấn đề.&lt;/li>
-&lt;li>🔐 &lt;strong>Hỗ trợ repo riêng tư miễn phí&lt;/strong>: Phù hợp với nhóm nhỏ.&lt;/li>
-&lt;/ul>
-&lt;p>📚 &lt;strong>Tài nguyên miễn phí để tìm hiểu thêm:&lt;/strong>&lt;/p>
-&lt;ul>
-&lt;li>🔗 &lt;a class="link" href="https://bitbucket.org" target="_blank" rel="noopener"
->Trang chủ Bitbucket&lt;/a>&lt;/li>
-&lt;li>📖 &lt;a class="link" href="https://bitbucket.org/product/guides/getting-started/overview" target="_blank" rel="noopener"
->Tổng quan về Bitbucket&lt;/a>&lt;/li>
-&lt;li>📚 &lt;a class="link" href="https://www.w3schools.com/git/git_intro.asp?remote=bitbucket" target="_blank" rel="noopener"
->Giới thiệu về Git và Bitbucket&lt;/a>&lt;/li>
-&lt;li>🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=M44nEyd_5To" target="_blank" rel="noopener"
->Hướng dẫn sử dụng Bitbucket Cloud&lt;/a>&lt;/li>
-&lt;li>📰 &lt;a class="link" href="https://app.daily.dev/tags/bitbucket?ref=roadmapsh" target="_blank" rel="noopener"
->Bài viết hay về Bitbucket&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-kết-luận">📌 Kết luận
-&lt;/h2>&lt;p>Việc lựa chọn dịch vụ lưu trữ kho mã nguồn phụ thuộc vào nhu cầu của nhóm phát triển. Nếu bạn cần một nền tảng phổ biến với hệ sinh thái rộng lớn, &lt;em>&lt;strong>GitHub&lt;/strong>&lt;/em> là một lựa chọn mạnh mẽ. Nếu muốn một giải pháp DevOps tích hợp đầy đủ, &lt;em>&lt;strong>GitLab&lt;/strong>&lt;/em> sẽ phù hợp hơn. Còn nếu bạn đã sử dụng hệ sinh thái Atlassian, &lt;em>&lt;strong>Bitbucket&lt;/strong>&lt;/em> sẽ là lựa chọn tốt nhất.&lt;/p>
-&lt;p>Hãy cân nhắc nhu cầu dự án và mức độ tích hợp mong muốn để đưa ra quyết định phù hợp! 🚀&lt;/p>
-&lt;p>👉 &lt;strong>Bước tiếp theo:&lt;/strong> Tìm hiểu về &lt;em>&lt;strong>Containers&lt;/strong>&lt;/em> giúp đóng gói ứng dụng cùng với tất cả các thư viện, cấu hình và dependencies để chạy nhất quán trên nhiều môi trường khác nhau.&lt;/p></description></item><item><title>Hệ thống quản lý phiên bản (Version Control Systems) 🛠️</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-four/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-four/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-four.webp" alt="Featured image of post Hệ thống quản lý phiên bản (Version Control Systems) 🛠️" />&lt;h2 id="-hệ-thống-quản-lý-phiên-bản-version-control-systems">🔄 Hệ thống quản lý phiên bản (Version Control Systems)
-&lt;/h2>&lt;p>Version control systems (VCS) là các công cụ giúp theo dõi sự thay đổi của mã nguồn và tệp theo thời gian. Chúng hỗ trợ làm việc nhóm, quản lý lịch sử thay đổi và duy trì nhiều phiên bản của mã nguồn. Có hai loại VCS chính:&lt;/p>
-&lt;ul>
-&lt;li>&lt;strong>Hệ thống tập trung (Centralized VCS - CVCS)&lt;/strong>: Sử dụng một kho lưu trữ trung tâm, ví dụ như &lt;strong>Subversion (SVN)&lt;/strong>, &lt;strong>CVS&lt;/strong>.&lt;/li>
-&lt;li>&lt;strong>Hệ thống phân tán (Distributed VCS - DVCS)&lt;/strong>: Mỗi người dùng có một bản sao đầy đủ của kho lưu trữ, bao gồm toàn bộ lịch sử. Ví dụ phổ biến nhất là &lt;strong>Git&lt;/strong>.&lt;/li>
-&lt;/ul>
-&lt;p>Git là một hệ thống quản lý phiên bản phân tán mạnh mẽ, cho phép làm việc ngoại tuyến, hỗ trợ nhanh chóng các thao tác nhánh (branching) và hợp nhất (merging), giúp tăng cường khả năng cộng tác.&lt;/p>
-&lt;hr>
-&lt;h2 id="-git---công-cụ-quản-lý-phiên-bản-phổ-biến-nhất">🛠️ Git - Công Cụ Quản Lý Phiên Bản Phổ Biến Nhất
-&lt;/h2>&lt;h3 id="-cài-đặt-git">🔹 Cài Đặt Git
-&lt;/h3>&lt;p>Nếu chưa cài đặt Git, bạn có thể tải về từ &lt;a class="link" href="https://git-scm.com/" target="_blank" rel="noopener"
->git-scm.com&lt;/a> hoặc sử dụng lệnh sau:&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt install git &lt;span class="c1"># Ubuntu/Debian&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">yum install git &lt;span class="c1"># CentOS/RHEL&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">brew install git &lt;span class="c1"># macOS&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;p>Xác nhận cài đặt Git:&lt;/p>
-&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;span class="lnt">3
-&lt;/span>&lt;span class="lnt">4
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git --version
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># output: &lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># git version 2.47.1.windows.1&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h2 id="-các-lệnh-cơ-bản-trong-git">🚀 Các Lệnh Cơ Bản Trong Git
-&lt;/h2>&lt;p>Dưới đây là các lệnh Git phổ biến, được sắp xếp từ cơ bản đến nâng cao:&lt;/p>
-&lt;h3 id="khởi-tạo--cấu-hình">&lt;strong>Khởi Tạo &amp;amp; Cấu Hình&lt;/strong>
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git init &lt;span class="c1"># Khởi tạo kho lưu trữ Git&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;span class="lnt">2
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git config --global user.name &lt;span class="s2">&amp;#34;Tên Của Bạn&amp;#34;&lt;/span> &lt;span class="c1"># Cấu hình tên&lt;/span>
-&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">git config --global user.email &lt;span class="s2">&amp;#34;email@example.com&amp;#34;&lt;/span> &lt;span class="c1"># Cấu hình email&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="làm-việc-với-kho-lưu-trữ">&lt;strong>Làm Việc Với Kho Lưu Trữ&lt;/strong>
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git clone &amp;lt;repo_url&amp;gt; &lt;span class="c1"># Sao chép một kho lưu trữ từ xa về máy&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git status &lt;span class="c1"># Kiểm tra trạng thái của các tệp&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="thêm--lưu-thay-đổi">&lt;strong>Thêm &amp;amp; Lưu Thay Đổi&lt;/strong>
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git add &amp;lt;file&amp;gt; &lt;span class="c1"># Thêm tệp vào vùng tạm&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git commit -m &lt;span class="s2">&amp;#34;Mô tả thay đổi&amp;#34;&lt;/span> &lt;span class="c1"># Lưu thay đổi vào lịch sử&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="làm-việc-với-kho-lưu-trữ-từ-xa">&lt;strong>Làm Việc Với Kho Lưu Trữ Từ Xa&lt;/strong>
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git remote add origin &amp;lt;repo_url&amp;gt; &lt;span class="c1"># Liên kết kho lưu trữ từ xa&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git push -u origin main &lt;span class="c1"># Đẩy thay đổi lên nhánh chính&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git pull origin main &lt;span class="c1"># Cập nhật thay đổi mới nhất từ kho lưu trữ từ xa&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="làm-việc-với-nhánh">&lt;strong>Làm Việc Với Nhánh&lt;/strong>
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git branch new-feature &lt;span class="c1"># Tạo nhánh mới&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git checkout new-feature &lt;span class="c1"># Chuyển sang nhánh mới&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git merge new-feature &lt;span class="c1"># Gộp nhánh vào nhánh hiện tại&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;h3 id="theo-dõi-lịch-sử">&lt;strong>Theo Dõi Lịch Sử&lt;/strong>
-&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git log &lt;span class="c1"># Xem lịch sử commit&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;div class="highlight">&lt;div class="chroma">
-&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
-&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
-&lt;td class="lntd">
-&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">git diff &lt;span class="c1"># So sánh thay đổi giữa các phiên bản&lt;/span>
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
-&lt;/div>
-&lt;/div>&lt;hr>
-&lt;h2 id="-tài-nguyên-học-git-miễn-phí">📚 Tài Nguyên Học Git Miễn Phí
-&lt;/h2>&lt;ul>
-&lt;li>&lt;a class="link" href="https://git-scm.com/doc" target="_blank" rel="noopener"
->📖 Tài liệu chính thức về Git&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://cs.fyi/guide/git-cheatsheet" target="_blank" rel="noopener"
->📄 Git Cheat Sheet&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://www.youtube.com/watch?v=SWYqp7iY_Tc" target="_blank" rel="noopener"
->▶️ Video hướng dẫn Git cho người mới bắt đầu&lt;/a>&lt;/li>
-&lt;li>&lt;a class="link" href="https://app.daily.dev/tags/git?ref=roadmapsh" target="_blank" rel="noopener"
->📝 Bài viết: Hệ thống quản lý phiên bản là gì?&lt;/a>&lt;/li>
-&lt;/ul>
-&lt;hr>
-&lt;h2 id="-kết-luận">🔚 Kết Luận
-&lt;/h2>&lt;p>Sử dụng Git giúp quản lý mã nguồn dễ dàng hơn, hỗ trợ làm việc nhóm hiệu quả và bảo vệ dữ liệu quan trọng của dự án. Việc hiểu và thành thạo Git là kỹ năng cần thiết cho mọi lập trình viên.&lt;/p>
-&lt;p>👉 &lt;strong>Bước tiếp theo:&lt;/strong> Tìm hiểu về &lt;em>&lt;strong>GitHub &amp;amp; GitLab&lt;/strong>&lt;/em> để quản lý kho lưu trữ Git trên nền tảng đám mây.&lt;/p></description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Git on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/git/</link><description>Recent content in Git on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Tue, 25 Feb 2025 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/git/index.xml" rel="self" type="application/rss+xml"/><item><title>GitOps - Tự động hoá triển khai với Git 🌟</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty/</link><pubDate>Tue, 25 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-twenty/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-twenty.webp" alt="Featured image of post GitOps - Tự động hoá triển khai với Git 🌟" /&gt;&lt;h2 id="giới-thiệu"&gt;Giới thiệu
+&lt;/h2&gt;&lt;p&gt;GitOps là một phương pháp quản lý hạ tầng và triển khai ứng dụng bằng cách sử dụng Git làm nguồn sự thật duy nhất (single source of truth). Phương pháp này giúp tự động hóa quy trình triển khai, đảm bảo tính nhất quán và tăng cường khả năng theo dõi các thay đổi.&lt;/p&gt;
+&lt;p&gt;GitOps mở rộng thực tiễn của DevOps bằng cách áp dụng các nguyên tắc của kiểm soát phiên bản (version control) và tích hợp liên tục (CI/CD) vào quản lý hạ tầng. Thay vì thực hiện thủ công, mọi thay đổi được thực hiện qua pull request và tự động đồng bộ với hệ thống thực tế.&lt;/p&gt;
+&lt;h2 id="-lợi-ích-của-gitops"&gt;🚀 Lợi ích của GitOps
+&lt;/h2&gt;&lt;p&gt;✅ &lt;strong&gt;Kiểm soát phiên bản&lt;/strong&gt;: Tất cả các thay đổi được theo dõi trong Git, dễ dàng kiểm tra và quay lại trạng thái cũ khi cần.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Tự động hoá triển khai&lt;/strong&gt;: Sử dụng các công cụ như ArgoCD hoặc FluxCD để tự động đồng bộ hệ thống.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Tăng cường bảo mật&lt;/strong&gt;: Mọi thay đổi cần thông qua Git, giúp kiểm soát truy cập và hạn chế rủi ro thao tác trực tiếp.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Khả năng phục hồi cao&lt;/strong&gt;: Hệ thống có thể nhanh chóng phục hồi trạng thái ban đầu khi gặp sự cố bằng cách áp dụng lại cấu hình từ Git.&lt;/p&gt;
+&lt;p&gt;✅ &lt;strong&gt;Cải thiện hợp tác nhóm&lt;/strong&gt;: Các thay đổi đều được ghi nhận và xem xét qua pull request, giúp các thành viên làm việc hiệu quả hơn.&lt;/p&gt;
+&lt;h2 id="-các-công-cụ-gitops-phổ-biến"&gt;🛠️ Các công cụ GitOps phổ biến
+&lt;/h2&gt;&lt;h3 id="argocd---triển-khai-liên-tục-mạnh-mẽ"&gt;ArgoCD - Triển khai liên tục mạnh mẽ
+&lt;/h3&gt;&lt;p&gt;ArgoCD là một công cụ triển khai liên tục (CD) dành cho Kubernetes, giúp tự động hóa quá trình triển khai bằng cách theo dõi trạng thái của ứng dụng trong Git và đồng bộ với môi trường thực tế.&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Tính năng nổi bật&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Tự động đồng bộ trạng thái ứng dụng với Git.&lt;/li&gt;
+&lt;li&gt;Giao diện web trực quan để theo dõi trạng thái triển khai.&lt;/li&gt;
+&lt;li&gt;Hỗ trợ Helm, Kustomize, và các công cụ quản lý cấu hình khác.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;🔹Ví dụ triển khai ArgoCD&lt;/strong&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;span class="lnt"&gt;11
+&lt;/span&gt;&lt;span class="lnt"&gt;12
+&lt;/span&gt;&lt;span class="lnt"&gt;13
+&lt;/span&gt;&lt;span class="lnt"&gt;14
+&lt;/span&gt;&lt;span class="lnt"&gt;15
+&lt;/span&gt;&lt;span class="lnt"&gt;16
+&lt;/span&gt;&lt;span class="lnt"&gt;17
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;apiVersion&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;argoproj.io/v1alpha1&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;kind&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;Application&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;metadata&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;my-app&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;namespace&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;argocd&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;spec&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;destination&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;namespace&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;default&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;server&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;https://kubernetes.default.svc&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;source&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;repoURL&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;https://github.com/my-org/my-repo.git&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;targetRevision&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;HEAD&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;path&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;manifests&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;syncPolicy&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;automated&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;selfHeal&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;prune&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="fluxcd---quản-lý-triển-khai-tự-động"&gt;FluxCD - Quản lý triển khai tự động
+&lt;/h3&gt;&lt;p&gt;FluxCD là một công cụ GitOps giúp triển khai ứng dụng lên Kubernetes bằng cách theo dõi Git repository và tự động cập nhật hệ thống khi có thay đổi.&lt;/p&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Tính năng nổi bật&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Theo dõi repository Git và triển khai ứng dụng tự động.&lt;/li&gt;
+&lt;li&gt;Hỗ trợ Helm, Kustomize, và nhiều hệ thống CI/CD khác.&lt;/li&gt;
+&lt;li&gt;Cung cấp khả năng cập nhật hình ảnh container tự động.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;🔹 &lt;strong&gt;Ví dụ triển khai FluxCD&lt;/strong&gt;:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
+&lt;/span&gt;&lt;span class="lnt"&gt; 2
+&lt;/span&gt;&lt;span class="lnt"&gt; 3
+&lt;/span&gt;&lt;span class="lnt"&gt; 4
+&lt;/span&gt;&lt;span class="lnt"&gt; 5
+&lt;/span&gt;&lt;span class="lnt"&gt; 6
+&lt;/span&gt;&lt;span class="lnt"&gt; 7
+&lt;/span&gt;&lt;span class="lnt"&gt; 8
+&lt;/span&gt;&lt;span class="lnt"&gt; 9
+&lt;/span&gt;&lt;span class="lnt"&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-yaml" data-lang="yaml"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;apiVersion&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;source.toolkit.fluxcd.io/v1beta1&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;kind&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;GitRepository&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;metadata&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;name&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;my-app-repo&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;namespace&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;flux-system&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nt"&gt;spec&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;interval&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;1m0s&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;url&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;https://github.com/my-org/my-repo.git&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;ref&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;branch&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l"&gt;main&lt;/span&gt;&lt;span class="w"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id="-so-sánh-argocd-và-fluxcd"&gt;🔥 So sánh ArgoCD và FluxCD
+&lt;/h2&gt;&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;Tính năng&lt;/th&gt;
+&lt;th&gt;ArgoCD&lt;/th&gt;
+&lt;th&gt;FluxCD&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;UI trực quan&lt;/td&gt;
+&lt;td&gt;✅ Có&lt;/td&gt;
+&lt;td&gt;❌ Không&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Hỗ trợ Helm&lt;/td&gt;
+&lt;td&gt;✅ Có&lt;/td&gt;
+&lt;td&gt;✅ Có&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Cập nhật hình ảnh container tự động&lt;/td&gt;
+&lt;td&gt;❌ Không&lt;/td&gt;
+&lt;td&gt;✅ Có&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Triển khai Canary/Rollback&lt;/td&gt;
+&lt;td&gt;✅ Có&lt;/td&gt;
+&lt;td&gt;✅ Có&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h2 id="-kết-luận"&gt;📌 Kết luận
+&lt;/h2&gt;&lt;p&gt;GitOps giúp đơn giản hóa quy trình triển khai ứng dụng bằng cách sử dụng Git làm trung tâm kiểm soát. Với các công cụ như ArgoCD và FluxCD, doanh nghiệp có thể dễ dàng tự động hóa triển khai, đảm bảo tính nhất quán và cải thiện khả năng phục hồi hệ thống.&lt;/p&gt;
+&lt;p&gt;🔗 &lt;strong&gt;Tài liệu tham khảo&lt;/strong&gt;:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://argo-cd.readthedocs.io/en/stable/" target="_blank" rel="noopener"
+&gt;Tài liệu ArgoCD&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://docs.fluxcd.io/" target="_blank" rel="noopener"
+&gt;Tài liệu FluxCD&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📘 &lt;a class="link" href="https://www.weave.works/technologies/gitops/" target="_blank" rel="noopener"
+&gt;Hướng dẫn GitOps&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Bạn đã thử áp dụng &lt;strong&gt;GitOps&lt;/strong&gt; vào dự án của mình chưa? Hãy chia sẻ trải nghiệm của bạn! 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Service Mesh&lt;/strong&gt;&lt;/em&gt; một lớp hạ tầng phần mềm giúp quản lý giao tiếp giữa các dịch vụ trong hệ thống microservices. Nó cung cấp các tính năng như cân bằng tải, bảo mật, quan sát, kiểm soát lưu lượng và khắc phục lỗi, giúp dịch vụ giao tiếp với nhau một cách hiệu quả mà không cần thay đổi mã nguồn ứng dụng.&lt;/p&gt;</description></item><item><title>Dịch vụ lưu trữ mã nguồn 🐱</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-five/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-five/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-five.webp" alt="Featured image of post Dịch vụ lưu trữ mã nguồn 🐱" /&gt;&lt;h2 id="-dịch-vụ-lưu-trữ-mã-nguồn-repo-hosting-services"&gt;🌍 Dịch vụ lưu trữ mã nguồn (Repo Hosting Services)
+&lt;/h2&gt;&lt;p&gt;Khi làm việc nhóm, bạn cần một nơi lưu trữ mã nguồn từ xa để mọi người có thể truy cập, tạo nhánh riêng, cũng như tạo hoặc xem xét các pull request. Các dịch vụ này thường bao gồm theo dõi vấn đề (issue tracking), đánh giá mã (code review) và tích hợp liên tục (CI/CD). Một số lựa chọn phổ biến gồm GitHub, GitLab, Bitbucket và AWS CodeCommit.&lt;/p&gt;
+&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu thêm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://github.com" target="_blank" rel="noopener"
+&gt;GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://gitlab.com" target="_blank" rel="noopener"
+&gt;GitLab&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://bitbucket.org" target="_blank" rel="noopener"
+&gt;BitBucket&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=FQGXIIqziQg" target="_blank" rel="noopener"
+&gt;GitHub vs GitLab vs Bitbucket - Nên chọn cái nào?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-github"&gt;🐙 GitHub
+&lt;/h2&gt;&lt;p&gt;GitHub là một nền tảng quản lý mã nguồn dựa trên Git, cung cấp dịch vụ lưu trữ kho mã trên nền tảng đám mây. Nó hỗ trợ các tính năng như theo dõi lỗi, quản lý nhiệm vụ, và wiki dự án. GitHub cho phép đánh giá mã qua pull request, theo dõi vấn đề và hỗ trợ lập trình cộng tác với các tính năng như fork và star.&lt;/p&gt;
+&lt;p&gt;GitHub hỗ trợ cả kho mã công khai và riêng tư, giúp nó trở thành lựa chọn phổ biến cho cả dự án mã nguồn mở và phát triển cá nhân. Hệ sinh thái GitHub bao gồm:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🚀 &lt;strong&gt;GitHub Actions&lt;/strong&gt;: Tự động hóa quy trình làm việc.&lt;/li&gt;
+&lt;li&gt;📦 &lt;strong&gt;GitHub Packages&lt;/strong&gt;: Quản lý gói phần mềm.&lt;/li&gt;
+&lt;li&gt;🌐 &lt;strong&gt;GitHub Pages&lt;/strong&gt;: Lưu trữ trang web tĩnh miễn phí.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu thêm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🗺️ &lt;a class="link" href="https://roadmap.sh/github" target="_blank" rel="noopener"
+&gt;Lộ trình Git &amp;amp; GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://github.com" target="_blank" rel="noopener"
+&gt;Trang chủ GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://ooloo.io/project/github-flow" target="_blank" rel="noopener"
+&gt;Cách sử dụng Git trong nhóm phát triển chuyên nghiệp&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=pBy1zgt0XPc" target="_blank" rel="noopener"
+&gt;GitHub là gì?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📰 &lt;a class="link" href="https://app.daily.dev/tags/github?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Bài viết hay về GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-gitlab"&gt;🦊 GitLab
+&lt;/h2&gt;&lt;p&gt;GitLab là một công cụ DevOps toàn diện, cung cấp quản lý kho mã Git kèm theo wiki, theo dõi vấn đề và các tính năng CI/CD tích hợp sẵn. Đây là một nền tảng DevOps hoàn chỉnh, bao gồm tất cả các giai đoạn từ lập kế hoạch, phát triển, kiểm thử đến triển khai và giám sát.&lt;/p&gt;
+&lt;p&gt;GitLab hỗ trợ cả phiên bản đám mây và tự lưu trữ, phù hợp với các tổ chức có yêu cầu bảo mật cao. Một số tính năng nổi bật của GitLab gồm:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔄 &lt;strong&gt;Tích hợp CI/CD&lt;/strong&gt;: Hỗ trợ kiểm thử và triển khai tự động.&lt;/li&gt;
+&lt;li&gt;📦 &lt;strong&gt;Container &amp;amp; Package Registry&lt;/strong&gt;: Quản lý và lưu trữ gói phần mềm.&lt;/li&gt;
+&lt;li&gt;🔎 &lt;strong&gt;Quét bảo mật mã nguồn&lt;/strong&gt;: Phát hiện lỗ hổng trong code.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu thêm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://gitlab.com" target="_blank" rel="noopener"
+&gt;Trang chủ GitLab&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://docs.gitlab.com" target="_blank" rel="noopener"
+&gt;Tài liệu chính thức của GitLab&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=bnF7f1zGpo4" target="_blank" rel="noopener"
+&gt;GitLab là gì và tại sao nên dùng?&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📰 &lt;a class="link" href="https://app.daily.dev/tags/gitlab?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Bài viết hay về GitLab&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-bitbucket"&gt;🏗️ Bitbucket
+&lt;/h2&gt;&lt;p&gt;Bitbucket là một dịch vụ lưu trữ kho mã nguồn của Atlassian, hỗ trợ cả Git và Mercurial. Nó tích hợp chặt chẽ với các công cụ Atlassian khác như Jira và Trello, giúp quản lý dự án dễ dàng hơn. Bitbucket cung cấp cả phiên bản đám mây và tự lưu trữ.&lt;/p&gt;
+&lt;p&gt;Một số tính năng đáng chú ý của Bitbucket:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔍 &lt;strong&gt;Code Review &amp;amp; Pull Requests&lt;/strong&gt;: Hỗ trợ đánh giá mã.&lt;/li&gt;
+&lt;li&gt;🔄 &lt;strong&gt;Bitbucket Pipelines&lt;/strong&gt;: CI/CD tích hợp sẵn.&lt;/li&gt;
+&lt;li&gt;📖 &lt;strong&gt;Wiki &amp;amp; Issue Tracking&lt;/strong&gt;: Quản lý tài liệu và theo dõi vấn đề.&lt;/li&gt;
+&lt;li&gt;🔐 &lt;strong&gt;Hỗ trợ repo riêng tư miễn phí&lt;/strong&gt;: Phù hợp với nhóm nhỏ.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;📚 &lt;strong&gt;Tài nguyên miễn phí để tìm hiểu thêm:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🔗 &lt;a class="link" href="https://bitbucket.org" target="_blank" rel="noopener"
+&gt;Trang chủ Bitbucket&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📖 &lt;a class="link" href="https://bitbucket.org/product/guides/getting-started/overview" target="_blank" rel="noopener"
+&gt;Tổng quan về Bitbucket&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📚 &lt;a class="link" href="https://www.w3schools.com/git/git_intro.asp?remote=bitbucket" target="_blank" rel="noopener"
+&gt;Giới thiệu về Git và Bitbucket&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;🎥 &lt;a class="link" href="https://www.youtube.com/watch?v=M44nEyd_5To" target="_blank" rel="noopener"
+&gt;Hướng dẫn sử dụng Bitbucket Cloud&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;📰 &lt;a class="link" href="https://app.daily.dev/tags/bitbucket?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;Bài viết hay về Bitbucket&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-kết-luận"&gt;📌 Kết luận
+&lt;/h2&gt;&lt;p&gt;Việc lựa chọn dịch vụ lưu trữ kho mã nguồn phụ thuộc vào nhu cầu của nhóm phát triển. Nếu bạn cần một nền tảng phổ biến với hệ sinh thái rộng lớn, &lt;em&gt;&lt;strong&gt;GitHub&lt;/strong&gt;&lt;/em&gt; là một lựa chọn mạnh mẽ. Nếu muốn một giải pháp DevOps tích hợp đầy đủ, &lt;em&gt;&lt;strong&gt;GitLab&lt;/strong&gt;&lt;/em&gt; sẽ phù hợp hơn. Còn nếu bạn đã sử dụng hệ sinh thái Atlassian, &lt;em&gt;&lt;strong&gt;Bitbucket&lt;/strong&gt;&lt;/em&gt; sẽ là lựa chọn tốt nhất.&lt;/p&gt;
+&lt;p&gt;Hãy cân nhắc nhu cầu dự án và mức độ tích hợp mong muốn để đưa ra quyết định phù hợp! 🚀&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;Containers&lt;/strong&gt;&lt;/em&gt; giúp đóng gói ứng dụng cùng với tất cả các thư viện, cấu hình và dependencies để chạy nhất quán trên nhiều môi trường khác nhau.&lt;/p&gt;</description></item><item><title>Hệ thống quản lý phiên bản (Version Control Systems) 🛠️</title><link>https://tech.nguuyen.io.vn/posts/devops/devops-step-four/</link><pubDate>Sun, 23 Feb 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/devops/devops-step-four/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/devops/devops-step-four.webp" alt="Featured image of post Hệ thống quản lý phiên bản (Version Control Systems) 🛠️" /&gt;&lt;h2 id="-hệ-thống-quản-lý-phiên-bản-version-control-systems"&gt;🔄 Hệ thống quản lý phiên bản (Version Control Systems)
+&lt;/h2&gt;&lt;p&gt;Version control systems (VCS) là các công cụ giúp theo dõi sự thay đổi của mã nguồn và tệp theo thời gian. Chúng hỗ trợ làm việc nhóm, quản lý lịch sử thay đổi và duy trì nhiều phiên bản của mã nguồn. Có hai loại VCS chính:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Hệ thống tập trung (Centralized VCS - CVCS)&lt;/strong&gt;: Sử dụng một kho lưu trữ trung tâm, ví dụ như &lt;strong&gt;Subversion (SVN)&lt;/strong&gt;, &lt;strong&gt;CVS&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Hệ thống phân tán (Distributed VCS - DVCS)&lt;/strong&gt;: Mỗi người dùng có một bản sao đầy đủ của kho lưu trữ, bao gồm toàn bộ lịch sử. Ví dụ phổ biến nhất là &lt;strong&gt;Git&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Git là một hệ thống quản lý phiên bản phân tán mạnh mẽ, cho phép làm việc ngoại tuyến, hỗ trợ nhanh chóng các thao tác nhánh (branching) và hợp nhất (merging), giúp tăng cường khả năng cộng tác.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id="-git---công-cụ-quản-lý-phiên-bản-phổ-biến-nhất"&gt;🛠️ Git - Công Cụ Quản Lý Phiên Bản Phổ Biến Nhất
+&lt;/h2&gt;&lt;h3 id="-cài-đặt-git"&gt;🔹 Cài Đặt Git
+&lt;/h3&gt;&lt;p&gt;Nếu chưa cài đặt Git, bạn có thể tải về từ &lt;a class="link" href="https://git-scm.com/" target="_blank" rel="noopener"
+&gt;git-scm.com&lt;/a&gt; hoặc sử dụng lệnh sau:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt install git &lt;span class="c1"&gt;# Ubuntu/Debian&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;yum install git &lt;span class="c1"&gt;# CentOS/RHEL&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;brew install git &lt;span class="c1"&gt;# macOS&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;Xác nhận cài đặt Git:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;span class="lnt"&gt;3
+&lt;/span&gt;&lt;span class="lnt"&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git --version
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# output: &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# git version 2.47.1.windows.1&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-các-lệnh-cơ-bản-trong-git"&gt;🚀 Các Lệnh Cơ Bản Trong Git
+&lt;/h2&gt;&lt;p&gt;Dưới đây là các lệnh Git phổ biến, được sắp xếp từ cơ bản đến nâng cao:&lt;/p&gt;
+&lt;h3 id="khởi-tạo--cấu-hình"&gt;&lt;strong&gt;Khởi Tạo &amp;amp; Cấu Hình&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git init &lt;span class="c1"&gt;# Khởi tạo kho lưu trữ Git&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;span class="lnt"&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git config --global user.name &lt;span class="s2"&gt;&amp;#34;Tên Của Bạn&amp;#34;&lt;/span&gt; &lt;span class="c1"&gt;# Cấu hình tên&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git config --global user.email &lt;span class="s2"&gt;&amp;#34;email@example.com&amp;#34;&lt;/span&gt; &lt;span class="c1"&gt;# Cấu hình email&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="làm-việc-với-kho-lưu-trữ"&gt;&lt;strong&gt;Làm Việc Với Kho Lưu Trữ&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git clone &amp;lt;repo_url&amp;gt; &lt;span class="c1"&gt;# Sao chép một kho lưu trữ từ xa về máy&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git status &lt;span class="c1"&gt;# Kiểm tra trạng thái của các tệp&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="thêm--lưu-thay-đổi"&gt;&lt;strong&gt;Thêm &amp;amp; Lưu Thay Đổi&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git add &amp;lt;file&amp;gt; &lt;span class="c1"&gt;# Thêm tệp vào vùng tạm&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git commit -m &lt;span class="s2"&gt;&amp;#34;Mô tả thay đổi&amp;#34;&lt;/span&gt; &lt;span class="c1"&gt;# Lưu thay đổi vào lịch sử&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="làm-việc-với-kho-lưu-trữ-từ-xa"&gt;&lt;strong&gt;Làm Việc Với Kho Lưu Trữ Từ Xa&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git remote add origin &amp;lt;repo_url&amp;gt; &lt;span class="c1"&gt;# Liên kết kho lưu trữ từ xa&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git push -u origin main &lt;span class="c1"&gt;# Đẩy thay đổi lên nhánh chính&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git pull origin main &lt;span class="c1"&gt;# Cập nhật thay đổi mới nhất từ kho lưu trữ từ xa&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="làm-việc-với-nhánh"&gt;&lt;strong&gt;Làm Việc Với Nhánh&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git branch new-feature &lt;span class="c1"&gt;# Tạo nhánh mới&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git checkout new-feature &lt;span class="c1"&gt;# Chuyển sang nhánh mới&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git merge new-feature &lt;span class="c1"&gt;# Gộp nhánh vào nhánh hiện tại&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id="theo-dõi-lịch-sử"&gt;&lt;strong&gt;Theo Dõi Lịch Sử&lt;/strong&gt;
+&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git log &lt;span class="c1"&gt;# Xem lịch sử commit&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
+&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class="lntd"&gt;
+&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;git diff &lt;span class="c1"&gt;# So sánh thay đổi giữa các phiên bản&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;hr&gt;
+&lt;h2 id="-tài-nguyên-học-git-miễn-phí"&gt;📚 Tài Nguyên Học Git Miễn Phí
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class="link" href="https://git-scm.com/doc" target="_blank" rel="noopener"
+&gt;📖 Tài liệu chính thức về Git&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://cs.fyi/guide/git-cheatsheet" target="_blank" rel="noopener"
+&gt;📄 Git Cheat Sheet&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://www.youtube.com/watch?v=SWYqp7iY_Tc" target="_blank" rel="noopener"
+&gt;▶️ Video hướng dẫn Git cho người mới bắt đầu&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class="link" href="https://app.daily.dev/tags/git?ref=roadmapsh" target="_blank" rel="noopener"
+&gt;📝 Bài viết: Hệ thống quản lý phiên bản là gì?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id="-kết-luận"&gt;🔚 Kết Luận
+&lt;/h2&gt;&lt;p&gt;Sử dụng Git giúp quản lý mã nguồn dễ dàng hơn, hỗ trợ làm việc nhóm hiệu quả và bảo vệ dữ liệu quan trọng của dự án. Việc hiểu và thành thạo Git là kỹ năng cần thiết cho mọi lập trình viên.&lt;/p&gt;
+&lt;p&gt;👉 &lt;strong&gt;Bước tiếp theo:&lt;/strong&gt; Tìm hiểu về &lt;em&gt;&lt;strong&gt;GitHub &amp;amp; GitLab&lt;/strong&gt;&lt;/em&gt; để quản lý kho lưu trữ Git trên nền tảng đám mây.&lt;/p&gt;</description></item></channel></rss>
