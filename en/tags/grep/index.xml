@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Grep on Hoang Duong</title><link>https://tech.nguuyen.io.vn/en/tags/grep/</link><description>Recent content in Grep on Hoang Duong</description><generator>Hugo -- gohugo.io</generator><language>en</language><lastBuildDate>Mon, 22 Jun 2026 07:10:00 +0700</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/en/tags/grep/index.xml" rel="self" type="application/rss+xml"/><item><title>Text Processing in Bash: grep, awk, and sed for DevOps</title><link>https://tech.nguuyen.io.vn/en/posts/bash/bash-step-five/</link><pubDate>Mon, 08 Jun 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/en/posts/bash/bash-step-five/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/bash/bash-step-five.webp" alt="Featured image of post Text Processing in Bash: grep, awk, and sed for DevOps" />&lt;h2 id="text-processing-in-bash-for-devops">Text Processing in Bash for DevOps
+&lt;/h2>&lt;p>In the &lt;a class="link" href="https://tech.nguuyen.io.vn/posts/bash/bash-step-four/" >previous article&lt;/a> we handled files: reading, writing, redirection, &lt;code>tee&lt;/code>, &lt;code>find&lt;/code>, and &lt;code>xargs&lt;/code>. But text files become truly useful when you know how to &lt;strong>filter, extract, and transform data&lt;/strong> inside them.&lt;/p>
+&lt;p>In DevOps, &lt;code>grep&lt;/code>, &lt;code>awk&lt;/code>, and &lt;code>sed&lt;/code> show up everywhere: filtering error logs, extracting status codes from access logs, counting the most active IP addresses, changing config before deployment, or creating quick reports from command output. This article walks through the three tools in a practical way, with examples close to daily operations work.&lt;/p>
+&lt;hr>
+&lt;h2 id="grep-find-lines-that-match-a-pattern">grep: find lines that match a pattern
+&lt;/h2>&lt;p>&lt;code>grep&lt;/code> reads input and prints lines that match a pattern. It is often the first tool you reach for when you need to find information quickly in logs or config files.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">grep &lt;span class="s2">&amp;#34;ERROR&amp;#34;&lt;/span> app.log
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep &lt;span class="s2">&amp;#34;server_name&amp;#34;&lt;/span> /etc/nginx/conf.d/*.conf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Common options:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">grep -n &lt;span class="s2">&amp;#34;ERROR&amp;#34;&lt;/span> app.log &lt;span class="c1"># print line numbers&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -i &lt;span class="s2">&amp;#34;timeout&amp;#34;&lt;/span> app.log &lt;span class="c1"># ignore case&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -v &lt;span class="s2">&amp;#34;healthcheck&amp;#34;&lt;/span> app.log &lt;span class="c1"># exclude matching lines&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -r &lt;span class="s2">&amp;#34;DATABASE_URL&amp;#34;&lt;/span> ./config &lt;span class="c1"># search recursively in a directory&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -E &lt;span class="s2">&amp;#34;ERROR|WARN&amp;#34;&lt;/span> app.log &lt;span class="c1"># extended regex&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -F &lt;span class="s2">&amp;#34;[literal]&amp;#34;&lt;/span> app.log &lt;span class="c1"># fixed string, not regex&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>According to GNU grep, &lt;code>-E&lt;/code> uses extended regular expressions, while &lt;code>-F&lt;/code> uses fixed strings. When the pattern is a simple literal string, &lt;code>grep -F&lt;/code> helps avoid surprises from characters like &lt;code>.&lt;/code>, &lt;code>[&lt;/code>, or &lt;code>*&lt;/code> being interpreted as regex.&lt;/p>
+&lt;hr>
+&lt;h2 id="grep-context-view-lines-before-and-after-an-error">grep context: view lines before and after an error
+&lt;/h2>&lt;p>When debugging logs, a single error line is often not enough. GNU grep supports context options:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">grep -A &lt;span class="m">3&lt;/span> &lt;span class="s2">&amp;#34;ERROR&amp;#34;&lt;/span> app.log &lt;span class="c1"># 3 lines after the match&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -B &lt;span class="m">3&lt;/span> &lt;span class="s2">&amp;#34;ERROR&amp;#34;&lt;/span> app.log &lt;span class="c1"># 3 lines before the match&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -C &lt;span class="m">3&lt;/span> &lt;span class="s2">&amp;#34;ERROR&amp;#34;&lt;/span> app.log &lt;span class="c1"># 3 lines before and after the match&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Example: inspect a deploy error with surrounding context:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">grep -n -C &lt;span class="m">5&lt;/span> &lt;span class="s2">&amp;#34;deploy failed&amp;#34;&lt;/span> ./logs/deploy.log
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>When multiple match groups are far apart, &lt;code>grep&lt;/code> inserts &lt;code>--&lt;/code> by default to separate context groups. This is useful in the terminal, but if the output is passed to another script, remember that this separator line may appear.&lt;/p>
+&lt;hr>
+&lt;h2 id="grep-in-a-devops-pipeline">grep in a DevOps pipeline
+&lt;/h2>&lt;p>Example: filter an application log, exclude healthchecks, and show only severe errors:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="p">./logs/app.log&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! -r &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: Cannot read log file: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">grep -E &lt;span class="s2">&amp;#34;ERROR|FATAL&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> grep -v &lt;span class="s2">&amp;#34;healthcheck&amp;#34;&lt;/span> &lt;span class="o">||&lt;/span> &lt;span class="nb">true&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Because &lt;code>grep&lt;/code> returns exit code &lt;code>1&lt;/code> when there is no match, a pipeline may stop the script if you are using &lt;code>set -e&lt;/code>. In a case where “no errors found” is normal, adding &lt;code>|| true&lt;/code> at the end of the pipeline is acceptable. For more important pipelines, handle the exit code explicitly with &lt;code>if grep ...; then ... fi&lt;/code>.&lt;/p>
+&lt;hr>
+&lt;h2 id="awk-process-text-by-line-and-column">awk: process text by line and column
+&lt;/h2>&lt;p>&lt;code>awk&lt;/code> reads input as records; by default, each line is one record. Each line is split into fields: &lt;code>$1&lt;/code>, &lt;code>$2&lt;/code>, &lt;code>$3&lt;/code>, and so on. The full line is &lt;code>$0&lt;/code>.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;{ print $1 }&amp;#39;&lt;/span> access.log
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;{ print $1, $9 }&amp;#39;&lt;/span> access.log
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Important built-in variables:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>NR&lt;/code>: number of records read so far.&lt;/li>
+&lt;li>&lt;code>NF&lt;/code>: number of fields in the current record.&lt;/li>
+&lt;li>&lt;code>$0&lt;/code>: the full current line.&lt;/li>
+&lt;li>&lt;code>$1&lt;/code>, &lt;code>$2&lt;/code>, &amp;hellip;: the first field, second field, and so on.&lt;/li>
+&lt;li>&lt;code>FS&lt;/code>: input field separator.&lt;/li>
+&lt;li>&lt;code>OFS&lt;/code>: output field separator.&lt;/li>
+&lt;/ul>
+&lt;p>Example: print line number, field count, and the full line:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;{ print NR, NF, $0 }&amp;#39;&lt;/span> app.log
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>According to the GNU awk manual, &lt;code>NR&lt;/code> increments whenever awk reads a new record, while &lt;code>NF&lt;/code> is the number of fields in the current record. These two variables are very useful when you need to validate text data quickly.&lt;/p>
+&lt;hr>
+&lt;h2 id="awk-begin-end-and-conditions">awk BEGIN, END, and conditions
+&lt;/h2>&lt;p>&lt;code>BEGIN&lt;/code> runs before input is read. &lt;code>END&lt;/code> runs after all input has been read. The middle part is a rule applied to each line.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;BEGIN { print &amp;#34;status,count&amp;#34; } { count[$9]++ } END { for (code in count) print code &amp;#34;,&amp;#34; count[code] }&amp;#39;&lt;/span> access.log
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>A more readable example: count HTTP status codes from a common Nginx access log format:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> BEGIN {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> print &amp;#34;status,count&amp;#34;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> status[$9]++
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> END {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> for (code in status) {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> print code &amp;#34;,&amp;#34; status[code]
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">&amp;#39;&lt;/span> access.log
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>In a common access log, &lt;code>$1&lt;/code> is often the client IP, &lt;code>$7&lt;/code> is the path, and &lt;code>$9&lt;/code> is the HTTP status code. However, log formats can differ depending on the Nginx or Apache configuration, so always inspect a few sample lines before hardcoding field positions.&lt;/p>
+&lt;hr>
+&lt;h2 id="awk-with-a-custom-delimiter">awk with a custom delimiter
+&lt;/h2>&lt;p>By default, awk splits fields on whitespace. For key-value files or simple CSV-like data, use &lt;code>-F&lt;/code> to choose a delimiter.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk -F&lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;{ print $1, $2 }&amp;#39;&lt;/span> app.env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">awk -F: &lt;span class="s1">&amp;#39;{ print $1, $7 }&amp;#39;&lt;/span> /etc/passwd
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Example: read a &lt;code>.env&lt;/code> file and skip comments or blank lines:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk -F&lt;span class="o">=&lt;/span> &lt;span class="s1">&amp;#39;
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> /^[[:space:]]*#/ { next }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> NF &amp;lt; 2 { next }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> {
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> print &amp;#34;key=&amp;#34; $1
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1"> }
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s1">&amp;#39;&lt;/span> .env
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>For complex CSV with quotes, commas inside fields, or escaping, &lt;code>awk -F,&lt;/code> is not safe enough. In that case, use a real CSV parser in Python, Go, or a dedicated tool.&lt;/p>
+&lt;hr>
+&lt;h2 id="sed-replace-and-edit-text-line-by-line">sed: replace and edit text line by line
+&lt;/h2>&lt;p>&lt;code>sed&lt;/code> is a stream editor: it reads input, applies a script, and writes output. Its most famous command is substitute:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sed &lt;span class="s1">&amp;#39;s/old/new/&amp;#39;&lt;/span> file.txt &lt;span class="c1"># replace the first match on each line&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sed &lt;span class="s1">&amp;#39;s/old/new/g&amp;#39;&lt;/span> file.txt &lt;span class="c1"># replace all matches on each line&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>According to the GNU sed manual, the basic syntax is &lt;code>s/regexp/replacement/flags&lt;/code>. The &lt;code>g&lt;/code> flag replaces all matches on a line instead of only the first match.&lt;/p>
+&lt;p>Example: change an endpoint in a config file and write the result to a new file:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sed &lt;span class="s1">&amp;#39;s|http://localhost:8080|https://api.example.com|g&amp;#39;&lt;/span> app.conf &amp;gt; app.conf.new
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Here we use &lt;code>|&lt;/code> as the delimiter instead of &lt;code>/&lt;/code> to avoid escaping many &lt;code>/&lt;/code> characters in the URL.&lt;/p>
+&lt;hr>
+&lt;h2 id="sed-addresses-and-in-place-editing">sed addresses and in-place editing
+&lt;/h2>&lt;p>You can limit &lt;code>sed&lt;/code> so it only changes lines matching a pattern or a range.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sed &lt;span class="s1">&amp;#39;/^LOG_LEVEL=/s/=.*$/=debug/&amp;#39;&lt;/span> app.env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sed &lt;span class="s1">&amp;#39;10,20s/enabled=false/enabled=true/&amp;#39;&lt;/span> feature.conf
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>GNU sed supports &lt;code>-i&lt;/code> for in-place editing. If you provide a suffix, sed creates a backup before renaming the temporary file back to the original file:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sed -i.bak &lt;span class="s1">&amp;#39;s/^LOG_LEVEL=.*/LOG_LEVEL=info/&amp;#39;&lt;/span> app.env
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Be careful with &lt;code>sed -i&lt;/code>:&lt;/p>
+&lt;ul>
+&lt;li>Always test without &lt;code>-i&lt;/code> first so you can inspect the output.&lt;/li>
+&lt;li>Use a suffix such as &lt;code>.bak&lt;/code> when editing important files.&lt;/li>
+&lt;li>Differences between GNU sed and BSD/macOS sed can make &lt;code>sed -i&lt;/code> scripts less portable.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="devops-practice-parse-nginx-logs">DevOps practice: parse Nginx logs
+&lt;/h2>&lt;p>Assume the access log uses a common format:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">203.0.113.10 - - [08/Jun/2026:10:12:01 +0700] &amp;#34;GET /api/health HTTP/1.1&amp;#34; 200 12
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">198.51.100.23 - - [08/Jun/2026:10:12:02 +0700] &amp;#34;POST /api/login HTTP/1.1&amp;#34; 401 64
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">203.0.113.10 - - [08/Jun/2026:10:12:03 +0700] &amp;#34;GET /api/users HTTP/1.1&amp;#34; 200 532
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Filter 4xx/5xx errors with &lt;code>awk&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;$9 ~ /^[45][0-9][0-9]$/ { print $1, $7, $9 }&amp;#39;&lt;/span> access.log
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Count the top IP addresses by request count:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;{ count[$1]++ } END { for (ip in count) print count[ip], ip }&amp;#39;&lt;/span> access.log &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> sort -nr &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> head -n &lt;span class="m">10&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Count status codes:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">awk &lt;span class="s1">&amp;#39;{ status[$9]++ } END { for (code in status) print code, status[code] }&amp;#39;&lt;/span> access.log &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> sort -n
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>If you want to exclude healthcheck requests from the statistics:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">grep -v &lt;span class="s1">&amp;#39;&amp;#34;GET /api/health &amp;#39;&lt;/span> access.log &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> awk &lt;span class="s1">&amp;#39;{ status[$9]++ } END { for (code in status) print code, status[code] }&amp;#39;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> sort -n
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="devops-practice-update-config-before-deployment">DevOps practice: update config before deployment
+&lt;/h2>&lt;p>Example script: update &lt;code>LOG_LEVEL&lt;/code> and &lt;code>FEATURE_FLAG&lt;/code> in a &lt;code>.env&lt;/code> file, with a backup before editing.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="p">./app.env&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOG_LEVEL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_LEVEL&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="nv">info&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">FEATURE_FLAG&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">FEATURE_FLAG&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="nv">false&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! -f &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: env file not found: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! -w &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: env file is not writable: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">cp -- &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">.bak.&lt;/span>&lt;span class="k">$(&lt;/span>date +%Y%m%d%H%M%S&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sed -i.bak &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -e &lt;span class="s2">&amp;#34;s/^LOG_LEVEL=.*/LOG_LEVEL=&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_LEVEL&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> -e &lt;span class="s2">&amp;#34;s/^FEATURE_FLAG=.*/FEATURE_FLAG=&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">FEATURE_FLAG&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> ! grep -q &lt;span class="s1">&amp;#39;^LOG_LEVEL=&amp;#39;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;LOG_LEVEL=&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_LEVEL&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &amp;gt;&amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> ! grep -q &lt;span class="s1">&amp;#39;^FEATURE_FLAG=&amp;#39;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;FEATURE_FLAG=&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">FEATURE_FLAG&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &amp;gt;&amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>This script demonstrates how the tools work together:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>cp&lt;/code> creates a clear backup before editing.&lt;/li>
+&lt;li>&lt;code>sed&lt;/code> replaces values when the keys already exist.&lt;/li>
+&lt;li>&lt;code>grep -q&lt;/code> checks whether each key exists.&lt;/li>
+&lt;li>&lt;code>&amp;gt;&amp;gt;&lt;/code> appends missing keys.&lt;/li>
+&lt;/ul>
+&lt;p>Note: do not put real secrets in examples or commits. For secrets, prefer environment variables, a secret manager, or your CI/CD secret store.&lt;/p>
+&lt;hr>
+&lt;h2 id="devops-practice-generate-an-error-report-from-logs">DevOps practice: generate an error report from logs
+&lt;/h2>&lt;p>Example: create a short report with the total number of errors and the top endpoints returning 5xx:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">ACCESS_LOG&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">1&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="p">./access.log&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">REPORT_FILE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">2&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="p">./error-report.txt&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! -r &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ACCESS_LOG&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;ERROR: Cannot read access log: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ACCESS_LOG&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Error report generated at &lt;/span>&lt;span class="k">$(&lt;/span>date -Is&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Total 5xx responses:&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> awk &lt;span class="s1">&amp;#39;$9 ~ /^5[0-9][0-9]$/ { total++ } END { print total + 0 }&amp;#39;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ACCESS_LOG&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Top 5 endpoints with 5xx:&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> awk &lt;span class="s1">&amp;#39;$9 ~ /^5[0-9][0-9]$/ { count[$7]++ } END { for (path in count) print count[path], path }&amp;#39;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ACCESS_LOG&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> sort -nr &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> head -n &lt;span class="m">5&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span> &amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">REPORT_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;Wrote &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">REPORT_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>This kind of script is useful to run from cron or a CI job after a load test, as long as you understand the input log format clearly.&lt;/p>
+&lt;hr>
+&lt;h2 id="common-mistakes">Common mistakes
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>Using regex when a literal string is enough:&lt;/strong> If the pattern contains special characters such as &lt;code>[&lt;/code>, &lt;code>.&lt;/code>, or &lt;code>*&lt;/code>, consider &lt;code>grep -F&lt;/code>.&lt;/li>
+&lt;li>&lt;strong>Forgetting grep exit codes:&lt;/strong> No match means exit code &lt;code>1&lt;/code>, which is not necessarily a business-level error.&lt;/li>
+&lt;li>&lt;strong>Hardcoding log fields without checking the format:&lt;/strong> &lt;code>$9&lt;/code> is the status code in a common format, but not every log format is the same.&lt;/li>
+&lt;li>&lt;strong>Using &lt;code>awk -F,&lt;/code> for complex CSV:&lt;/strong> CSV with quotes or commas inside fields needs a real parser.&lt;/li>
+&lt;li>&lt;strong>Running &lt;code>sed -i&lt;/code> directly on important files:&lt;/strong> Test the output first, use a backup suffix, or copy the file before editing.&lt;/li>
+&lt;li>&lt;strong>Not quoting variables in scripts:&lt;/strong> When passing file paths to &lt;code>grep&lt;/code>, &lt;code>awk&lt;/code>, or &lt;code>sed&lt;/code>, always quote &lt;code>&amp;quot;${FILE}&amp;quot;&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="implementation-notes">Implementation notes
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>When applying this to your own project&lt;/strong>, choose the tool based on the goal:
+&lt;ul>
+&lt;li>Find/filter lines → &lt;code>grep&lt;/code>.&lt;/li>
+&lt;li>Extract columns, calculate totals, group counts → &lt;code>awk&lt;/code>.&lt;/li>
+&lt;li>Replace text by line or pattern → &lt;code>sed&lt;/code>.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Best practices:&lt;/strong>
+&lt;ul>
+&lt;li>Use &lt;code>grep -n&lt;/code> when debugging so you can see line numbers.&lt;/li>
+&lt;li>Use &lt;code>grep -C&lt;/code> when you need context around an error.&lt;/li>
+&lt;li>Use &lt;code>awk&lt;/code> with &lt;code>BEGIN&lt;/code>/&lt;code>END&lt;/code> to create reports with headers or footers.&lt;/li>
+&lt;li>Use a different delimiter in &lt;code>sed&lt;/code> when processing URLs or paths, for example &lt;code>s|old|new|g&lt;/code>.&lt;/li>
+&lt;li>For config edits, back up first and verify afterward with &lt;code>grep&lt;/code> or the service&amp;rsquo;s config test command.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Troubleshooting:&lt;/strong>
+&lt;ul>
+&lt;li>Pipeline stops because &lt;code>grep&lt;/code> found no match? → Handle the exit code with &lt;code>if grep ...&lt;/code> or &lt;code>|| true&lt;/code> when appropriate.&lt;/li>
+&lt;li>&lt;code>awk&lt;/code> prints the wrong column? → Try &lt;code>awk '{ print NR, NF, $0 }'&lt;/code> to inspect fields.&lt;/li>
+&lt;li>&lt;code>sed&lt;/code> changes nothing? → Check whether the pattern anchor is correct and whether the delimiter needs escaping.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-conclusion">🎯 Conclusion
+&lt;/h2>&lt;p>&lt;code>grep&lt;/code>, &lt;code>awk&lt;/code>, and &lt;code>sed&lt;/code> are the core trio that turns Bash into a fast log and config processing tool. &lt;code>grep&lt;/code> helps you find the right lines, &lt;code>awk&lt;/code> helps you analyze columns and summarize numbers, and &lt;code>sed&lt;/code> helps you edit text in a controlled way. Combined with the file-handling skills from the previous article, you can already build many small but useful DevOps scripts.&lt;/p>
+&lt;p>In the next article, we will cover &lt;strong>functions in Bash&lt;/strong>: splitting logic into functions, passing arguments, using &lt;code>local&lt;/code>, handling return codes, and building a small reusable logging library. 🚀&lt;/p>
+&lt;hr>
+&lt;h2 id="references">References
+&lt;/h2>&lt;ul>
+&lt;li>&lt;a class="link" href="https://www.gnu.org/software/grep/manual/grep.html" target="_blank" rel="noopener"
+>GNU Grep Manual&lt;/a> — Official documentation for &lt;code>grep&lt;/code>, regex, &lt;code>-E&lt;/code>, &lt;code>-F&lt;/code>, &lt;code>-n&lt;/code>, &lt;code>-A&lt;/code>, &lt;code>-B&lt;/code>, and &lt;code>-C&lt;/code>.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.gnu.org/software/gawk/manual/gawk.html" target="_blank" rel="noopener"
+>GNU Awk Manual&lt;/a> — Official documentation for fields, &lt;code>NR&lt;/code>, &lt;code>NF&lt;/code>, &lt;code>BEGIN&lt;/code>, &lt;code>END&lt;/code>, and awk programs.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.gnu.org/software/sed/manual/sed.html" target="_blank" rel="noopener"
+>GNU Sed Manual&lt;/a> — Official documentation for &lt;code>s/regexp/replacement/flags&lt;/code>, addresses, and &lt;code>-i&lt;/code>.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.gnu.org/software/coreutils/manual/html_node/sort-invocation.html" target="_blank" rel="noopener"
+>GNU Coreutils Manual — sort&lt;/a> — Additional reference for statistical pipelines with &lt;code>sort&lt;/code>.&lt;/li>
+&lt;/ul></description></item></channel></rss>

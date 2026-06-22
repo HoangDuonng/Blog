@@ -1,669 +1,667 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ubuntu on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/ubuntu/</link><description>Recent content in Ubuntu on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sat, 11 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/ubuntu/index.xml" rel="self" type="application/rss+xml"/><item><title>Cài đặt Docker và Docker Compose tự động bằng Bash Script</title><link>https://tech.nguuyen.io.vn/posts/docker/install-docker-bash-script/</link><pubDate>Sat, 11 Apr 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/docker/install-docker-bash-script/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker/install-docker-bash-script.webp" alt="Featured image of post Cài đặt Docker và Docker Compose tự động bằng Bash Script" /&gt;&lt;h2 id="tự-động-hóa-cài-đặt-docker-bằng-bash-script"&gt;Tự động hóa cài đặt Docker bằng Bash Script
-&lt;/h2&gt;&lt;p&gt;Khi làm việc với nhiều server, việc cài đặt Docker thủ công từng bước trên mỗi máy là tốn thời gian và dễ sai sót. Giải pháp đơn giản nhất là viết một &lt;strong&gt;Bash Script&lt;/strong&gt; tự động hóa toàn bộ quá trình — từ cài đặt dependencies, thêm Docker repository, đến cài đặt Docker Engine và Docker Compose.&lt;/p&gt;
-&lt;p&gt;Trong bài viết này, tôi sẽ hướng dẫn bạn viết script cài đặt Docker theo đúng &lt;a class="link" href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener"
-&gt;tài liệu chính thức của Docker&lt;/a&gt;, đảm bảo luôn lấy phiên bản mới nhất từ repository chính thức.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="yêu-cầu-hệ-thống"&gt;Yêu cầu hệ thống
-&lt;/h2&gt;&lt;p&gt;Trước khi bắt đầu, hãy đảm bảo server của bạn đáp ứng các điều kiện sau:&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Yêu cầu&lt;/th&gt;
-&lt;th&gt;Chi tiết&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Hệ điều hành&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;Ubuntu 22.04 (Jammy), 24.04 (Noble), 25.10 (Questing), 26.04 (Resolute)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Kiến trúc&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;x86_64 (amd64), arm64, armhf, s390x, ppc64le&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Quyền&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;Tài khoản có quyền &lt;code&gt;sudo&lt;/code&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;strong&gt;Kết nối mạng&lt;/strong&gt;&lt;/td&gt;
-&lt;td&gt;Có kết nối Internet để tải packages&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;hr&gt;
-&lt;h2 id="gỡ-cài-đặt-phiên-bản-docker-cũ-nếu-có"&gt;Gỡ cài đặt phiên bản Docker cũ (nếu có)
-&lt;/h2&gt;&lt;p&gt;Theo &lt;a class="link" href="https://docs.docker.com/engine/install/ubuntu/#uninstall-old-versions" target="_blank" rel="noopener"
-&gt;tài liệu chính thức của Docker&lt;/a&gt;, trước khi cài đặt Docker Engine, bạn cần gỡ bỏ các package xung đột có thể đã được cài sẵn bởi hệ điều hành:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt remove docker.io docker-compose docker-compose-v2 docker-doc podman-docker containerd runc
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Lưu ý:&lt;/strong&gt; Lệnh trên có thể báo rằng không có package nào được cài — điều này hoàn toàn bình thường trên server mới.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;hr&gt;
-&lt;h2 id="viết-bash-script-cài-đặt-docker"&gt;Viết Bash Script cài đặt Docker
-&lt;/h2&gt;&lt;h3 id="tạo-file-script"&gt;Tạo file script
-&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;vi install-docker.sh
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h3 id="nội-dung-script"&gt;Nội dung script
-&lt;/h3&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt; 1
-&lt;/span&gt;&lt;span class="lnt"&gt; 2
-&lt;/span&gt;&lt;span class="lnt"&gt; 3
-&lt;/span&gt;&lt;span class="lnt"&gt; 4
-&lt;/span&gt;&lt;span class="lnt"&gt; 5
-&lt;/span&gt;&lt;span class="lnt"&gt; 6
-&lt;/span&gt;&lt;span class="lnt"&gt; 7
-&lt;/span&gt;&lt;span class="lnt"&gt; 8
-&lt;/span&gt;&lt;span class="lnt"&gt; 9
-&lt;/span&gt;&lt;span class="lnt"&gt;10
-&lt;/span&gt;&lt;span class="lnt"&gt;11
-&lt;/span&gt;&lt;span class="lnt"&gt;12
-&lt;/span&gt;&lt;span class="lnt"&gt;13
-&lt;/span&gt;&lt;span class="lnt"&gt;14
-&lt;/span&gt;&lt;span class="lnt"&gt;15
-&lt;/span&gt;&lt;span class="lnt"&gt;16
-&lt;/span&gt;&lt;span class="lnt"&gt;17
-&lt;/span&gt;&lt;span class="lnt"&gt;18
-&lt;/span&gt;&lt;span class="lnt"&gt;19
-&lt;/span&gt;&lt;span class="lnt"&gt;20
-&lt;/span&gt;&lt;span class="lnt"&gt;21
-&lt;/span&gt;&lt;span class="lnt"&gt;22
-&lt;/span&gt;&lt;span class="lnt"&gt;23
-&lt;/span&gt;&lt;span class="lnt"&gt;24
-&lt;/span&gt;&lt;span class="lnt"&gt;25
-&lt;/span&gt;&lt;span class="lnt"&gt;26
-&lt;/span&gt;&lt;span class="lnt"&gt;27
-&lt;/span&gt;&lt;span class="lnt"&gt;28
-&lt;/span&gt;&lt;span class="lnt"&gt;29
-&lt;/span&gt;&lt;span class="lnt"&gt;30
-&lt;/span&gt;&lt;span class="lnt"&gt;31
-&lt;/span&gt;&lt;span class="lnt"&gt;32
-&lt;/span&gt;&lt;span class="lnt"&gt;33
-&lt;/span&gt;&lt;span class="lnt"&gt;34
-&lt;/span&gt;&lt;span class="lnt"&gt;35
-&lt;/span&gt;&lt;span class="lnt"&gt;36
-&lt;/span&gt;&lt;span class="lnt"&gt;37
-&lt;/span&gt;&lt;span class="lnt"&gt;38
-&lt;/span&gt;&lt;span class="lnt"&gt;39
-&lt;/span&gt;&lt;span class="lnt"&gt;40
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="cp"&gt;#!/bin/bash
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;set&lt;/span&gt; -e
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;==========================================&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34; Cài đặt Docker Engine &amp;amp; Docker Compose &amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;==========================================&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Bước 1: Cài đặt các packages cần thiết&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;[1/5] Cài đặt dependencies...&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt update -y
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt install -y ca-certificates curl gnupg
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Bước 2: Thêm Docker GPG key&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;[2/5] Thêm Docker GPG key...&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo install -m &lt;span class="m"&gt;0755&lt;/span&gt; -d /etc/apt/keyrings
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -fsSL https://download.docker.com/linux/ubuntu/gpg &lt;span class="p"&gt;|&lt;/span&gt; sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo chmod a+r /etc/apt/keyrings/docker.gpg
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Bước 3: Thêm Docker repository vào apt sources&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;[3/5] Thêm Docker repository...&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="se"&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; &lt;span class="s2"&gt;&amp;#34;deb [arch=&lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;dpkg --print-architecture&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt; signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="s2"&gt; &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;. /etc/os-release &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="nv"&gt;$VERSION_CODENAME&lt;/span&gt;&lt;span class="s2"&gt;&amp;#34;&lt;/span&gt;&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt; stable&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; &lt;span class="se"&gt;\
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt; sudo tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Bước 4: Cài đặt Docker Engine và Docker Compose plugin&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;[4/5] Cài đặt Docker Engine...&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt update -y
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Bước 5: Khởi động và enable Docker service&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;[5/5] Khởi động Docker service...&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl start docker
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; docker
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;==========================================&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34; Cài đặt hoàn tất!&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;==========================================&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker --version
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker compose version
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Giải thích từng bước trong script:&lt;/strong&gt;&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Bước&lt;/th&gt;
-&lt;th&gt;Lệnh&lt;/th&gt;
-&lt;th&gt;Mục đích&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;1&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;apt install ca-certificates curl gnupg&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Cài các package cần thiết để xác thực GPG key và tải file qua HTTPS&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;2&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;curl ... | gpg --dearmor&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Tải và chuyển đổi GPG key của Docker sang định dạng binary để &lt;code&gt;apt&lt;/code&gt; xác thực package&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;3&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;tee /etc/apt/sources.list.d/docker.list&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Thêm Docker repository vào danh sách sources của &lt;code&gt;apt&lt;/code&gt;, tự động detect kiến trúc và codename&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;4&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;apt install docker-ce ...&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Cài đặt Docker Engine, CLI, containerd, Buildx plugin và Compose plugin&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;5&lt;/td&gt;
-&lt;td&gt;&lt;code&gt;systemctl start/enable docker&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Khởi động Docker daemon và cấu hình tự khởi động cùng hệ thống&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Lưu ý quan trọng:&lt;/strong&gt; Script sử dụng &lt;code&gt;docker-compose-plugin&lt;/code&gt; (Compose V2) thay vì &lt;code&gt;docker-compose&lt;/code&gt; standalone (V1). Compose V2 được tích hợp trực tiếp vào Docker CLI với lệnh &lt;code&gt;docker compose&lt;/code&gt; (không có dấu gạch ngang). Docker đã &lt;a class="link" href="https://docs.docker.com/compose/releases/migrate/" target="_blank" rel="noopener"
-&gt;ngừng hỗ trợ Compose V1&lt;/a&gt; từ tháng 7/2023.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;hr&gt;
-&lt;h2 id="cấp-quyền-và-chạy-script"&gt;Cấp quyền và chạy script
-&lt;/h2&gt;&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;span class="lnt"&gt;3
-&lt;/span&gt;&lt;span class="lnt"&gt;4
-&lt;/span&gt;&lt;span class="lnt"&gt;5
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Cấp quyền thực thi&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;chmod +x install-docker.sh
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Chạy script&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo bash install-docker.sh
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id="xác-nhận-kết-quả-cài-đặt"&gt;Xác nhận kết quả cài đặt
-&lt;/h2&gt;&lt;p&gt;Sau khi script chạy xong, bạn sẽ thấy output tương tự:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;span class="lnt"&gt;3
-&lt;/span&gt;&lt;span class="lnt"&gt;4
-&lt;/span&gt;&lt;span class="lnt"&gt;5
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ docker --version
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Docker version 28.1.1, build 4eba377
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;$ docker compose version
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;Docker Compose version v2.35.1
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Để kiểm tra Docker hoạt động chính xác, chạy container thử nghiệm:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo docker run hello-world
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Nếu thấy thông báo &lt;code&gt;Hello from Docker!&lt;/code&gt;, quá trình cài đặt đã thành công.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="cấu-hình-sau-cài-đặt-post-installation"&gt;Cấu hình sau cài đặt (Post-installation)
-&lt;/h2&gt;&lt;h3 id="cho-phép-user-thường-chạy-docker-không-cần-sudo"&gt;Cho phép user thường chạy Docker (không cần sudo)
-&lt;/h3&gt;&lt;p&gt;Theo mặc định, lệnh &lt;code&gt;docker&lt;/code&gt; yêu cầu quyền &lt;code&gt;root&lt;/code&gt;. Để user thường có thể sử dụng Docker:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;span class="lnt"&gt;3
-&lt;/span&gt;&lt;span class="lnt"&gt;4
-&lt;/span&gt;&lt;span class="lnt"&gt;5
-&lt;/span&gt;&lt;span class="lnt"&gt;6
-&lt;/span&gt;&lt;span class="lnt"&gt;7
-&lt;/span&gt;&lt;span class="lnt"&gt;8
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Thêm user hiện tại vào group docker&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo usermod -aG docker &lt;span class="nv"&gt;$USER&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Áp dụng thay đổi group (cần logout/login lại hoặc chạy lệnh sau)&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;newgrp docker
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Xác nhận — không cần sudo nữa&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker run hello-world
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h3 id="cấu-hình-docker-khởi-động-cùng-hệ-thống"&gt;Cấu hình Docker khởi động cùng hệ thống
-&lt;/h3&gt;&lt;p&gt;Script đã thực hiện bước này với &lt;code&gt;systemctl enable docker&lt;/code&gt;. Để xác nhận:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl is-enabled docker
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Output: enabled&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id="ghi-chú-triển-khai"&gt;Ghi chú triển khai
-&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Khi áp dụng vào dự án của bạn&lt;/strong&gt;, hãy lưu ý:
-&lt;ul&gt;
-&lt;li&gt;Script chỉ hỗ trợ &lt;strong&gt;Ubuntu&lt;/strong&gt;. Với Debian, CentOS, hoặc Fedora, cần thay đổi URL repository và lệnh package manager tương ứng&lt;/li&gt;
-&lt;li&gt;Luôn kiểm tra &lt;a class="link" href="https://docs.docker.com/engine/install/" target="_blank" rel="noopener"
-&gt;tài liệu chính thức&lt;/a&gt; để đảm bảo các bước cài đặt chưa thay đổi&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;set -e&lt;/code&gt; ở đầu script đảm bảo script dừng ngay khi có lệnh bị lỗi, tránh cài đặt không đầy đủ&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Best practices:&lt;/strong&gt;
-&lt;ul&gt;
-&lt;li&gt;Sử dụng &lt;code&gt;docker compose&lt;/code&gt; (V2) thay vì &lt;code&gt;docker-compose&lt;/code&gt; (V1) — V1 đã ngừng hỗ trợ&lt;/li&gt;
-&lt;li&gt;Không chạy container bằng user &lt;code&gt;root&lt;/code&gt; trong production — cấu hình user thường với group &lt;code&gt;docker&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;Sau khi cài đặt, cấu hình &lt;a class="link" href="https://docs.docker.com/reference/cli/dockerd/" target="_blank" rel="noopener"
-&gt;Docker daemon&lt;/a&gt; phù hợp với môi trường (log driver, storage driver, v.v.)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Troubleshooting:&lt;/strong&gt;
-&lt;ul&gt;
-&lt;li&gt;Lỗi &lt;code&gt;Permission denied&lt;/code&gt; khi chạy &lt;code&gt;docker&lt;/code&gt;? → Đảm bảo user đã được thêm vào group &lt;code&gt;docker&lt;/code&gt; và đã logout/login lại&lt;/li&gt;
-&lt;li&gt;Lỗi &lt;code&gt;Cannot connect to the Docker daemon&lt;/code&gt;? → Kiểm tra Docker service: &lt;code&gt;sudo systemctl status docker&lt;/code&gt;&lt;/li&gt;
-&lt;li&gt;GPG key bị lỗi khi &lt;code&gt;apt update&lt;/code&gt;? → Xóa key cũ và chạy lại bước thêm GPG key: &lt;code&gt;sudo rm /etc/apt/keyrings/docker.gpg&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id="-lời-kết"&gt;🎯 Lời kết
-&lt;/h2&gt;&lt;p&gt;Với Bash Script trên, bạn có thể cài đặt Docker Engine và Docker Compose trên bất kỳ server Ubuntu nào chỉ với một lệnh duy nhất. Script sử dụng phương pháp cài đặt chính thức từ Docker repository, đảm bảo:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Luôn lấy &lt;strong&gt;phiên bản mới nhất&lt;/strong&gt; từ repository chính thức&lt;/li&gt;
-&lt;li&gt;Cài đặt đầy đủ: Docker Engine, CLI, containerd, Buildx, và Compose V2&lt;/li&gt;
-&lt;li&gt;Tự động khởi động và enable Docker service&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Bạn có thể lưu script này vào hệ thống quản lý cấu hình (Ansible, Terraform) hoặc đơn giản clone từ repository để sử dụng trên nhiều server. 🚀&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="tài-liệu-tham-khảo"&gt;Tài liệu tham khảo
-&lt;/h2&gt;&lt;ul&gt;
-&lt;li&gt;&lt;a class="link" href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener"
-&gt;Docker Official - Install Docker Engine on Ubuntu&lt;/a&gt; — Hướng dẫn chính thức cài đặt Docker trên Ubuntu&lt;/li&gt;
-&lt;li&gt;&lt;a class="link" href="https://docs.docker.com/engine/install/linux-postinstall/" target="_blank" rel="noopener"
-&gt;Docker Official - Post-installation steps for Linux&lt;/a&gt; — Cấu hình sau cài đặt&lt;/li&gt;
-&lt;li&gt;&lt;a class="link" href="https://docs.docker.com/compose/releases/migrate/" target="_blank" rel="noopener"
-&gt;Docker Compose - Migrate to Compose V2&lt;/a&gt; — Hướng dẫn chuyển từ Compose V1 sang V2&lt;/li&gt;
-&lt;/ul&gt;</description></item><item><title>Cách cài đặt Docker trên Ubuntu 🐳</title><link>https://tech.nguuyen.io.vn/posts/installation-guides/setup-docker-on-ubuntu/</link><pubDate>Sun, 30 Nov 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/installation-guides/setup-docker-on-ubuntu/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/installation-guides/docker-installation-ubuntu.webp" alt="Featured image of post Cách cài đặt Docker trên Ubuntu 🐳" /&gt;&lt;h2 id="-giới-thiệu-về-docker"&gt;🐳 Giới thiệu về Docker
-&lt;/h2&gt;&lt;p&gt;Docker là một nền tảng phổ biến trong DevOps để triển khai ứng dụng bằng &lt;strong&gt;container&lt;/strong&gt;. Container cho phép bạn đóng gói ứng dụng cùng với tất cả các dependencies và cấu hình cần thiết, giúp ứng dụng chạy nhất quán trên mọi môi trường từ development đến production.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Lợi ích của Docker:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;⚡ &lt;strong&gt;Tính nhất quán&lt;/strong&gt;: Ứng dụng chạy giống nhau trên mọi môi trường&lt;/li&gt;
-&lt;li&gt;🚀 &lt;strong&gt;Tốc độ&lt;/strong&gt;: Khởi động container nhanh hơn so với virtual machine&lt;/li&gt;
-&lt;li&gt;📦 &lt;strong&gt;Đóng gói&lt;/strong&gt;: Dễ dàng chia sẻ và triển khai ứng dụng&lt;/li&gt;
-&lt;li&gt;🔄 &lt;strong&gt;Scalability&lt;/strong&gt;: Dễ dàng mở rộng và quản lý nhiều container&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Bài viết này hướng dẫn bạn cách cài đặt Docker trên Ubuntu 20.04 và 22.04 một cách đơn giản và hiệu quả, sử dụng repository chính thức của Docker để đảm bảo bạn luôn có phiên bản mới nhất và ổn định.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="-yêu-cầu-trước-khi-cài-đặt"&gt;✅ Yêu cầu trước khi cài đặt
-&lt;/h2&gt;&lt;p&gt;Trước khi bắt đầu, hãy đảm bảo bạn có:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;🖥️ &lt;strong&gt;Máy chủ Ubuntu 20.04 hoặc 22.04&lt;/strong&gt; đã được cài đặt&lt;/li&gt;
-&lt;li&gt;🔐 &lt;strong&gt;Quyền sudo&lt;/strong&gt; để thực thi các lệnh quản trị&lt;/li&gt;
-&lt;li&gt;🌐 &lt;strong&gt;Kết nối internet&lt;/strong&gt; để tải các gói cài đặt&lt;/li&gt;
-&lt;li&gt;⏱️ &lt;strong&gt;Thời gian&lt;/strong&gt;: Quá trình cài đặt mất khoảng 5-10 phút&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id="1-cập-nhật-hệ-thống"&gt;1. Cập nhật hệ thống
-&lt;/h2&gt;&lt;p&gt;Trước khi cài đặt Docker, hãy đảm bảo hệ thống được cập nhật đầy đủ. Điều này giúp đảm bảo bạn có các bản vá bảo mật mới nhất và các gói phụ thuộc cần thiết.&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt update &lt;span class="o"&gt;&amp;amp;&amp;amp;&lt;/span&gt; sudo apt upgrade -y
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;💡 Lưu ý:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Lệnh &lt;code&gt;apt update&lt;/code&gt; cập nhật danh sách các gói có sẵn từ repository&lt;/li&gt;
-&lt;li&gt;Lệnh &lt;code&gt;apt upgrade -y&lt;/code&gt; tự động cài đặt các bản cập nhật mà không cần xác nhận&lt;/li&gt;
-&lt;li&gt;Quá trình này có thể mất vài phút tùy thuộc vào số lượng gói cần cập nhật&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id="2-cài-đặt-docker"&gt;2. Cài đặt Docker
-&lt;/h2&gt;&lt;h3 id="21-cài-đặt-các-gói-phụ-thuộc"&gt;2.1. Cài đặt các gói phụ thuộc
-&lt;/h3&gt;&lt;p&gt;Các gói này cần thiết để Docker có thể tải và xác thực các gói từ repository chính thức:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;apt-transport-https&lt;/code&gt;: Cho phép APT sử dụng giao thức HTTPS&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;ca-certificates&lt;/code&gt;: Cung cấp chứng chỉ SSL/TLS để xác thực kết nối bảo mật&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;curl&lt;/code&gt;: Công cụ để tải xuống các file từ internet&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;software-properties-common&lt;/code&gt;: Cung cấp các tiện ích để quản lý repository&lt;/li&gt;
-&lt;/ul&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h3 id="22-thêm-repository-docker-chính-thức"&gt;2.2. Thêm repository Docker chính thức
-&lt;/h3&gt;&lt;p&gt;Để cài đặt Docker từ nguồn chính thức, chúng ta cần thêm GPG key và repository của Docker vào hệ thống. Điều này đảm bảo bạn nhận được các bản cập nhật chính thức và bảo mật từ Docker.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Bước 1: Thêm GPG key của Docker&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;GPG key được sử dụng để xác thực tính toàn vẹn của các gói Docker:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;curl -fsSL https://download.docker.com/linux/ubuntu/gpg &lt;span class="p"&gt;|&lt;/span&gt; sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Bước 2: Thêm Docker repository&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Thêm repository Docker vào danh sách nguồn của APT. Lệnh này tự động phát hiện phiên bản Ubuntu của bạn (&lt;code&gt;$(lsb_release -cs)&lt;/code&gt;) và thêm repository phù hợp:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="nb"&gt;echo&lt;/span&gt; &lt;span class="s2"&gt;&amp;#34;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu &lt;/span&gt;&lt;span class="k"&gt;$(&lt;/span&gt;lsb_release -cs&lt;span class="k"&gt;)&lt;/span&gt;&lt;span class="s2"&gt; stable&amp;#34;&lt;/span&gt; &lt;span class="p"&gt;|&lt;/span&gt; sudo tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;💡 Giải thích:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;arch=amd64&lt;/code&gt;: Chỉ định kiến trúc 64-bit&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;signed-by&lt;/code&gt;: Chỉ định GPG key để xác thực&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;$(lsb_release -cs)&lt;/code&gt;: Tự động lấy tên code name của Ubuntu (ví dụ: jammy cho Ubuntu 22.04)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;stable&lt;/code&gt;: Sử dụng channel ổn định (có thể dùng &lt;code&gt;test&lt;/code&gt; hoặc &lt;code&gt;nightly&lt;/code&gt; cho các phiên bản thử nghiệm)&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h3 id="23-cài-đặt-docker-engine"&gt;2.3. Cài đặt Docker Engine
-&lt;/h3&gt;&lt;p&gt;Sau khi đã thêm repository, cập nhật danh sách gói và cài đặt Docker Engine:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt update
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt install -y docker-ce docker-ce-cli containerd.io
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;📦 Các gói được cài đặt:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;docker-ce&lt;/code&gt;: Docker Community Edition - phiên bản mã nguồn mở của Docker&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;docker-ce-cli&lt;/code&gt;: Docker Command Line Interface - công cụ dòng lệnh để tương tác với Docker&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;containerd.io&lt;/code&gt;: Container runtime - công cụ quản lý vòng đời container ở mức thấp&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;⏱️ Thời gian cài đặt:&lt;/strong&gt; Quá trình này thường mất 2-5 phút tùy thuộc vào tốc độ internet của bạn.&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="3-kiểm-tra-docker"&gt;3. Kiểm tra Docker
-&lt;/h2&gt;&lt;p&gt;Sau khi cài đặt, hãy kiểm tra xem Docker đã được khởi động và hoạt động chưa:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl status docker
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Kết quả mong đợi:&lt;/strong&gt; Bạn sẽ thấy trạng thái &lt;code&gt;active (running)&lt;/code&gt; nếu Docker đã khởi động thành công.&lt;/p&gt;
-&lt;p&gt;Nếu Docker chưa chạy, bạn có thể khởi động và kích hoạt Docker để tự động khởi động khi hệ thống boot:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl start docker
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl &lt;span class="nb"&gt;enable&lt;/span&gt; docker
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;💡 Giải thích các lệnh:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;systemctl start docker&lt;/code&gt;: Khởi động dịch vụ Docker ngay lập tức&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;systemctl enable docker&lt;/code&gt;: Cấu hình Docker tự động khởi động khi hệ thống khởi động lại&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id="4-chạy-thử-docker"&gt;4. Chạy thử Docker
-&lt;/h2&gt;&lt;p&gt;Để xác nhận Docker đã hoạt động đúng, chạy container mẫu &lt;code&gt;hello-world&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo docker run hello-world
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Kết quả mong đợi:&lt;/strong&gt; Nếu thấy thông báo &amp;ldquo;Hello from Docker!&amp;rdquo; cùng với các thông tin về Docker, nghĩa là bạn đã cài đặt thành công! 🎉&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;🔍 Container &lt;code&gt;hello-world&lt;/code&gt; làm gì?&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Container này tải xuống image &lt;code&gt;hello-world&lt;/code&gt; từ Docker Hub (nếu chưa có)&lt;/li&gt;
-&lt;li&gt;Chạy container và hiển thị thông báo chào mừng&lt;/li&gt;
-&lt;li&gt;Tự động dừng sau khi hoàn thành&lt;/li&gt;
-&lt;/ul&gt;
-&lt;hr&gt;
-&lt;h2 id="5-cấu-hình-quyền-cho-user"&gt;5. Cấu hình quyền cho user
-&lt;/h2&gt;&lt;p&gt;Mặc định, Docker yêu cầu quyền root để chạy các lệnh. Để chạy Docker không cần &lt;code&gt;sudo&lt;/code&gt;, bạn cần thêm user hiện tại vào nhóm &lt;code&gt;docker&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo usermod -aG docker &lt;span class="nv"&gt;$USER&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;newgrp docker
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;💡 Giải thích:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;code&gt;usermod -aG docker $USER&lt;/code&gt;: Thêm user hiện tại vào nhóm &lt;code&gt;docker&lt;/code&gt; (nhóm này có quyền truy cập Docker daemon)&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;newgrp docker&lt;/code&gt;: Áp dụng thay đổi nhóm ngay lập tức mà không cần đăng xuất&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;⚠️ Lưu ý quan trọng:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Sau khi thực hiện lệnh này, bạn có thể cần đăng xuất và đăng nhập lại để thay đổi có hiệu lực&lt;/li&gt;
-&lt;li&gt;Hoặc bạn có thể mở terminal mới để áp dụng thay đổi&lt;/li&gt;
-&lt;li&gt;Việc thêm user vào nhóm &lt;code&gt;docker&lt;/code&gt; cho phép user đó có quyền tương đương root trên Docker daemon, vì vậy chỉ thêm những user đáng tin cậy&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Kiểm tra quyền mới:&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Sau khi cấu hình, thử chạy Docker không cần &lt;code&gt;sudo&lt;/code&gt;:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;docker run hello-world
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;Nếu lệnh chạy thành công mà không cần &lt;code&gt;sudo&lt;/code&gt;, bạn đã cấu hình đúng! ✅&lt;/p&gt;
-&lt;hr&gt;
-&lt;h2 id="6-gỡ-cài-đặt-docker-nếu-cần"&gt;6. Gỡ cài đặt Docker (nếu cần)
-&lt;/h2&gt;&lt;p&gt;Nếu bạn muốn gỡ cài đặt Docker hoàn toàn khỏi hệ thống, thực hiện các bước sau:&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Bước 1: Gỡ cài đặt các gói Docker&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo apt remove -y docker-ce docker-ce-cli containerd.io
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;Bước 2: Xóa dữ liệu Docker&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Dữ liệu Docker (images, containers, volumes, networks) được lưu trong &lt;code&gt;/var/lib/docker&lt;/code&gt;. Để xóa hoàn toàn:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo rm -rf /var/lib/docker
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;strong&gt;⚠️ Cảnh báo:&lt;/strong&gt; Lệnh này sẽ xóa &lt;strong&gt;TẤT CẢ&lt;/strong&gt; dữ liệu Docker bao gồm:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Tất cả images đã tải về&lt;/li&gt;
-&lt;li&gt;Tất cả containers (đang chạy và đã dừng)&lt;/li&gt;
-&lt;li&gt;Tất cả volumes và networks&lt;/li&gt;
-&lt;li&gt;Tất cả dữ liệu trong containers&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;strong&gt;Bước 3: Xóa cấu hình Docker (tùy chọn)&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Nếu muốn xóa hoàn toàn mọi dấu vết của Docker:&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo rm -rf /var/lib/containerd
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo rm -rf /etc/docker
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id="-các-lệnh-docker-cơ-bản"&gt;📚 Các lệnh Docker cơ bản
-&lt;/h2&gt;&lt;p&gt;Sau khi cài đặt Docker, đây là một số lệnh cơ bản bạn nên biết:&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;Lệnh&lt;/th&gt;
-&lt;th&gt;Mô tả&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;docker --version&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Kiểm tra phiên bản Docker&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;docker ps&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Liệt kê các container đang chạy&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;docker ps -a&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Liệt kê tất cả containers (bao gồm đã dừng)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;docker images&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Liệt kê tất cả images&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;docker pull &amp;lt;image&amp;gt;&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Tải image từ Docker Hub&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;docker run &amp;lt;image&amp;gt;&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Chạy container từ image&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;docker stop &amp;lt;container&amp;gt;&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Dừng container đang chạy&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;docker rm &amp;lt;container&amp;gt;&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Xóa container&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;&lt;code&gt;docker rmi &amp;lt;image&amp;gt;&lt;/code&gt;&lt;/td&gt;
-&lt;td&gt;Xóa image&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;hr&gt;
-&lt;h2 id="-troubleshooting"&gt;🔧 Troubleshooting
-&lt;/h2&gt;&lt;h3 id="vấn-đề-docker-daemon-không-khởi-động"&gt;Vấn đề: Docker daemon không khởi động
-&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Nguyên nhân:&lt;/strong&gt; Có thể do xung đột với các dịch vụ khác hoặc cấu hình sai.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Giải pháp:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;span class="lnt"&gt;3
-&lt;/span&gt;&lt;span class="lnt"&gt;4
-&lt;/span&gt;&lt;span class="lnt"&gt;5
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Kiểm tra log của Docker&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo journalctl -u docker
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Khởi động lại Docker&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl restart docker
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h3 id="vấn-đề-permission-denied-khi-chạy-docker"&gt;Vấn đề: Permission denied khi chạy Docker
-&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Nguyên nhân:&lt;/strong&gt; User chưa được thêm vào nhóm &lt;code&gt;docker&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Giải pháp:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;span class="lnt"&gt;3
-&lt;/span&gt;&lt;span class="lnt"&gt;4
-&lt;/span&gt;&lt;span class="lnt"&gt;5
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Thêm user vào nhóm docker&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo usermod -aG docker &lt;span class="nv"&gt;$USER&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Đăng xuất và đăng nhập lại, hoặc chạy:&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;newgrp docker
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;h3 id="vấn-đề-không-thể-kết-nối-đến-docker-daemon"&gt;Vấn đề: Không thể kết nối đến Docker daemon
-&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Nguyên nhân:&lt;/strong&gt; Docker daemon chưa được khởi động.&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Giải pháp:&lt;/strong&gt;&lt;/p&gt;
-&lt;div class="highlight"&gt;&lt;div class="chroma"&gt;
-&lt;table class="lntable"&gt;&lt;tr&gt;&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code&gt;&lt;span class="lnt"&gt;1
-&lt;/span&gt;&lt;span class="lnt"&gt;2
-&lt;/span&gt;&lt;span class="lnt"&gt;3
-&lt;/span&gt;&lt;span class="lnt"&gt;4
-&lt;/span&gt;&lt;span class="lnt"&gt;5
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
-&lt;td class="lntd"&gt;
-&lt;pre tabindex="0" class="chroma"&gt;&lt;code class="language-bash" data-lang="bash"&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Kiểm tra trạng thái&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl status docker
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;&lt;span class="c1"&gt;# Khởi động Docker&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class="line"&gt;&lt;span class="cl"&gt;sudo systemctl start docker
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
-&lt;/div&gt;
-&lt;/div&gt;&lt;hr&gt;
-&lt;h2 id="-lời-kết"&gt;🎯 Lời kết
-&lt;/h2&gt;&lt;p&gt;Vậy là chúng ta đã hoàn tất cài đặt Docker trên Ubuntu! 🎉 Giờ đây, bạn có thể bắt đầu:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;🐳 &lt;strong&gt;Tạo và chạy containers&lt;/strong&gt; cho các ứng dụng của mình&lt;/li&gt;
-&lt;li&gt;📦 &lt;strong&gt;Sử dụng Docker images&lt;/strong&gt; có sẵn từ Docker Hub&lt;/li&gt;
-&lt;li&gt;🚀 &lt;strong&gt;Triển khai ứng dụng&lt;/strong&gt; một cách nhất quán và dễ dàng&lt;/li&gt;
-&lt;li&gt;🔄 &lt;strong&gt;Quản lý môi trường development&lt;/strong&gt; và production hiệu quả hơn&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Docker là một công cụ mạnh mẽ trong thế giới DevOps. Hãy tiếp tục khám phá các tính năng của Docker như Docker Compose, Docker Swarm, và tích hợp với các công cụ CI/CD để tối ưu hóa quy trình phát triển của bạn!&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;📖 Tài liệu tham khảo:&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a class="link" href="https://docs.docker.com/" target="_blank" rel="noopener"
-&gt;Tài liệu chính thức của Docker&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a class="link" href="https://hub.docker.com/" target="_blank" rel="noopener"
-&gt;Docker Hub&lt;/a&gt; - Kho lưu trữ images lớn nhất&lt;/li&gt;
-&lt;li&gt;&lt;a class="link" href="https://docs.docker.com/develop/dev-best-practices/" target="_blank" rel="noopener"
-&gt;Best practices cho Docker&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Chúc bạn thành công với Docker! 🚀😊&lt;/p&gt;</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Ubuntu on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/ubuntu/</link><description>Recent content in Ubuntu on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sat, 11 Apr 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/ubuntu/index.xml" rel="self" type="application/rss+xml"/><item><title>Cài đặt Docker và Docker Compose tự động bằng Bash Script</title><link>https://tech.nguuyen.io.vn/posts/docker/install-docker-bash-script/</link><pubDate>Sat, 11 Apr 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/docker/install-docker-bash-script/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/docker/install-docker-bash-script.webp" alt="Featured image of post Cài đặt Docker và Docker Compose tự động bằng Bash Script" />&lt;h2 id="tự-động-hóa-cài-đặt-docker-bằng-bash-script">Tự động hóa cài đặt Docker bằng Bash Script
+&lt;/h2>&lt;p>Khi làm việc với nhiều server, việc cài đặt Docker thủ công từng bước trên mỗi máy là tốn thời gian và dễ sai sót. Giải pháp đơn giản nhất là viết một &lt;strong>Bash Script&lt;/strong> tự động hóa toàn bộ quá trình — từ cài đặt dependencies, thêm Docker repository, đến cài đặt Docker Engine và Docker Compose.&lt;/p>
+&lt;p>Trong bài viết này, tôi sẽ hướng dẫn bạn viết script cài đặt Docker theo đúng &lt;a class="link" href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener"
+>tài liệu chính thức của Docker&lt;/a>, đảm bảo luôn lấy phiên bản mới nhất từ repository chính thức.&lt;/p>
+&lt;hr>
+&lt;h2 id="yêu-cầu-hệ-thống">Yêu cầu hệ thống
+&lt;/h2>&lt;p>Trước khi bắt đầu, hãy đảm bảo server của bạn đáp ứng các điều kiện sau:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Yêu cầu&lt;/th>
+&lt;th>Chi tiết&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;strong>Hệ điều hành&lt;/strong>&lt;/td>
+&lt;td>Ubuntu 22.04 (Jammy), 24.04 (Noble), 25.10 (Questing), 26.04 (Resolute)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Kiến trúc&lt;/strong>&lt;/td>
+&lt;td>x86_64 (amd64), arm64, armhf, s390x, ppc64le&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Quyền&lt;/strong>&lt;/td>
+&lt;td>Tài khoản có quyền &lt;code>sudo&lt;/code>&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;strong>Kết nối mạng&lt;/strong>&lt;/td>
+&lt;td>Có kết nối Internet để tải packages&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="gỡ-cài-đặt-phiên-bản-docker-cũ-nếu-có">Gỡ cài đặt phiên bản Docker cũ (nếu có)
+&lt;/h2>&lt;p>Theo &lt;a class="link" href="https://docs.docker.com/engine/install/ubuntu/#uninstall-old-versions" target="_blank" rel="noopener"
+>tài liệu chính thức của Docker&lt;/a>, trước khi cài đặt Docker Engine, bạn cần gỡ bỏ các package xung đột có thể đã được cài sẵn bởi hệ điều hành:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt remove docker.io docker-compose docker-compose-v2 docker-doc podman-docker containerd runc
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;blockquote>
+&lt;p>&lt;strong>Lưu ý:&lt;/strong> Lệnh trên có thể báo rằng không có package nào được cài — điều này hoàn toàn bình thường trên server mới.&lt;/p>&lt;/blockquote>
+&lt;hr>
+&lt;h2 id="viết-bash-script-cài-đặt-docker">Viết Bash Script cài đặt Docker
+&lt;/h2>&lt;h3 id="tạo-file-script">Tạo file script
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">vi install-docker.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="nội-dung-script">Nội dung script
+&lt;/h3>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/bin/bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -e
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;==========================================&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34; Cài đặt Docker Engine &amp;amp; Docker Compose &amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;==========================================&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Bước 1: Cài đặt các packages cần thiết&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;[1/5] Cài đặt dependencies...&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt update -y
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt install -y ca-certificates curl gnupg
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Bước 2: Thêm Docker GPG key&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;[2/5] Thêm Docker GPG key...&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo install -m &lt;span class="m">0755&lt;/span> -d /etc/apt/keyrings
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">curl -fsSL https://download.docker.com/linux/ubuntu/gpg &lt;span class="p">|&lt;/span> sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo chmod a+r /etc/apt/keyrings/docker.gpg
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Bước 3: Thêm Docker repository vào apt sources&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;[3/5] Thêm Docker repository...&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="s2">&amp;#34;deb [arch=&lt;/span>&lt;span class="k">$(&lt;/span>dpkg --print-architecture&lt;span class="k">)&lt;/span>&lt;span class="s2"> signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu \
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="s2"> &lt;/span>&lt;span class="k">$(&lt;/span>. /etc/os-release &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$VERSION_CODENAME&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">)&lt;/span>&lt;span class="s2"> stable&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> sudo tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Bước 4: Cài đặt Docker Engine và Docker Compose plugin&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;[4/5] Cài đặt Docker Engine...&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt update -y
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Bước 5: Khởi động và enable Docker service&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;[5/5] Khởi động Docker service...&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo systemctl start docker
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo systemctl &lt;span class="nb">enable&lt;/span> docker
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;==========================================&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34; Cài đặt hoàn tất!&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;==========================================&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker --version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker compose version
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Giải thích từng bước trong script:&lt;/strong>&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Bước&lt;/th>
+&lt;th>Lệnh&lt;/th>
+&lt;th>Mục đích&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>1&lt;/td>
+&lt;td>&lt;code>apt install ca-certificates curl gnupg&lt;/code>&lt;/td>
+&lt;td>Cài các package cần thiết để xác thực GPG key và tải file qua HTTPS&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>2&lt;/td>
+&lt;td>&lt;code>curl ... | gpg --dearmor&lt;/code>&lt;/td>
+&lt;td>Tải và chuyển đổi GPG key của Docker sang định dạng binary để &lt;code>apt&lt;/code> xác thực package&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>3&lt;/td>
+&lt;td>&lt;code>tee /etc/apt/sources.list.d/docker.list&lt;/code>&lt;/td>
+&lt;td>Thêm Docker repository vào danh sách sources của &lt;code>apt&lt;/code>, tự động detect kiến trúc và codename&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>4&lt;/td>
+&lt;td>&lt;code>apt install docker-ce ...&lt;/code>&lt;/td>
+&lt;td>Cài đặt Docker Engine, CLI, containerd, Buildx plugin và Compose plugin&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>5&lt;/td>
+&lt;td>&lt;code>systemctl start/enable docker&lt;/code>&lt;/td>
+&lt;td>Khởi động Docker daemon và cấu hình tự khởi động cùng hệ thống&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;blockquote>
+&lt;p>&lt;strong>Lưu ý quan trọng:&lt;/strong> Script sử dụng &lt;code>docker-compose-plugin&lt;/code> (Compose V2) thay vì &lt;code>docker-compose&lt;/code> standalone (V1). Compose V2 được tích hợp trực tiếp vào Docker CLI với lệnh &lt;code>docker compose&lt;/code> (không có dấu gạch ngang). Docker đã &lt;a class="link" href="https://docs.docker.com/compose/releases/migrate/" target="_blank" rel="noopener"
+>ngừng hỗ trợ Compose V1&lt;/a> từ tháng 7/2023.&lt;/p>&lt;/blockquote>
+&lt;hr>
+&lt;h2 id="cấp-quyền-và-chạy-script">Cấp quyền và chạy script
+&lt;/h2>&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Cấp quyền thực thi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">chmod +x install-docker.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Chạy script&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo bash install-docker.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="xác-nhận-kết-quả-cài-đặt">Xác nhận kết quả cài đặt
+&lt;/h2>&lt;p>Sau khi script chạy xong, bạn sẽ thấy output tương tự:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">$ docker --version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Docker version 28.1.1, build 4eba377
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">$ docker compose version
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Docker Compose version v2.35.1
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Để kiểm tra Docker hoạt động chính xác, chạy container thử nghiệm:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo docker run hello-world
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Nếu thấy thông báo &lt;code>Hello from Docker!&lt;/code>, quá trình cài đặt đã thành công.&lt;/p>
+&lt;hr>
+&lt;h2 id="cấu-hình-sau-cài-đặt-post-installation">Cấu hình sau cài đặt (Post-installation)
+&lt;/h2>&lt;h3 id="cho-phép-user-thường-chạy-docker-không-cần-sudo">Cho phép user thường chạy Docker (không cần sudo)
+&lt;/h3>&lt;p>Theo mặc định, lệnh &lt;code>docker&lt;/code> yêu cầu quyền &lt;code>root&lt;/code>. Để user thường có thể sử dụng Docker:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;span class="lnt">8
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Thêm user hiện tại vào group docker&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo usermod -aG docker &lt;span class="nv">$USER&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Áp dụng thay đổi group (cần logout/login lại hoặc chạy lệnh sau)&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">newgrp docker
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Xác nhận — không cần sudo nữa&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">docker run hello-world
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="cấu-hình-docker-khởi-động-cùng-hệ-thống">Cấu hình Docker khởi động cùng hệ thống
+&lt;/h3>&lt;p>Script đã thực hiện bước này với &lt;code>systemctl enable docker&lt;/code>. Để xác nhận:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo systemctl is-enabled docker
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Output: enabled&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="ghi-chú-triển-khai">Ghi chú triển khai
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>Khi áp dụng vào dự án của bạn&lt;/strong>, hãy lưu ý:
+&lt;ul>
+&lt;li>Script chỉ hỗ trợ &lt;strong>Ubuntu&lt;/strong>. Với Debian, CentOS, hoặc Fedora, cần thay đổi URL repository và lệnh package manager tương ứng&lt;/li>
+&lt;li>Luôn kiểm tra &lt;a class="link" href="https://docs.docker.com/engine/install/" target="_blank" rel="noopener"
+>tài liệu chính thức&lt;/a> để đảm bảo các bước cài đặt chưa thay đổi&lt;/li>
+&lt;li>&lt;code>set -e&lt;/code> ở đầu script đảm bảo script dừng ngay khi có lệnh bị lỗi, tránh cài đặt không đầy đủ&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Best practices:&lt;/strong>
+&lt;ul>
+&lt;li>Sử dụng &lt;code>docker compose&lt;/code> (V2) thay vì &lt;code>docker-compose&lt;/code> (V1) — V1 đã ngừng hỗ trợ&lt;/li>
+&lt;li>Không chạy container bằng user &lt;code>root&lt;/code> trong production — cấu hình user thường với group &lt;code>docker&lt;/code>&lt;/li>
+&lt;li>Sau khi cài đặt, cấu hình &lt;a class="link" href="https://docs.docker.com/reference/cli/dockerd/" target="_blank" rel="noopener"
+>Docker daemon&lt;/a> phù hợp với môi trường (log driver, storage driver, v.v.)&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Troubleshooting:&lt;/strong>
+&lt;ul>
+&lt;li>Lỗi &lt;code>Permission denied&lt;/code> khi chạy &lt;code>docker&lt;/code>? → Đảm bảo user đã được thêm vào group &lt;code>docker&lt;/code> và đã logout/login lại&lt;/li>
+&lt;li>Lỗi &lt;code>Cannot connect to the Docker daemon&lt;/code>? → Kiểm tra Docker service: &lt;code>sudo systemctl status docker&lt;/code>&lt;/li>
+&lt;li>GPG key bị lỗi khi &lt;code>apt update&lt;/code>? → Xóa key cũ và chạy lại bước thêm GPG key: &lt;code>sudo rm /etc/apt/keyrings/docker.gpg&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-lời-kết">🎯 Lời kết
+&lt;/h2>&lt;p>Với Bash Script trên, bạn có thể cài đặt Docker Engine và Docker Compose trên bất kỳ server Ubuntu nào chỉ với một lệnh duy nhất. Script sử dụng phương pháp cài đặt chính thức từ Docker repository, đảm bảo:&lt;/p>
+&lt;ul>
+&lt;li>Luôn lấy &lt;strong>phiên bản mới nhất&lt;/strong> từ repository chính thức&lt;/li>
+&lt;li>Cài đặt đầy đủ: Docker Engine, CLI, containerd, Buildx, và Compose V2&lt;/li>
+&lt;li>Tự động khởi động và enable Docker service&lt;/li>
+&lt;/ul>
+&lt;p>Bạn có thể lưu script này vào hệ thống quản lý cấu hình (Ansible, Terraform) hoặc đơn giản clone từ repository để sử dụng trên nhiều server. 🚀&lt;/p>
+&lt;hr>
+&lt;h2 id="tài-liệu-tham-khảo">Tài liệu tham khảo
+&lt;/h2>&lt;ul>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/engine/install/ubuntu/" target="_blank" rel="noopener"
+>Docker Official - Install Docker Engine on Ubuntu&lt;/a> — Hướng dẫn chính thức cài đặt Docker trên Ubuntu&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/engine/install/linux-postinstall/" target="_blank" rel="noopener"
+>Docker Official - Post-installation steps for Linux&lt;/a> — Cấu hình sau cài đặt&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/compose/releases/migrate/" target="_blank" rel="noopener"
+>Docker Compose - Migrate to Compose V2&lt;/a> — Hướng dẫn chuyển từ Compose V1 sang V2&lt;/li>
+&lt;/ul></description></item><item><title>Cách cài đặt Docker trên Ubuntu 🐳</title><link>https://tech.nguuyen.io.vn/posts/installation-guides/setup-docker-on-ubuntu/</link><pubDate>Sun, 30 Nov 2025 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/installation-guides/setup-docker-on-ubuntu/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/installation-guides/docker-installation-ubuntu.webp" alt="Featured image of post Cách cài đặt Docker trên Ubuntu 🐳" />&lt;h2 id="-giới-thiệu-về-docker">🐳 Giới thiệu về Docker
+&lt;/h2>&lt;p>Docker là một nền tảng phổ biến trong DevOps để triển khai ứng dụng bằng &lt;strong>container&lt;/strong>. Container cho phép bạn đóng gói ứng dụng cùng với tất cả các dependencies và cấu hình cần thiết, giúp ứng dụng chạy nhất quán trên mọi môi trường từ development đến production.&lt;/p>
+&lt;p>&lt;strong>Lợi ích của Docker:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>⚡ &lt;strong>Tính nhất quán&lt;/strong>: Ứng dụng chạy giống nhau trên mọi môi trường&lt;/li>
+&lt;li>🚀 &lt;strong>Tốc độ&lt;/strong>: Khởi động container nhanh hơn so với virtual machine&lt;/li>
+&lt;li>📦 &lt;strong>Đóng gói&lt;/strong>: Dễ dàng chia sẻ và triển khai ứng dụng&lt;/li>
+&lt;li>🔄 &lt;strong>Scalability&lt;/strong>: Dễ dàng mở rộng và quản lý nhiều container&lt;/li>
+&lt;/ul>
+&lt;p>Bài viết này hướng dẫn bạn cách cài đặt Docker trên Ubuntu 20.04 và 22.04 một cách đơn giản và hiệu quả, sử dụng repository chính thức của Docker để đảm bảo bạn luôn có phiên bản mới nhất và ổn định.&lt;/p>
+&lt;hr>
+&lt;h2 id="-yêu-cầu-trước-khi-cài-đặt">✅ Yêu cầu trước khi cài đặt
+&lt;/h2>&lt;p>Trước khi bắt đầu, hãy đảm bảo bạn có:&lt;/p>
+&lt;ul>
+&lt;li>🖥️ &lt;strong>Máy chủ Ubuntu 20.04 hoặc 22.04&lt;/strong> đã được cài đặt&lt;/li>
+&lt;li>🔐 &lt;strong>Quyền sudo&lt;/strong> để thực thi các lệnh quản trị&lt;/li>
+&lt;li>🌐 &lt;strong>Kết nối internet&lt;/strong> để tải các gói cài đặt&lt;/li>
+&lt;li>⏱️ &lt;strong>Thời gian&lt;/strong>: Quá trình cài đặt mất khoảng 5-10 phút&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="1-cập-nhật-hệ-thống">1. Cập nhật hệ thống
+&lt;/h2>&lt;p>Trước khi cài đặt Docker, hãy đảm bảo hệ thống được cập nhật đầy đủ. Điều này giúp đảm bảo bạn có các bản vá bảo mật mới nhất và các gói phụ thuộc cần thiết.&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt update &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> sudo apt upgrade -y
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>💡 Lưu ý:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Lệnh &lt;code>apt update&lt;/code> cập nhật danh sách các gói có sẵn từ repository&lt;/li>
+&lt;li>Lệnh &lt;code>apt upgrade -y&lt;/code> tự động cài đặt các bản cập nhật mà không cần xác nhận&lt;/li>
+&lt;li>Quá trình này có thể mất vài phút tùy thuộc vào số lượng gói cần cập nhật&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="2-cài-đặt-docker">2. Cài đặt Docker
+&lt;/h2>&lt;h3 id="21-cài-đặt-các-gói-phụ-thuộc">2.1. Cài đặt các gói phụ thuộc
+&lt;/h3>&lt;p>Các gói này cần thiết để Docker có thể tải và xác thực các gói từ repository chính thức:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>apt-transport-https&lt;/code>: Cho phép APT sử dụng giao thức HTTPS&lt;/li>
+&lt;li>&lt;code>ca-certificates&lt;/code>: Cung cấp chứng chỉ SSL/TLS để xác thực kết nối bảo mật&lt;/li>
+&lt;li>&lt;code>curl&lt;/code>: Công cụ để tải xuống các file từ internet&lt;/li>
+&lt;li>&lt;code>software-properties-common&lt;/code>: Cung cấp các tiện ích để quản lý repository&lt;/li>
+&lt;/ul>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="22-thêm-repository-docker-chính-thức">2.2. Thêm repository Docker chính thức
+&lt;/h3>&lt;p>Để cài đặt Docker từ nguồn chính thức, chúng ta cần thêm GPG key và repository của Docker vào hệ thống. Điều này đảm bảo bạn nhận được các bản cập nhật chính thức và bảo mật từ Docker.&lt;/p>
+&lt;p>&lt;strong>Bước 1: Thêm GPG key của Docker&lt;/strong>&lt;/p>
+&lt;p>GPG key được sử dụng để xác thực tính toàn vẹn của các gói Docker:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">curl -fsSL https://download.docker.com/linux/ubuntu/gpg &lt;span class="p">|&lt;/span> sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Bước 2: Thêm Docker repository&lt;/strong>&lt;/p>
+&lt;p>Thêm repository Docker vào danh sách nguồn của APT. Lệnh này tự động phát hiện phiên bản Ubuntu của bạn (&lt;code>$(lsb_release -cs)&lt;/code>) và thêm repository phù hợp:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">echo&lt;/span> &lt;span class="s2">&amp;#34;deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu &lt;/span>&lt;span class="k">$(&lt;/span>lsb_release -cs&lt;span class="k">)&lt;/span>&lt;span class="s2"> stable&amp;#34;&lt;/span> &lt;span class="p">|&lt;/span> sudo tee /etc/apt/sources.list.d/docker.list &amp;gt; /dev/null
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>💡 Giải thích:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>arch=amd64&lt;/code>: Chỉ định kiến trúc 64-bit&lt;/li>
+&lt;li>&lt;code>signed-by&lt;/code>: Chỉ định GPG key để xác thực&lt;/li>
+&lt;li>&lt;code>$(lsb_release -cs)&lt;/code>: Tự động lấy tên code name của Ubuntu (ví dụ: jammy cho Ubuntu 22.04)&lt;/li>
+&lt;li>&lt;code>stable&lt;/code>: Sử dụng channel ổn định (có thể dùng &lt;code>test&lt;/code> hoặc &lt;code>nightly&lt;/code> cho các phiên bản thử nghiệm)&lt;/li>
+&lt;/ul>
+&lt;h3 id="23-cài-đặt-docker-engine">2.3. Cài đặt Docker Engine
+&lt;/h3>&lt;p>Sau khi đã thêm repository, cập nhật danh sách gói và cài đặt Docker Engine:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt update
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo apt install -y docker-ce docker-ce-cli containerd.io
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>📦 Các gói được cài đặt:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>docker-ce&lt;/code>: Docker Community Edition - phiên bản mã nguồn mở của Docker&lt;/li>
+&lt;li>&lt;code>docker-ce-cli&lt;/code>: Docker Command Line Interface - công cụ dòng lệnh để tương tác với Docker&lt;/li>
+&lt;li>&lt;code>containerd.io&lt;/code>: Container runtime - công cụ quản lý vòng đời container ở mức thấp&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>⏱️ Thời gian cài đặt:&lt;/strong> Quá trình này thường mất 2-5 phút tùy thuộc vào tốc độ internet của bạn.&lt;/p>
+&lt;hr>
+&lt;h2 id="3-kiểm-tra-docker">3. Kiểm tra Docker
+&lt;/h2>&lt;p>Sau khi cài đặt, hãy kiểm tra xem Docker đã được khởi động và hoạt động chưa:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo systemctl status docker
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Kết quả mong đợi:&lt;/strong> Bạn sẽ thấy trạng thái &lt;code>active (running)&lt;/code> nếu Docker đã khởi động thành công.&lt;/p>
+&lt;p>Nếu Docker chưa chạy, bạn có thể khởi động và kích hoạt Docker để tự động khởi động khi hệ thống boot:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo systemctl start docker
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo systemctl &lt;span class="nb">enable&lt;/span> docker
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>💡 Giải thích các lệnh:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>systemctl start docker&lt;/code>: Khởi động dịch vụ Docker ngay lập tức&lt;/li>
+&lt;li>&lt;code>systemctl enable docker&lt;/code>: Cấu hình Docker tự động khởi động khi hệ thống khởi động lại&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="4-chạy-thử-docker">4. Chạy thử Docker
+&lt;/h2>&lt;p>Để xác nhận Docker đã hoạt động đúng, chạy container mẫu &lt;code>hello-world&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo docker run hello-world
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Kết quả mong đợi:&lt;/strong> Nếu thấy thông báo &amp;ldquo;Hello from Docker!&amp;rdquo; cùng với các thông tin về Docker, nghĩa là bạn đã cài đặt thành công! 🎉&lt;/p>
+&lt;p>&lt;strong>🔍 Container &lt;code>hello-world&lt;/code> làm gì?&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Container này tải xuống image &lt;code>hello-world&lt;/code> từ Docker Hub (nếu chưa có)&lt;/li>
+&lt;li>Chạy container và hiển thị thông báo chào mừng&lt;/li>
+&lt;li>Tự động dừng sau khi hoàn thành&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="5-cấu-hình-quyền-cho-user">5. Cấu hình quyền cho user
+&lt;/h2>&lt;p>Mặc định, Docker yêu cầu quyền root để chạy các lệnh. Để chạy Docker không cần &lt;code>sudo&lt;/code>, bạn cần thêm user hiện tại vào nhóm &lt;code>docker&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo usermod -aG docker &lt;span class="nv">$USER&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">newgrp docker
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>💡 Giải thích:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>usermod -aG docker $USER&lt;/code>: Thêm user hiện tại vào nhóm &lt;code>docker&lt;/code> (nhóm này có quyền truy cập Docker daemon)&lt;/li>
+&lt;li>&lt;code>newgrp docker&lt;/code>: Áp dụng thay đổi nhóm ngay lập tức mà không cần đăng xuất&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>⚠️ Lưu ý quan trọng:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>Sau khi thực hiện lệnh này, bạn có thể cần đăng xuất và đăng nhập lại để thay đổi có hiệu lực&lt;/li>
+&lt;li>Hoặc bạn có thể mở terminal mới để áp dụng thay đổi&lt;/li>
+&lt;li>Việc thêm user vào nhóm &lt;code>docker&lt;/code> cho phép user đó có quyền tương đương root trên Docker daemon, vì vậy chỉ thêm những user đáng tin cậy&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Kiểm tra quyền mới:&lt;/strong>&lt;/p>
+&lt;p>Sau khi cấu hình, thử chạy Docker không cần &lt;code>sudo&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">docker run hello-world
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Nếu lệnh chạy thành công mà không cần &lt;code>sudo&lt;/code>, bạn đã cấu hình đúng! ✅&lt;/p>
+&lt;hr>
+&lt;h2 id="6-gỡ-cài-đặt-docker-nếu-cần">6. Gỡ cài đặt Docker (nếu cần)
+&lt;/h2>&lt;p>Nếu bạn muốn gỡ cài đặt Docker hoàn toàn khỏi hệ thống, thực hiện các bước sau:&lt;/p>
+&lt;p>&lt;strong>Bước 1: Gỡ cài đặt các gói Docker&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo apt remove -y docker-ce docker-ce-cli containerd.io
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>Bước 2: Xóa dữ liệu Docker&lt;/strong>&lt;/p>
+&lt;p>Dữ liệu Docker (images, containers, volumes, networks) được lưu trong &lt;code>/var/lib/docker&lt;/code>. Để xóa hoàn toàn:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo rm -rf /var/lib/docker
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;strong>⚠️ Cảnh báo:&lt;/strong> Lệnh này sẽ xóa &lt;strong>TẤT CẢ&lt;/strong> dữ liệu Docker bao gồm:&lt;/p>
+&lt;ul>
+&lt;li>Tất cả images đã tải về&lt;/li>
+&lt;li>Tất cả containers (đang chạy và đã dừng)&lt;/li>
+&lt;li>Tất cả volumes và networks&lt;/li>
+&lt;li>Tất cả dữ liệu trong containers&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>Bước 3: Xóa cấu hình Docker (tùy chọn)&lt;/strong>&lt;/p>
+&lt;p>Nếu muốn xóa hoàn toàn mọi dấu vết của Docker:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo rm -rf /var/lib/containerd
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo rm -rf /etc/docker
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-các-lệnh-docker-cơ-bản">📚 Các lệnh Docker cơ bản
+&lt;/h2>&lt;p>Sau khi cài đặt Docker, đây là một số lệnh cơ bản bạn nên biết:&lt;/p>
+&lt;table>
+&lt;thead>
+&lt;tr>
+&lt;th>Lệnh&lt;/th>
+&lt;th>Mô tả&lt;/th>
+&lt;/tr>
+&lt;/thead>
+&lt;tbody>
+&lt;tr>
+&lt;td>&lt;code>docker --version&lt;/code>&lt;/td>
+&lt;td>Kiểm tra phiên bản Docker&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>docker ps&lt;/code>&lt;/td>
+&lt;td>Liệt kê các container đang chạy&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>docker ps -a&lt;/code>&lt;/td>
+&lt;td>Liệt kê tất cả containers (bao gồm đã dừng)&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>docker images&lt;/code>&lt;/td>
+&lt;td>Liệt kê tất cả images&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>docker pull &amp;lt;image&amp;gt;&lt;/code>&lt;/td>
+&lt;td>Tải image từ Docker Hub&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>docker run &amp;lt;image&amp;gt;&lt;/code>&lt;/td>
+&lt;td>Chạy container từ image&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>docker stop &amp;lt;container&amp;gt;&lt;/code>&lt;/td>
+&lt;td>Dừng container đang chạy&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>docker rm &amp;lt;container&amp;gt;&lt;/code>&lt;/td>
+&lt;td>Xóa container&lt;/td>
+&lt;/tr>
+&lt;tr>
+&lt;td>&lt;code>docker rmi &amp;lt;image&amp;gt;&lt;/code>&lt;/td>
+&lt;td>Xóa image&lt;/td>
+&lt;/tr>
+&lt;/tbody>
+&lt;/table>
+&lt;hr>
+&lt;h2 id="-troubleshooting">🔧 Troubleshooting
+&lt;/h2>&lt;h3 id="vấn-đề-docker-daemon-không-khởi-động">Vấn đề: Docker daemon không khởi động
+&lt;/h3>&lt;p>&lt;strong>Nguyên nhân:&lt;/strong> Có thể do xung đột với các dịch vụ khác hoặc cấu hình sai.&lt;/p>
+&lt;p>&lt;strong>Giải pháp:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Kiểm tra log của Docker&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo journalctl -u docker
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Khởi động lại Docker&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo systemctl restart docker
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="vấn-đề-permission-denied-khi-chạy-docker">Vấn đề: Permission denied khi chạy Docker
+&lt;/h3>&lt;p>&lt;strong>Nguyên nhân:&lt;/strong> User chưa được thêm vào nhóm &lt;code>docker&lt;/code>.&lt;/p>
+&lt;p>&lt;strong>Giải pháp:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Thêm user vào nhóm docker&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo usermod -aG docker &lt;span class="nv">$USER&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Đăng xuất và đăng nhập lại, hoặc chạy:&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">newgrp docker
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;h3 id="vấn-đề-không-thể-kết-nối-đến-docker-daemon">Vấn đề: Không thể kết nối đến Docker daemon
+&lt;/h3>&lt;p>&lt;strong>Nguyên nhân:&lt;/strong> Docker daemon chưa được khởi động.&lt;/p>
+&lt;p>&lt;strong>Giải pháp:&lt;/strong>&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Kiểm tra trạng thái&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo systemctl status docker
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="c1"># Khởi động Docker&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo systemctl start docker
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;hr>
+&lt;h2 id="-lời-kết">🎯 Lời kết
+&lt;/h2>&lt;p>Vậy là chúng ta đã hoàn tất cài đặt Docker trên Ubuntu! 🎉 Giờ đây, bạn có thể bắt đầu:&lt;/p>
+&lt;ul>
+&lt;li>🐳 &lt;strong>Tạo và chạy containers&lt;/strong> cho các ứng dụng của mình&lt;/li>
+&lt;li>📦 &lt;strong>Sử dụng Docker images&lt;/strong> có sẵn từ Docker Hub&lt;/li>
+&lt;li>🚀 &lt;strong>Triển khai ứng dụng&lt;/strong> một cách nhất quán và dễ dàng&lt;/li>
+&lt;li>🔄 &lt;strong>Quản lý môi trường development&lt;/strong> và production hiệu quả hơn&lt;/li>
+&lt;/ul>
+&lt;p>Docker là một công cụ mạnh mẽ trong thế giới DevOps. Hãy tiếp tục khám phá các tính năng của Docker như Docker Compose, Docker Swarm, và tích hợp với các công cụ CI/CD để tối ưu hóa quy trình phát triển của bạn!&lt;/p>
+&lt;p>&lt;strong>📖 Tài liệu tham khảo:&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/" target="_blank" rel="noopener"
+>Tài liệu chính thức của Docker&lt;/a>&lt;/li>
+&lt;li>&lt;a class="link" href="https://hub.docker.com/" target="_blank" rel="noopener"
+>Docker Hub&lt;/a> - Kho lưu trữ images lớn nhất&lt;/li>
+&lt;li>&lt;a class="link" href="https://docs.docker.com/develop/dev-best-practices/" target="_blank" rel="noopener"
+>Best practices cho Docker&lt;/a>&lt;/li>
+&lt;/ul>
+&lt;p>Chúc bạn thành công với Docker! 🚀😊&lt;/p></description></item></channel></rss>
