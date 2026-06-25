@@ -1,0 +1,340 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'><meta name=description content="Learn how to manage variables in Bash: local variables, export, env, set/unset, .env files, getopts, IFS, and common special variables for DevOps scripts."><title>Managing Variables and Environment in Bash for DevOps</title>
+<link rel=canonical href=https://tech.nguuyen.io.vn/en/posts/bash/bash-step-seven/><link rel=stylesheet href=/scss/style.min.6d49d9c46fdcc76124b42a4fe51f2711c246f6f503ce3ff15cba284e7e18f2c4.css><meta property='og:title' content="Managing Variables and Environment in Bash for DevOps"><meta property='og:description' content="Learn how to manage variables in Bash: local variables, export, env, set/unset, .env files, getopts, IFS, and common special variables for DevOps scripts."><meta property='og:url' content='https://tech.nguuyen.io.vn/en/posts/bash/bash-step-seven/'><meta property='og:site_name' content='Hoang Duong'><meta property='og:type' content='article'><meta property='article:section' content='Posts'><meta property='article:tag' content='bash'><meta property='article:tag' content='shell-script'><meta property='article:tag' content='devops'><meta property='article:tag' content='automation'><meta property='article:tag' content='linux'><meta property='article:tag' content='environment-variable'><meta property='article:published_time' content='2026-06-24T00:00:00+00:00'><meta property='article:modified_time' content='2026-06-25T00:00:00+07:00'><meta property='og:image' content='https://tech.nguuyen.io.vn/images/bash/bash-step-seven.webp'><meta name=twitter:title content="Managing Variables and Environment in Bash for DevOps"><meta name=twitter:description content="Learn how to manage variables in Bash: local variables, export, env, set/unset, .env files, getopts, IFS, and common special variables for DevOps scripts."><meta name=twitter:card content="summary_large_image"><meta name=twitter:image content='https://tech.nguuyen.io.vn/images/bash/bash-step-seven.webp'><link rel=icon type=image/x-icon href=/favicon.ico><style>:root{--article-font-family:"Roboto", var(--base-font-family)}</style><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;900&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></head><body class=article-page><script>(function(){const e="StackColorScheme";localStorage.getItem(e)||localStorage.setItem(e,"auto")})()</script><script>(function(){const t="StackColorScheme",e=localStorage.getItem(t),n=window.matchMedia("(prefers-color-scheme: dark)").matches===!0;e=="dark"||e==="auto"&&n?document.documentElement.dataset.scheme="dark":document.documentElement.dataset.scheme="light"})()</script><div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky"><button class="hamburger hamburger--spin" type=button id=toggle-menu aria-label="Toggle Menu">
+<span class=hamburger-box><span class=hamburger-inner></span></span></button><header><figure class=site-avatar><a href=/en/><img src=/img/hoang_hu_f5b001d7581bed29.png width=300 height=300 class=site-logo loading=lazy alt=Avatar>
+</a><span class=emoji>🍥</span></figure><div class=site-meta><h1 class=site-name><a href=/en>Hoang Duong</a></h1><h2 class=site-description>And, when you want something, all the universe conspires in helping you to achieve it.</h2></div></header><ol class=menu-social><li><a href=https://github.com/HoangDuonng target=_blank title=GitHub rel=me><svg class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 19c-4.3 1.4-4.3-2.5-6-3m12 5v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6.0 00-1.3-3.2 4.2 4.2.0 00-.1-3.2s-1.1-.3-3.5 1.3a12.3 12.3.0 00-6.2.0C6.5 2.8 5.4 3.1 5.4 3.1a4.2 4.2.0 00-.1 3.2A4.6 4.6.0 004 9.5c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg></a></li><li><a href=https://www.instagram.com/ngu_uuen/ target=_blank title=Instagram rel=me><svg class="icon icon-tabler icon-tabler-brand-instagram" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="12" cy="12" r="4"/><path d="M16.5 7.5h.01"/></svg></a></li></ol><ol class=menu id=main-menu><li><a href=/en/><svg class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><polyline points="5 12 3 12 12 3 21 12 19 12"/><path d="M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"/><path d="M9 21v-6a2 2 0 012-2h2a2 2 0 012 2v6"/></svg>
+<span>Home page</span></a></li><li><a href=/en/about/><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span>About me</span></a></li><li><a href=/en/archives/><svg class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><rect x="3" y="4" width="18" height="4" rx="2"/><path d="M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+<span>Archives</span></a></li><li><a href=/en/search/><svg class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="10" cy="10" r="7"/><line x1="21" y1="21" x2="15" y2="15"/></svg>
+<span>Search</span></a></li><li><a href=/en/links/><svg class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M10 14a3.5 3.5.0 005 0l4-4a3.5 3.5.0 00-5-5l-.5.5"/><path d="M14 10a3.5 3.5.0 00-5 0l-4 4a3.5 3.5.0 005 5l.5-.5"/></svg>
+<span>Links</span></a></li><li class=menu-bottom-section><ol class=menu><li id=i18n-switch><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg>
+<select name=language title=language onchange="window.location.href=this.selectedOptions[0].value"><option value=https://tech.nguuyen.io.vn/>Tiếng Việt</option><option value=https://tech.nguuyen.io.vn/en/ selected>English</option></select></li><li id=dark-mode-toggle><svg class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="8" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<svg class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="16" cy="12" r="2"/><rect x="2" y="6" width="20" height="12" rx="6"/></svg>
+<span>Dark Mode</span></li></ol></li></ol></aside><aside class="sidebar right-sidebar sticky"><section class="widget archives"><h2 class="widget-title section-title">Table of contents</h2><div class=widget--toc><nav id=TableOfContents><ol><li><a href=#why-environment-variables-matter-in-bash>Why environment variables matter in Bash</a></li><li><a href=#local-variables-and-assignment-syntax>Local variables and assignment syntax</a></li><li><a href=#export-when-a-variable-becomes-an-environment-variable><code>export</code>: when a variable becomes an environment variable</a></li><li><a href=#inspect-set-and-remove-variables-with-env-set-unset>Inspect, set, and remove variables with <code>env</code>, <code>set</code>, <code>unset</code></a></li><li><a href=#loading-configuration-from-a-env-file>Loading configuration from a <code>.env</code> file</a></li><li><a href=#reading-cli-arguments-with-getopts>Reading CLI arguments with <code>getopts</code></a></li><li><a href=#ifs-controlling-how-bash-splits-strings><code>$IFS</code>: controlling how Bash splits strings</a></li><li><a href=#common-special-variables>Common special variables</a></li><li><a href=#devops-example-deploy-script-with-env-flags-and-validation>DevOps example: deploy script with <code>.env</code>, flags, and validation</a></li><li><a href=#common-mistakes>Common mistakes</a></li><li><a href=#implementation-notes>Implementation notes</a></li><li><a href=#-conclusion>🎯 Conclusion</a></li><li><a href=#references>References</a></li></ol></nav></div></section></aside><main class="main full-width"><article class="has-image main-article"><header class=article-header><div class=article-image><a href=/en/posts/bash/bash-step-seven/><img src=/images/bash/bash-step-seven.webp loading=lazy alt="Featured image of post Managing Variables and Environment in Bash for DevOps"></a></div><div class=article-details><header class=article-category><a href=/en/categories/devops/ style=background-color:#2a9d8f;color:#fff>DevOps
+</a><a href=/en/categories/bash/>Bash</a></header><div class=article-title-wrapper><h2 class=article-title><a href=/en/posts/bash/bash-step-seven/>Managing Variables and Environment in Bash for DevOps</a></h2><h3 class=article-subtitle>Learn how to manage variables in Bash: local variables, export, env, set/unset, .env files, getopts, IFS, and common special variables for DevOps scripts.</h3></div><footer class=article-time><div><svg class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><path d="M11.795 21H5a2 2 0 01-2-2V7a2 2 0 012-2h12a2 2 0 012 2v4"/><circle cx="18" cy="18" r="4"/><path d="M15 3v4"/><path d="M7 3v4"/><path d="M3 11h16"/><path d="M18 16.496V18l1 1"/></svg>
+<time class=article-time--published>24/06/2026</time></div><div><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<time class=article-time--reading>8 minute read</time></div><div><svg class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="7" r="4"/><path d="M6 21v-2a4 4 0 014-4h4a4 4 0 014 4v2"/></svg>
+<span class=article-author--name>Hoàng Dương</span></div></footer><footer class=article-translations><svg class="icon icon-tabler icon-tabler-language" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 5h7"/><path d="M9 3v2c0 4.418-2.239 8-5 8"/><path d="M5 9c-.003 2.144 2.952 3.908 6.7 4"/><path d="M12 20l4-9 4 9"/><path d="M19.1 18h-6.2"/></svg><div><a href=https://tech.nguuyen.io.vn/posts/bash/bash-step-seven/ class=link>Tiếng Việt</a></div></footer></div></header><section class=article-content><h2 id=why-environment-variables-matter-in-bash>Why environment variables matter in Bash</h2><p>In the <a class=link href=/en/posts/bash/bash-step-six/>previous article</a> we split logic into functions so scripts are easier to reuse. Once a script starts running across multiple environments — local, staging, production, CI/CD runners — the next question is: <strong>where does configuration come from, and how should it be passed in?</strong></p><p>Variables in Bash store temporary values inside a script. Environment variables pass configuration to child processes such as <code>docker</code>, <code>kubectl</code>, <code>aws</code>, <code>curl</code>, or the application launched by the script. If variables are managed poorly, a script can deploy to the wrong environment, leak secrets, or fail because required config is missing.</p><hr><h2 id=local-variables-and-assignment-syntax>Local variables and assignment syntax</h2><p>Bash variable assignment has no spaces around <code>=</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>APP_NAME</span><span class=o>=</span><span class=s2>&#34;blog-api&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>ENVIRONMENT</span><span class=o>=</span><span class=s2>&#34;staging&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>RETRY_COUNT</span><span class=o>=</span><span class=m>3</span>
+</span></span></code></pre></td></tr></table></div></div><p>To read a variable, use <code>$VAR</code> or <code>${VAR}</code>. In real scripts, <code>${VAR}</code> is often clearer when concatenating strings:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Deploying </span><span class=si>${</span><span class=nv>APP_NAME</span><span class=si>}</span><span class=s2> to </span><span class=si>${</span><span class=nv>ENVIRONMENT</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>LOG_FILE</span><span class=o>=</span><span class=s2>&#34;/var/log/</span><span class=si>${</span><span class=nv>APP_NAME</span><span class=si>}</span><span class=s2>.log&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>A very common mistake is adding spaces:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>APP_NAME</span> <span class=o>=</span> <span class=s2>&#34;blog-api&#34;</span>   <span class=c1># wrong: Bash treats APP_NAME as a command</span>
+</span></span></code></pre></td></tr></table></div></div><p>When a value contains spaces or special characters, always quote the variable:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>BACKUP_DIR</span><span class=o>=</span><span class=s2>&#34;/opt/backups/blog api&#34;</span>
+</span></span><span class=line><span class=cl>mkdir -p <span class=s2>&#34;</span><span class=si>${</span><span class=nv>BACKUP_DIR</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Unquoted variables can split paths into multiple arguments and cause hard-to-debug operational failures.</p><hr><h2 id=export-when-a-variable-becomes-an-environment-variable><code>export</code>: when a variable becomes an environment variable</h2><p>A normal Bash variable only exists in the current shell. Child processes do not see it automatically:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>APP_ENV</span><span class=o>=</span><span class=s2>&#34;staging&#34;</span>
+</span></span><span class=line><span class=cl>bash -c <span class=s1>&#39;echo &#34;APP_ENV=$APP_ENV&#34;&#39;</span>   <span class=c1># empty</span>
+</span></span></code></pre></td></tr></table></div></div><p>To make a child process read it, use <code>export</code>:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>export</span> <span class=nv>APP_ENV</span><span class=o>=</span><span class=s2>&#34;staging&#34;</span>
+</span></span><span class=line><span class=cl>bash -c <span class=s1>&#39;echo &#34;APP_ENV=$APP_ENV&#34;&#39;</span>   <span class=c1># APP_ENV=staging</span>
+</span></span></code></pre></td></tr></table></div></div><p>In DevOps, <code>export</code> is commonly used before calling a CLI or starting an app:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>export</span> <span class=nv>AWS_PROFILE</span><span class=o>=</span><span class=s2>&#34;staging&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>export</span> <span class=nv>KUBECONFIG</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>HOME</span><span class=si>}</span><span class=s2>/.kube/staging-config&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>kubectl get pods
+</span></span></code></pre></td></tr></table></div></div><p>You can also pass a variable to a single command only:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>APP_ENV</span><span class=o>=</span><span class=s2>&#34;staging&#34;</span> ./run-migration.sh
+</span></span></code></pre></td></tr></table></div></div><p>This is cleaner and safer when the variable only needs to exist for one command.</p><hr><h2 id=inspect-set-and-remove-variables-with-env-set-unset>Inspect, set, and remove variables with <code>env</code>, <code>set</code>, <code>unset</code></h2><p>A few useful commands when debugging a script environment:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>env                  <span class=c1># print environment variables</span>
+</span></span><span class=line><span class=cl>printenv APP_ENV     <span class=c1># print a specific environment variable</span>
+</span></span><span class=line><span class=cl><span class=nb>set</span>                  <span class=c1># print shell variables, functions, and environment variables</span>
+</span></span><span class=line><span class=cl><span class=nb>unset</span> APP_ENV        <span class=c1># remove a variable</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>env</code> is useful for checking what child processes will see. <code>set</code> is more detailed, but its output is long and may contain sensitive data, so avoid pasting the full output into tickets or logs.</p><p>Example for validating required variables:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>require_env<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>local</span> <span class=nv>name</span><span class=o>=</span><span class=s2>&#34;</span><span class=nv>$1</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>  <span class=k>if</span> <span class=o>[[</span> -z <span class=s2>&#34;</span><span class=si>${</span><span class=p>!name</span><span class=k>:-</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;ERROR: missing required env </span><span class=si>${</span><span class=nv>name</span><span class=si>}</span><span class=s2>&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl>    <span class=k>return</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl>  <span class=k>fi</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>require_env <span class=s2>&#34;APP_ENV&#34;</span>
+</span></span><span class=line><span class=cl>require_env <span class=s2>&#34;DATABASE_URL&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>${!name}</code> is indirect expansion: if <code>name="APP_ENV"</code>, Bash reads the value of the <code>APP_ENV</code> variable.</p><hr><h2 id=loading-configuration-from-a-env-file>Loading configuration from a <code>.env</code> file</h2><p>A <code>.env</code> file keeps configuration separate from code:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>APP_ENV</span><span class=o>=</span>staging
+</span></span><span class=line><span class=cl><span class=nv>APP_PORT</span><span class=o>=</span><span class=m>8080</span>
+</span></span><span class=line><span class=cl><span class=nv>BACKUP_DIR</span><span class=o>=</span>/opt/backups/blog
+</span></span></code></pre></td></tr></table></div></div><p>The simplest way to load it:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nb>set</span> -a
+</span></span><span class=line><span class=cl><span class=nb>source</span> .env
+</span></span><span class=line><span class=cl><span class=nb>set</span> +a
+</span></span></code></pre></td></tr></table></div></div><p><code>set -a</code> automatically exports variables assigned after it, so child processes can read them.</p><p>However, <code>source .env</code> executes the file content as Bash code. Only use it with files you control. Never source files uploaded by users or fetched from untrusted sources.</p><p>A safer pattern for deployment scripts:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>ENV_FILE</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>1</span><span class=k>:-</span><span class=p>.env</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> ! -f <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ENV_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;ERROR: env file not found: </span><span class=si>${</span><span class=nv>ENV_FILE</span><span class=si>}</span><span class=s2>&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>set</span> -a
+</span></span><span class=line><span class=cl><span class=nb>source</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ENV_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>set</span> +a
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>: <span class=s2>&#34;</span><span class=si>${</span><span class=nv>APP_ENV</span><span class=p>:?APP_ENV is required</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>: <span class=s2>&#34;</span><span class=si>${</span><span class=nv>APP_PORT</span><span class=p>:?APP_PORT is required</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p><code>: "${VAR:?message}"</code> makes the script stop immediately if the variable is unset or empty. This fail-fast pattern is very useful before running a deployment.</p><hr><h2 id=reading-cli-arguments-with-getopts>Reading CLI arguments with <code>getopts</code></h2><p>Not every config value belongs in <code>.env</code>. Values that change per run, such as target environment or dry-run mode, should be passed as flags:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>ENVIRONMENT</span><span class=o>=</span><span class=s2>&#34;staging&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>DRY_RUN</span><span class=o>=</span><span class=s2>&#34;false&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>while</span> <span class=nb>getopts</span> <span class=s2>&#34;:e:n&#34;</span> opt<span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>  <span class=k>case</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>opt</span><span class=si>}</span><span class=s2>&#34;</span> in
+</span></span><span class=line><span class=cl>    e<span class=o>)</span>
+</span></span><span class=line><span class=cl>      <span class=nv>ENVIRONMENT</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>OPTARG</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>      <span class=p>;;</span>
+</span></span><span class=line><span class=cl>    n<span class=o>)</span>
+</span></span><span class=line><span class=cl>      <span class=nv>DRY_RUN</span><span class=o>=</span><span class=s2>&#34;true&#34;</span>
+</span></span><span class=line><span class=cl>      <span class=p>;;</span>
+</span></span><span class=line><span class=cl>    ?<span class=o>)</span>
+</span></span><span class=line><span class=cl>      <span class=nb>echo</span> <span class=s2>&#34;Usage: </span><span class=nv>$0</span><span class=s2> [-e environment] [-n]&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl>      <span class=nb>exit</span> <span class=m>2</span>
+</span></span><span class=line><span class=cl>      <span class=p>;;</span>
+</span></span><span class=line><span class=cl>  <span class=k>esac</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;environment=</span><span class=si>${</span><span class=nv>ENVIRONMENT</span><span class=si>}</span><span class=s2> dry_run=</span><span class=si>${</span><span class=nv>DRY_RUN</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>Run it:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>./deploy.sh -e production -n
+</span></span></code></pre></td></tr></table></div></div><p><code>getopts</code> is a good fit for short options such as <code>-e production</code> and <code>-n</code>. If you need long options such as <code>--environment</code>, you can parse them manually with <code>case</code>, but keeping the format simple makes scripts easier to maintain.</p><hr><h2 id=ifs-controlling-how-bash-splits-strings><code>$IFS</code>: controlling how Bash splits strings</h2><p><code>IFS</code> means Internal Field Separator — the characters Bash uses for word splitting in some expansions and in the <code>read</code> command. By default, it contains space, tab, and newline.</p><p>When reading a file line by line, use this pattern to preserve leading/trailing spaces and avoid special backslash handling:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=k>while</span> <span class=nv>IFS</span><span class=o>=</span> <span class=nb>read</span> -r server<span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>  <span class=o>[[</span> -z <span class=s2>&#34;</span><span class=si>${</span><span class=nv>server</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>||</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>server</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=se>\#</span>* <span class=o>]]</span> <span class=o>&amp;&amp;</span> <span class=k>continue</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Checking </span><span class=si>${</span><span class=nv>server</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>  ssh <span class=s2>&#34;deploy@</span><span class=si>${</span><span class=nv>server</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;hostname &amp;&amp; uptime&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>done</span> &lt; servers.txt
+</span></span></code></pre></td></tr></table></div></div><p>When splitting a simple CSV string:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span><span class=lnt>4
+</span><span class=lnt>5
+</span><span class=lnt>6
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>TARGETS</span><span class=o>=</span><span class=s2>&#34;web-01,web-02,web-03&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>IFS</span><span class=o>=</span><span class=s1>&#39;,&#39;</span> <span class=nb>read</span> -r -a servers <span class=o>&lt;&lt;&lt;</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>TARGETS</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>for</span> server in <span class=s2>&#34;</span><span class=si>${</span><span class=nv>servers</span><span class=p>[@]</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Deploy to </span><span class=si>${</span><span class=nv>server</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span></code></pre></td></tr></table></div></div><p>Avoid changing <code>IFS</code> globally unless you really need to. If you must change it, keep the change limited to one line or a small scope so it does not break another part of the script.</p><hr><h2 id=common-special-variables>Common special variables</h2><p>Bash has many special variables that are useful in operational scripts:</p><div class=table-wrapper><table><thead><tr><th>Variable</th><th>Meaning</th></tr></thead><tbody><tr><td><code>$0</code></td><td>Name of the running script</td></tr><tr><td><code>$1</code>, <code>$2</code></td><td>Positional arguments</td></tr><tr><td><code>$@</code></td><td>All arguments; usually use <code>"$@"</code></td></tr><tr><td><code>$#</code></td><td>Number of arguments</td></tr><tr><td><code>$?</code></td><td>Exit code of the last command</td></tr><tr><td><code>$$</code></td><td>PID of the current shell</td></tr><tr><td><code>$!</code></td><td>PID of the most recent background process</td></tr><tr><td><code>${BASH_SOURCE[0]}</code></td><td>Path to the current script file in Bash</td></tr></tbody></table></div><p>Example using <code>$!</code> and <code>wait</code> to track a background job:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl>./long-healthcheck.sh <span class=p>&amp;</span>
+</span></span><span class=line><span class=cl><span class=nv>healthcheck_pid</span><span class=o>=</span><span class=nv>$!</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>echo</span> <span class=s2>&#34;Healthcheck PID: </span><span class=si>${</span><span class=nv>healthcheck_pid</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=nb>wait</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>healthcheck_pid</span><span class=si>}</span><span class=s2>&#34;</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Healthcheck passed&#34;</span>
+</span></span><span class=line><span class=cl><span class=k>else</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Healthcheck failed&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span></code></pre></td></tr></table></div></div><p>Example for finding the directory that contains the script, regardless of where you run it from:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>SCRIPT_DIR</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span><span class=nb>cd</span> <span class=s2>&#34;</span><span class=k>$(</span>dirname <span class=s2>&#34;</span><span class=si>${</span><span class=nv>BASH_SOURCE</span><span class=p>[0]</span><span class=si>}</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span> <span class=o>&amp;&amp;</span> <span class=nb>pwd</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>source</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>SCRIPT_DIR</span><span class=si>}</span><span class=s2>/lib/log.sh&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>This pattern is useful when a script needs to load a config file or library located next to it.</p><hr><h2 id=devops-example-deploy-script-with-env-flags-and-validation>DevOps example: deploy script with <code>.env</code>, flags, and validation</h2><p>The example below simulates a small deployment script. It accepts the environment through <code>-e</code>, supports dry-run with <code>-n</code>, loads <code>.env.&lt;environment></code>, validates required variables, and then runs the deploy command.</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt> 1
+</span><span class=lnt> 2
+</span><span class=lnt> 3
+</span><span class=lnt> 4
+</span><span class=lnt> 5
+</span><span class=lnt> 6
+</span><span class=lnt> 7
+</span><span class=lnt> 8
+</span><span class=lnt> 9
+</span><span class=lnt>10
+</span><span class=lnt>11
+</span><span class=lnt>12
+</span><span class=lnt>13
+</span><span class=lnt>14
+</span><span class=lnt>15
+</span><span class=lnt>16
+</span><span class=lnt>17
+</span><span class=lnt>18
+</span><span class=lnt>19
+</span><span class=lnt>20
+</span><span class=lnt>21
+</span><span class=lnt>22
+</span><span class=lnt>23
+</span><span class=lnt>24
+</span><span class=lnt>25
+</span><span class=lnt>26
+</span><span class=lnt>27
+</span><span class=lnt>28
+</span><span class=lnt>29
+</span><span class=lnt>30
+</span><span class=lnt>31
+</span><span class=lnt>32
+</span><span class=lnt>33
+</span><span class=lnt>34
+</span><span class=lnt>35
+</span><span class=lnt>36
+</span><span class=lnt>37
+</span><span class=lnt>38
+</span><span class=lnt>39
+</span><span class=lnt>40
+</span><span class=lnt>41
+</span><span class=lnt>42
+</span><span class=lnt>43
+</span><span class=lnt>44
+</span><span class=lnt>45
+</span><span class=lnt>46
+</span><span class=lnt>47
+</span><span class=lnt>48
+</span><span class=lnt>49
+</span><span class=lnt>50
+</span><span class=lnt>51
+</span><span class=lnt>52
+</span><span class=lnt>53
+</span><span class=lnt>54
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=cp>#!/usr/bin/env bash
+</span></span></span><span class=line><span class=cl><span class=cp></span><span class=nb>set</span> -euo pipefail
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>ENVIRONMENT</span><span class=o>=</span><span class=s2>&#34;staging&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>DRY_RUN</span><span class=o>=</span><span class=s2>&#34;false&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>usage<span class=o>()</span> <span class=o>{</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Usage: </span><span class=nv>$0</span><span class=s2> [-e staging|production] [-n]&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl><span class=o>}</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>while</span> <span class=nb>getopts</span> <span class=s2>&#34;:e:n&#34;</span> opt<span class=p>;</span> <span class=k>do</span>
+</span></span><span class=line><span class=cl>  <span class=k>case</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>opt</span><span class=si>}</span><span class=s2>&#34;</span> in
+</span></span><span class=line><span class=cl>    e<span class=o>)</span> <span class=nv>ENVIRONMENT</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>OPTARG</span><span class=si>}</span><span class=s2>&#34;</span> <span class=p>;;</span>
+</span></span><span class=line><span class=cl>    n<span class=o>)</span> <span class=nv>DRY_RUN</span><span class=o>=</span><span class=s2>&#34;true&#34;</span> <span class=p>;;</span>
+</span></span><span class=line><span class=cl>    ?<span class=o>)</span> usage<span class=p>;</span> <span class=nb>exit</span> <span class=m>2</span> <span class=p>;;</span>
+</span></span><span class=line><span class=cl>  <span class=k>esac</span>
+</span></span><span class=line><span class=cl><span class=k>done</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>case</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ENVIRONMENT</span><span class=si>}</span><span class=s2>&#34;</span> in
+</span></span><span class=line><span class=cl>  staging<span class=p>|</span>production<span class=o>)</span> <span class=p>;;</span>
+</span></span><span class=line><span class=cl>  *<span class=o>)</span>
+</span></span><span class=line><span class=cl>    <span class=nb>echo</span> <span class=s2>&#34;ERROR: unsupported environment: </span><span class=si>${</span><span class=nv>ENVIRONMENT</span><span class=si>}</span><span class=s2>&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl>    <span class=nb>exit</span> <span class=m>2</span>
+</span></span><span class=line><span class=cl>    <span class=p>;;</span>
+</span></span><span class=line><span class=cl><span class=k>esac</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>SCRIPT_DIR</span><span class=o>=</span><span class=s2>&#34;</span><span class=k>$(</span><span class=nb>cd</span> <span class=s2>&#34;</span><span class=k>$(</span>dirname <span class=s2>&#34;</span><span class=si>${</span><span class=nv>BASH_SOURCE</span><span class=p>[0]</span><span class=si>}</span><span class=s2>&#34;</span><span class=k>)</span><span class=s2>&#34;</span> <span class=o>&amp;&amp;</span> <span class=nb>pwd</span><span class=k>)</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nv>ENV_FILE</span><span class=o>=</span><span class=s2>&#34;</span><span class=si>${</span><span class=nv>SCRIPT_DIR</span><span class=si>}</span><span class=s2>/.env.</span><span class=si>${</span><span class=nv>ENVIRONMENT</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> ! -f <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ENV_FILE</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;ERROR: env file not found: </span><span class=si>${</span><span class=nv>ENV_FILE</span><span class=si>}</span><span class=s2>&#34;</span> &gt;<span class=p>&amp;</span><span class=m>2</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>1</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>set</span> -a
+</span></span><span class=line><span class=cl><span class=nb>source</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ENV_FILE</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>set</span> +a
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl>: <span class=s2>&#34;</span><span class=si>${</span><span class=nv>APP_NAME</span><span class=p>:?APP_NAME is required</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>: <span class=s2>&#34;</span><span class=si>${</span><span class=nv>IMAGE_TAG</span><span class=p>:?IMAGE_TAG is required</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>: <span class=s2>&#34;</span><span class=si>${</span><span class=nv>DEPLOY_HOST</span><span class=p>:?DEPLOY_HOST is required</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nv>cmd</span><span class=o>=(</span>ssh <span class=s2>&#34;deploy@</span><span class=si>${</span><span class=nv>DEPLOY_HOST</span><span class=si>}</span><span class=s2>&#34;</span> <span class=s2>&#34;docker service update --image </span><span class=si>${</span><span class=nv>APP_NAME</span><span class=si>}</span><span class=s2>:</span><span class=si>${</span><span class=nv>IMAGE_TAG</span><span class=si>}</span><span class=s2> </span><span class=si>${</span><span class=nv>APP_NAME</span><span class=si>}</span><span class=s2>&#34;</span><span class=o>)</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=nb>printf</span> <span class=s1>&#39;Environment: %s\n&#39;</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>ENVIRONMENT</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>printf</span> <span class=s1>&#39;Command: %q &#39;</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>cmd</span><span class=p>[@]</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span><span class=line><span class=cl><span class=nb>printf</span> <span class=s1>&#39;\n&#39;</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=k>if</span> <span class=o>[[</span> <span class=s2>&#34;</span><span class=si>${</span><span class=nv>DRY_RUN</span><span class=si>}</span><span class=s2>&#34;</span> <span class=o>==</span> <span class=s2>&#34;true&#34;</span> <span class=o>]]</span><span class=p>;</span> <span class=k>then</span>
+</span></span><span class=line><span class=cl>  <span class=nb>echo</span> <span class=s2>&#34;Dry-run mode: command was not executed&#34;</span>
+</span></span><span class=line><span class=cl>  <span class=nb>exit</span> <span class=m>0</span>
+</span></span><span class=line><span class=cl><span class=k>fi</span>
+</span></span><span class=line><span class=cl>
+</span></span><span class=line><span class=cl><span class=s2>&#34;</span><span class=si>${</span><span class=nv>cmd</span><span class=p>[@]</span><span class=si>}</span><span class=s2>&#34;</span>
+</span></span></code></pre></td></tr></table></div></div><p>A <code>.env.staging</code> file can look like this:</p><div class=highlight><div class=chroma><table class=lntable><tr><td class=lntd><pre tabindex=0 class=chroma><code><span class=lnt>1
+</span><span class=lnt>2
+</span><span class=lnt>3
+</span></code></pre></td><td class=lntd><pre tabindex=0 class=chroma><code class=language-bash data-lang=bash><span class=line><span class=cl><span class=nv>APP_NAME</span><span class=o>=</span>blog-api
+</span></span><span class=line><span class=cl><span class=nv>IMAGE_TAG</span><span class=o>=</span>2026.06.24
+</span></span><span class=line><span class=cl><span class=nv>DEPLOY_HOST</span><span class=o>=</span>webserver-01
+</span></span></code></pre></td></tr></table></div></div><p>Key points in this example:</p><ul><li>Do not hardcode host names or image tags in the script.</li><li>Validate the allowed environment before sourcing a file.</li><li>Use <code>set -a</code> to export config for child processes if needed.</li><li>Use dry-run mode to inspect the command before executing it.</li><li>Quote variables when building paths and arguments.</li></ul><hr><h2 id=common-mistakes>Common mistakes</h2><ul><li><strong>Spaces around <code>=</code> in assignment:</strong> <code>NAME = value</code> is invalid in Bash.</li><li><strong>Not quoting variables:</strong> Paths with spaces or glob characters such as <code>*</code> can make scripts behave incorrectly.</li><li><strong>Exporting too much:</strong> Only export variables child processes need to read.</li><li><strong>Sourcing untrusted <code>.env</code> files:</strong> With <code>source</code>, <code>.env</code> is Bash code and can execute commands.</li><li><strong>Logging secrets:</strong> Avoid <code>set -x</code> around token/password handling.</li><li><strong>Using <code>$1</code> directly with <code>set -u</code>:</strong> Use <code>${1:-}</code> or validate first.</li><li><strong>Changing <code>IFS</code> globally:</strong> It can break loops or argument parsing later in the script.</li></ul><hr><h2 id=implementation-notes>Implementation notes</h2><ul><li><strong>When applying this to your own project</strong>, classify configuration:<ul><li>Values fixed per environment → <code>.env.staging</code>, <code>.env.production</code>, or a separate config file.</li><li>Values that change per run → CLI flags through <code>getopts</code>.</li><li>Secrets → environment variables from a CI/CD secret store or vault; do not commit them to git.</li></ul></li><li><strong>Best practices:</strong><ul><li>Enable <code>set -u</code> to catch undeclared variables, but use <code>${VAR:-}</code> for optional variables.</li><li>Validate required variables early with <code>: "${VAR:?message}"</code>.</li><li>Use <code>printenv VAR</code> to debug one variable instead of printing the whole environment.</li><li>Prefix app-specific variables, for example <code>BLOG_APP_ENV</code>, to avoid name collisions.</li><li>Do not commit <code>.env</code> files containing secrets; commit only <code>.env.example</code>.</li></ul></li><li><strong>Troubleshooting:</strong><ul><li>Child process cannot see a variable? → Check whether you used <code>export</code>.</li><li>Script works locally but fails in cron/CI? → Check <code>PATH</code>, working directory, and runner-provided environment variables.</li><li><code>.env</code> does not load correctly? → Check that the file uses valid Bash syntax and has no spaces around <code>=</code>.</li></ul></li></ul><hr><h2 id=-conclusion>🎯 Conclusion</h2><p>Good variable management makes Bash scripts more stable across environments. Keep code and config separate, validate required variables before real operations, quote variables when using them in commands, and export only what child processes need.</p><p>In the next article, we will cover <strong>cron jobs with Bash</strong>: schedule syntax, <code>crontab</code>, <code>@daily</code>, <code>@reboot</code>, cron logs, <code>PATH</code> issues, and automated backup/healthcheck examples. 🚀</p><hr><h2 id=references>References</h2><ul><li><a class=link href=https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameters target=_blank rel=noopener>GNU Bash Manual — Shell Parameters</a> — Official documentation for positional parameters and special parameters.</li><li><a class=link href=https://www.gnu.org/software/bash/manual/bash.html#Bourne-Shell-Builtins target=_blank rel=noopener>GNU Bash Manual — Bourne Shell Builtins</a> — Reference for <code>export</code>, <code>set</code>, <code>unset</code>, <code>getopts</code>, and <code>source</code>.</li><li><a class=link href=https://www.gnu.org/software/bash/manual/bash.html#Word-Splitting target=_blank rel=noopener>GNU Bash Manual — Word Splitting</a> — Explains the role of <code>IFS</code> in word splitting.</li><li><a class=link href=https://pubs.opengroup.org/onlinepubs/9699919799/utilities/V3_chap02.html target=_blank rel=noopener>The Open Group — Shell Command Language</a> — POSIX shell reference for variables, quoting, and expansion.</li></ul></section><footer class=article-footer><section class=article-tags><a href=/en/tags/bash/>Bash</a>
+<a href=/en/tags/shell-script/>Shell-Script</a>
+<a href=/en/tags/devops/>Devops</a>
+<a href=/en/tags/automation/>Automation</a>
+<a href=/en/tags/linux/>Linux</a>
+<a href=/en/tags/environment-variable/>Environment-Variable</a></section><section class=article-copyright><svg class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><path d="M14.5 9a3.5 4 0 100 6"/></svg>
+<span>Licensed under CC BY-NC-SA 4.0</span></section><section class=article-lastmod><svg class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentcolor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z"/><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>
+<span>Last updated on 00:00 25/06/2026</span></section></footer></article><aside class=related-content--wrapper><h2 class=section-title>Related content</h2><div class=related-content><div class="flex article-list--tile"><article class=has-image><a href=/en/posts/bash/bash-step-six/><div class=article-image><img src=/images/bash/bash-step-six.webp loading=lazy data-key data-hash=/images/bash/bash-step-six.webp></div><div class=article-details><h2 class=article-title>Functions in Bash: Reuse Code Effectively for DevOps</h2></div></a></article><article class=has-image><a href=/en/posts/bash/bash-step-four/><div class=article-image><img src=/images/bash/bash-step-four.webp loading=lazy data-key data-hash=/images/bash/bash-step-four.webp></div><div class=article-details><h2 class=article-title>File Handling in Bash: Read, Write, and Manage Files Safely for DevOps</h2></div></a></article><article class=has-image><a href=/en/posts/bash/bash-step-five/><div class=article-image><img src=/images/bash/bash-step-five.webp loading=lazy data-key data-hash=/images/bash/bash-step-five.webp></div><div class=article-details><h2 class=article-title>Text Processing in Bash: grep, awk, and sed for DevOps</h2></div></a></article><article class=has-image><a href=/en/posts/bash/bash-step-three/><div class=article-image><img src=/images/bash/bash-step-three.webp loading=lazy data-key data-hash=/images/bash/bash-step-three.webp></div><div class=article-details><h2 class=article-title>Loops in Bash: for, while, and until for DevOps Automation</h2></div></a></article><article class=has-image><a href=/en/posts/bash/bash-step-two/><div class=article-image><img src=/images/bash/bash-step-two.webp loading=lazy data-key data-hash=/images/bash/bash-step-two.webp></div><div class=article-details><h2 class=article-title>Bash Conditionals: if, case, and DevOps Logic Handling</h2></div></a></article></div></div></aside><script src=https://utteranc.es/client.js repo=hoangduonng/blog_comments issue-term=pathname label=comments theme=icy-dark crossorigin=anonymous async></script><style>.utterances{max-width:unset}</style><script>let utterancesLoaded=!1;function setUtterancesTheme(e){let t=document.querySelector(".utterances iframe");t&&t.contentWindow.postMessage({type:"set-theme",theme:`github-${e}`},"https://utteranc.es")}addEventListener("message",e=>{if(e.origin!=="https://utteranc.es")return;utterancesLoaded=!0,setUtterancesTheme(document.documentElement.dataset.scheme)}),window.addEventListener("onColorSchemeChange",e=>{if(!utterancesLoaded)return;setUtterancesTheme(e.detail)})</script><footer class=site-footer><section class=copyright>&copy;
+2025 -
+2026 Hoang Duong</section><section class=powerby>Built with <a href=https://www.linkedin.com/in/ho%C3%A0ng-d%C6%B0%C6%A1ng-52a521300/ target=_blank rel=noopener>Ngữ Uyển ❤️</a><br>Theme <no value>designed by Jimmy</section></footer><div class=pswp tabindex=-1 role=dialog aria-hidden=true><div class=pswp__bg></div><div class=pswp__scroll-wrap><div class=pswp__container><div class=pswp__item></div><div class=pswp__item></div><div class=pswp__item></div></div><div class="pswp__ui pswp__ui--hidden"><div class=pswp__top-bar><div class=pswp__counter></div><button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title=Share></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button><div class=pswp__preloader><div class=pswp__preloader__icn><div class=pswp__preloader__cut><div class=pswp__preloader__donut></div></div></div></div></div><div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap"><div class=pswp__share-tooltip></div></div><button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)"></button><div class=pswp__caption><div class=pswp__caption__center></div></div></div></div></div><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" crossorigin=anonymous defer></script><script src=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" crossorigin=anonymous defer></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css crossorigin=anonymous><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css crossorigin=anonymous></main></div><script src=https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" crossorigin=anonymous></script><script type=text/javascript src=/ts/main.aaecef6dc1f6ece2cd0f2281d25b528e1c224afd46c5222c1e69b4205133eb8b.js defer></script><script>(function(){const e=document.createElement("link");e.href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap",e.type="text/css",e.rel="stylesheet",document.head.appendChild(e)})()</script></body></html>
