@@ -1,4 +1,567 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bash on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/bash/</link><description>Recent content in Bash on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Wed, 24 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/bash/index.xml" rel="self" type="application/rss+xml"/><item><title>Quản lý biến và môi trường trong Bash cho DevOps</title><link>https://tech.nguuyen.io.vn/posts/bash/bash-step-seven/</link><pubDate>Wed, 24 Jun 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/bash/bash-step-seven/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/bash/bash-step-seven.webp" alt="Featured image of post Quản lý biến và môi trường trong Bash cho DevOps" />&lt;h2 id="vì-sao-biến-môi-trường-quan-trọng-trong-bash">Vì sao biến môi trường quan trọng trong Bash
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Bash on Hoàng Dương</title><link>https://tech.nguuyen.io.vn/tags/bash/</link><description>Recent content in Bash on Hoàng Dương</description><generator>Hugo -- gohugo.io</generator><language>vi</language><lastBuildDate>Sun, 28 Jun 2026 00:00:00 +0000</lastBuildDate><atom:link href="https://tech.nguuyen.io.vn/tags/bash/index.xml" rel="self" type="application/rss+xml"/><item><title>Cron Job với Bash: tự động hóa theo lịch cho DevOps</title><link>https://tech.nguuyen.io.vn/posts/bash/bash-step-eight/</link><pubDate>Sun, 28 Jun 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/bash/bash-step-eight/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/bash/bash-step-eight.webp" alt="Featured image of post Cron Job với Bash: tự động hóa theo lịch cho DevOps" />&lt;h2 id="cron-job-trong-bash-cho-devops">Cron job trong Bash cho DevOps
+&lt;/h2>&lt;p>Ở &lt;a class="link" href="https://tech.nguuyen.io.vn/posts/bash/bash-step-seven/" >bài trước&lt;/a> chúng ta đã quản lý biến, &lt;code>.env&lt;/code>, tham số CLI và các biến đặc biệt trong Bash. Khi script đã chạy ổn định bằng tay, bước tiếp theo thường là: &lt;strong>làm sao để nó tự chạy đúng thời điểm?&lt;/strong>&lt;/p>
+&lt;p>&lt;code>cron&lt;/code> là công cụ kinh điển trên Linux/Unix để chạy command hoặc script theo lịch. Với DevOps, cron thường dùng cho backup định kỳ, dọn log, healthcheck, đồng bộ file, tạo report, kiểm tra chứng chỉ SSL hoặc gọi một endpoint bảo trì nhẹ.&lt;/p>
+&lt;p>Điểm quan trọng: cron chạy trong môi trường tối giản hơn terminal của bạn. Vì vậy script chạy đúng khi gọi tay chưa chắc chạy đúng trong cron nếu thiếu &lt;code>PATH&lt;/code>, working directory, biến môi trường hoặc log rõ ràng.&lt;/p>
+&lt;hr>
+&lt;h2 id="cron-và-crontab-là-gì">Cron và crontab là gì
+&lt;/h2>&lt;p>&lt;code>cron&lt;/code> là daemon chạy nền, đọc các bảng lịch và thực thi command khi tới thời điểm phù hợp. Bảng lịch đó thường được gọi là &lt;code>crontab&lt;/code>.&lt;/p>
+&lt;p>Một số lệnh cơ bản:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">crontab -l &lt;span class="c1"># xem crontab của user hiện tại&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">crontab -e &lt;span class="c1"># chỉnh crontab&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">crontab -r &lt;span class="c1"># xóa crontab của user hiện tại&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Bạn có thể chỉnh crontab của user hiện tại bằng &lt;code>crontab -e&lt;/code>. Trên server production, hãy cẩn thận với &lt;code>crontab -r&lt;/code> vì lệnh này xóa toàn bộ lịch của user đó.&lt;/p>
+&lt;p>Ví dụ một dòng cron đơn giản:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">*/&lt;/span>&lt;span class="mi">5&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">scripts&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">check&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sh&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nb">log&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">check&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">log&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;&amp;amp;&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Dòng trên chạy script mỗi 5 phút và ghi cả stdout/stderr vào file log.&lt;/p>
+&lt;hr>
+&lt;h2 id="cú-pháp-lịch-5-trường">Cú pháp lịch 5 trường
+&lt;/h2>&lt;p>Một cron job phổ biến có 5 trường thời gian, sau đó là command:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;span class="lnt">7
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-text" data-lang="text">&lt;span class="line">&lt;span class="cl">* * * * * command-to-run
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ │ │
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ │ └── day of week: 0-7 (0 hoặc 7 thường là Chủ nhật)
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ │ └──── month: 1-12
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ │ └────── day of month: 1-31
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">│ └──────── hour: 0-23
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">└────────── minute: 0-59
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Một vài ví dụ hay gặp:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;span class="lnt">6
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">* * * * * # mỗi phút
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">*/5 * * * * # mỗi 5 phút
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">0 * * * * # đầu mỗi giờ
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">30 2 * * * # 02:30 mỗi ngày
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">0 3 * * 0 # 03:00 Chủ nhật hằng tuần
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">0 1 1 * * # 01:00 ngày đầu mỗi tháng
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Cron cũng hỗ trợ danh sách, range và bước nhảy:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">0 9,17 * * 1-5 # 09:00 và 17:00 từ thứ Hai đến thứ Sáu
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">*/10 8-18 * * * # mỗi 10 phút trong khung 08:00-18:59
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Khi viết lịch cho production, nên thêm comment phía trên để người sau hiểu mục đích của job.&lt;/p>
+&lt;hr>
+&lt;h2 id="shortcut-daily-hourly-reboot">Shortcut &lt;code>@daily&lt;/code>, &lt;code>@hourly&lt;/code>, &lt;code>@reboot&lt;/code>
+&lt;/h2>&lt;p>Nhiều hệ thống cron hỗ trợ các shortcut giúp crontab dễ đọc hơn:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-fallback" data-lang="fallback">&lt;span class="line">&lt;span class="cl">@hourly /opt/scripts/hourly-report.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">@daily /opt/scripts/backup-db.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">@weekly /opt/scripts/cleanup-old-logs.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">@monthly /opt/scripts/monthly-report.sh
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">@reboot /opt/scripts/start-worker.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>@daily&lt;/code> thường tương đương chạy một lần mỗi ngày vào nửa đêm. &lt;code>@reboot&lt;/code> chạy khi cron daemon khởi động, thường dùng cho tác vụ nhẹ sau khi server boot.&lt;/p>
+&lt;p>Không nên lạm dụng &lt;code>@reboot&lt;/code> cho service quan trọng. Với daemon dài hạn, &lt;code>systemd&lt;/code> service thường phù hợp hơn vì có restart policy, dependency và log rõ ràng qua &lt;code>journalctl&lt;/code>.&lt;/p>
+&lt;hr>
+&lt;h2 id="viết-script-bash-thân-thiện-với-cron">Viết script Bash thân thiện với cron
+&lt;/h2>&lt;p>Script chạy từ cron nên tự chuẩn bị môi trường cần thiết thay vì phụ thuộc vào shell tương tác.&lt;/p>
+&lt;p>Ví dụ khung script tốt:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">SCRIPT_DIR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>&lt;span class="nb">cd&lt;/span> -- &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>dirname -- &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">BASH_SOURCE&lt;/span>&lt;span class="p">[0]&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">&amp;amp;&amp;amp;&lt;/span> &lt;span class="nb">pwd&lt;/span>&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">LOG_DIR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/var/log/example-app&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkdir -p &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">LOG_DIR&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">log_info&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">printf&lt;/span> &lt;span class="s1">&amp;#39;%s [INFO] %s\n&amp;#39;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>date -Is&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$*&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">log_error&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">printf&lt;/span> &lt;span class="s1">&amp;#39;%s [ERROR] %s\n&amp;#39;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>date -Is&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$*&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">cd&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">SCRIPT_DIR&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">log_info &lt;span class="s2">&amp;#34;Script started&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Các điểm cần chú ý:&lt;/p>
+&lt;ul>
+&lt;li>Khai báo shebang rõ ràng.&lt;/li>
+&lt;li>Bật &lt;code>set -euo pipefail&lt;/code> để lỗi không bị nuốt im lặng.&lt;/li>
+&lt;li>Đặt &lt;code>PATH&lt;/code> trong script hoặc trong crontab.&lt;/li>
+&lt;li>Dùng path tuyệt đối cho file quan trọng.&lt;/li>
+&lt;li>Ghi log có timestamp.&lt;/li>
+&lt;li>Không giả định cron chạy từ thư mục project.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="redirect-log-trong-cron">Redirect log trong cron
+&lt;/h2>&lt;p>Cron có thể gửi output qua mail nội bộ nếu hệ thống cấu hình mail. Trong thực tế DevOps, ghi log vào file thường dễ kiểm soát hơn.&lt;/p>
+&lt;p>Ví dụ redirect stdout và stderr:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">*/&lt;/span>&lt;span class="mi">5&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">scripts&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">check&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sh&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nb">log&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">check&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">log&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;&amp;amp;&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Ý nghĩa:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>&amp;gt;&amp;gt; /var/log/check-health.log&lt;/code>: append stdout vào file.&lt;/li>
+&lt;li>&lt;code>2&amp;gt;&amp;amp;1&lt;/code>: chuyển stderr vào cùng nơi với stdout.&lt;/li>
+&lt;/ul>
+&lt;p>Nếu muốn tách log lỗi riêng:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">*/&lt;/span>&lt;span class="mi">5&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">scripts&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">check&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sh&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nb">log&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">check&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">out&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nb">log&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">check&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">err&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Với job chạy thường xuyên, cần có chiến lược rotate log bằng &lt;code>logrotate&lt;/code> hoặc tự giới hạn dung lượng, nếu không file log có thể đầy disk.&lt;/p>
+&lt;hr>
+&lt;h2 id="kiểm-tra-log-cron">Kiểm tra log cron
+&lt;/h2>&lt;p>Vị trí log cron phụ thuộc distro và cấu hình logging.&lt;/p>
+&lt;p>Trên nhiều hệ thống Ubuntu/Debian dùng syslog:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">grep CRON /var/log/syslog
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Trên hệ thống dùng &lt;code>systemd&lt;/code> journal:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">journalctl -u cron
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">journalctl -u crond
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Một số distro dùng service tên &lt;code>crond&lt;/code> thay vì &lt;code>cron&lt;/code>. Nếu không chắc, kiểm tra service:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">systemctl status cron
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">systemctl status crond
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Lưu ý: log cron thường chỉ cho biết cron đã gọi command hay chưa, không đảm bảo command thành công. Muốn biết script lỗi gì, bạn vẫn cần redirect output hoặc tự ghi log trong script.&lt;/p>
+&lt;hr>
+&lt;h2 id="vấn-đề-path-và-environment-trong-cron">Vấn đề &lt;code>PATH&lt;/code> và environment trong cron
+&lt;/h2>&lt;p>Cron không load đầy đủ &lt;code>.bashrc&lt;/code>, &lt;code>.profile&lt;/code> hoặc environment giống terminal của bạn. Đây là nguyên nhân phổ biến khiến script chạy tay thì đúng, nhưng vào cron lại lỗi &lt;code>command not found&lt;/code>.&lt;/p>
+&lt;p>Ví dụ nên đặt &lt;code>PATH&lt;/code> ở đầu crontab:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="n">SHELL&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bash&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="n">PATH&lt;/span>&lt;span class="o">=/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">local&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">usr&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">sbin&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">bin&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">*/&lt;/span>&lt;span class="mi">5&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">scripts&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">check&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sh&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nb">log&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">check&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">log&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;&amp;amp;&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Hoặc dùng path tuyệt đối cho command trong script:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">/usr/bin/curl --fail --silent --show-error https://example.com/health
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Với biến môi trường riêng của app, ưu tiên load từ file config do bạn kiểm soát:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span> -a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">source&lt;/span> /etc/example-app/backup.env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span> +a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">: &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DATABASE_URL&lt;/span>&lt;span class="p">:?DATABASE_URL is required&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Không đặt secret trực tiếp trong crontab nếu nhiều người có quyền đọc crontab hoặc backup hệ thống. Với secret quan trọng, dùng secret manager, file quyền hạn chặt chẽ hoặc cơ chế secret của nền tảng đang dùng.&lt;/p>
+&lt;hr>
+&lt;h2 id="thực-hành-devops-backup-database-hằng-đêm">Thực hành DevOps: backup database hằng đêm
+&lt;/h2>&lt;p>Ví dụ dưới đây minh họa script backup PostgreSQL hằng đêm. Script dùng biến môi trường từ file cấu hình, tạo thư mục backup, nén output và xóa bản backup cũ.&lt;/p>
+&lt;p>File &lt;code>/opt/scripts/backup-db.sh&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;span class="lnt">31
+&lt;/span>&lt;span class="lnt">32
+&lt;/span>&lt;span class="lnt">33
+&lt;/span>&lt;span class="lnt">34
+&lt;/span>&lt;span class="lnt">35
+&lt;/span>&lt;span class="lnt">36
+&lt;/span>&lt;span class="lnt">37
+&lt;/span>&lt;span class="lnt">38
+&lt;/span>&lt;span class="lnt">39
+&lt;/span>&lt;span class="lnt">40
+&lt;/span>&lt;span class="lnt">41
+&lt;/span>&lt;span class="lnt">42
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/etc/example-app/backup.env&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">BACKUP_DIR&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/var/backups/example-app&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">RETENTION_DAYS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">RETENTION_DAYS&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="nv">7&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">log&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">printf&lt;/span> &lt;span class="s1">&amp;#39;%s [%s] %s\n&amp;#39;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>date -Is&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$1&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$2&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">if&lt;/span> &lt;span class="o">[[&lt;/span> ! -r &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="o">]]&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> log &lt;span class="s2">&amp;#34;ERROR&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;Cannot read env file: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span> -a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">source&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">ENV_FILE&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nb">set&lt;/span> +a
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">: &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DATABASE_NAME&lt;/span>&lt;span class="p">:?DATABASE_NAME is required&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">: &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DATABASE_USER&lt;/span>&lt;span class="p">:?DATABASE_USER is required&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">: &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DATABASE_HOST&lt;/span>&lt;span class="p">:?DATABASE_HOST is required&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">mkdir -p &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">BACKUP_DIR&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">backup_file&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">BACKUP_DIR&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DATABASE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">-&lt;/span>&lt;span class="k">$(&lt;/span>date +%Y%m%d%H%M%S&lt;span class="k">)&lt;/span>&lt;span class="s2">.sql.gz&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">log &lt;span class="s2">&amp;#34;INFO&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;Starting backup to &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">backup_file&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">pg_dump &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --host &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DATABASE_HOST&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --username &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DATABASE_USER&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --dbname &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DATABASE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --format plain &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> --no-owner &lt;span class="se">\
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="se">&lt;/span> &lt;span class="p">|&lt;/span> gzip &amp;gt; &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">backup_file&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">find &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">BACKUP_DIR&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> -type f -name &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DATABASE_NAME&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">-*.sql.gz&amp;#34;&lt;/span> -mtime +&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">RETENTION_DAYS&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> -delete
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">log &lt;span class="s2">&amp;#34;INFO&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;Backup completed&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>File &lt;code>/etc/example-app/backup.env&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;span class="lnt">4
+&lt;/span>&lt;span class="lnt">5
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="nv">DATABASE_NAME&lt;/span>&lt;span class="o">=&lt;/span>blog_app
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">DATABASE_USER&lt;/span>&lt;span class="o">=&lt;/span>backup_user
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">DATABASE_HOST&lt;/span>&lt;span class="o">=&lt;/span>db-01.example.com
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">PGPASSWORD&lt;/span>&lt;span class="o">=&lt;/span>&amp;lt;database-password&amp;gt;
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">RETENTION_DAYS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">14&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Đặt quyền file config chặt chẽ:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;span class="lnt">2
+&lt;/span>&lt;span class="lnt">3
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">sudo chown root:root /etc/example-app/backup.env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo chmod &lt;span class="m">600&lt;/span> /etc/example-app/backup.env
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">sudo chmod &lt;span class="m">700&lt;/span> /opt/scripts/backup-db.sh
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Thêm cron job chạy lúc 02:30 mỗi ngày:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="mi">30&lt;/span> &lt;span class="mi">2&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">scripts&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">backup&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sh&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nb">log&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">backup&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">log&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;&amp;amp;&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Trong môi trường thật, hãy test restore định kỳ. Backup chỉ có giá trị khi bạn biết chắc có thể khôi phục được.&lt;/p>
+&lt;hr>
+&lt;h2 id="thực-hành-devops-healthcheck-mỗi-5-phút">Thực hành DevOps: healthcheck mỗi 5 phút
+&lt;/h2>&lt;p>Ví dụ script kiểm tra endpoint &lt;code>/health&lt;/code>, retry nhẹ rồi ghi log. Nếu endpoint vẫn lỗi, script trả exit code khác &lt;code>0&lt;/code> để cron log lại trạng thái lỗi.&lt;/p>
+&lt;p>File &lt;code>/opt/scripts/check-health.sh&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt"> 1
+&lt;/span>&lt;span class="lnt"> 2
+&lt;/span>&lt;span class="lnt"> 3
+&lt;/span>&lt;span class="lnt"> 4
+&lt;/span>&lt;span class="lnt"> 5
+&lt;/span>&lt;span class="lnt"> 6
+&lt;/span>&lt;span class="lnt"> 7
+&lt;/span>&lt;span class="lnt"> 8
+&lt;/span>&lt;span class="lnt"> 9
+&lt;/span>&lt;span class="lnt">10
+&lt;/span>&lt;span class="lnt">11
+&lt;/span>&lt;span class="lnt">12
+&lt;/span>&lt;span class="lnt">13
+&lt;/span>&lt;span class="lnt">14
+&lt;/span>&lt;span class="lnt">15
+&lt;/span>&lt;span class="lnt">16
+&lt;/span>&lt;span class="lnt">17
+&lt;/span>&lt;span class="lnt">18
+&lt;/span>&lt;span class="lnt">19
+&lt;/span>&lt;span class="lnt">20
+&lt;/span>&lt;span class="lnt">21
+&lt;/span>&lt;span class="lnt">22
+&lt;/span>&lt;span class="lnt">23
+&lt;/span>&lt;span class="lnt">24
+&lt;/span>&lt;span class="lnt">25
+&lt;/span>&lt;span class="lnt">26
+&lt;/span>&lt;span class="lnt">27
+&lt;/span>&lt;span class="lnt">28
+&lt;/span>&lt;span class="lnt">29
+&lt;/span>&lt;span class="lnt">30
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-bash" data-lang="bash">&lt;span class="line">&lt;span class="cl">&lt;span class="cp">#!/usr/bin/env bash
+&lt;/span>&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="cp">&lt;/span>&lt;span class="nb">set&lt;/span> -euo pipefail
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">PATH&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">HEALTH_URL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">HEALTH_URL&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="nv">https&lt;/span>&lt;span class="p">://example.com/health&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">MAX_ATTEMPTS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">MAX_ATTEMPTS&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="nv">3&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">DELAY_SECONDS&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DELAY_SECONDS&lt;/span>&lt;span class="k">:-&lt;/span>&lt;span class="nv">5&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">log&lt;span class="o">()&lt;/span> &lt;span class="o">{&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">printf&lt;/span> &lt;span class="s1">&amp;#39;%s [%s] %s\n&amp;#39;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="k">$(&lt;/span>date -Is&lt;span class="k">)&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$1&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="nv">$2&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="o">}&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="nv">attempt&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">while&lt;/span> &lt;span class="o">((&lt;/span> attempt &amp;lt;&lt;span class="o">=&lt;/span> MAX_ATTEMPTS &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">do&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> curl --fail --silent --show-error --max-time &lt;span class="m">10&lt;/span> &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">HEALTH_URL&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span> &amp;gt; /dev/null&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> log &lt;span class="s2">&amp;#34;INFO&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;Healthcheck OK: &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">HEALTH_URL&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">0&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> log &lt;span class="s2">&amp;#34;WARN&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;Healthcheck attempt &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">attempt&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">/&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">MAX_ATTEMPTS&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> failed&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">if&lt;/span> &lt;span class="o">((&lt;/span> &lt;span class="nv">attempt&lt;/span> &lt;span class="o">==&lt;/span> MAX_ATTEMPTS &lt;span class="o">))&lt;/span>&lt;span class="p">;&lt;/span> &lt;span class="k">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> log &lt;span class="s2">&amp;#34;ERROR&amp;#34;&lt;/span> &lt;span class="s2">&amp;#34;Healthcheck failed after &lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">MAX_ATTEMPTS&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2"> attempts&amp;#34;&lt;/span> &amp;gt;&lt;span class="p">&amp;amp;&lt;/span>&lt;span class="m">2&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="nb">exit&lt;/span> &lt;span class="m">1&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="k">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> sleep &lt;span class="s2">&amp;#34;&lt;/span>&lt;span class="si">${&lt;/span>&lt;span class="nv">DELAY_SECONDS&lt;/span>&lt;span class="si">}&lt;/span>&lt;span class="s2">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl"> &lt;span class="o">((&lt;/span>attempt++&lt;span class="o">))&lt;/span>
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">&lt;span class="k">done&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Crontab:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">*/&lt;/span>&lt;span class="mi">5&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">HEALTH_URL&lt;/span>&lt;span class="o">=&lt;/span>&lt;span class="n">https&lt;/span>&lt;span class="p">:&lt;/span>&lt;span class="o">//&lt;/span>&lt;span class="n">example&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">com&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">health&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">scripts&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">check&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sh&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nb">log&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">check&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">log&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;&amp;amp;&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Inline environment variable như trên phù hợp với giá trị không nhạy cảm. Nếu cần token hoặc header bí mật, hãy load từ file quyền hạn chặt chẽ hoặc secret manager thay vì đặt thẳng trong crontab.&lt;/p>
+&lt;hr>
+&lt;h2 id="tránh-job-chạy-chồng-lên-nhau">Tránh job chạy chồng lên nhau
+&lt;/h2>&lt;p>Nếu một job chạy lâu hơn chu kỳ cron, lần chạy mới có thể bắt đầu khi lần cũ chưa xong. Điều này nguy hiểm với backup, cleanup hoặc deploy.&lt;/p>
+&lt;p>Một cách phổ biến là dùng &lt;code>flock&lt;/code>:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="o">*/&lt;/span>&lt;span class="mi">5&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">flock&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">n&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">tmp&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">check&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">lock&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">scripts&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">check&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sh&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nb">log&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">check&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">health&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">log&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;&amp;amp;&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>&lt;code>flock -n&lt;/code> sẽ không chờ lock. Nếu job cũ còn chạy, job mới thoát ngay. Với backup:&lt;/p>
+&lt;div class="highlight">&lt;div class="chroma">
+&lt;table class="lntable">&lt;tr>&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code>&lt;span class="lnt">1
+&lt;/span>&lt;/code>&lt;/pre>&lt;/td>
+&lt;td class="lntd">
+&lt;pre tabindex="0" class="chroma">&lt;code class="language-gdscript3" data-lang="gdscript3">&lt;span class="line">&lt;span class="cl">&lt;span class="mi">30&lt;/span> &lt;span class="mi">2&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="o">*&lt;/span> &lt;span class="n">flock&lt;/span> &lt;span class="o">-&lt;/span>&lt;span class="n">n&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">tmp&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">backup&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">lock&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="n">opt&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">scripts&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">backup&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">sh&lt;/span> &lt;span class="o">&amp;gt;&amp;gt;&lt;/span> &lt;span class="o">/&lt;/span>&lt;span class="k">var&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="nb">log&lt;/span>&lt;span class="o">/&lt;/span>&lt;span class="n">backup&lt;/span>&lt;span class="o">-&lt;/span>&lt;span class="n">db&lt;/span>&lt;span class="o">.&lt;/span>&lt;span class="n">log&lt;/span> &lt;span class="mi">2&lt;/span>&lt;span class="o">&amp;gt;&amp;amp;&lt;/span>&lt;span class="mi">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/td>&lt;/tr>&lt;/table>
+&lt;/div>
+&lt;/div>&lt;p>Không phải hệ thống nào cũng cài sẵn &lt;code>flock&lt;/code>, nhưng trên nhiều distro Linux nó nằm trong gói &lt;code>util-linux&lt;/code>. Nếu môi trường của bạn không có &lt;code>flock&lt;/code>, cần dùng cơ chế lock khác và xử lý stale lock cẩn thận.&lt;/p>
+&lt;hr>
+&lt;h2 id="sai-sót-thường-gặp">Sai sót thường gặp
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>Quên redirect log:&lt;/strong> Job lỗi nhưng không có output để debug.&lt;/li>
+&lt;li>&lt;strong>Phụ thuộc vào working directory:&lt;/strong> Cron không đảm bảo chạy trong thư mục project.&lt;/li>
+&lt;li>&lt;strong>Thiếu &lt;code>PATH&lt;/code>:&lt;/strong> Command như &lt;code>docker&lt;/code>, &lt;code>kubectl&lt;/code>, &lt;code>node&lt;/code>, &lt;code>python&lt;/code> có thể không tìm thấy.&lt;/li>
+&lt;li>&lt;strong>Dùng path tương đối:&lt;/strong> File config, log, backup nên dùng path tuyệt đối.&lt;/li>
+&lt;li>&lt;strong>Không kiểm soát job chạy chồng:&lt;/strong> Backup/cleanup có thể chạy đồng thời và gây hỏng dữ liệu.&lt;/li>
+&lt;li>&lt;strong>Đặt secret trực tiếp trong crontab:&lt;/strong> Khó quản lý quyền và audit.&lt;/li>
+&lt;li>&lt;strong>Không test command trước khi lưu crontab:&lt;/strong> Nên chạy script bằng đúng user sẽ chạy cron.&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="ghi-chú-triển-khai">Ghi chú triển khai
+&lt;/h2>&lt;ul>
+&lt;li>&lt;strong>Khi áp dụng vào dự án của bạn&lt;/strong>, hãy chuẩn hóa mỗi cron job theo checklist nhỏ:
+&lt;ul>
+&lt;li>Script có shebang, &lt;code>set -euo pipefail&lt;/code> và path tuyệt đối.&lt;/li>
+&lt;li>Crontab có comment mô tả mục đích job.&lt;/li>
+&lt;li>Output được redirect vào log hoặc gửi về hệ thống logging.&lt;/li>
+&lt;li>Job dài có lock để tránh chạy chồng.&lt;/li>
+&lt;li>Secret nằm trong nơi phù hợp, không hardcode trong script public.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Best practices:&lt;/strong>
+&lt;ul>
+&lt;li>Test script bằng tay với đúng user: &lt;code>sudo -u &amp;lt;app-user&amp;gt; /opt/scripts/job.sh&lt;/code>.&lt;/li>
+&lt;li>Ghi timestamp trong log để dễ đối chiếu sự cố.&lt;/li>
+&lt;li>Đặt &lt;code>PATH&lt;/code> rõ ràng trong script hoặc crontab.&lt;/li>
+&lt;li>Dùng &lt;code>flock&lt;/code> cho job có thể chạy lâu.&lt;/li>
+&lt;li>Theo dõi dung lượng log/backup bằng &lt;code>logrotate&lt;/code> hoặc retention policy.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;li>&lt;strong>Troubleshooting:&lt;/strong>
+&lt;ul>
+&lt;li>Job không chạy? → Kiểm tra &lt;code>crontab -l&lt;/code>, cú pháp lịch, timezone và log cron.&lt;/li>
+&lt;li>Job chạy nhưng command lỗi? → Kiểm tra file log riêng của script.&lt;/li>
+&lt;li>Chạy tay đúng nhưng cron sai? → Kiểm tra &lt;code>PATH&lt;/code>, working directory, permission và biến môi trường.&lt;/li>
+&lt;/ul>
+&lt;/li>
+&lt;/ul>
+&lt;hr>
+&lt;h2 id="-lời-kết">🎯 Lời kết
+&lt;/h2>&lt;p>Cron giúp Bash script trở thành một phần của lịch vận hành tự động: backup hằng đêm, healthcheck định kỳ, cleanup log hoặc tạo report. Nhưng để cron job đáng tin cậy, bạn cần viết script tự chủ về môi trường, dùng path tuyệt đối, ghi log rõ ràng và tránh chạy chồng khi job có thể kéo dài.&lt;/p>
+&lt;p>Ở bài tiếp theo, chúng ta sẽ đi vào &lt;strong>debug script Bash&lt;/strong>: &lt;code>bash -x&lt;/code>, &lt;code>bash -n&lt;/code>, &lt;code>set -x&lt;/code>, &lt;code>set -e&lt;/code>, &lt;code>set -u&lt;/code>, &lt;code>pipefail&lt;/code>, &lt;code>trap ERR&lt;/code>, &lt;code>PS4&lt;/code> và &lt;code>shellcheck&lt;/code> để tìm lỗi nhanh hơn. 🚀&lt;/p>
+&lt;hr>
+&lt;h2 id="tài-liệu-tham-khảo">Tài liệu tham khảo
+&lt;/h2>&lt;ul>
+&lt;li>&lt;a class="link" href="https://man7.org/linux/man-pages/man5/crontab.5.html" target="_blank" rel="noopener"
+>man7.org — crontab(5)&lt;/a> — Tham khảo cú pháp crontab, 5 trường thời gian và các biến môi trường trong cron.&lt;/li>
+&lt;li>&lt;a class="link" href="https://man7.org/linux/man-pages/man8/cron.8.html" target="_blank" rel="noopener"
+>man7.org — cron(8)&lt;/a> — Mô tả cron daemon và cách cron xử lý lịch chạy.&lt;/li>
+&lt;li>&lt;a class="link" href="https://man7.org/linux/man-pages/man1/flock.1.html" target="_blank" rel="noopener"
+>man7.org — flock(1)&lt;/a> — Tham khảo &lt;code>flock&lt;/code> để tránh job chạy chồng.&lt;/li>
+&lt;li>&lt;a class="link" href="https://www.postgresql.org/docs/current/app-pgdump.html" target="_blank" rel="noopener"
+>PostgreSQL Documentation — pg_dump&lt;/a> — Tài liệu chính thức về &lt;code>pg_dump&lt;/code> dùng trong ví dụ backup.&lt;/li>
+&lt;li>&lt;a class="link" href="https://curl.se/docs/manpage.html" target="_blank" rel="noopener"
+>curl Documentation&lt;/a> — Tham khảo &lt;code>--fail&lt;/code>, &lt;code>--silent&lt;/code>, &lt;code>--show-error&lt;/code>, &lt;code>--max-time&lt;/code> dùng trong ví dụ healthcheck.&lt;/li>
+&lt;/ul></description></item><item><title>Quản lý biến và môi trường trong Bash cho DevOps</title><link>https://tech.nguuyen.io.vn/posts/bash/bash-step-seven/</link><pubDate>Wed, 24 Jun 2026 00:00:00 +0000</pubDate><guid>https://tech.nguuyen.io.vn/posts/bash/bash-step-seven/</guid><description>&lt;img src="https://tech.nguuyen.io.vn/images/bash/bash-step-seven.webp" alt="Featured image of post Quản lý biến và môi trường trong Bash cho DevOps" />&lt;h2 id="vì-sao-biến-môi-trường-quan-trọng-trong-bash">Vì sao biến môi trường quan trọng trong Bash
 &lt;/h2>&lt;p>Ở &lt;a class="link" href="https://tech.nguuyen.io.vn/posts/bash/bash-step-six/" >bài trước&lt;/a> chúng ta đã tách logic thành function để script dễ tái sử dụng hơn. Khi script bắt đầu chạy trong nhiều môi trường — local, staging, production, CI/CD runner — vấn đề tiếp theo là: &lt;strong>cấu hình lấy từ đâu và truyền vào như thế nào?&lt;/strong>&lt;/p>
 &lt;p>Biến trong Bash giúp lưu giá trị tạm thời trong script. Biến môi trường giúp truyền cấu hình cho process con như &lt;code>docker&lt;/code>, &lt;code>kubectl&lt;/code>, &lt;code>aws&lt;/code>, &lt;code>curl&lt;/code> hoặc ứng dụng mà script khởi chạy. Nếu quản lý biến không rõ ràng, script rất dễ deploy nhầm môi trường, lộ secret, hoặc chạy sai vì thiếu config.&lt;/p>
 &lt;hr>
